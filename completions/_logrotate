@@ -1,0 +1,22 @@
+#compdef logrotate
+
+# Auto-generated with h2o
+
+function _logrotate {
+    _arguments \
+        {-d,--debug}'[Don'\''t do anything, just test and print debug messages]' \
+        {-f,--force}'[Force file rotation]' \
+        {-m,--mail}'[Command to send mail (instead of `/usr/bin/mail'\'')]' \
+        {-s,--state}'[Path of state file]':file:_files \
+        '--skip-state-lock[Do not lock the state file]' \
+        {-v,--verbose}'[Display messages during rotation]' \
+        {-l,--log}'[Log file or '\''syslog'\'' to log to syslog]':file:_files \
+        '--version[Display version information]' \
+        {-?,--help}'[Show this help message]' \
+        '--usage[Display brief usage message]' \
+        "*: :_files"
+
+}
+
+_logrotate "$@"
+

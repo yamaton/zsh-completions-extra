@@ -1,0 +1,1123 @@
+#compdef flatpak
+
+# Auto-generated with h2o
+
+
+function _flatpak {
+    local line state
+
+    function _commands {
+        local -a commands
+        commands=(
+            'install:Install an application or runtime'
+            'update:Update an installed application or runtime'
+            'uninstall:Uninstall an installed application or runtime'
+            'mask:Mask out updates and automatic installation'
+            'pin:Pin a runtime to prevent automatic removal'
+            'list:List installed apps and/or runtimes'
+            'info:Show info for installed app or runtime'
+            'history:Show history'
+            'config:Configure flatpak'
+            'repair:Repair flatpak installation'
+            'create-usb:Put applications or runtimes onto removable media'
+            'search:Search for remote apps/runtimes'
+            'run:Run an application'
+            'override:Override permissions for an application'
+            'make-current:Specify default version to run'
+            'enter:Enter the namespace of a running application'
+            'ps:Enumerate running applications'
+            'kill:Stop a running application'
+            'documents:List exported files'
+            'document-export:Grant an application access to a specific file'
+            'document-unexport:Revoke access to a specific file'
+            'document-info:Show information about a specific file'
+            'permissions:List permissions'
+            'permission-remove:Remove item from permission store'
+            'permission-set:Set permissions'
+            'permission-show:Show app permissions'
+            'permission-reset:Reset app permissions'
+            'remotes:List all configured remotes'
+            'remote-add:Add a new remote repository (by URL)'
+            'remote-modify:Modify properties of a configured remote'
+            'remote-delete:Delete a configured remote'
+            'remote-ls:List contents of a configured remote'
+            'remote-info:Show information about a remote app or runtime'
+            'build-init:Initialize a directory for building'
+            'build:Run a build command inside the build dir'
+            'build-finish:Finish a build dir for export'
+            'build-export:Export a build dir to a repository'
+            'build-bundle:Create a bundle file from a ref in a local repository'
+            'build-import-bundle:Import a bundle file'
+            'build-sign:Sign an application or runtime'
+            'build-update-repo:Update the summary file in a repository'
+            'build-commit-from:Create new commit based on existing ref'
+            'repo:Show information about a repo'
+        )
+        _describe 'command' commands
+    }
+ 
+
+    _arguments -C \
+        {-h,--help}'[Show help options]' \
+        '--version[Print version information and exit]' \
+        '--default-arch[Print default arch and exit]' \
+        '--supported-arches[Print supported arches and exit]' \
+        '--gl-drivers[Print active gl drivers and exit]' \
+        '--installations[Print paths for system installations and exit]' \
+        '--print-updated-env[Print the updated environment needed to run flatpaks]' \
+        '--print-system-only[Only include the system installation with --print-updated-env]' \
+        {-v,--verbose}'[Show debug information, -vv for more detail]' \
+        '--ostree-verbose[Show OSTree debug information]' \
+        ': :->cmd' \
+        '*:: :->subcmd'
+
+    case $state in
+    (cmd)
+        _commands
+        ;;
+    (subcmd)
+        case $line[1] in
+        (install)
+            _flatpak_install
+            ;;
+
+        (update)
+            _flatpak_update
+            ;;
+
+        (uninstall)
+            _flatpak_uninstall
+            ;;
+
+        (mask)
+            _flatpak_mask
+            ;;
+
+        (pin)
+            _flatpak_pin
+            ;;
+
+        (list)
+            _flatpak_list
+            ;;
+
+        (info)
+            _flatpak_info
+            ;;
+
+        (history)
+            _flatpak_history
+            ;;
+
+        (config)
+            _flatpak_config
+            ;;
+
+        (repair)
+            _flatpak_repair
+            ;;
+
+        (create-usb)
+            _flatpak_create-usb
+            ;;
+
+        (search)
+            _flatpak_search
+            ;;
+
+        (run)
+            _flatpak_run
+            ;;
+
+        (override)
+            _flatpak_override
+            ;;
+
+        (make-current)
+            _flatpak_make-current
+            ;;
+
+        (enter)
+            _flatpak_enter
+            ;;
+
+        (ps)
+            _flatpak_ps
+            ;;
+
+        (kill)
+            _flatpak_kill
+            ;;
+
+        (documents)
+            _flatpak_documents
+            ;;
+
+        (document-export)
+            _flatpak_document-export
+            ;;
+
+        (document-unexport)
+            _flatpak_document-unexport
+            ;;
+
+        (document-info)
+            _flatpak_document-info
+            ;;
+
+        (permissions)
+            _flatpak_permissions
+            ;;
+
+        (permission-remove)
+            _flatpak_permission-remove
+            ;;
+
+        (permission-set)
+            _flatpak_permission-set
+            ;;
+
+        (permission-show)
+            _flatpak_permission-show
+            ;;
+
+        (permission-reset)
+            _flatpak_permission-reset
+            ;;
+
+        (remotes)
+            _flatpak_remotes
+            ;;
+
+        (remote-add)
+            _flatpak_remote-add
+            ;;
+
+        (remote-modify)
+            _flatpak_remote-modify
+            ;;
+
+        (remote-delete)
+            _flatpak_remote-delete
+            ;;
+
+        (remote-ls)
+            _flatpak_remote-ls
+            ;;
+
+        (remote-info)
+            _flatpak_remote-info
+            ;;
+
+        (build-init)
+            _flatpak_build-init
+            ;;
+
+        (build)
+            _flatpak_build
+            ;;
+
+        (build-finish)
+            _flatpak_build-finish
+            ;;
+
+        (build-export)
+            _flatpak_build-export
+            ;;
+
+        (build-bundle)
+            _flatpak_build-bundle
+            ;;
+
+        (build-import-bundle)
+            _flatpak_build-import-bundle
+            ;;
+
+        (build-sign)
+            _flatpak_build-sign
+            ;;
+
+        (build-update-repo)
+            _flatpak_build-update-repo
+            ;;
+
+        (build-commit-from)
+            _flatpak_build-commit-from
+            ;;
+
+        (repo)
+            _flatpak_repo
+            ;;
+
+        esac
+        ;;
+     esac
+
+}
+
+function _flatpak_install {
+    _arguments \
+        {-h,--help}'[Show help options]' \
+        '--user[Work on the user installation]' \
+        '--system[Work on the system-wide installation (default)]' \
+        '--installation[Work on a non-default system-wide installation]' \
+        '--arch[Arch to install for]' \
+        '--no-pull[Don'\''t pull, only install from local cache]' \
+        '--no-deploy[Don'\''t deploy, only download to local cache]' \
+        '--no-related[Don'\''t install related refs]' \
+        '--no-deps[Don'\''t verify/install runtime dependencies]' \
+        '--no-auto-pin[Don'\''t automatically pin explicit installs]' \
+        '--no-static-deltas[Don'\''t use static deltas]' \
+        '--runtime[Look for runtime with the specified name]' \
+        '--app[Look for app with the specified name]' \
+        '--bundle[Assume LOCATION is a .flatpak single-file bundle]' \
+        '--from[Assume LOCATION is a .flatpakref application description]' \
+        '--gpg-file[Check bundle signatures with GPG key from FILE (- for stdin)]':file:_files \
+        '--subpath[Only install this subpath]':file:_files \
+        {-y,--assumeyes}'[Automatically answer yes for all questions]' \
+        '--reinstall[Uninstall first if already installed]' \
+        '--noninteractive[Produce minimal output and don'\''t ask questions]' \
+        '--or-update[Update install if already installed]' \
+        '--sideload-repo[Use this local repo for sideloads]':file:_files \
+        {-v,--verbose}'[Show debug information, -vv for more detail]' \
+        '--ostree-verbose[Show OSTree debug information]' \
+        "*: :_files"
+
+}
+
+function _flatpak_update {
+    _arguments \
+        {-h,--help}'[Show help options]' \
+        '--user[Work on the user installation]' \
+        '--system[Work on the system-wide installation (default)]' \
+        '--installation[Work on a non-default system-wide installation]' \
+        '--arch[Arch to update for]' \
+        '--commit[Commit to deploy]' \
+        '--force-remove[Remove old files even if running]' \
+        '--no-pull[Don'\''t pull, only update from local cache]' \
+        '--no-deploy[Don'\''t deploy, only download to local cache]' \
+        '--no-related[Don'\''t update related refs]' \
+        '--no-deps[Don'\''t verify/install runtime dependencies]' \
+        '--no-static-deltas[Don'\''t use static deltas]' \
+        '--runtime[Look for runtime with the specified name]' \
+        '--app[Look for app with the specified name]' \
+        '--appstream[Update appstream for remote]' \
+        '--subpath[Only update this subpath]':file:_files \
+        {-y,--assumeyes}'[Automatically answer yes for all questions]' \
+        '--noninteractive[Produce minimal output and don'\''t ask questions]' \
+        '--sideload-repo[Use this local repo for sideloads]':file:_files \
+        {-v,--verbose}'[Show debug information, -vv for more detail]' \
+        '--ostree-verbose[Show OSTree debug information]' \
+        "*: :_files"
+
+}
+
+function _flatpak_uninstall {
+    _arguments \
+        {-h,--help}'[Show help options]' \
+        '--user[Work on the user installation]' \
+        '--system[Work on the system-wide installation (default)]' \
+        '--installation[Work on a non-default system-wide installation]' \
+        '--arch[Arch to uninstall]' \
+        '--keep-ref[Keep ref in local repository]' \
+        '--no-related[Don'\''t uninstall related refs]' \
+        '--force-remove[Remove files even if running]' \
+        '--runtime[Look for runtime with the specified name]' \
+        '--app[Look for app with the specified name]' \
+        '--all[Uninstall all]' \
+        '--unused[Uninstall unused]' \
+        '--delete-data[Delete app data]' \
+        {-y,--assumeyes}'[Automatically answer yes for all questions]' \
+        '--noninteractive[Produce minimal output and don'\''t ask questions]' \
+        {-v,--verbose}'[Show debug information, -vv for more detail]' \
+        '--ostree-verbose[Show OSTree debug information]' \
+        "*: :_files"
+
+}
+
+function _flatpak_mask {
+    _arguments \
+        {-h,--help}'[Show help options]' \
+        '--user[Work on the user installation]' \
+        '--system[Work on the system-wide installation (default)]' \
+        '--installation[Work on a non-default system-wide installation]' \
+        '--remove[Remove matching masks]' \
+        {-v,--verbose}'[Show debug information, -vv for more detail]' \
+        '--ostree-verbose[Show OSTree debug information]' \
+        "*: :_files"
+
+}
+
+function _flatpak_pin {
+    _arguments \
+        {-h,--help}'[Show help options]' \
+        '--user[Work on the user installation]' \
+        '--system[Work on the system-wide installation (default)]' \
+        '--installation[Work on a non-default system-wide installation]' \
+        '--remove[Remove matching pins]' \
+        {-v,--verbose}'[Show debug information, -vv for more detail]' \
+        '--ostree-verbose[Show OSTree debug information]' \
+        "*: :_files"
+
+}
+
+function _flatpak_list {
+    _arguments \
+        {-h,--help}'[Show help options]' \
+        '--user[Work on the user installation]' \
+        '--system[Work on the system-wide installation (default)]' \
+        '--installation[Work on a non-default system-wide installation]' \
+        {-d,--show-details}'[Show extra information]' \
+        '--runtime[List installed runtimes]' \
+        '--app[List installed applications]' \
+        '--arch[Arch to show]' \
+        {-a,--all}'[List all refs (including locale/debug)]' \
+        '--app-runtime[List all applications using RUNTIME]' \
+        {-v,--verbose}'[Show debug information, -vv for more detail]' \
+        '--ostree-verbose[Show OSTree debug information]' \
+        "*: :_files"
+
+}
+
+function _flatpak_info {
+    _arguments \
+        {-h,--help}'[Show help options]' \
+        '--arch[Arch to use]' \
+        '--user[Show user installations]' \
+        '--system[Show system-wide installations]' \
+        '--installation[Show specific system-wide installations]' \
+        {-r,--show-ref}'[Show ref]' \
+        {-c,--show-commit}'[Show commit]' \
+        {-o,--show-origin}'[Show origin]' \
+        {-s,--show-size}'[Show size]' \
+        {-m,--show-metadata}'[Show metadata]' \
+        '--show-runtime[Show runtime]' \
+        '--show-sdk[Show sdk]' \
+        {-M,--show-permissions}'[Show permissions]' \
+        '--file-access[Query file access]':file:_files \
+        {-e,--show-extensions}'[Show extensions]' \
+        {-l,--show-location}'[Show location]' \
+        {-v,--verbose}'[Show debug information, -vv for more detail]' \
+        '--ostree-verbose[Show OSTree debug information]' \
+        "*: :_files"
+
+}
+
+function _flatpak_history {
+    _arguments \
+        {-h,--help}'[Show help options]' \
+        '--user[Work on the user installation]' \
+        '--system[Work on the system-wide installation (default)]' \
+        '--installation[Work on a non-default system-wide installation]' \
+        '--since[Only show changes after TIME]' \
+        '--until[Only show changes before TIME]' \
+        '--reverse[Show newest entries first]' \
+        {-v,--verbose}'[Show debug information, -vv for more detail]' \
+        '--ostree-verbose[Show OSTree debug information]' \
+        "*: :_files"
+
+}
+
+function _flatpak_config {
+    _arguments \
+        {-h,--help}'[Show help options]' \
+        '--user[Work on the user installation]' \
+        '--system[Work on the system-wide installation (default)]' \
+        '--installation[Work on a non-default system-wide installation]' \
+        '--list[List configuration keys and values]' \
+        '--get[Get configuration for KEY]' \
+        '--set[Set configuration for KEY to VALUE]' \
+        '--unset[Unset configuration for KEY]' \
+        {-v,--verbose}'[Show debug information, -vv for more detail]' \
+        '--ostree-verbose[Show OSTree debug information]' \
+        "*: :_files"
+
+}
+
+function _flatpak_repair {
+    _arguments \
+        {-h,--help}'[Show help options]' \
+        '--user[Work on the user installation]' \
+        '--system[Work on the system-wide installation (default)]' \
+        '--installation[Work on a non-default system-wide installation]' \
+        '--dry-run[Don'\''t make any changes]' \
+        '--reinstall-all[Reinstall all refs]' \
+        {-v,--verbose}'[Show debug information, -vv for more detail]' \
+        '--ostree-verbose[Show OSTree debug information]' \
+        "*: :_files"
+
+}
+
+function _flatpak_create-usb {
+    _arguments \
+        {-h,--help}'[Show help options]' \
+        '--user[Work on the user installation]' \
+        '--system[Work on the system-wide installation (default)]' \
+        '--installation[Work on a non-default system-wide installation]' \
+        '--app[Look for app with the specified name]' \
+        '--arch[Arch to copy]' \
+        '--destination-repo[Use custom repository directory within the mount]' \
+        '--runtime[Look for runtime with the specified name]' \
+        '--allow-partial[Allow partial commits in the created repo]' \
+        {-v,--verbose}'[Show debug information, -vv for more detail]' \
+        '--ostree-verbose[Show OSTree debug information]' \
+        "*: :_files"
+
+}
+
+function _flatpak_search {
+    _arguments \
+        {-h,--help}'[Show help options]' \
+        '--user[Work on the user installation]' \
+        '--system[Work on the system-wide installation (default)]' \
+        '--installation[Work on a non-default system-wide installation]' \
+        '--arch[Arch to search for]' \
+        {-v,--verbose}'[Show debug information, -vv for more detail]' \
+        '--ostree-verbose[Show OSTree debug information]' \
+        "*: :_files"
+
+}
+
+function _flatpak_run {
+    _arguments \
+        {-h,--help}'[Show help options]' \
+        '--help-all[Show all help options]' \
+        '--user[Work on the user installation]' \
+        '--system[Work on the system-wide installation (default)]' \
+        '--installation[Work on a non-default system-wide installation]' \
+        '--arch[Arch to use]' \
+        '--command[Command to run]' \
+        '--cwd[Directory to run the command in]':file:_files \
+        '--branch[Branch to use]' \
+        {-d,--devel}'[Use development runtime]' \
+        '--runtime[Runtime to use]' \
+        '--runtime-version[Runtime version to use]' \
+        '--log-session-bus[Log session bus calls]' \
+        '--log-system-bus[Log system bus calls]' \
+        '--log-a11y-bus[Log accessibility bus calls]' \
+        '--no-a11y-bus[Don'\''t proxy accessibility bus calls]' \
+        '--a11y-bus[Proxy accessibility bus calls (default except when sandboxed)]' \
+        '--no-session-bus[Don'\''t proxy session bus calls]' \
+        '--session-bus[Proxy session bus calls (default except when sandboxed)]' \
+        '--no-documents-portal[Don'\''t start portals]' \
+        '--file-forwarding[Enable file forwarding]' \
+        '--commit[Run specified commit]' \
+        '--runtime-commit[Use specified runtime commit]' \
+        '--sandbox[Run completely sandboxed]' \
+        {-p,--die-with-parent}'[Kill processes when the parent process dies]' \
+        '--parent-pid[Use PID as parent pid for sharing namespaces]' \
+        '--parent-expose-pids[Make processes visible in parent namespace]' \
+        '--parent-share-pids[Share process ID namespace with parent]' \
+        '--instance-id-fd[Write the instance ID to the given file descriptor]' \
+        '--app-path[Use PATH instead of the app'\''s /app]':file:_files \
+        '--usr-path[Use PATH instead of the runtime'\''s /usr]':file:_files \
+        {-v,--verbose}'[Show debug information, -vv for more detail]' \
+        '--ostree-verbose[Show OSTree debug information]' \
+        '--share[Share with host]' \
+        '--unshare[Unshare with host]' \
+        '--socket[Expose socket to app]' \
+        '--nosocket[Don'\''t expose socket to app]' \
+        '--device[Expose device to app]' \
+        '--nodevice[Don'\''t expose device to app]' \
+        '--allow[Allow feature]' \
+        '--disallow[Don'\''t allow feature]' \
+        '--filesystem[Expose filesystem to app (:ro for read-only)]':file:_files \
+        '--nofilesystem[Don'\''t expose filesystem to app]':file:_files \
+        '--env[Set environment variable]' \
+        '--env-fd[Read environment variables in env -0 format from FD]' \
+        '--unset-env[Remove variable from environment]' \
+        '--own-name[Allow app to own name on the session bus]' \
+        '--talk-name[Allow app to talk to name on the session bus]' \
+        '--no-talk-name[Don'\''t allow app to talk to name on the session bus]' \
+        '--system-own-name[Allow app to own name on the system bus]' \
+        '--system-talk-name[Allow app to talk to name on the system bus]' \
+        '--system-no-talk-name[Don'\''t allow app to talk to name on the system bus]' \
+        '--add-policy[Add generic policy option]' \
+        '--remove-policy[Remove generic policy option]' \
+        '--persist[Persist home directory subpath]':file:_files \
+        "*: :_files"
+
+}
+
+function _flatpak_override {
+    _arguments \
+        {-h,--help}'[Show help options]' \
+        '--help-all[Show all help options]' \
+        '--user[Work on the user installation]' \
+        '--system[Work on the system-wide installation (default)]' \
+        '--installation[Work on a non-default system-wide installation]' \
+        '--reset[Remove existing overrides]' \
+        '--show[Show existing overrides]' \
+        {-v,--verbose}'[Show debug information, -vv for more detail]' \
+        '--ostree-verbose[Show OSTree debug information]' \
+        '--share[Share with host]' \
+        '--unshare[Unshare with host]' \
+        '--socket[Expose socket to app]' \
+        '--nosocket[Don'\''t expose socket to app]' \
+        '--device[Expose device to app]' \
+        '--nodevice[Don'\''t expose device to app]' \
+        '--allow[Allow feature]' \
+        '--disallow[Don'\''t allow feature]' \
+        '--filesystem[Expose filesystem to app (:ro for read-only)]':file:_files \
+        '--nofilesystem[Don'\''t expose filesystem to app]':file:_files \
+        '--env[Set environment variable]' \
+        '--env-fd[Read environment variables in env -0 format from FD]' \
+        '--unset-env[Remove variable from environment]' \
+        '--own-name[Allow app to own name on the session bus]' \
+        '--talk-name[Allow app to talk to name on the session bus]' \
+        '--no-talk-name[Don'\''t allow app to talk to name on the session bus]' \
+        '--system-own-name[Allow app to own name on the system bus]' \
+        '--system-talk-name[Allow app to talk to name on the system bus]' \
+        '--system-no-talk-name[Don'\''t allow app to talk to name on the system bus]' \
+        '--add-policy[Add generic policy option]' \
+        '--remove-policy[Remove generic policy option]' \
+        '--persist[Persist home directory subpath]':file:_files \
+        "*: :_files"
+
+}
+
+function _flatpak_make-current {
+    _arguments \
+        {-h,--help}'[Show help options]' \
+        '--user[Work on the user installation]' \
+        '--system[Work on the system-wide installation (default)]' \
+        '--installation[Work on a non-default system-wide installation]' \
+        '--arch[Arch to make current for]' \
+        {-v,--verbose}'[Show debug information, -vv for more detail]' \
+        '--ostree-verbose[Show OSTree debug information]' \
+        "*: :_files"
+
+}
+
+function _flatpak_enter {
+    _arguments \
+        {-h,--help}'[Show help options]' \
+        {-v,--verbose}'[Show debug information, -vv for more detail]' \
+        '--ostree-verbose[Show OSTree debug information]' \
+        "*: :_files"
+
+}
+
+function _flatpak_ps {
+    _arguments \
+        {-h,--help}'[Show help options]' \
+        {-v,--verbose}'[Show debug information, -vv for more detail]' \
+        '--ostree-verbose[Show OSTree debug information]' \
+        "*: :_files"
+
+}
+
+function _flatpak_kill {
+    _arguments \
+        {-h,--help}'[Show help options]' \
+        {-v,--verbose}'[Show debug information, -vv for more detail]' \
+        '--ostree-verbose[Show OSTree debug information]' \
+        "*: :_files"
+
+}
+
+function _flatpak_documents {
+    _arguments \
+        {-h,--help}'[Show help options]' \
+        {-v,--verbose}'[Show debug information, -vv for more detail]' \
+        '--ostree-verbose[Show OSTree debug information]' \
+        "*: :_files"
+
+}
+
+function _flatpak_document-export {
+    _arguments \
+        {-h,--help}'[Show help options]' \
+        {-u,--unique}'[Create a unique document reference]' \
+        {-t,--transient}'[Make the document transient for the current session]' \
+        {-n,--noexist}'[Don'\''t require the file to exist already]' \
+        {-r,--allow-read}'[Give the app read permissions]' \
+        {-w,--allow-write}'[Give the app write permissions]' \
+        {-d,--allow-delete}'[Give the app delete permissions]' \
+        {-g,--allow-grant-permission}'[Give the app permissions to grant further permissions]' \
+        '--forbid-read[Revoke read permissions of the app]' \
+        '--forbid-write[Revoke write permissions of the app]' \
+        '--forbid-delete[Revoke delete permissions of the app]' \
+        '--forbid-grant-permission[Revoke the permission to grant further permissions]' \
+        {-a,--app}'[Add permissions for this app]' \
+        {-v,--verbose}'[Show debug information, -vv for more detail]' \
+        '--ostree-verbose[Show OSTree debug information]' \
+        "*: :_files"
+
+}
+
+function _flatpak_document-unexport {
+    _arguments \
+        {-h,--help}'[Show help options]' \
+        {-v,--verbose}'[Show debug information, -vv for more detail]' \
+        '--ostree-verbose[Show OSTree debug information]' \
+        "*: :_files"
+
+}
+
+function _flatpak_document-info {
+    _arguments \
+        {-h,--help}'[Show help options]' \
+        {-v,--verbose}'[Show debug information, -vv for more detail]' \
+        '--ostree-verbose[Show OSTree debug information]' \
+        "*: :_files"
+
+}
+
+function _flatpak_permissions {
+    _arguments \
+        {-h,--help}'[Show help options]' \
+        {-v,--verbose}'[Show debug information, -vv for more detail]' \
+        '--ostree-verbose[Show OSTree debug information]' \
+        "*: :_files"
+
+}
+
+function _flatpak_permission-remove {
+    _arguments \
+        {-h,--help}'[Show help options]' \
+        {-v,--verbose}'[Show debug information, -vv for more detail]' \
+        '--ostree-verbose[Show OSTree debug information]' \
+        "*: :_files"
+
+}
+
+function _flatpak_permission-set {
+    _arguments \
+        {-h,--help}'[Show help options]' \
+        '--data[Associate DATA with the entry]' \
+        {-v,--verbose}'[Show debug information, -vv for more detail]' \
+        '--ostree-verbose[Show OSTree debug information]' \
+        "*: :_files"
+
+}
+
+function _flatpak_permission-show {
+    _arguments \
+        {-h,--help}'[Show help options]' \
+        {-v,--verbose}'[Show debug information, -vv for more detail]' \
+        '--ostree-verbose[Show OSTree debug information]' \
+        "*: :_files"
+
+}
+
+function _flatpak_permission-reset {
+    _arguments \
+        {-h,--help}'[Show help options]' \
+        '--all[Reset all permissions]' \
+        {-v,--verbose}'[Show debug information, -vv for more detail]' \
+        '--ostree-verbose[Show OSTree debug information]' \
+        "*: :_files"
+
+}
+
+function _flatpak_remotes {
+    _arguments \
+        {-h,--help}'[Show help options]' \
+        '--user[Work on the user installation]' \
+        '--system[Work on the system-wide installation (default)]' \
+        '--installation[Work on a non-default system-wide installation]' \
+        {-d,--show-details}'[Show remote details]' \
+        '--show-disabled[Show disabled remotes]' \
+        {-v,--verbose}'[Show debug information, -vv for more detail]' \
+        '--ostree-verbose[Show OSTree debug information]' \
+        "*: :_files"
+
+}
+
+function _flatpak_remote-add {
+    _arguments \
+        {-h,--help}'[Show help options]' \
+        '--no-gpg-verify[Disable GPG verification]' \
+        '--no-enumerate[Mark the remote as don'\''t enumerate]' \
+        '--no-use-for-deps[Mark the remote as don'\''t use for deps]' \
+        '--prio[Set priority (default 1, higher is more prioritized)]' \
+        '--subset[The named subset to use for this remote]' \
+        '--title[A nice name to use for this remote]' \
+        '--comment[A one-line comment for this remote]' \
+        '--description[A full-paragraph description for this remote]' \
+        '--homepage[URL for a website for this remote]' \
+        '--icon[URL for an icon for this remote]' \
+        '--default-branch[Default branch to use for this remote]' \
+        '--collection-id[Collection ID]' \
+        '--gpg-import[Import GPG key from FILE (- for stdin)]':file:_files \
+        '--filter[Set path to local filter FILE]':file:_files \
+        '--disable[Disable the remote]' \
+        '--authenticator-name[Name of authenticator]' \
+        '--authenticator-option[Authenticator option]' \
+        '--authenticator-install[Autoinstall authenticator]' \
+        '--no-authenticator-install[Don'\''t autoinstall authenticator]' \
+        '--no-follow_redirect[Don'\''t follow the redirect set in the summary file]' \
+        '--user[Work on the user installation]' \
+        '--system[Work on the system-wide installation (default)]' \
+        '--installation[Work on a non-default system-wide installation]' \
+        '--if-not-exists[Do nothing if the provided remote exists]' \
+        '--from[LOCATION specifies a configuration file, not the repo location]' \
+        {-v,--verbose}'[Show debug information, -vv for more detail]' \
+        '--ostree-verbose[Show OSTree debug information]' \
+        "*: :_files"
+
+}
+
+function _flatpak_remote-modify {
+    _arguments \
+        {-h,--help}'[Show help options]' \
+        '--no-gpg-verify[Disable GPG verification]' \
+        '--no-enumerate[Mark the remote as don'\''t enumerate]' \
+        '--no-use-for-deps[Mark the remote as don'\''t use for deps]' \
+        '--prio[Set priority (default 1, higher is more prioritized)]' \
+        '--title[A nice name to use for this remote]' \
+        '--comment[A one-line comment for this remote]' \
+        '--description[A full-paragraph description for this remote]' \
+        '--homepage[URL for a website for this remote]' \
+        '--icon[URL for an icon for this remote]' \
+        '--default-branch[Default branch to use for this remote]' \
+        '--collection-id[Collection ID]' \
+        '--gpg-import[Import GPG key from FILE (- for stdin)]':file:_files \
+        '--no-filter[Disable local filter]' \
+        '--filter[Set path to local filter FILE]':file:_files \
+        '--disable[Disable the remote]' \
+        '--authenticator-name[Name of authenticator]' \
+        '--authenticator-option[Authenticator options]' \
+        '--authenticator-install[Autoinstall authenticator]' \
+        '--no-authenticator-install[Don'\''t autoinstall authenticator]' \
+        '--follow-redirect[Follow the redirect set in the summary file]' \
+        '--no-follow-redirect[Don'\''t follow the redirect set in the summary file]' \
+        '--user[Work on the user installation]' \
+        '--system[Work on the system-wide installation (default)]' \
+        '--installation[Work on a non-default system-wide installation]' \
+        '--gpg-verify[Enable GPG verification]' \
+        '--enumerate[Mark the remote as enumerate]' \
+        '--use-for-deps[Mark the remote as used for dependencies]' \
+        '--url[Set a new url]' \
+        '--subset[Set a new subset to use]' \
+        '--enable[Enable the remote]' \
+        '--update-metadata[Update extra metadata from the summary file]' \
+        {-v,--verbose}'[Show debug information, -vv for more detail]' \
+        '--ostree-verbose[Show OSTree debug information]' \
+        "*: :_files"
+
+}
+
+function _flatpak_remote-delete {
+    _arguments \
+        {-h,--help}'[Show help options]' \
+        '--force[Remove remote even if in use]' \
+        '--user[Work on the user installation]' \
+        '--system[Work on the system-wide installation (default)]' \
+        '--installation[Work on a non-default system-wide installation]' \
+        {-v,--verbose}'[Show debug information, -vv for more detail]' \
+        '--ostree-verbose[Show OSTree debug information]' \
+        "*: :_files"
+
+}
+
+function _flatpak_remote-ls {
+    _arguments \
+        {-h,--help}'[Show help options]' \
+        '--user[Work on the user installation]' \
+        '--system[Work on the system-wide installation (default)]' \
+        '--installation[Work on a non-default system-wide installation]' \
+        {-d,--show-details}'[Show arches and branches]' \
+        '--runtime[Show only runtimes]' \
+        '--app[Show only apps]' \
+        '--updates[Show only those where updates are available]' \
+        '--arch[Limit to this arch (* for all)]' \
+        {-a,--all}'[List all refs (including locale/debug)]' \
+        '--app-runtime[List all applications using RUNTIME]' \
+        '--cached[Use local caches even if they are stale]' \
+        '--sideloaded[Only list refs available as sideloads]' \
+        {-v,--verbose}'[Show debug information, -vv for more detail]' \
+        '--ostree-verbose[Show OSTree debug information]' \
+        "*: :_files"
+
+}
+
+function _flatpak_remote-info {
+    _arguments \
+        {-h,--help}'[Show help options]' \
+        '--user[Work on the user installation]' \
+        '--system[Work on the system-wide installation (default)]' \
+        '--installation[Work on a non-default system-wide installation]' \
+        '--arch[Arch to install for]' \
+        '--commit[Commit to show info for]' \
+        '--runtime[Look for runtime with the specified name]' \
+        '--app[Look for app with the specified name]' \
+        '--log[Display log]' \
+        {-r,--show-ref}'[Show ref]' \
+        {-c,--show-commit}'[Show commit]' \
+        {-p,--show-parent}'[Show parent]' \
+        {-m,--show-metadata}'[Show metadata]' \
+        '--show-runtime[Show runtime]' \
+        '--show-sdk[Show sdk]' \
+        '--cached[Use local caches even if they are stale]' \
+        '--sideloaded[Only list refs available as sideloads]' \
+        {-v,--verbose}'[Show debug information, -vv for more detail]' \
+        '--ostree-verbose[Show OSTree debug information]' \
+        "*: :_files"
+
+}
+
+function _flatpak_build-init {
+    _arguments \
+        {-h,--help}'[Show help options]' \
+        '--arch[Arch to use]' \
+        {-v,--var}'[Initialize var from named runtime]' \
+        '--base[Initialize apps from named app]' \
+        '--base-version[Specify version for --base]' \
+        '--base-extension[Include this base extension]' \
+        '--extension-tag[Extension tag to use if building extension]' \
+        {-w,--writable-sdk}'[Initialize /usr with a writable copy of the sdk]' \
+        '--type[Specify the build type (app, runtime, extension)]' \
+        '--tag[Add a tag]' \
+        '--sdk-extension[Include this sdk extension in /usr]' \
+        '--extension[Add extension point info]' \
+        '--sdk-dir[Where to store sdk (defaults to '\''usr'\'')]':file:_files \
+        '--update[Re-initialize the sdk/var]' \
+        '--verbose[Show debug information, -vv for more detail]' \
+        '--ostree-verbose[Show OSTree debug information]' \
+        "*: :_files"
+
+}
+
+function _flatpak_build {
+    _arguments \
+        {-h,--help}'[Show help options]' \
+        '--help-all[Show all help options]' \
+        {-r,--runtime}'[Use Platform runtime rather than Sdk]' \
+        '--readonly[Make destination readonly]' \
+        '--bind-mount[Add bind mount]' \
+        '--build-dir[Start build in this directory]':file:_files \
+        '--sdk-dir[Where to look for custom sdk dir (defaults to '\''usr'\'')]':file:_files \
+        '--metadata[Use alternative file for the metadata]':file:_files \
+        {-p,--die-with-parent}'[Kill processes when the parent process dies]' \
+        '--with-appdir[Export application homedir directory to build]' \
+        '--log-session-bus[Log session bus calls]' \
+        '--log-system-bus[Log system bus calls]' \
+        {-v,--verbose}'[Show debug information, -vv for more detail]' \
+        '--ostree-verbose[Show OSTree debug information]' \
+        '--share[Share with host]' \
+        '--unshare[Unshare with host]' \
+        '--socket[Expose socket to app]' \
+        '--nosocket[Don'\''t expose socket to app]' \
+        '--device[Expose device to app]' \
+        '--nodevice[Don'\''t expose device to app]' \
+        '--allow[Allow feature]' \
+        '--disallow[Don'\''t allow feature]' \
+        '--filesystem[Expose filesystem to app (:ro for read-only)]':file:_files \
+        '--nofilesystem[Don'\''t expose filesystem to app]':file:_files \
+        '--env[Set environment variable]' \
+        '--env-fd[Read environment variables in env -0 format from FD]' \
+        '--unset-env[Remove variable from environment]' \
+        '--own-name[Allow app to own name on the session bus]' \
+        '--talk-name[Allow app to talk to name on the session bus]' \
+        '--no-talk-name[Don'\''t allow app to talk to name on the session bus]' \
+        '--system-own-name[Allow app to own name on the system bus]' \
+        '--system-talk-name[Allow app to talk to name on the system bus]' \
+        '--system-no-talk-name[Don'\''t allow app to talk to name on the system bus]' \
+        '--add-policy[Add generic policy option]' \
+        '--remove-policy[Remove generic policy option]' \
+        '--persist[Persist home directory subpath]':file:_files \
+        "*: :_files"
+
+}
+
+function _flatpak_build-finish {
+    _arguments \
+        {-h,--help}'[Show help options]' \
+        '--help-all[Show all help options]' \
+        '--command[Command to set]' \
+        '--require-version[Flatpak version to require]' \
+        '--no-exports[Don'\''t process exports]' \
+        '--extra-data[Extra data info]' \
+        '--extension[Add extension point info]' \
+        '--remove-extension[Remove extension point info]' \
+        '--extension-priority[Set extension priority (only for extensions)]' \
+        '--sdk[Change the sdk used for the app]' \
+        '--runtime[Change the runtime used for the app]' \
+        '--metadata[Set generic metadata option]' \
+        '--no-inherit-permissions[Don'\''t inherit permissions from runtime]' \
+        {-v,--verbose}'[Show debug information, -vv for more detail]' \
+        '--ostree-verbose[Show OSTree debug information]' \
+        '--share[Share with host]' \
+        '--unshare[Unshare with host]' \
+        '--socket[Expose socket to app]' \
+        '--nosocket[Don'\''t expose socket to app]' \
+        '--device[Expose device to app]' \
+        '--nodevice[Don'\''t expose device to app]' \
+        '--allow[Allow feature]' \
+        '--disallow[Don'\''t allow feature]' \
+        '--filesystem[Expose filesystem to app (:ro for read-only)]':file:_files \
+        '--nofilesystem[Don'\''t expose filesystem to app]':file:_files \
+        '--env[Set environment variable]' \
+        '--env-fd[Read environment variables in env -0 format from FD]' \
+        '--unset-env[Remove variable from environment]' \
+        '--own-name[Allow app to own name on the session bus]' \
+        '--talk-name[Allow app to talk to name on the session bus]' \
+        '--no-talk-name[Don'\''t allow app to talk to name on the session bus]' \
+        '--system-own-name[Allow app to own name on the system bus]' \
+        '--system-talk-name[Allow app to talk to name on the system bus]' \
+        '--system-no-talk-name[Don'\''t allow app to talk to name on the system bus]' \
+        '--add-policy[Add generic policy option]' \
+        '--remove-policy[Remove generic policy option]' \
+        '--persist[Persist home directory subpath]':file:_files \
+        "*: :_files"
+
+}
+
+function _flatpak_build-export {
+    _arguments \
+        {-h,--help}'[Show help options]' \
+        {-s,--subject}'[One line subject]' \
+        {-b,--body}'[Full description]' \
+        '--arch[Architecture to export for (must be host compatible)]' \
+        {-r,--runtime}'[Commit runtime (/usr), not /app]' \
+        '--update-appstream[Update the appstream branch]' \
+        '--no-update-summary[Don'\''t update the summary]' \
+        '--files[Use alternative directory for the files]':file:_files \
+        '--metadata[Use alternative file for the metadata]':file:_files \
+        '--gpg-sign[GPG Key ID to sign the commit with]' \
+        '--exclude[Files to exclude]' \
+        '--include[Excluded files to include]' \
+        '--gpg-homedir[GPG Homedir to use when looking for keyrings]':file:_files \
+        '--subset[Add to a named subset]' \
+        '--end-of-life[Mark build as end-of-life]' \
+        '--end-of-life-rebase[Mark build as end-of-life, to be replaced with the given ID]' \
+        '--token-type[Set type of token needed to install this commit]' \
+        '--timestamp[Override the timestamp of the commit]' \
+        '--collection-id[Collection ID]' \
+        '--disable-fsync[Do not invoke fsync()]' \
+        '--disable-sandbox[Do not sandbox icon validator]' \
+        '--no-summary-index[Don'\''t generate a summary index]' \
+        {-v,--verbose}'[Show debug information, -vv for more detail]' \
+        '--ostree-verbose[Show OSTree debug information]' \
+        "*: :_files"
+
+}
+
+function _flatpak_build-bundle {
+    _arguments \
+        {-h,--help}'[Show help options]' \
+        '--runtime[Export runtime instead of app]' \
+        '--arch[Arch to bundle for]' \
+        '--repo-url[Url for repo]' \
+        '--runtime-repo[Url for runtime flatpakrepo file]' \
+        '--gpg-keys[Add GPG key from FILE (- for stdin)]':file:_files \
+        '--gpg-sign[GPG Key ID to sign the OCI image with]' \
+        '--gpg-homedir[GPG Homedir to use when looking for keyrings]':file:_files \
+        '--from-commit[OSTree commit to create a delta bundle from]' \
+        '--oci[Export oci image instead of flatpak bundle]' \
+        {-v,--verbose}'[Show debug information, -vv for more detail]' \
+        '--ostree-verbose[Show OSTree debug information]' \
+        "*: :_files"
+
+}
+
+function _flatpak_build-import-bundle {
+    _arguments \
+        {-h,--help}'[Show help options]' \
+        '--ref[Override the ref used for the imported bundle]' \
+        '--oci[Import oci image instead of flatpak bundle]' \
+        '--gpg-sign[GPG Key ID to sign the commit with]' \
+        '--gpg-homedir[GPG Homedir to use when looking for keyrings]':file:_files \
+        '--update-appstream[Update the appstream branch]' \
+        '--no-update-summary[Don'\''t update the summary]' \
+        '--no-summary-index[Don'\''t generate a summary index]' \
+        {-v,--verbose}'[Show debug information, -vv for more detail]' \
+        '--ostree-verbose[Show OSTree debug information]' \
+        "*: :_files"
+
+}
+
+function _flatpak_build-sign {
+    _arguments \
+        {-h,--help}'[Show help options]' \
+        '--arch[Arch to install for]' \
+        '--runtime[Look for runtime with the specified name]' \
+        '--gpg-sign[GPG Key ID to sign the commit with]' \
+        '--gpg-homedir[GPG Homedir to use when looking for keyrings]':file:_files \
+        {-v,--verbose}'[Show debug information, -vv for more detail]' \
+        '--ostree-verbose[Show OSTree debug information]' \
+        "*: :_files"
+
+}
+
+function _flatpak_build-update-repo {
+    _arguments \
+        {-h,--help}'[Show help options]' \
+        '--redirect-url[Redirect this repo to a new URL]' \
+        '--title[A nice name to use for this repository]' \
+        '--comment[A one-line comment for this repository]' \
+        '--description[A full-paragraph description for this repository]' \
+        '--homepage[URL for a website for this repository]' \
+        '--icon[URL for an icon for this repository]' \
+        '--default-branch[Default branch to use for this repository]' \
+        '--collection-id[Collection ID]' \
+        '--deploy-sideload-collection-id[Permanently deploy collection ID to client remote configurations, only for sideload support]' \
+        '--deploy-collection-id[Permanently deploy collection ID to client remote configurations]' \
+        '--authenticator-name[Name of authenticator for this repository]' \
+        '--authenticator-install[Autoinstall authenticator for this repository]' \
+        '--no-authenticator-install[Don'\''t autoinstall authenticator for this repository]' \
+        '--authenticator-option[Authenticator option]' \
+        '--gpg-import[Import new default GPG public key from FILE]':file:_files \
+        '--gpg-sign[GPG Key ID to sign the summary with]' \
+        '--gpg-homedir[GPG Homedir to use when looking for keyrings]':file:_files \
+        '--generate-static-deltas[Generate delta files]' \
+        '--no-update-summary[Don'\''t update the summary]' \
+        '--no-update-appstream[Don'\''t update the appstream branch]' \
+        '--static-delta-jobs[Max parallel jobs when creating deltas (default: NUMCPUs)]' \
+        '--static-delta-ignore-ref[Don'\''t create deltas matching refs]' \
+        '--prune[Prune unused objects]' \
+        '--prune-dry-run[Prune but don'\''t actually remove anything]' \
+        '--prune-depth[Only traverse DEPTH parents for each commit (default: -1=infinite)]' \
+        '--no-summary-index[Don'\''t generate a summary index]' \
+        {-v,--verbose}'[Show debug information, -vv for more detail]' \
+        '--ostree-verbose[Show OSTree debug information]' \
+        "*: :_files"
+
+}
+
+function _flatpak_build-commit-from {
+    _arguments \
+        {-h,--help}'[Show help options]' \
+        '--src-repo[Source repo dir]' \
+        '--src-ref[Source repo ref]' \
+        '--untrusted[Do not trust SRC-REPO]' \
+        '--force[Always commit, even if same content]' \
+        '--extra-collection-id[Add an extra collection id ref and binding]' \
+        '--subset[Add to a named subset]' \
+        {-s,--subject}'[One line subject]' \
+        {-b,--body}'[Full description]' \
+        '--update-appstream[Update the appstream branch]' \
+        '--no-update-summary[Don'\''t update the summary]' \
+        '--gpg-sign[GPG Key ID to sign the commit with]' \
+        '--gpg-homedir[GPG Homedir to use when looking for keyrings]':file:_files \
+        '--end-of-life[Mark build as end-of-life]' \
+        '--end-of-life-rebase[Mark refs matching the OLDID prefix as end-of-life, to be replaced with the given NEWID]' \
+        '--token-type[Set type of token needed to install this commit]' \
+        '--timestamp[Override the timestamp of the commit (NOW for current time)]' \
+        '--disable-fsync[Do not invoke fsync()]' \
+        '--no-summary-index[Don'\''t generate a summary index]' \
+        {-v,--verbose}'[Show debug information, -vv for more detail]' \
+        '--ostree-verbose[Show OSTree debug information]' \
+        "*: :_files"
+
+}
+
+function _flatpak_repo {
+    _arguments \
+        {-h,--help}'[Show help options]' \
+        '--info[Print general information about the repository]' \
+        '--branches[List the branches in the repository]' \
+        '--metadata[Print metadata for a branch]' \
+        '--commits[Show commits for a branch]' \
+        '--subsets[Print information about the repo subsets]' \
+        '--subset[Limit information to subsets with this prefix]' \
+        {-v,--verbose}'[Show debug information, -vv for more detail]' \
+        '--ostree-verbose[Show OSTree debug information]' \
+        "*: :_files"
+
+}
+
+_flatpak "$@"
+

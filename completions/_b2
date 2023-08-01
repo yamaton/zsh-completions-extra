@@ -1,0 +1,644 @@
+#compdef b2
+
+# Auto-generated with h2o
+
+
+function _b2 {
+    local line state
+
+    function _commands {
+        local -a commands
+        commands=(
+            'authorize-account:Prompts for Backblaze applicationKeyId and applicationKey (unless they are given on the command line).'
+            'cancel-all-unfinished-large-files:Lists all large files that have been started but not finished and cancels them. Any parts that have been uploaded will be deleted.'
+            'cancel-large-file:Cancels a large file upload. Used to undo a start-large-file.'
+            'clear-account:Erases everything in local cache.'
+            'copy-file-by-id:Copy a file version to the given bucket (server-side, not via download+upload).'
+            'create-bucket:Creates a new bucket. Prints the ID of the bucket created.'
+            'create-key:Creates a new application key. Prints the application key information.'
+            'delete-bucket:Deletes the bucket with the given name.'
+            'delete-file-version:Permanently and irrevocably deletes one version of a file.'
+            'delete-key:Deletes the specified application key by its ID.'
+            'download-file-by-id:Downloads the given file, and stores it in the given local file.'
+            'download-file-by-name:Downloads the given file, and stores it in the given local file.'
+            'get-account-info:Shows the account ID, key, auth token, URLs, and what capabilities the current application keys has.'
+            'get-bucket:Prints all of the information about the bucket, including bucket info, CORS rules and lifecycle rules.'
+            'get-file-info:Prints all of the information about the file, but not its contents.'
+            'get-download-auth:Prints an authorization token that is valid only for downloading files from the given bucket.'
+            'get-download-url-with-auth:Prints a URL to download the given file.'
+            'hide-file:Uploads a new, hidden, version of the given file.'
+            'list-buckets:Lists all of the buckets in the current account.'
+            'list-keys:Lists the application keys for the current account.'
+            'list-parts:Lists all of the parts that have been uploaded for the given large file, which must be a file that was started but not finished or canceled.'
+            'list-unfinished-large-files:Lists all of the large files in the bucket that were started, but not finished or canceled.'
+            'ls:Using the file naming convention that / separates folder names from their contents, returns a list of the files and folders in a given folder. If no folder name is given, lists all files at the top level.'
+            'rm:Removes a "folder" or a set of files matching a pattern. **Use with caution.**'
+            'make-url:Prints an URL that can be used to download the given file, if it is public.'
+            'make-friendly-url:Prints a short URL that can be used to download the given file, if it is public.'
+            'sync:Copies multiple files from source to destination. Optionally deletes or hides destination files that the source does not have.'
+            'update-bucket:Updates the bucketType of an existing bucket. Prints the ID of the bucket updated.'
+            'upload-file:Uploads one file to the given bucket. Uploads the contents of the local file, and assigns the given name to the B2 file, possibly setting options like server-side encryption and retention.'
+            'update-file-legal-hold:Only works in buckets with fileLockEnabled=true.'
+            'update-file-retention:Only works in buckets with fileLockEnabled=true. Providing a retentionMode other than none requires providing retainUntil, which has to be a future timestamp in the form of an integer representing milliseconds since epoch.'
+            'replication-setup:Sets up replication between two buckets (potentially from different accounts), creating and replacing keys if necessary.'
+            'replication-delete:Deletes a replication rule'
+            'replication-pause:Pauses a replication rule'
+            'replication-unpause:Unpauses a replication rule'
+            'replication-status:Inspects files in only source or both source and destination buckets (potentially from different accounts) and provides detailed replication statistics.'
+            'version:Prints the version number of this tool.'
+            'license:Prints the license of B2 Command line tool and all libraries shipped with it.'
+        )
+        _describe 'command' commands
+    }
+ 
+
+    _arguments -C \
+        {-h,--help}'[show this help message and exit]' \
+        ': :->cmd' \
+        '*:: :->subcmd'
+
+    case $state in
+    (cmd)
+        _commands
+        ;;
+    (subcmd)
+        case $line[1] in
+        (authorize-account)
+            _b2_authorize-account
+            ;;
+
+        (cancel-all-unfinished-large-files)
+            _b2_cancel-all-unfinished-large-files
+            ;;
+
+        (cancel-large-file)
+            _b2_cancel-large-file
+            ;;
+
+        (clear-account)
+            _b2_clear-account
+            ;;
+
+        (copy-file-by-id)
+            _b2_copy-file-by-id
+            ;;
+
+        (create-bucket)
+            _b2_create-bucket
+            ;;
+
+        (create-key)
+            _b2_create-key
+            ;;
+
+        (delete-bucket)
+            _b2_delete-bucket
+            ;;
+
+        (delete-file-version)
+            _b2_delete-file-version
+            ;;
+
+        (delete-key)
+            _b2_delete-key
+            ;;
+
+        (download-file-by-id)
+            _b2_download-file-by-id
+            ;;
+
+        (download-file-by-name)
+            _b2_download-file-by-name
+            ;;
+
+        (get-account-info)
+            _b2_get-account-info
+            ;;
+
+        (get-bucket)
+            _b2_get-bucket
+            ;;
+
+        (get-file-info)
+            _b2_get-file-info
+            ;;
+
+        (get-download-auth)
+            _b2_get-download-auth
+            ;;
+
+        (get-download-url-with-auth)
+            _b2_get-download-url-with-auth
+            ;;
+
+        (hide-file)
+            _b2_hide-file
+            ;;
+
+        (list-buckets)
+            _b2_list-buckets
+            ;;
+
+        (list-keys)
+            _b2_list-keys
+            ;;
+
+        (list-parts)
+            _b2_list-parts
+            ;;
+
+        (list-unfinished-large-files)
+            _b2_list-unfinished-large-files
+            ;;
+
+        (ls)
+            _b2_ls
+            ;;
+
+        (rm)
+            _b2_rm
+            ;;
+
+        (make-url)
+            _b2_make-url
+            ;;
+
+        (make-friendly-url)
+            _b2_make-friendly-url
+            ;;
+
+        (sync)
+            _b2_sync
+            ;;
+
+        (update-bucket)
+            _b2_update-bucket
+            ;;
+
+        (upload-file)
+            _b2_upload-file
+            ;;
+
+        (update-file-legal-hold)
+            _b2_update-file-legal-hold
+            ;;
+
+        (update-file-retention)
+            _b2_update-file-retention
+            ;;
+
+        (replication-setup)
+            _b2_replication-setup
+            ;;
+
+        (replication-delete)
+            _b2_replication-delete
+            ;;
+
+        (replication-pause)
+            _b2_replication-pause
+            ;;
+
+        (replication-unpause)
+            _b2_replication-unpause
+            ;;
+
+        (replication-status)
+            _b2_replication-status
+            ;;
+
+        (version)
+            _b2_version
+            ;;
+
+        (license)
+            _b2_license
+            ;;
+
+        esac
+        ;;
+     esac
+
+}
+
+function _b2_authorize-account {
+    _arguments \
+        {-h,--help}'[show this help message and exit]' \
+        '--profile[set profile]':file:_files \
+        "*: :_files"
+
+}
+
+function _b2_cancel-all-unfinished-large-files {
+    _arguments \
+        {-h,--help}'[show this help message and exit]' \
+        '--profile[set profile]':file:_files \
+        "*: :_files"
+
+}
+
+function _b2_cancel-large-file {
+    _arguments \
+        {-h,--help}'[show this help message and exit]' \
+        '--profile[set profile]':file:_files \
+        "*: :_files"
+
+}
+
+function _b2_clear-account {
+    _arguments \
+        {-h,--help}'[show this help message and exit]' \
+        '--profile[set profile]':file:_files \
+        "*: :_files"
+
+}
+
+function _b2_copy-file-by-id {
+    _arguments \
+        {-h,--help}'[show this help message and exit]' \
+        '--profile[set profile]':file:_files \
+        '--fetchMetadata[]' \
+        '--contentType[]' \
+        '--range[]' \
+        '--info[]' \
+        '--noInfo[]' \
+        '--destinationServerSideEncryption[]' \
+        '--destinationServerSideEncryptionAlgorithm[]' \
+        '--sourceServerSideEncryption[]' \
+        '--sourceServerSideEncryptionAlgorithm[]' \
+        '--fileRetentionMode[]' \
+        '--retainUntil[]' \
+        '--legalHold[]' \
+        "*: :_files"
+
+}
+
+function _b2_create-bucket {
+    _arguments \
+        {-h,--help}'[show this help message and exit]' \
+        '--profile[set profile]':file:_files \
+        '--bucketInfo[]' \
+        '--corsRules[]' \
+        '--lifecycleRules[]' \
+        '--fileLockEnabled[If given, the bucket will have the file lock mechanism enabled. This parameter cannot be changed after bucket creation.]' \
+        '--replication[]' \
+        '--defaultServerSideEncryption[]' \
+        '--defaultServerSideEncryptionAlgorithm[]' \
+        "*: :_files"
+
+}
+
+function _b2_create-key {
+    _arguments \
+        {-h,--help}'[show this help message and exit]' \
+        '--profile[set profile]':file:_files \
+        '--bucket[]' \
+        '--namePrefix[]' \
+        '--duration[]' \
+        '--allCapabilities[]' \
+        "*: :_files"
+
+}
+
+function _b2_delete-bucket {
+    _arguments \
+        {-h,--help}'[show this help message and exit]' \
+        '--profile[set profile]':file:_files \
+        "*: :_files"
+
+}
+
+function _b2_delete-file-version {
+    _arguments \
+        {-h,--help}'[show this help message and exit]' \
+        '--profile[set profile]':file:_files \
+        "*: :_files"
+
+}
+
+function _b2_delete-key {
+    _arguments \
+        {-h,--help}'[show this help message and exit]' \
+        '--profile[set profile]':file:_files \
+        "*: :_files"
+
+}
+
+function _b2_download-file-by-id {
+    _arguments \
+        {-h,--help}'[show this help message and exit]' \
+        '--profile[set profile]':file:_files \
+        '--noProgress[]' \
+        '--threads[]' \
+        '--sourceServerSideEncryption[]' \
+        '--sourceServerSideEncryptionAlgorithm[]' \
+        '--write-buffer-size[]' \
+        '--skip-hash-verification[]' \
+        '--max-download-streams-per-file[]':file:_files \
+        "*: :_files"
+
+}
+
+function _b2_download-file-by-name {
+    _arguments \
+        {-h,--help}'[show this help message and exit]' \
+        '--profile[set profile]':file:_files \
+        '--noProgress[]' \
+        '--threads[]' \
+        '--sourceServerSideEncryption[]' \
+        '--sourceServerSideEncryptionAlgorithm[]' \
+        '--write-buffer-size[]' \
+        '--skip-hash-verification[]' \
+        '--max-download-streams-per-file[]':file:_files \
+        "*: :_files"
+
+}
+
+function _b2_get-account-info {
+    _arguments \
+        {-h,--help}'[show this help message and exit]' \
+        '--profile[set profile]':file:_files \
+        "*: :_files"
+
+}
+
+function _b2_get-bucket {
+    _arguments \
+        {-h,--help}'[show this help message and exit]' \
+        '--profile[set profile]':file:_files \
+        '--showSize[Show file size]' \
+        "*: :_files"
+
+}
+
+function _b2_get-file-info {
+    _arguments \
+        {-h,--help}'[show this help message and exit]' \
+        "*: :_files"
+
+}
+
+function _b2_get-download-auth {
+    _arguments \
+        {-h,--help}'[show this help message and exit]' \
+        '--profile[set profile]':file:_files \
+        '--prefix[set prefix]' \
+        '--duration[set duration]' \
+        "*: :_files"
+
+}
+
+function _b2_get-download-url-with-auth {
+    _arguments \
+        {-h,--help}'[show this help message and exit]' \
+        '--profile[set profile]':file:_files \
+        '--duration[set duration]' \
+        "*: :_files"
+
+}
+
+function _b2_hide-file {
+    _arguments \
+        {-h,--help}'[show this help message and exit]' \
+        '--profile[set profile]':file:_files \
+        "*: :_files"
+
+}
+
+function _b2_list-buckets {
+    _arguments \
+        {-h,--help}'[show this help message and exit]' \
+        '--profile[set profile]':file:_files \
+        '--json[Get outputs as JSON]' \
+        "*: :_files"
+
+}
+
+function _b2_list-keys {
+    _arguments \
+        {-h,--help}'[show this help message and exit]' \
+        '--profile[set profile]':file:_files \
+        '--long[Get detailed outputs]' \
+        "*: :_files"
+
+}
+
+function _b2_list-parts {
+    _arguments \
+        {-h,--help}'[show this help message and exit]' \
+        "*: :_files"
+
+}
+
+function _b2_list-unfinished-large-files {
+    _arguments \
+        {-h,--help}'[show this help message and exit]' \
+        '--profile[set profile]':file:_files \
+        "*: :_files"
+
+}
+
+function _b2_ls {
+    _arguments \
+        {-h,--help}'[show this help message and exit]' \
+        '--profile[set profile]':file:_files \
+        '--long[Get detailed outputs]' \
+        '--json[Get outputs as JSON]' \
+        '--replication[replication]' \
+        '--versions[Show versions]' \
+        '--recursive[Show outputs recursively]' \
+        '--withWildCard[Use wildcard]' \
+        "*: :_files"
+
+}
+
+function _b2_rm {
+    _arguments \
+        {-h,--help}'[show this help message and exit]' \
+        '--profile[set profile]':file:_files \
+        '--dryRun[Do not really execute]' \
+        '--threads[Set number of threads]' \
+        '--noProgress[Do not show progress]' \
+        '--failFast[Set fail-fast]' \
+        '--versions[Show versions]' \
+        '--recursive[Show outputs recursively]' \
+        '--withWildCard[Use wildcard]' \
+        "*: :_files"
+
+}
+
+function _b2_make-url {
+    _arguments \
+        {-h,--help}'[show this help message and exit]' \
+        '--profile[set profile]':file:_files \
+        "*: :_files"
+
+}
+
+function _b2_make-friendly-url {
+    _arguments \
+        {-h,--help}'[show this help message and exit]' \
+        '--profile[set profile]':file:_files \
+        "*: :_files"
+
+}
+
+function _b2_sync {
+    _arguments \
+        {-h,--help}'[show this help message and exit]' \
+        '--profile[set profile]':file:_files \
+        '--noProgress[Do not show progress]' \
+        '--dryRun[Do not really execute]' \
+        '--allowEmptySource[Allow empty source]' \
+        '--excludeAllSymlinks[Exclude all symlinks]' \
+        '--threads[Set number of threads]' \
+        '--syncThreads[Sync threads]' \
+        '--downloadThreads[Set download threads]' \
+        '--uploadThreads[Set upload threads]' \
+        '--compareVersions[Compare version]' \
+        '--compareThreshold[Comare thresholds]' \
+        '--excludeRegex[Exclude regular expressions]' \
+        '--includeRegex[Include regular expressions]' \
+        '--excludeDirRegex[Exclude regular expressions for directories]' \
+        '--excludeIfModifiedAfter[]' \
+        '--destinationServerSideEncryption[]' \
+        '--destinationServerSideEncryptionAlgorithm[]' \
+        '--sourceServerSideEncryption[]' \
+        '--sourceServerSideEncryptionAlgorithm[]' \
+        '--write-buffer-size[]' \
+        '--skip-hash-verification[]' \
+        '--max-download-streams-per-file[]':file:_files \
+        '--incrementalMode[]' \
+        '--skipNewer[]' \
+        '--replaceNewer[]' \
+        '--delete[]' \
+        '--keepDays[]' \
+        "*: :_files"
+
+}
+
+function _b2_update-bucket {
+    _arguments \
+        {-h,--help}'[show this help message and exit]' \
+        '--profile[set profile]':file:_files \
+        '--bucketInfo[]' \
+        '--corsRules[]' \
+        '--lifecycleRules[]' \
+        '--defaultRetentionMode[]' \
+        '--defaultRetentionPeriod[]' \
+        '--replication[]' \
+        '--fileLockEnabled[If given, the bucket will have the file lock mechanism enabled. This parameter cannot be changed back.]' \
+        '--defaultServerSideEncryption[]' \
+        '--defaultServerSideEncryptionAlgorithm[]' \
+        "*: :_files"
+
+}
+
+function _b2_upload-file {
+    _arguments \
+        {-h,--help}'[show this help message and exit]' \
+        '--profile[set profile]':file:_files \
+        '--noProgress[Do not show progress]' \
+        '--quiet[Minimize output]' \
+        '--contentType[]' \
+        '--minPartSize[]' \
+        '--sha1[]' \
+        '--threads[]' \
+        '--info[]' \
+        '--destinationServerSideEncryption[]' \
+        '--destinationServerSideEncryptionAlgorithm[]' \
+        '--legalHold[]' \
+        '--fileRetentionMode[]' \
+        '--retainUntil[]' \
+        '--incrementalMode[]' \
+        "*: :_files"
+
+}
+
+function _b2_update-file-legal-hold {
+    _arguments \
+        {-h,--help}'[show this help message and exit]' \
+        '--profile[set profile]':file:_files \
+        "*: :_files"
+
+}
+
+function _b2_update-file-retention {
+    _arguments \
+        {-h,--help}'[show this help message and exit]' \
+        '--profile[set profile]':file:_files \
+        '--retainUntil[Retain until the TIMESTAMP]' \
+        '--bypassGovernance[set bypass governance]' \
+        "*: :_files"
+
+}
+
+function _b2_replication-setup {
+    _arguments \
+        {-h,--help}'[show this help message and exit]' \
+        '--profile[set profile]':file:_files \
+        '--destination-profile[set destination profile]':file:_files \
+        '--name[name for the new replication rule on the source side]' \
+        '--priority[priority for the new replication rule on the source side \[1-2147483647\]. Will be set automatically when not specified.]' \
+        '--file-name-prefix[only replicate files starting with PREFIX]' \
+        '--include-existing-files[if given, also replicates files uploaded prior to creation of the replication rule]' \
+        "*: :_files"
+
+}
+
+function _b2_replication-delete {
+    _arguments \
+        {-h,--help}'[show this help message and exit]' \
+        '--profile[set profile]':file:_files \
+        "*: :_files"
+
+}
+
+function _b2_replication-pause {
+    _arguments \
+        {-h,--help}'[show this help message and exit]' \
+        '--profile[set profile]':file:_files \
+        "*: :_files"
+
+}
+
+function _b2_replication-unpause {
+    _arguments \
+        {-h,--help}'[show this help message and exit]' \
+        '--profile[set profile]':file:_files \
+        "*: :_files"
+
+}
+
+function _b2_replication-status {
+    _arguments \
+        {-h,--help}'[show this help message and exit]' \
+        '--profile[set profile]':file:_files \
+        '--rule[]' \
+        '--destination-profile[]':file:_files \
+        '--dont-scan-destination[]' \
+        '--output-format[]' \
+        '--noProgress[]' \
+        '--columns[]' \
+        "*: :_files"
+
+}
+
+function _b2_version {
+    _arguments \
+        {-h,--help}'[show this help message and exit]' \
+        '--profile[set profile]':file:_files \
+        "*: :_files"
+
+}
+
+function _b2_license {
+    _arguments \
+        {-h,--help}'[show this help message and exit]' \
+        '--profile[set profile]':file:_files \
+        "*: :_files"
+
+}
+
+_b2 "$@"
+

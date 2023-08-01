@@ -1,0 +1,17 @@
+#compdef chroot
+
+# Auto-generated with h2o
+
+function _chroot {
+    _arguments \
+        '--groups[specify supplementary groups as g1,g2,..,gN]' \
+        '--userspec[specify user and group (ID or name) to use]' \
+        '--skip-chdir[do not change working directory to '\''/'\'']' \
+        '--help[display this help and exit]' \
+        '--version[output version information and exit]' \
+        "*: :_files"
+
+}
+
+_chroot "$@"
+

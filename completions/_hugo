@@ -1,0 +1,1392 @@
+#compdef hugo
+
+# Auto-generated with h2o
+
+
+function _hugo {
+    local line state
+
+    function _commands {
+        local -a commands
+        commands=(
+            'completion:Generate the autocompletion script for the specified shell'
+            'config:Print the site configuration'
+            'convert:Convert your content to different formats'
+            'deploy:Deploy your site to a Cloud provider.'
+            'env:Print Hugo version and environment info'
+            'gen:A collection of several useful generators.'
+            'help:Help about any command'
+            'import:Import your site from others.'
+            'list:Listing out various types of content'
+            'mod:Various Hugo Modules helpers.'
+            'new:Create new content for your site'
+            'server:A high performance webserver'
+            'version:Print the version number of Hugo'
+        )
+        _describe 'command' commands
+    }
+ 
+
+    _arguments -C \
+        {-b,--baseURL}'[hostname (and path) to the root, e.g. https://spf13.com/]' \
+        {-D,--buildDrafts}'[include content marked as draft]' \
+        {-E,--buildExpired}'[include expired content]' \
+        {-F,--buildFuture}'[include content with publishdate in the future]' \
+        '--cacheDir[filesystem path to cache directory. Defaults: $TMPDIR/hugo_cache/]' \
+        '--cleanDestinationDir[remove files from destination not found in static directories]' \
+        '--clock[set the clock used by Hugo, e.g. --clock 2021-11-06T22:30:00.00+09:00]' \
+        '--config[config file (default is path/config.yaml|json|toml)]' \
+        '--configDir[config dir (default "config")]' \
+        {-c,--contentDir}'[filesystem path to content directory]' \
+        '--debug[debug output]' \
+        {-d,--destination}'[filesystem path to write files to]' \
+        '--disableKinds[disable different kind of pages (home, RSS etc.)]' \
+        '--enableGitInfo[add Git revision, date, author, and CODEOWNERS info to the pages]' \
+        {-e,--environment}'[build environment]' \
+        '--forceSyncStatic[copy all files when static is changed.]' \
+        '--gc[enable to run some cleanup tasks (remove unused cache files) after the build]' \
+        {-h,--help}'[help for hugo]' \
+        '--ignoreCache[ignores the cache directory]' \
+        '--ignoreVendorPaths[ignores any _vendor for module paths matching the given Glob pattern]' \
+        {-l,--layoutDir}'[filesystem path to layout directory]' \
+        '--log[enable Logging]' \
+        '--logFile[log File path (if set, logging enabled automatically)]' \
+        '--minify[minify any supported output format (HTML, XML etc.)]' \
+        '--noBuildLock[don'\''t create .hugo_build.lock file]' \
+        '--noChmod[don'\''t sync permission mode of files]' \
+        '--noTimes[don'\''t sync modification time of files]' \
+        '--panicOnWarning[panic on first WARNING log]' \
+        '--poll[set this to a poll interval, e.g --poll 700ms, to use a poll based approach to watch for file system changes]' \
+        '--printI18nWarnings[print missing translations]' \
+        '--printMemoryUsage[print memory usage to screen at intervals]' \
+        '--printPathWarnings[print warnings on duplicate target paths etc.]' \
+        '--printUnusedTemplates[print warnings on unused templates.]' \
+        '--quiet[build in quiet mode]' \
+        '--renderToMemory[render to memory (only useful for benchmark testing)]' \
+        {-s,--source}'[filesystem path to read files relative from]' \
+        '--templateMetrics[display metrics about template executions]' \
+        '--templateMetricsHints[calculate some improvement hints when combined with --templateMetrics]' \
+        {-t,--theme}'[themes to use (located in /themes/THEMENAME/)]' \
+        '--themesDir[filesystem path to themes directory]' \
+        '--trace[write trace to file (not useful in general)]':file:_files \
+        {-v,--verbose}'[verbose output]' \
+        '--verboseLog[verbose logging]' \
+        {-w,--watch}'[watch filesystem for changes and recreate as needed]' \
+        ': :->cmd' \
+        '*:: :->subcmd'
+
+    case $state in
+    (cmd)
+        _commands
+        ;;
+    (subcmd)
+        case $line[1] in
+        (completion)
+            _hugo_completion
+            ;;
+
+        (config)
+            _hugo_config
+            ;;
+
+        (convert)
+            _hugo_convert
+            ;;
+
+        (deploy)
+            _hugo_deploy
+            ;;
+
+        (env)
+            _hugo_env
+            ;;
+
+        (gen)
+            _hugo_gen
+            ;;
+
+        (help)
+            _hugo_help
+            ;;
+
+        (import)
+            _hugo_import
+            ;;
+
+        (list)
+            _hugo_list
+            ;;
+
+        (mod)
+            _hugo_mod
+            ;;
+
+        (new)
+            _hugo_new
+            ;;
+
+        (server)
+            _hugo_server
+            ;;
+
+        (version)
+            _hugo_version
+            ;;
+
+        esac
+        ;;
+     esac
+
+}
+
+
+function _hugo_completion {
+    local line state
+
+    function _commands {
+        local -a commands
+        commands=(
+            'bash:Generate the autocompletion script for bash'
+            'fish:Generate the autocompletion script for fish'
+            'powershell:Generate the autocompletion script for powershell'
+            'zsh:Generate the autocompletion script for zsh'
+        )
+        _describe 'command' commands
+    }
+ 
+
+    _arguments -C \
+        {-h,--help}'[help for completion]' \
+        '--clock[set the clock used by Hugo, e.g. --clock 2021-11-06T22:30:00.00+09:00]' \
+        '--config[config file (default is path/config.yaml|json|toml)]' \
+        '--configDir[config dir (default "config")]' \
+        '--debug[debug output]' \
+        {-e,--environment}'[build environment]' \
+        '--ignoreVendorPaths[ignores any _vendor for module paths matching the given Glob pattern]' \
+        '--log[enable Logging]' \
+        '--logFile[log File path (if set, logging enabled automatically)]' \
+        '--quiet[build in quiet mode]' \
+        {-s,--source}'[filesystem path to read files relative from]' \
+        '--themesDir[filesystem path to themes directory]' \
+        {-v,--verbose}'[verbose output]' \
+        '--verboseLog[verbose logging]' \
+        ': :->cmd' \
+        '*:: :->subcmd'
+
+    case $state in
+    (cmd)
+        _commands
+        ;;
+    (subcmd)
+        case $line[1] in
+        (bash)
+            _hugo_completion_bash
+            ;;
+
+        (fish)
+            _hugo_completion_fish
+            ;;
+
+        (powershell)
+            _hugo_completion_powershell
+            ;;
+
+        (zsh)
+            _hugo_completion_zsh
+            ;;
+
+        esac
+        ;;
+     esac
+
+}
+
+function _hugo_completion_bash {
+    _arguments \
+        {-h,--help}'[help for bash]' \
+        '--no-descriptions[disable completion descriptions]' \
+        '--clock[set the clock used by Hugo, e.g. --clock 2021-11-06T22:30:00.00+09:00]' \
+        '--config[config file (default is path/config.yaml|json|toml)]' \
+        '--configDir[config dir (default "config")]' \
+        '--debug[debug output]' \
+        {-e,--environment}'[build environment]' \
+        '--ignoreVendorPaths[ignores any _vendor for module paths matching the given Glob pattern]' \
+        '--log[enable Logging]' \
+        '--logFile[log File path (if set, logging enabled automatically)]' \
+        '--quiet[build in quiet mode]' \
+        {-s,--source}'[filesystem path to read files relative from]' \
+        '--themesDir[filesystem path to themes directory]' \
+        {-v,--verbose}'[verbose output]' \
+        '--verboseLog[verbose logging]' \
+        "*: :_files"
+
+}
+
+function _hugo_completion_fish {
+    _arguments \
+        {-h,--help}'[help for fish]' \
+        '--no-descriptions[disable completion descriptions]' \
+        '--clock[set the clock used by Hugo, e.g. --clock 2021-11-06T22:30:00.00+09:00]' \
+        '--config[config file (default is path/config.yaml|json|toml)]' \
+        '--configDir[config dir (default "config")]' \
+        '--debug[debug output]' \
+        {-e,--environment}'[build environment]' \
+        '--ignoreVendorPaths[ignores any _vendor for module paths matching the given Glob pattern]' \
+        '--log[enable Logging]' \
+        '--logFile[log File path (if set, logging enabled automatically)]' \
+        '--quiet[build in quiet mode]' \
+        {-s,--source}'[filesystem path to read files relative from]' \
+        '--themesDir[filesystem path to themes directory]' \
+        {-v,--verbose}'[verbose output]' \
+        '--verboseLog[verbose logging]' \
+        "*: :_files"
+
+}
+
+function _hugo_completion_powershell {
+    _arguments \
+        {-h,--help}'[help for powershell]' \
+        '--no-descriptions[disable completion descriptions]' \
+        '--clock[set the clock used by Hugo, e.g. --clock 2021-11-06T22:30:00.00+09:00]' \
+        '--config[config file (default is path/config.yaml|json|toml)]' \
+        '--configDir[config dir (default "config")]' \
+        '--debug[debug output]' \
+        {-e,--environment}'[build environment]' \
+        '--ignoreVendorPaths[ignores any _vendor for module paths matching the given Glob pattern]' \
+        '--log[enable Logging]' \
+        '--logFile[log File path (if set, logging enabled automatically)]' \
+        '--quiet[build in quiet mode]' \
+        {-s,--source}'[filesystem path to read files relative from]' \
+        '--themesDir[filesystem path to themes directory]' \
+        {-v,--verbose}'[verbose output]' \
+        '--verboseLog[verbose logging]' \
+        "*: :_files"
+
+}
+
+function _hugo_completion_zsh {
+    _arguments \
+        {-h,--help}'[help for zsh]' \
+        '--no-descriptions[disable completion descriptions]' \
+        '--clock[set the clock used by Hugo, e.g. --clock 2021-11-06T22:30:00.00+09:00]' \
+        '--config[config file (default is path/config.yaml|json|toml)]' \
+        '--configDir[config dir (default "config")]' \
+        '--debug[debug output]' \
+        {-e,--environment}'[build environment]' \
+        '--ignoreVendorPaths[ignores any _vendor for module paths matching the given Glob pattern]' \
+        '--log[enable Logging]' \
+        '--logFile[log File path (if set, logging enabled automatically)]' \
+        '--quiet[build in quiet mode]' \
+        {-s,--source}'[filesystem path to read files relative from]' \
+        '--themesDir[filesystem path to themes directory]' \
+        {-v,--verbose}'[verbose output]' \
+        '--verboseLog[verbose logging]' \
+        "*: :_files"
+
+}
+
+
+function _hugo_config {
+    local line state
+
+    function _commands {
+        local -a commands
+        commands=(
+            'mounts:Print the configured file mounts'
+        )
+        _describe 'command' commands
+    }
+ 
+
+    _arguments -C \
+        '--clock[set the clock used by Hugo, e.g. --clock 2021-11-06T22:30:00.00+09:00]' \
+        {-e,--environment}'[build environment]' \
+        {-h,--help}'[help for config]' \
+        '--ignoreVendorPaths[ignores any _vendor for module paths matching the given Glob pattern]' \
+        {-s,--source}'[filesystem path to read files relative from]' \
+        '--themesDir[filesystem path to themes directory]' \
+        '--config[config file (default is path/config.yaml|json|toml)]' \
+        '--configDir[config dir (default "config")]' \
+        '--debug[debug output]' \
+        '--log[enable Logging]' \
+        '--logFile[log File path (if set, logging enabled automatically)]' \
+        '--quiet[build in quiet mode]' \
+        {-v,--verbose}'[verbose output]' \
+        '--verboseLog[verbose logging]' \
+        ': :->cmd' \
+        '*:: :->subcmd'
+
+    case $state in
+    (cmd)
+        _commands
+        ;;
+    (subcmd)
+        case $line[1] in
+        (mounts)
+            _hugo_config_mounts
+            ;;
+
+        esac
+        ;;
+     esac
+
+}
+
+function _hugo_config_mounts {
+    _arguments \
+        {-h,--help}'[help for mounts]' \
+        '--clock[set the clock used by Hugo, e.g. --clock 2021-11-06T22:30:00.00+09:00]' \
+        '--config[config file (default is path/config.yaml|json|toml)]' \
+        '--configDir[config dir (default "config")]' \
+        '--debug[debug output]' \
+        {-e,--environment}'[build environment]' \
+        '--ignoreVendorPaths[ignores any _vendor for module paths matching the given Glob pattern]' \
+        '--log[enable Logging]' \
+        '--logFile[log File path (if set, logging enabled automatically)]' \
+        '--quiet[build in quiet mode]' \
+        {-s,--source}'[filesystem path to read files relative from]' \
+        '--themesDir[filesystem path to themes directory]' \
+        {-v,--verbose}'[verbose output]' \
+        '--verboseLog[verbose logging]' \
+        "*: :_files"
+
+}
+
+
+function _hugo_convert {
+    local line state
+
+    function _commands {
+        local -a commands
+        commands=(
+            'toJSON:Convert front matter to JSON'
+            'toTOML:Convert front matter to TOML'
+            'toYAML:Convert front matter to YAML'
+        )
+        _describe 'command' commands
+    }
+ 
+
+    _arguments -C \
+        '--clock[set the clock used by Hugo, e.g. --clock 2021-11-06T22:30:00.00+09:00]' \
+        {-e,--environment}'[build environment]' \
+        {-h,--help}'[help for convert]' \
+        '--ignoreVendorPaths[ignores any _vendor for module paths matching the given Glob pattern]' \
+        {-o,--output}'[filesystem path to write files to]' \
+        {-s,--source}'[filesystem path to read files relative from]' \
+        '--themesDir[filesystem path to themes directory]' \
+        '--unsafe[enable less safe operations, please backup first]' \
+        '--config[config file (default is path/config.yaml|json|toml)]' \
+        '--configDir[config dir (default "config")]' \
+        '--debug[debug output]' \
+        '--log[enable Logging]' \
+        '--logFile[log File path (if set, logging enabled automatically)]' \
+        '--quiet[build in quiet mode]' \
+        {-v,--verbose}'[verbose output]' \
+        '--verboseLog[verbose logging]' \
+        ': :->cmd' \
+        '*:: :->subcmd'
+
+    case $state in
+    (cmd)
+        _commands
+        ;;
+    (subcmd)
+        case $line[1] in
+        (toJSON)
+            _hugo_convert_toJSON
+            ;;
+
+        (toTOML)
+            _hugo_convert_toTOML
+            ;;
+
+        (toYAML)
+            _hugo_convert_toYAML
+            ;;
+
+        esac
+        ;;
+     esac
+
+}
+
+function _hugo_convert_toJSON {
+    _arguments \
+        {-h,--help}'[help for toJSON]' \
+        '--clock[set the clock used by Hugo, e.g. --clock 2021-11-06T22:30:00.00+09:00]' \
+        '--config[config file (default is path/config.yaml|json|toml)]' \
+        '--configDir[config dir (default "config")]' \
+        '--debug[debug output]' \
+        {-e,--environment}'[build environment]' \
+        '--ignoreVendorPaths[ignores any _vendor for module paths matching the given Glob pattern]' \
+        '--log[enable Logging]' \
+        '--logFile[log File path (if set, logging enabled automatically)]' \
+        {-o,--output}'[filesystem path to write files to]' \
+        '--quiet[build in quiet mode]' \
+        {-s,--source}'[filesystem path to read files relative from]' \
+        '--themesDir[filesystem path to themes directory]' \
+        '--unsafe[enable less safe operations, please backup first]' \
+        {-v,--verbose}'[verbose output]' \
+        '--verboseLog[verbose logging]' \
+        "*: :_files"
+
+}
+
+function _hugo_convert_toTOML {
+    _arguments \
+        {-h,--help}'[help for toTOML]' \
+        '--clock[set the clock used by Hugo, e.g. --clock 2021-11-06T22:30:00.00+09:00]' \
+        '--config[config file (default is path/config.yaml|json|toml)]' \
+        '--configDir[config dir (default "config")]' \
+        '--debug[debug output]' \
+        {-e,--environment}'[build environment]' \
+        '--ignoreVendorPaths[ignores any _vendor for module paths matching the given Glob pattern]' \
+        '--log[enable Logging]' \
+        '--logFile[log File path (if set, logging enabled automatically)]' \
+        {-o,--output}'[filesystem path to write files to]' \
+        '--quiet[build in quiet mode]' \
+        {-s,--source}'[filesystem path to read files relative from]' \
+        '--themesDir[filesystem path to themes directory]' \
+        '--unsafe[enable less safe operations, please backup first]' \
+        {-v,--verbose}'[verbose output]' \
+        '--verboseLog[verbose logging]' \
+        "*: :_files"
+
+}
+
+function _hugo_convert_toYAML {
+    _arguments \
+        {-h,--help}'[help for toYAML]' \
+        '--clock[set the clock used by Hugo, e.g. --clock 2021-11-06T22:30:00.00+09:00]' \
+        '--config[config file (default is path/config.yaml|json|toml)]' \
+        '--configDir[config dir (default "config")]' \
+        '--debug[debug output]' \
+        {-e,--environment}'[build environment]' \
+        '--ignoreVendorPaths[ignores any _vendor for module paths matching the given Glob pattern]' \
+        '--log[enable Logging]' \
+        '--logFile[log File path (if set, logging enabled automatically)]' \
+        {-o,--output}'[filesystem path to write files to]' \
+        '--quiet[build in quiet mode]' \
+        {-s,--source}'[filesystem path to read files relative from]' \
+        '--themesDir[filesystem path to themes directory]' \
+        '--unsafe[enable less safe operations, please backup first]' \
+        {-v,--verbose}'[verbose output]' \
+        '--verboseLog[verbose logging]' \
+        "*: :_files"
+
+}
+
+function _hugo_deploy {
+    _arguments \
+        '--clock[set the clock used by Hugo, e.g. --clock 2021-11-06T22:30:00.00+09:00]' \
+        '--confirm[ask for confirmation before making changes to the target]' \
+        '--dryRun[dry run]' \
+        {-e,--environment}'[build environment]' \
+        '--force[force upload of all files]' \
+        {-h,--help}'[help for deploy]' \
+        '--ignoreVendorPaths[ignores any _vendor for module paths matching the given Glob pattern]' \
+        '--invalidateCDN[invalidate the CDN cache listed in the deployment target (default true)]' \
+        '--maxDeletes[maximum # of files to delete, or -1 to disable (default 256)]' \
+        {-s,--source}'[filesystem path to read files relative from]' \
+        '--target[target deployment from deployments section in config file; defaults to the first one]' \
+        '--themesDir[filesystem path to themes directory]' \
+        '--config[config file (default is path/config.yaml|json|toml)]' \
+        '--configDir[config dir (default "config")]' \
+        '--debug[debug output]' \
+        '--log[enable Logging]' \
+        '--logFile[log File path (if set, logging enabled automatically)]' \
+        '--quiet[build in quiet mode]' \
+        {-v,--verbose}'[verbose output]' \
+        '--verboseLog[verbose logging]' \
+        "*: :_files"
+
+}
+
+function _hugo_env {
+    _arguments \
+        {-h,--help}'[help for env]' \
+        '--clock[set the clock used by Hugo, e.g. --clock 2021-11-06T22:30:00.00+09:00]' \
+        '--config[config file (default is path/config.yaml|json|toml)]' \
+        '--configDir[config dir (default "config")]' \
+        '--debug[debug output]' \
+        {-e,--environment}'[build environment]' \
+        '--ignoreVendorPaths[ignores any _vendor for module paths matching the given Glob pattern]' \
+        '--log[enable Logging]' \
+        '--logFile[log File path (if set, logging enabled automatically)]' \
+        '--quiet[build in quiet mode]' \
+        {-s,--source}'[filesystem path to read files relative from]' \
+        '--themesDir[filesystem path to themes directory]' \
+        {-v,--verbose}'[verbose output]' \
+        '--verboseLog[verbose logging]' \
+        "*: :_files"
+
+}
+
+
+function _hugo_gen {
+    local line state
+
+    function _commands {
+        local -a commands
+        commands=(
+            'chromastyles:Generate CSS stylesheet for the Chroma code highlighter'
+            'doc:Generate Markdown documentation for the Hugo CLI.'
+            'man:Generate man pages for the Hugo CLI'
+        )
+        _describe 'command' commands
+    }
+ 
+
+    _arguments -C \
+        {-h,--help}'[help for gen]' \
+        '--clock[set the clock used by Hugo, e.g. --clock 2021-11-06T22:30:00.00+09:00]' \
+        '--config[config file (default is path/config.yaml|json|toml)]' \
+        '--configDir[config dir (default "config")]' \
+        '--debug[debug output]' \
+        {-e,--environment}'[build environment]' \
+        '--ignoreVendorPaths[ignores any _vendor for module paths matching the given Glob pattern]' \
+        '--log[enable Logging]' \
+        '--logFile[log File path (if set, logging enabled automatically)]' \
+        '--quiet[build in quiet mode]' \
+        {-s,--source}'[filesystem path to read files relative from]' \
+        '--themesDir[filesystem path to themes directory]' \
+        {-v,--verbose}'[verbose output]' \
+        '--verboseLog[verbose logging]' \
+        ': :->cmd' \
+        '*:: :->subcmd'
+
+    case $state in
+    (cmd)
+        _commands
+        ;;
+    (subcmd)
+        case $line[1] in
+        (chromastyles)
+            _hugo_gen_chromastyles
+            ;;
+
+        (doc)
+            _hugo_gen_doc
+            ;;
+
+        (man)
+            _hugo_gen_man
+            ;;
+
+        esac
+        ;;
+     esac
+
+}
+
+function _hugo_gen_chromastyles {
+    _arguments \
+        {-h,--help}'[help for chromastyles]' \
+        '--highlightStyle[style used for highlighting lines (see https://github.com/alecthomas/chroma) (default "bg:#ffffcc")]' \
+        '--linesStyle[style used for line numbers (see https://github.com/alecthomas/chroma)]' \
+        '--style[highlighter style (see https://xyproto.github.io/splash/docs/) (default "friendly")]' \
+        '--clock[set the clock used by Hugo, e.g. --clock 2021-11-06T22:30:00.00+09:00]' \
+        '--config[config file (default is path/config.yaml|json|toml)]' \
+        '--configDir[config dir (default "config")]' \
+        '--debug[debug output]' \
+        {-e,--environment}'[build environment]' \
+        '--ignoreVendorPaths[ignores any _vendor for module paths matching the given Glob pattern]' \
+        '--log[enable Logging]' \
+        '--logFile[log File path (if set, logging enabled automatically)]' \
+        '--quiet[build in quiet mode]' \
+        {-s,--source}'[filesystem path to read files relative from]' \
+        '--themesDir[filesystem path to themes directory]' \
+        {-v,--verbose}'[verbose output]' \
+        '--verboseLog[verbose logging]' \
+        "*: :_files"
+
+}
+
+function _hugo_gen_doc {
+    _arguments \
+        '--dir[the directory to write the doc. (default "/tmp/hugodoc/")]' \
+        {-h,--help}'[help for doc]' \
+        '--clock[set the clock used by Hugo, e.g. --clock 2021-11-06T22:30:00.00+09:00]' \
+        '--config[config file (default is path/config.yaml|json|toml)]' \
+        '--configDir[config dir (default "config")]' \
+        '--debug[debug output]' \
+        {-e,--environment}'[build environment]' \
+        '--ignoreVendorPaths[ignores any _vendor for module paths matching the given Glob pattern]' \
+        '--log[enable Logging]' \
+        '--logFile[log File path (if set, logging enabled automatically)]' \
+        '--quiet[build in quiet mode]' \
+        {-s,--source}'[filesystem path to read files relative from]' \
+        '--themesDir[filesystem path to themes directory]' \
+        {-v,--verbose}'[verbose output]' \
+        '--verboseLog[verbose logging]' \
+        "*: :_files"
+
+}
+
+function _hugo_gen_man {
+    _arguments \
+        '--dir[the directory to write the man pages. (default "man/")]' \
+        {-h,--help}'[help for man]' \
+        '--clock[set the clock used by Hugo, e.g. --clock 2021-11-06T22:30:00.00+09:00]' \
+        '--config[config file (default is path/config.yaml|json|toml)]' \
+        '--configDir[config dir (default "config")]' \
+        '--debug[debug output]' \
+        {-e,--environment}'[build environment]' \
+        '--ignoreVendorPaths[ignores any _vendor for module paths matching the given Glob pattern]' \
+        '--log[enable Logging]' \
+        '--logFile[log File path (if set, logging enabled automatically)]' \
+        '--quiet[build in quiet mode]' \
+        {-s,--source}'[filesystem path to read files relative from]' \
+        '--themesDir[filesystem path to themes directory]' \
+        {-v,--verbose}'[verbose output]' \
+        '--verboseLog[verbose logging]' \
+        "*: :_files"
+
+}
+
+function _hugo_help {
+    _arguments \
+        {-h,--help}'[help for help]' \
+        '--clock[set the clock used by Hugo, e.g. --clock 2021-11-06T22:30:00.00+09:00]' \
+        '--config[config file (default is path/config.yaml|json|toml)]' \
+        '--configDir[config dir (default "config")]' \
+        '--debug[debug output]' \
+        {-e,--environment}'[build environment]' \
+        '--ignoreVendorPaths[ignores any _vendor for module paths matching the given Glob pattern]' \
+        '--log[enable Logging]' \
+        '--logFile[log File path (if set, logging enabled automatically)]' \
+        '--quiet[build in quiet mode]' \
+        {-s,--source}'[filesystem path to read files relative from]' \
+        '--themesDir[filesystem path to themes directory]' \
+        {-v,--verbose}'[verbose output]' \
+        '--verboseLog[verbose logging]' \
+        "*: :_files"
+
+}
+
+
+function _hugo_import {
+    local line state
+
+    function _commands {
+        local -a commands
+        commands=(
+            'jekyll:hugo import from Jekyll'
+        )
+        _describe 'command' commands
+    }
+ 
+
+    _arguments -C \
+        {-h,--help}'[help for import]' \
+        '--clock[set the clock used by Hugo, e.g. --clock 2021-11-06T22:30:00.00+09:00]' \
+        '--config[config file (default is path/config.yaml|json|toml)]' \
+        '--configDir[config dir (default "config")]' \
+        '--debug[debug output]' \
+        {-e,--environment}'[build environment]' \
+        '--ignoreVendorPaths[ignores any _vendor for module paths matching the given Glob pattern]' \
+        '--log[enable Logging]' \
+        '--logFile[log File path (if set, logging enabled automatically)]' \
+        '--quiet[build in quiet mode]' \
+        {-s,--source}'[filesystem path to read files relative from]' \
+        '--themesDir[filesystem path to themes directory]' \
+        {-v,--verbose}'[verbose output]' \
+        '--verboseLog[verbose logging]' \
+        ': :->cmd' \
+        '*:: :->subcmd'
+
+    case $state in
+    (cmd)
+        _commands
+        ;;
+    (subcmd)
+        case $line[1] in
+        (jekyll)
+            _hugo_import_jekyll
+            ;;
+
+        esac
+        ;;
+     esac
+
+}
+
+function _hugo_import_jekyll {
+    _arguments \
+        '--force[allow import into non-empty target directory]' \
+        {-h,--help}'[help for jekyll]' \
+        '--clock[set the clock used by Hugo, e.g. --clock 2021-11-06T22:30:00.00+09:00]' \
+        '--config[config file (default is path/config.yaml|json|toml)]' \
+        '--configDir[config dir (default "config")]' \
+        '--debug[debug output]' \
+        {-e,--environment}'[build environment]' \
+        '--ignoreVendorPaths[ignores any _vendor for module paths matching the given Glob pattern]' \
+        '--log[enable Logging]' \
+        '--logFile[log File path (if set, logging enabled automatically)]' \
+        '--quiet[build in quiet mode]' \
+        {-s,--source}'[filesystem path to read files relative from]' \
+        '--themesDir[filesystem path to themes directory]' \
+        {-v,--verbose}'[verbose output]' \
+        '--verboseLog[verbose logging]' \
+        "*: :_files"
+
+}
+
+
+function _hugo_list {
+    local line state
+
+    function _commands {
+        local -a commands
+        commands=(
+            'all:List all posts'
+            'drafts:List all drafts'
+            'expired:List all posts already expired'
+            'future:List all posts dated in the future'
+        )
+        _describe 'command' commands
+    }
+ 
+
+    _arguments -C \
+        '--clock[set the clock used by Hugo, e.g. --clock 2021-11-06T22:30:00.00+09:00]' \
+        {-e,--environment}'[build environment]' \
+        {-h,--help}'[help for list]' \
+        '--ignoreVendorPaths[ignores any _vendor for module paths matching the given Glob pattern]' \
+        {-s,--source}'[filesystem path to read files relative from]' \
+        '--themesDir[filesystem path to themes directory]' \
+        '--config[config file (default is path/config.yaml|json|toml)]' \
+        '--configDir[config dir (default "config")]' \
+        '--debug[debug output]' \
+        '--log[enable Logging]' \
+        '--logFile[log File path (if set, logging enabled automatically)]' \
+        '--quiet[build in quiet mode]' \
+        {-v,--verbose}'[verbose output]' \
+        '--verboseLog[verbose logging]' \
+        ': :->cmd' \
+        '*:: :->subcmd'
+
+    case $state in
+    (cmd)
+        _commands
+        ;;
+    (subcmd)
+        case $line[1] in
+        (all)
+            _hugo_list_all
+            ;;
+
+        (drafts)
+            _hugo_list_drafts
+            ;;
+
+        (expired)
+            _hugo_list_expired
+            ;;
+
+        (future)
+            _hugo_list_future
+            ;;
+
+        esac
+        ;;
+     esac
+
+}
+
+function _hugo_list_all {
+    _arguments \
+        {-h,--help}'[help for all]' \
+        '--clock[set the clock used by Hugo, e.g. --clock 2021-11-06T22:30:00.00+09:00]' \
+        '--config[config file (default is path/config.yaml|json|toml)]' \
+        '--configDir[config dir (default "config")]' \
+        '--debug[debug output]' \
+        {-e,--environment}'[build environment]' \
+        '--ignoreVendorPaths[ignores any _vendor for module paths matching the given Glob pattern]' \
+        '--log[enable Logging]' \
+        '--logFile[log File path (if set, logging enabled automatically)]' \
+        '--quiet[build in quiet mode]' \
+        {-s,--source}'[filesystem path to read files relative from]' \
+        '--themesDir[filesystem path to themes directory]' \
+        {-v,--verbose}'[verbose output]' \
+        '--verboseLog[verbose logging]' \
+        "*: :_files"
+
+}
+
+function _hugo_list_drafts {
+    _arguments \
+        {-h,--help}'[help for drafts]' \
+        '--clock[set the clock used by Hugo, e.g. --clock 2021-11-06T22:30:00.00+09:00]' \
+        '--config[config file (default is path/config.yaml|json|toml)]' \
+        '--configDir[config dir (default "config")]' \
+        '--debug[debug output]' \
+        {-e,--environment}'[build environment]' \
+        '--ignoreVendorPaths[ignores any _vendor for module paths matching the given Glob pattern]' \
+        '--log[enable Logging]' \
+        '--logFile[log File path (if set, logging enabled automatically)]' \
+        '--quiet[build in quiet mode]' \
+        {-s,--source}'[filesystem path to read files relative from]' \
+        '--themesDir[filesystem path to themes directory]' \
+        {-v,--verbose}'[verbose output]' \
+        '--verboseLog[verbose logging]' \
+        "*: :_files"
+
+}
+
+function _hugo_list_expired {
+    _arguments \
+        {-h,--help}'[help for expired]' \
+        '--clock[set the clock used by Hugo, e.g. --clock 2021-11-06T22:30:00.00+09:00]' \
+        '--config[config file (default is path/config.yaml|json|toml)]' \
+        '--configDir[config dir (default "config")]' \
+        '--debug[debug output]' \
+        {-e,--environment}'[build environment]' \
+        '--ignoreVendorPaths[ignores any _vendor for module paths matching the given Glob pattern]' \
+        '--log[enable Logging]' \
+        '--logFile[log File path (if set, logging enabled automatically)]' \
+        '--quiet[build in quiet mode]' \
+        {-s,--source}'[filesystem path to read files relative from]' \
+        '--themesDir[filesystem path to themes directory]' \
+        {-v,--verbose}'[verbose output]' \
+        '--verboseLog[verbose logging]' \
+        "*: :_files"
+
+}
+
+function _hugo_list_future {
+    _arguments \
+        {-h,--help}'[help for future]' \
+        '--clock[set the clock used by Hugo, e.g. --clock 2021-11-06T22:30:00.00+09:00]' \
+        '--config[config file (default is path/config.yaml|json|toml)]' \
+        '--configDir[config dir (default "config")]' \
+        '--debug[debug output]' \
+        {-e,--environment}'[build environment]' \
+        '--ignoreVendorPaths[ignores any _vendor for module paths matching the given Glob pattern]' \
+        '--log[enable Logging]' \
+        '--logFile[log File path (if set, logging enabled automatically)]' \
+        '--quiet[build in quiet mode]' \
+        {-s,--source}'[filesystem path to read files relative from]' \
+        '--themesDir[filesystem path to themes directory]' \
+        {-v,--verbose}'[verbose output]' \
+        '--verboseLog[verbose logging]' \
+        "*: :_files"
+
+}
+
+
+function _hugo_mod {
+    local line state
+
+    function _commands {
+        local -a commands
+        commands=(
+            'clean:Delete the Hugo Module cache for the current project.'
+            'get:Resolves dependencies in your current Hugo Project.'
+            'graph:Print a module dependency graph.'
+            'init:Initialize this project as a Hugo Module.'
+            'npm:Various npm helpers.'
+            'tidy:Remove unused entries in go.mod and go.sum.'
+            'vendor:Vendor all module dependencies into the _vendor directory.'
+            'verify:Verify dependencies.'
+        )
+        _describe 'command' commands
+    }
+ 
+
+    _arguments -C \
+        {-b,--baseURL}'[hostname (and path) to the root, e.g. https://spf13.com/]' \
+        {-D,--buildDrafts}'[include content marked as draft]' \
+        {-E,--buildExpired}'[include expired content]' \
+        {-F,--buildFuture}'[include content with publishdate in the future]' \
+        '--cacheDir[filesystem path to cache directory. Defaults: $TMPDIR/hugo_cache/]' \
+        '--cleanDestinationDir[remove files from destination not found in static directories]' \
+        '--clock[set the clock used by Hugo, e.g. --clock 2021-11-06T22:30:00.00+09:00]' \
+        {-c,--contentDir}'[filesystem path to content directory]' \
+        {-d,--destination}'[filesystem path to write files to]' \
+        '--disableKinds[disable different kind of pages (home, RSS etc.)]' \
+        '--enableGitInfo[add Git revision, date, author, and CODEOWNERS info to the pages]' \
+        {-e,--environment}'[build environment]' \
+        '--forceSyncStatic[copy all files when static is changed.]' \
+        '--gc[enable to run some cleanup tasks (remove unused cache files) after the build]' \
+        {-h,--help}'[help for mod]' \
+        '--ignoreCache[ignores the cache directory]' \
+        '--ignoreVendorPaths[ignores any _vendor for module paths matching the given Glob pattern]' \
+        {-l,--layoutDir}'[filesystem path to layout directory]' \
+        '--minify[minify any supported output format (HTML, XML etc.)]' \
+        '--noBuildLock[don'\''t create .hugo_build.lock file]' \
+        '--noChmod[don'\''t sync permission mode of files]' \
+        '--noTimes[don'\''t sync modification time of files]' \
+        '--panicOnWarning[panic on first WARNING log]' \
+        '--poll[set this to a poll interval, e.g --poll 700ms, to use a poll based approach to watch for file system changes]' \
+        '--printI18nWarnings[print missing translations]' \
+        '--printMemoryUsage[print memory usage to screen at intervals]' \
+        '--printPathWarnings[print warnings on duplicate target paths etc.]' \
+        '--printUnusedTemplates[print warnings on unused templates.]' \
+        {-s,--source}'[filesystem path to read files relative from]' \
+        '--templateMetrics[display metrics about template executions]' \
+        '--templateMetricsHints[calculate some improvement hints when combined with --templateMetrics]' \
+        {-t,--theme}'[themes to use (located in /themes/THEMENAME/)]' \
+        '--themesDir[filesystem path to themes directory]' \
+        '--trace[write trace to file (not useful in general)]':file:_files \
+        '--config[config file (default is path/config.yaml|json|toml)]' \
+        '--configDir[config dir (default "config")]' \
+        '--debug[debug output]' \
+        '--log[enable Logging]' \
+        '--logFile[log File path (if set, logging enabled automatically)]' \
+        '--quiet[build in quiet mode]' \
+        {-v,--verbose}'[verbose output]' \
+        '--verboseLog[verbose logging]' \
+        ': :->cmd' \
+        '*:: :->subcmd'
+
+    case $state in
+    (cmd)
+        _commands
+        ;;
+    (subcmd)
+        case $line[1] in
+        (clean)
+            _hugo_mod_clean
+            ;;
+
+        (get)
+            _hugo_mod_get
+            ;;
+
+        (graph)
+            _hugo_mod_graph
+            ;;
+
+        (init)
+            _hugo_mod_init
+            ;;
+
+        (npm)
+            _hugo_mod_npm
+            ;;
+
+        (tidy)
+            _hugo_mod_tidy
+            ;;
+
+        (vendor)
+            _hugo_mod_vendor
+            ;;
+
+        (verify)
+            _hugo_mod_verify
+            ;;
+
+        esac
+        ;;
+     esac
+
+}
+
+function _hugo_mod_clean {
+    _arguments \
+        '--all[clean entire module cache]' \
+        {-h,--help}'[help for clean]' \
+        '--pattern[pattern matching module paths to clean (all if not set), e.g. "**hugo*"]' \
+        '--clock[set the clock used by Hugo, e.g. --clock 2021-11-06T22:30:00.00+09:00]' \
+        '--config[config file (default is path/config.yaml|json|toml)]' \
+        '--configDir[config dir (default "config")]' \
+        '--debug[debug output]' \
+        {-e,--environment}'[build environment]' \
+        '--ignoreVendorPaths[ignores any _vendor for module paths matching the given Glob pattern]' \
+        '--log[enable Logging]' \
+        '--logFile[log File path (if set, logging enabled automatically)]' \
+        '--quiet[build in quiet mode]' \
+        {-s,--source}'[filesystem path to read files relative from]' \
+        '--themesDir[filesystem path to themes directory]' \
+        {-v,--verbose}'[verbose output]' \
+        '--verboseLog[verbose logging]' \
+        "*: :_files"
+
+}
+
+function _hugo_mod_get {
+    _arguments \
+        "*: :_files"
+
+}
+
+function _hugo_mod_graph {
+    _arguments \
+        {-h,--help}'[help for graph]' \
+        '--clock[set the clock used by Hugo, e.g. --clock 2021-11-06T22:30:00.00+09:00]' \
+        '--config[config file (default is path/config.yaml|json|toml)]' \
+        '--configDir[config dir (default "config")]' \
+        '--debug[debug output]' \
+        {-e,--environment}'[build environment]' \
+        '--ignoreVendorPaths[ignores any _vendor for module paths matching the given Glob pattern]' \
+        '--log[enable Logging]' \
+        '--logFile[log File path (if set, logging enabled automatically)]' \
+        '--quiet[build in quiet mode]' \
+        {-s,--source}'[filesystem path to read files relative from]' \
+        '--themesDir[filesystem path to themes directory]' \
+        {-v,--verbose}'[verbose output]' \
+        '--verboseLog[verbose logging]' \
+        "*: :_files"
+
+}
+
+function _hugo_mod_init {
+    _arguments \
+        {-h,--help}'[help for init]' \
+        '--clock[set the clock used by Hugo, e.g. --clock 2021-11-06T22:30:00.00+09:00]' \
+        '--config[config file (default is path/config.yaml|json|toml)]' \
+        '--configDir[config dir (default "config")]' \
+        '--debug[debug output]' \
+        {-e,--environment}'[build environment]' \
+        '--ignoreVendorPaths[ignores any _vendor for module paths matching the given Glob pattern]' \
+        '--log[enable Logging]' \
+        '--logFile[log File path (if set, logging enabled automatically)]' \
+        '--quiet[build in quiet mode]' \
+        {-s,--source}'[filesystem path to read files relative from]' \
+        '--themesDir[filesystem path to themes directory]' \
+        {-v,--verbose}'[verbose output]' \
+        '--verboseLog[verbose logging]' \
+        "*: :_files"
+
+}
+
+
+function _hugo_mod_npm {
+    local line state
+
+    function _commands {
+        local -a commands
+        commands=(
+            'pack:Experimental: Prepares and writes a composite package.json file for your project.'
+        )
+        _describe 'command' commands
+    }
+ 
+
+    _arguments -C \
+        {-h,--help}'[help for npm]' \
+        '--clock[set the clock used by Hugo, e.g. --clock 2021-11-06T22:30:00.00+09:00]' \
+        '--config[config file (default is path/config.yaml|json|toml)]' \
+        '--configDir[config dir (default "config")]' \
+        '--debug[debug output]' \
+        {-e,--environment}'[build environment]' \
+        '--ignoreVendorPaths[ignores any _vendor for module paths matching the given Glob pattern]' \
+        '--log[enable Logging]' \
+        '--logFile[log File path (if set, logging enabled automatically)]' \
+        '--quiet[build in quiet mode]' \
+        {-s,--source}'[filesystem path to read files relative from]' \
+        '--themesDir[filesystem path to themes directory]' \
+        {-v,--verbose}'[verbose output]' \
+        '--verboseLog[verbose logging]' \
+        ': :->cmd' \
+        '*:: :->subcmd'
+
+    case $state in
+    (cmd)
+        _commands
+        ;;
+    (subcmd)
+        case $line[1] in
+        (pack)
+            _hugo_mod_npm_pack
+            ;;
+
+        esac
+        ;;
+     esac
+
+}
+
+function _hugo_mod_npm_pack {
+    _arguments \
+        {-h,--help}'[help for pack]' \
+        '--clock[set the clock used by Hugo, e.g. --clock 2021-11-06T22:30:00.00+09:00]' \
+        '--config[config file (default is path/config.yaml|json|toml)]' \
+        '--configDir[config dir (default "config")]' \
+        '--debug[debug output]' \
+        {-e,--environment}'[build environment]' \
+        '--ignoreVendorPaths[ignores any _vendor for module paths matching the given Glob pattern]' \
+        '--log[enable Logging]' \
+        '--logFile[log File path (if set, logging enabled automatically)]' \
+        '--quiet[build in quiet mode]' \
+        {-s,--source}'[filesystem path to read files relative from]' \
+        '--themesDir[filesystem path to themes directory]' \
+        {-v,--verbose}'[verbose output]' \
+        '--verboseLog[verbose logging]' \
+        "*: :_files"
+
+}
+
+function _hugo_mod_tidy {
+    _arguments \
+        {-h,--help}'[help for tidy]' \
+        '--clock[set the clock used by Hugo, e.g. --clock 2021-11-06T22:30:00.00+09:00]' \
+        '--config[config file (default is path/config.yaml|json|toml)]' \
+        '--configDir[config dir (default "config")]' \
+        '--debug[debug output]' \
+        {-e,--environment}'[build environment]' \
+        '--ignoreVendorPaths[ignores any _vendor for module paths matching the given Glob pattern]' \
+        '--log[enable Logging]' \
+        '--logFile[log File path (if set, logging enabled automatically)]' \
+        '--quiet[build in quiet mode]' \
+        {-s,--source}'[filesystem path to read files relative from]' \
+        '--themesDir[filesystem path to themes directory]' \
+        {-v,--verbose}'[verbose output]' \
+        '--verboseLog[verbose logging]' \
+        "*: :_files"
+
+}
+
+function _hugo_mod_vendor {
+    _arguments \
+        {-h,--help}'[help for vendor]' \
+        '--clock[set the clock used by Hugo, e.g. --clock 2021-11-06T22:30:00.00+09:00]' \
+        '--config[config file (default is path/config.yaml|json|toml)]' \
+        '--configDir[config dir (default "config")]' \
+        '--debug[debug output]' \
+        {-e,--environment}'[build environment]' \
+        '--ignoreVendorPaths[ignores any _vendor for module paths matching the given Glob pattern]' \
+        '--log[enable Logging]' \
+        '--logFile[log File path (if set, logging enabled automatically)]' \
+        '--quiet[build in quiet mode]' \
+        {-s,--source}'[filesystem path to read files relative from]' \
+        '--themesDir[filesystem path to themes directory]' \
+        {-v,--verbose}'[verbose output]' \
+        '--verboseLog[verbose logging]' \
+        "*: :_files"
+
+}
+
+function _hugo_mod_verify {
+    _arguments \
+        '--clean[delete module cache for dependencies that fail verification]' \
+        {-h,--help}'[help for verify]' \
+        '--clock[set the clock used by Hugo, e.g. --clock 2021-11-06T22:30:00.00+09:00]' \
+        '--config[config file (default is path/config.yaml|json|toml)]' \
+        '--configDir[config dir (default "config")]' \
+        '--debug[debug output]' \
+        {-e,--environment}'[build environment]' \
+        '--ignoreVendorPaths[ignores any _vendor for module paths matching the given Glob pattern]' \
+        '--log[enable Logging]' \
+        '--logFile[log File path (if set, logging enabled automatically)]' \
+        '--quiet[build in quiet mode]' \
+        {-s,--source}'[filesystem path to read files relative from]' \
+        '--themesDir[filesystem path to themes directory]' \
+        {-v,--verbose}'[verbose output]' \
+        '--verboseLog[verbose logging]' \
+        "*: :_files"
+
+}
+
+
+function _hugo_new {
+    local line state
+
+    function _commands {
+        local -a commands
+        commands=(
+            'site:Create a new site (skeleton)'
+            'theme:Create a new theme'
+        )
+        _describe 'command' commands
+    }
+ 
+
+    _arguments -C \
+        {-b,--baseURL}'[hostname (and path) to the root, e.g. https://spf13.com/]' \
+        {-D,--buildDrafts}'[include content marked as draft]' \
+        {-E,--buildExpired}'[include expired content]' \
+        {-F,--buildFuture}'[include content with publishdate in the future]' \
+        '--cacheDir[filesystem path to cache directory. Defaults: $TMPDIR/hugo_cache/]' \
+        '--cleanDestinationDir[remove files from destination not found in static directories]' \
+        '--clock[set the clock used by Hugo, e.g. --clock 2021-11-06T22:30:00.00+09:00]' \
+        {-c,--contentDir}'[filesystem path to content directory]' \
+        {-d,--destination}'[filesystem path to write files to]' \
+        '--disableKinds[disable different kind of pages (home, RSS etc.)]' \
+        '--editor[edit new content with this editor, if provided]' \
+        '--enableGitInfo[add Git revision, date, author, and CODEOWNERS info to the pages]' \
+        {-e,--environment}'[build environment]' \
+        {-f,--force}'[overwrite file if it already exists]' \
+        '--forceSyncStatic[copy all files when static is changed.]' \
+        '--gc[enable to run some cleanup tasks (remove unused cache files) after the build]' \
+        {-h,--help}'[help for new]' \
+        '--ignoreCache[ignores the cache directory]' \
+        '--ignoreVendorPaths[ignores any _vendor for module paths matching the given Glob pattern]' \
+        {-k,--kind}'[content type to create]' \
+        {-l,--layoutDir}'[filesystem path to layout directory]' \
+        '--minify[minify any supported output format (HTML, XML etc.)]' \
+        '--noBuildLock[don'\''t create .hugo_build.lock file]' \
+        '--noChmod[don'\''t sync permission mode of files]' \
+        '--noTimes[don'\''t sync modification time of files]' \
+        '--panicOnWarning[panic on first WARNING log]' \
+        '--poll[set this to a poll interval, e.g --poll 700ms, to use a poll based approach to watch for file system changes]' \
+        '--printI18nWarnings[print missing translations]' \
+        '--printMemoryUsage[print memory usage to screen at intervals]' \
+        '--printPathWarnings[print warnings on duplicate target paths etc.]' \
+        '--printUnusedTemplates[print warnings on unused templates.]' \
+        {-s,--source}'[filesystem path to read files relative from]' \
+        '--templateMetrics[display metrics about template executions]' \
+        '--templateMetricsHints[calculate some improvement hints when combined with --templateMetrics]' \
+        {-t,--theme}'[themes to use (located in /themes/THEMENAME/)]' \
+        '--themesDir[filesystem path to themes directory]' \
+        '--trace[write trace to file (not useful in general)]':file:_files \
+        '--config[config file (default is path/config.yaml|json|toml)]' \
+        '--configDir[config dir (default "config")]' \
+        '--debug[debug output]' \
+        '--log[enable Logging]' \
+        '--logFile[log File path (if set, logging enabled automatically)]' \
+        '--quiet[build in quiet mode]' \
+        {-v,--verbose}'[verbose output]' \
+        '--verboseLog[verbose logging]' \
+        ': :->cmd' \
+        '*:: :->subcmd'
+
+    case $state in
+    (cmd)
+        _commands
+        ;;
+    (subcmd)
+        case $line[1] in
+        (site)
+            _hugo_new_site
+            ;;
+
+        (theme)
+            _hugo_new_theme
+            ;;
+
+        esac
+        ;;
+     esac
+
+}
+
+function _hugo_new_site {
+    _arguments \
+        '--clock[set the clock used by Hugo, e.g. --clock 2021-11-06T22:30:00.00+09:00]' \
+        {-e,--environment}'[build environment]' \
+        '--force[init inside non-empty directory]' \
+        {-f,--format}'[config file format (default "toml")]' \
+        {-h,--help}'[help for site]' \
+        '--ignoreVendorPaths[ignores any _vendor for module paths matching the given Glob pattern]' \
+        {-s,--source}'[filesystem path to read files relative from]' \
+        '--themesDir[filesystem path to themes directory]' \
+        '--config[config file (default is path/config.yaml|json|toml)]' \
+        '--configDir[config dir (default "config")]' \
+        '--debug[debug output]' \
+        '--log[enable Logging]' \
+        '--logFile[log File path (if set, logging enabled automatically)]' \
+        '--quiet[build in quiet mode]' \
+        {-v,--verbose}'[verbose output]' \
+        '--verboseLog[verbose logging]' \
+        "*: :_files"
+
+}
+
+function _hugo_new_theme {
+    _arguments \
+        '--clock[set the clock used by Hugo, e.g. --clock 2021-11-06T22:30:00.00+09:00]' \
+        {-e,--environment}'[build environment]' \
+        {-h,--help}'[help for theme]' \
+        '--ignoreVendorPaths[ignores any _vendor for module paths matching the given Glob pattern]' \
+        {-s,--source}'[filesystem path to read files relative from]' \
+        '--themesDir[filesystem path to themes directory]' \
+        '--config[config file (default is path/config.yaml|json|toml)]' \
+        '--configDir[config dir (default "config")]' \
+        '--debug[debug output]' \
+        '--log[enable Logging]' \
+        '--logFile[log File path (if set, logging enabled automatically)]' \
+        '--quiet[build in quiet mode]' \
+        {-v,--verbose}'[verbose output]' \
+        '--verboseLog[verbose logging]' \
+        "*: :_files"
+
+}
+
+function _hugo_server {
+    _arguments \
+        '--appendPort[append port to baseURL (default true)]' \
+        {-b,--baseURL}'[hostname (and path) to the root, e.g. https://spf13.com/]' \
+        '--bind[interface to which the server will bind (default "127.0.0.1")]' \
+        {-D,--buildDrafts}'[include content marked as draft]' \
+        {-E,--buildExpired}'[include expired content]' \
+        {-F,--buildFuture}'[include content with publishdate in the future]' \
+        '--cacheDir[filesystem path to cache directory. Defaults: $TMPDIR/hugo_cache/]' \
+        '--cleanDestinationDir[remove files from destination not found in static directories]' \
+        '--clock[set the clock used by Hugo, e.g. --clock 2021-11-06T22:30:00.00+09:00]' \
+        {-c,--contentDir}'[filesystem path to content directory]' \
+        {-d,--destination}'[filesystem path to write files to]' \
+        '--disableBrowserError[do not show build errors in the browser]' \
+        '--disableFastRender[enables full re-renders on changes]' \
+        '--disableKinds[disable different kind of pages (home, RSS etc.)]' \
+        '--disableLiveReload[watch without enabling live browser reload on rebuild]' \
+        '--enableGitInfo[add Git revision, date, author, and CODEOWNERS info to the pages]' \
+        {-e,--environment}'[build environment]' \
+        '--forceSyncStatic[copy all files when static is changed.]' \
+        '--gc[enable to run some cleanup tasks (remove unused cache files) after the build]' \
+        {-h,--help}'[help for server]' \
+        '--ignoreCache[ignores the cache directory]' \
+        '--ignoreVendorPaths[ignores any _vendor for module paths matching the given Glob pattern]' \
+        {-l,--layoutDir}'[filesystem path to layout directory]' \
+        '--liveReloadPort[port for live reloading (i.e. 443 in HTTPS proxy situations) (default -1)]' \
+        '--meminterval[interval to poll memory usage (requires --memstats), valid time units are "ns", "us" (or "µs"), "ms", "s", "m", "h". (default "100ms")]' \
+        '--memstats[log memory usage to this file]' \
+        '--minify[minify any supported output format (HTML, XML etc.)]' \
+        '--navigateToChanged[navigate to changed content file on live browser reload]' \
+        '--noBuildLock[don'\''t create .hugo_build.lock file]' \
+        '--noChmod[don'\''t sync permission mode of files]' \
+        '--noHTTPCache[prevent HTTP caching]' \
+        '--noTimes[don'\''t sync modification time of files]' \
+        '--panicOnWarning[panic on first WARNING log]' \
+        '--poll[set this to a poll interval, e.g --poll 700ms, to use a poll based approach to watch for file system changes]' \
+        {-p,--port}'[port on which the server will listen (default 1313)]' \
+        '--printI18nWarnings[print missing translations]' \
+        '--printMemoryUsage[print memory usage to screen at intervals]' \
+        '--printPathWarnings[print warnings on duplicate target paths etc.]' \
+        '--printUnusedTemplates[print warnings on unused templates.]' \
+        '--renderStaticToDisk[serve static files from disk and dynamic files from memory]' \
+        '--renderToDisk[serve all files from disk (default is from memory)]' \
+        {-s,--source}'[filesystem path to read files relative from]' \
+        '--templateMetrics[display metrics about template executions]' \
+        '--templateMetricsHints[calculate some improvement hints when combined with --templateMetrics]' \
+        {-t,--theme}'[themes to use (located in /themes/THEMENAME/)]' \
+        '--themesDir[filesystem path to themes directory]' \
+        '--trace[write trace to file (not useful in general)]':file:_files \
+        {-w,--watch}'[watch filesystem for changes and recreate as needed (default true)]' \
+        '--config[config file (default is path/config.yaml|json|toml)]' \
+        '--configDir[config dir (default "config")]' \
+        '--debug[debug output]' \
+        '--log[enable Logging]' \
+        '--logFile[log File path (if set, logging enabled automatically)]' \
+        '--quiet[build in quiet mode]' \
+        {-v,--verbose}'[verbose output]' \
+        '--verboseLog[verbose logging]' \
+        "*: :_files"
+
+}
+
+function _hugo_version {
+    _arguments \
+        {-h,--help}'[help for version]' \
+        '--clock[set the clock used by Hugo, e.g. --clock 2021-11-06T22:30:00.00+09:00]' \
+        '--config[config file (default is path/config.yaml|json|toml)]' \
+        '--configDir[config dir (default "config")]' \
+        '--debug[debug output]' \
+        {-e,--environment}'[build environment]' \
+        '--ignoreVendorPaths[ignores any _vendor for module paths matching the given Glob pattern]' \
+        '--log[enable Logging]' \
+        '--logFile[log File path (if set, logging enabled automatically)]' \
+        '--quiet[build in quiet mode]' \
+        {-s,--source}'[filesystem path to read files relative from]' \
+        '--themesDir[filesystem path to themes directory]' \
+        {-v,--verbose}'[verbose output]' \
+        '--verboseLog[verbose logging]' \
+        "*: :_files"
+
+}
+
+_hugo "$@"
+

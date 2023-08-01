@@ -1,0 +1,24 @@
+#compdef fortune
+
+# Auto-generated with h2o
+
+function _fortune {
+    _arguments \
+        '-a[Choose from all lists of maxims, both offensive and not. (See the -o option for more information on offensive fortunes.)]' \
+        '-c[Show the cookie file from which the fortune came.]' \
+        '-e[Consider all fortune files to be of equal size (see discussion below on multiple files).]' \
+        '-f[Print out the list of files which would be searched, but don'\''t print a fortune.]' \
+        '-l[Long dictums only. See -n on how ``long'\'''\'' is defined in this sense.]' \
+        '-m[Print out all fortunes which match the basic regular expression pattern. The syntax of these expressions depends on how your system defines re_comp(3) or regcomp(3), but it should nevertheless be similar to the syntax used in grep(1).]' \
+        '-n[Set the longest fortune length (in characters) considered to be ``short'\'''\'' (the default is 160). All fortunes longer than this are considered ``long'\'''\''. Be careful! If you set the length too short and ask for short fortunes, or too long and ask for long ones, fortune goes into a never-ending thrash loop.]' \
+        '-o[Choose only from potentially offensive aphorisms. The -o option is ignored if a fortune directory is specified.]' \
+        '-s[Short apothegms only. See -n on which fortunes are considered ``short'\'''\''.]' \
+        '-i[Ignore case for -m patterns.]' \
+        '-w[Wait before termination for an amount of time calculated from the number of characters in the message. This is useful if it is executed as part of the logout procedure to guarantee that the message can be read before the screen is cleared.]' \
+        '-u[Don'\''t translate UTF-8 fortunes to the locale when searching or translating.]' \
+        "*: :_files"
+
+}
+
+_fortune "$@"
+

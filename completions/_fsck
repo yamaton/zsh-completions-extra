@@ -1,0 +1,26 @@
+#compdef fsck
+
+# Auto-generated with h2o
+
+function _fsck {
+    _arguments \
+        '-A[check all filesystems]' \
+        '-C[display progress bar; file descriptor is for GUIs]' \
+        '-l[lock the device to guarantee exclusive access]' \
+        '-M[do not check mounted filesystems]' \
+        '-N[do not execute, just show what would be done]' \
+        '-P[check filesystems in parallel, including root]' \
+        '-R[skip root filesystem; useful only with '\''-A'\'']' \
+        '-r[report statistics for each device checked; file descriptor is for GUIs]' \
+        '-s[serialize the checking operations]' \
+        '-T[do not show the title on startup]' \
+        '-t[specify filesystem types to be checked; <type> is allowed to be a comma-separated list]' \
+        '-V[explain what is being done]' \
+        {-?,--help}'[display this help]' \
+        '--version[display version]' \
+        "*: :_files"
+
+}
+
+_fsck "$@"
+

@@ -1,0 +1,20 @@
+#compdef ionice
+
+# Auto-generated with h2o
+
+function _ionice {
+    _arguments \
+        {-c,--class}'[name or number of scheduling class,  0: none, 1: realtime, 2: best-effort, 3: idle]' \
+        {-n,--classdata}'[priority (0..7) in the specified scheduling class, only for the realtime and best-effort classes]' \
+        {-p,--pid}'[act on these already running processes]' \
+        {-P,--pgid}'[act on already running processes in these groups]' \
+        {-t,--ignore}'[ignore failures]' \
+        {-u,--uid}'[act on already running processes owned by these users]' \
+        {-h,--help}'[display this help]' \
+        {-V,--version}'[display version]' \
+        "*: :_files"
+
+}
+
+_ionice "$@"
+

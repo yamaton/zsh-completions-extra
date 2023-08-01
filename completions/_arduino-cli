@@ -1,0 +1,1165 @@
+#compdef arduino-cli
+
+# Auto-generated with h2o
+
+
+function _arduino-cli {
+    local line state
+
+    function _commands {
+        local -a commands
+        commands=(
+            'board:Arduino board commands.'
+            'burn-bootloader:Upload the bootloader.'
+            'cache:Arduino cache commands.'
+            'compile:Compiles Arduino sketches.'
+            'completion:Generates completion scripts'
+            'config:Arduino configuration commands.'
+            'core:Arduino core operations.'
+            'daemon:Run as a daemon on port: 50051'
+            'debug:Debug Arduino sketches.'
+            'lib:Arduino commands about libraries.'
+            'monitor:Open a communication port with a board.'
+            'outdated:Lists cores and libraries that can be upgraded'
+            'sketch:Arduino CLI sketch commands.'
+            'update:Updates the index of cores and libraries'
+            'upgrade:Upgrades installed cores and libraries.'
+            'upload:Upload Arduino sketches.'
+            'version:Shows version number of Arduino CLI.'
+        )
+        _describe 'command' commands
+    }
+ 
+
+    _arguments -C \
+        '--additional-urls[Comma-separated list of additional URLs for the Boards Manager.]' \
+        '--config-file[The custom config file (if not specified the default will be used).]' \
+        '--format[The output format for the logs, can be: text, json, jsonmini, yaml (default "text")]' \
+        {-h,--help}'[help for arduino-cli]' \
+        '--log-file[Path to the file where logs will be written.]' \
+        '--log-format[The output format for the logs, can be: text, json]' \
+        '--log-level[Messages with this level and above will be logged. Valid levels are: trace, debug, info, warn, error, fatal, panic]' \
+        '--no-color[Disable colored output.]' \
+        {-v,--verbose}'[Print the logs on the standard output.]' \
+        ': :->cmd' \
+        '*:: :->subcmd'
+
+    case $state in
+    (cmd)
+        _commands
+        ;;
+    (subcmd)
+        case $line[1] in
+        (board)
+            _arduino-cli_board
+            ;;
+
+        (burn-bootloader)
+            _arduino-cli_burn-bootloader
+            ;;
+
+        (cache)
+            _arduino-cli_cache
+            ;;
+
+        (compile)
+            _arduino-cli_compile
+            ;;
+
+        (completion)
+            _arduino-cli_completion
+            ;;
+
+        (config)
+            _arduino-cli_config
+            ;;
+
+        (core)
+            _arduino-cli_core
+            ;;
+
+        (daemon)
+            _arduino-cli_daemon
+            ;;
+
+        (debug)
+            _arduino-cli_debug
+            ;;
+
+        (lib)
+            _arduino-cli_lib
+            ;;
+
+        (monitor)
+            _arduino-cli_monitor
+            ;;
+
+        (outdated)
+            _arduino-cli_outdated
+            ;;
+
+        (sketch)
+            _arduino-cli_sketch
+            ;;
+
+        (update)
+            _arduino-cli_update
+            ;;
+
+        (upgrade)
+            _arduino-cli_upgrade
+            ;;
+
+        (upload)
+            _arduino-cli_upload
+            ;;
+
+        (version)
+            _arduino-cli_version
+            ;;
+
+        esac
+        ;;
+     esac
+
+}
+
+
+function _arduino-cli_board {
+    local line state
+
+    function _commands {
+        local -a commands
+        commands=(
+            'attach:Attaches a sketch to a board.'
+            'details:Print details about a board.'
+            'list:List connected boards.'
+            'listall:List all known boards and their corresponding FQBN.'
+            'search:List all known boards and their corresponding FQBN.'
+        )
+        _describe 'command' commands
+    }
+ 
+
+    _arguments -C \
+        {-h,--help}'[help for board]' \
+        '--additional-urls[Comma-separated list of additional URLs for the Boards Manager.]' \
+        '--config-file[The custom config file (if not specified the default will be used).]' \
+        '--format[The output format for the logs, can be: text, json, jsonmini, yaml (default "text")]' \
+        '--log-file[Path to the file where logs will be written.]' \
+        '--log-format[The output format for the logs, can be: text, json]' \
+        '--log-level[Messages with this level and above will be logged. Valid levels are: trace, debug, info, warn, error, fatal, panic]' \
+        '--no-color[Disable colored output.]' \
+        {-v,--verbose}'[Print the logs on the standard output.]' \
+        ': :->cmd' \
+        '*:: :->subcmd'
+
+    case $state in
+    (cmd)
+        _commands
+        ;;
+    (subcmd)
+        case $line[1] in
+        (attach)
+            _arduino-cli_board_attach
+            ;;
+
+        (details)
+            _arduino-cli_board_details
+            ;;
+
+        (list)
+            _arduino-cli_board_list
+            ;;
+
+        (listall)
+            _arduino-cli_board_listall
+            ;;
+
+        (search)
+            _arduino-cli_board_search
+            ;;
+
+        esac
+        ;;
+     esac
+
+}
+
+function _arduino-cli_board_attach {
+    _arguments \
+        '--discovery-timeout[Max time to wait for port discovery, e.g.: 30s, 1m (default 5s)]' \
+        {-b,--fqbn}'[Fully Qualified Board Name, e.g.: arduino:avr:uno]' \
+        {-h,--help}'[help for attach]' \
+        {-p,--port}'[Upload port address, e.g.: COM3 or /dev/ttyACM2]' \
+        {-l,--protocol}'[Upload port protocol, e.g: serial]' \
+        '--additional-urls[Comma-separated list of additional URLs for the Boards Manager.]' \
+        '--config-file[The custom config file (if not specified the default will be used).]' \
+        '--format[The output format for the logs, can be: text, json, jsonmini, yaml (default "text")]' \
+        '--log-file[Path to the file where logs will be written.]' \
+        '--log-format[The output format for the logs, can be: text, json]' \
+        '--log-level[Messages with this level and above will be logged. Valid levels are: trace, debug, info, warn, error, fatal, panic]' \
+        '--no-color[Disable colored output.]' \
+        {-v,--verbose}'[Print the logs on the standard output.]' \
+        "*: :_files"
+
+}
+
+function _arduino-cli_board_details {
+    _arguments \
+        {-b,--fqbn}'[Fully Qualified Board Name, e.g.: arduino:avr:uno]' \
+        {-f,--full}'[Show full board details]' \
+        {-h,--help}'[help for details]' \
+        '--list-programmers[Show list of available programmers]' \
+        '--additional-urls[Comma-separated list of additional URLs for the Boards Manager.]' \
+        '--config-file[The custom config file (if not specified the default will be used).]' \
+        '--format[The output format for the logs, can be: text, json, jsonmini, yaml (default "text")]' \
+        '--log-file[Path to the file where logs will be written.]' \
+        '--log-format[The output format for the logs, can be: text, json]' \
+        '--log-level[Messages with this level and above will be logged. Valid levels are: trace, debug, info, warn, error, fatal, panic]' \
+        '--no-color[Disable colored output.]' \
+        {-v,--verbose}'[Print the logs on the standard output.]' \
+        "*: :_files"
+
+}
+
+function _arduino-cli_board_list {
+    _arguments \
+        '--discovery-timeout[Max time to wait for port discovery, e.g.: 30s, 1m (default 1s)]' \
+        {-h,--help}'[help for list]' \
+        {-w,--watch}'[Command keeps running and prints list of connected boards whenever there is a change.]' \
+        '--additional-urls[Comma-separated list of additional URLs for the Boards Manager.]' \
+        '--config-file[The custom config file (if not specified the default will be used).]' \
+        '--format[The output format for the logs, can be: text, json, jsonmini, yaml (default "text")]' \
+        '--log-file[Path to the file where logs will be written.]' \
+        '--log-format[The output format for the logs, can be: text, json]' \
+        '--log-level[Messages with this level and above will be logged. Valid levels are: trace, debug, info, warn, error, fatal, panic]' \
+        '--no-color[Disable colored output.]' \
+        {-v,--verbose}'[Print the logs on the standard output.]' \
+        "*: :_files"
+
+}
+
+function _arduino-cli_board_listall {
+    _arguments \
+        {-h,--help}'[help for listall]' \
+        {-a,--show-hidden}'[Show also boards marked as '\''hidden'\'' in the platform]' \
+        '--additional-urls[Comma-separated list of additional URLs for the Boards Manager.]' \
+        '--config-file[The custom config file (if not specified the default will be used).]' \
+        '--format[The output format for the logs, can be: text, json, jsonmini, yaml (default "text")]' \
+        '--log-file[Path to the file where logs will be written.]' \
+        '--log-format[The output format for the logs, can be: text, json]' \
+        '--log-level[Messages with this level and above will be logged. Valid levels are: trace, debug, info, warn, error, fatal, panic]' \
+        '--no-color[Disable colored output.]' \
+        {-v,--verbose}'[Print the logs on the standard output.]' \
+        "*: :_files"
+
+}
+
+function _arduino-cli_board_search {
+    _arguments \
+        {-h,--help}'[help for search]' \
+        {-a,--show-hidden}'[Show also boards marked as '\''hidden'\'' in the platform]' \
+        '--additional-urls[Comma-separated list of additional URLs for the Boards Manager.]' \
+        '--config-file[The custom config file (if not specified the default will be used).]' \
+        '--format[The output format for the logs, can be: text, json, jsonmini, yaml (default "text")]' \
+        '--log-file[Path to the file where logs will be written.]' \
+        '--log-format[The output format for the logs, can be: text, json]' \
+        '--log-level[Messages with this level and above will be logged. Valid levels are: trace, debug, info, warn, error, fatal, panic]' \
+        '--no-color[Disable colored output.]' \
+        {-v,--verbose}'[Print the logs on the standard output.]' \
+        "*: :_files"
+
+}
+
+function _arduino-cli_burn-bootloader {
+    _arguments \
+        '--discovery-timeout[Max time to wait for port discovery, e.g.: 30s, 1m (default 5s)]' \
+        {-b,--fqbn}'[Fully Qualified Board Name, e.g.: arduino:avr:uno]' \
+        {-h,--help}'[help for burn-bootloader]' \
+        {-p,--port}'[Upload port address, e.g.: COM3 or /dev/ttyACM2]' \
+        {-P,--programmer}'[Programmer to use, e.g: atmel_ice]' \
+        {-l,--protocol}'[Upload port protocol, e.g: serial]' \
+        {-t,--verify}'[Verify uploaded binary after the upload.]' \
+        '--additional-urls[Comma-separated list of additional URLs for the Boards Manager.]' \
+        '--config-file[The custom config file (if not specified the default will be used).]' \
+        '--format[The output format for the logs, can be: text, json, jsonmini, yaml (default "text")]' \
+        '--log-file[Path to the file where logs will be written.]' \
+        '--log-format[The output format for the logs, can be: text, json]' \
+        '--log-level[Messages with this level and above will be logged. Valid levels are: trace, debug, info, warn, error, fatal, panic]' \
+        '--no-color[Disable colored output.]' \
+        {-v,--verbose}'[Print the logs on the standard output.]' \
+        "*: :_files"
+
+}
+
+
+function _arduino-cli_cache {
+    local line state
+
+    function _commands {
+        local -a commands
+        commands=(
+            'clean:Delete Boards/Library Manager download cache.'
+        )
+        _describe 'command' commands
+    }
+ 
+
+    _arguments -C \
+        {-h,--help}'[help for cache]' \
+        '--additional-urls[Comma-separated list of additional URLs for the Boards Manager.]' \
+        '--config-file[The custom config file (if not specified the default will be used).]' \
+        '--format[The output format for the logs, can be: text, json, jsonmini, yaml (default "text")]' \
+        '--log-file[Path to the file where logs will be written.]' \
+        '--log-format[The output format for the logs, can be: text, json]' \
+        '--log-level[Messages with this level and above will be logged. Valid levels are: trace, debug, info, warn, error, fatal, panic]' \
+        '--no-color[Disable colored output.]' \
+        {-v,--verbose}'[Print the logs on the standard output.]' \
+        ': :->cmd' \
+        '*:: :->subcmd'
+
+    case $state in
+    (cmd)
+        _commands
+        ;;
+    (subcmd)
+        case $line[1] in
+        (clean)
+            _arduino-cli_cache_clean
+            ;;
+
+        esac
+        ;;
+     esac
+
+}
+
+function _arduino-cli_cache_clean {
+    _arguments \
+        {-h,--help}'[help for clean]' \
+        '--additional-urls[Comma-separated list of additional URLs for the Boards Manager.]' \
+        '--config-file[The custom config file (if not specified the default will be used).]' \
+        '--format[The output format for the logs, can be: text, json, jsonmini, yaml (default "text")]' \
+        '--log-file[Path to the file where logs will be written.]' \
+        '--log-format[The output format for the logs, can be: text, json]' \
+        '--log-level[Messages with this level and above will be logged. Valid levels are: trace, debug, info, warn, error, fatal, panic]' \
+        '--no-color[Disable colored output.]' \
+        {-v,--verbose}'[Print the logs on the standard output.]' \
+        "*: :_files"
+
+}
+
+function _arduino-cli_compile {
+    _arguments \
+        '--build-cache-path[Builds of '\''core.a'\'' are saved into this path to be cached and reused.]' \
+        '--build-path[Path where to save compiled files. If omitted, a directory will be created in the default temporary path of your OS.]' \
+        '--build-property[Override a build property with a custom value. Can be used multiple times for multiple properties.]' \
+        '--clean[Optional, cleanup the build folder and do not use any cached build.]' \
+        '--discovery-timeout[Max time to wait for port discovery, e.g.: 30s, 1m (default 5s)]' \
+        {-e,--export-binaries}'[If set built binaries will be exported to the sketch folder.]' \
+        {-b,--fqbn}'[Fully Qualified Board Name, e.g.: arduino:avr:uno]' \
+        {-h,--help}'[help for compile]' \
+        '--libraries[List of custom libraries dir paths separated by commas. Or can be used multiple times for multiple libraries dir paths.]' \
+        '--library[List of paths to libraries root folders. Libraries set this way have top priority in case of conflicts. Can be used multiple times for different libraries.]' \
+        '--only-compilation-database[Just produce the compilation database, without actually compiling. All build commands are skipped except pre* hooks.]' \
+        '--optimize-for-debug[Optional, optimize compile output for debugging, rather than for release.]' \
+        '--output-dir[Save build artifacts in this directory.]' \
+        {-p,--port}'[Upload port address, e.g.: COM3 or /dev/ttyACM2]' \
+        '--preprocess[Print preprocessed code to stdout instead of compiling.]' \
+        {-P,--programmer}'[Programmer to use, e.g: atmel_ice]' \
+        {-l,--protocol}'[Upload port protocol, e.g: serial]' \
+        '--quiet[Optional, suppresses almost every output.]' \
+        '--show-properties[Show all build properties used instead of compiling.]' \
+        {-u,--upload}'[Upload the binary after the compilation.]' \
+        {-t,--verify}'[Verify uploaded binary after the upload.]' \
+        '--vid-pid[When specified, VID/PID specific build properties are used, if board supports them.]' \
+        '--warnings[Optional, can be: none, default, more, all. Used to tell gcc which warning level to use (-W flag). (default "none")]' \
+        '--additional-urls[Comma-separated list of additional URLs for the Boards Manager.]' \
+        '--config-file[The custom config file (if not specified the default will be used).]' \
+        '--format[The output format for the logs, can be: text, json, jsonmini, yaml (default "text")]' \
+        '--log-file[Path to the file where logs will be written.]' \
+        '--log-format[The output format for the logs, can be: text, json]' \
+        '--log-level[Messages with this level and above will be logged. Valid levels are: trace, debug, info, warn, error, fatal, panic]' \
+        '--no-color[Disable colored output.]' \
+        {-v,--verbose}'[Print the logs on the standard output.]' \
+        "*: :_files"
+
+}
+
+function _arduino-cli_completion {
+    _arguments \
+        {-h,--help}'[help for completion]' \
+        '--no-descriptions[Disable completion description for shells that support it]' \
+        '--additional-urls[Comma-separated list of additional URLs for the Boards Manager.]' \
+        '--config-file[The custom config file (if not specified the default will be used).]' \
+        '--format[The output format for the logs, can be: text, json, jsonmini, yaml (default "text")]' \
+        '--log-file[Path to the file where logs will be written.]' \
+        '--log-format[The output format for the logs, can be: text, json]' \
+        '--log-level[Messages with this level and above will be logged. Valid levels are: trace, debug, info, warn, error, fatal, panic]' \
+        '--no-color[Disable colored output.]' \
+        {-v,--verbose}'[Print the logs on the standard output.]' \
+        "*: :_files"
+
+}
+
+
+function _arduino-cli_config {
+    local line state
+
+    function _commands {
+        local -a commands
+        commands=(
+            'add:Adds one or more values to a setting.'
+            'delete:Deletes a settings key and all its sub keys.'
+            'dump:Prints the current configuration'
+            'init:Writes current configuration to a configuration file.'
+            'remove:Removes one or more values from a setting.'
+            'set:Sets a setting value.'
+        )
+        _describe 'command' commands
+    }
+ 
+
+    _arguments -C \
+        {-h,--help}'[help for config]' \
+        '--additional-urls[Comma-separated list of additional URLs for the Boards Manager.]' \
+        '--config-file[The custom config file (if not specified the default will be used).]' \
+        '--format[The output format for the logs, can be: text, json, jsonmini, yaml (default "text")]' \
+        '--log-file[Path to the file where logs will be written.]' \
+        '--log-format[The output format for the logs, can be: text, json]' \
+        '--log-level[Messages with this level and above will be logged. Valid levels are: trace, debug, info, warn, error, fatal, panic]' \
+        '--no-color[Disable colored output.]' \
+        {-v,--verbose}'[Print the logs on the standard output.]' \
+        ': :->cmd' \
+        '*:: :->subcmd'
+
+    case $state in
+    (cmd)
+        _commands
+        ;;
+    (subcmd)
+        case $line[1] in
+        (add)
+            _arduino-cli_config_add
+            ;;
+
+        (delete)
+            _arduino-cli_config_delete
+            ;;
+
+        (dump)
+            _arduino-cli_config_dump
+            ;;
+
+        (init)
+            _arduino-cli_config_init
+            ;;
+
+        (remove)
+            _arduino-cli_config_remove
+            ;;
+
+        (set)
+            _arduino-cli_config_set
+            ;;
+
+        esac
+        ;;
+     esac
+
+}
+
+function _arduino-cli_config_add {
+    _arguments \
+        {-h,--help}'[help for add]' \
+        '--additional-urls[Comma-separated list of additional URLs for the Boards Manager.]' \
+        '--config-file[The custom config file (if not specified the default will be used).]' \
+        '--format[The output format for the logs, can be: text, json, jsonmini, yaml (default "text")]' \
+        '--log-file[Path to the file where logs will be written.]' \
+        '--log-format[The output format for the logs, can be: text, json]' \
+        '--log-level[Messages with this level and above will be logged. Valid levels are: trace, debug, info, warn, error, fatal, panic]' \
+        '--no-color[Disable colored output.]' \
+        {-v,--verbose}'[Print the logs on the standard output.]' \
+        "*: :_files"
+
+}
+
+function _arduino-cli_config_delete {
+    _arguments \
+        {-h,--help}'[help for delete]' \
+        '--additional-urls[Comma-separated list of additional URLs for the Boards Manager.]' \
+        '--config-file[The custom config file (if not specified the default will be used).]' \
+        '--format[The output format for the logs, can be: text, json, jsonmini, yaml (default "text")]' \
+        '--log-file[Path to the file where logs will be written.]' \
+        '--log-format[The output format for the logs, can be: text, json]' \
+        '--log-level[Messages with this level and above will be logged. Valid levels are: trace, debug, info, warn, error, fatal, panic]' \
+        '--no-color[Disable colored output.]' \
+        {-v,--verbose}'[Print the logs on the standard output.]' \
+        "*: :_files"
+
+}
+
+function _arduino-cli_config_dump {
+    _arguments \
+        {-h,--help}'[help for dump]' \
+        '--additional-urls[Comma-separated list of additional URLs for the Boards Manager.]' \
+        '--config-file[The custom config file (if not specified the default will be used).]' \
+        '--format[The output format for the logs, can be: text, json, jsonmini, yaml (default "text")]' \
+        '--log-file[Path to the file where logs will be written.]' \
+        '--log-format[The output format for the logs, can be: text, json]' \
+        '--log-level[Messages with this level and above will be logged. Valid levels are: trace, debug, info, warn, error, fatal, panic]' \
+        '--no-color[Disable colored output.]' \
+        {-v,--verbose}'[Print the logs on the standard output.]' \
+        "*: :_files"
+
+}
+
+function _arduino-cli_config_init {
+    _arguments \
+        '--dest-dir[Sets where to save the configuration file.]' \
+        '--dest-file[Sets where to save the configuration file.]' \
+        {-h,--help}'[help for init]' \
+        '--overwrite[Overwrite existing config file.]' \
+        '--additional-urls[Comma-separated list of additional URLs for the Boards Manager.]' \
+        '--config-file[The custom config file (if not specified the default will be used).]' \
+        '--format[The output format for the logs, can be: text, json, jsonmini, yaml (default "text")]' \
+        '--log-file[Path to the file where logs will be written.]' \
+        '--log-format[The output format for the logs, can be: text, json]' \
+        '--log-level[Messages with this level and above will be logged. Valid levels are: trace, debug, info, warn, error, fatal, panic]' \
+        '--no-color[Disable colored output.]' \
+        {-v,--verbose}'[Print the logs on the standard output.]' \
+        "*: :_files"
+
+}
+
+function _arduino-cli_config_remove {
+    _arguments \
+        {-h,--help}'[help for remove]' \
+        '--additional-urls[Comma-separated list of additional URLs for the Boards Manager.]' \
+        '--config-file[The custom config file (if not specified the default will be used).]' \
+        '--format[The output format for the logs, can be: text, json, jsonmini, yaml (default "text")]' \
+        '--log-file[Path to the file where logs will be written.]' \
+        '--log-format[The output format for the logs, can be: text, json]' \
+        '--log-level[Messages with this level and above will be logged. Valid levels are: trace, debug, info, warn, error, fatal, panic]' \
+        '--no-color[Disable colored output.]' \
+        {-v,--verbose}'[Print the logs on the standard output.]' \
+        "*: :_files"
+
+}
+
+function _arduino-cli_config_set {
+    _arguments \
+        {-h,--help}'[help for set]' \
+        '--additional-urls[Comma-separated list of additional URLs for the Boards Manager.]' \
+        '--config-file[The custom config file (if not specified the default will be used).]' \
+        '--format[The output format for the logs, can be: text, json, jsonmini, yaml (default "text")]' \
+        '--log-file[Path to the file where logs will be written.]' \
+        '--log-format[The output format for the logs, can be: text, json]' \
+        '--log-level[Messages with this level and above will be logged. Valid levels are: trace, debug, info, warn, error, fatal, panic]' \
+        '--no-color[Disable colored output.]' \
+        {-v,--verbose}'[Print the logs on the standard output.]' \
+        "*: :_files"
+
+}
+
+
+function _arduino-cli_core {
+    local line state
+
+    function _commands {
+        local -a commands
+        commands=(
+            'download:Downloads one or more cores and corresponding tool dependencies.'
+            'install:Installs one or more cores and corresponding tool dependencies.'
+            'list:Shows the list of installed platforms.'
+            'search:Search for a core in Boards Manager.'
+            'uninstall:Uninstalls one or more cores and corresponding tool dependencies if no longer used.'
+            'upgrade:Upgrades one or all installed platforms to the latest version.'
+        )
+        _describe 'command' commands
+    }
+ 
+
+    _arguments -C \
+        {-h,--help}'[help for core]' \
+        '--additional-urls[Comma-separated list of additional URLs for the Boards Manager.]' \
+        '--config-file[The custom config file (if not specified the default will be used).]' \
+        '--format[The output format for the logs, can be: text, json, jsonmini, yaml (default "text")]' \
+        '--log-file[Path to the file where logs will be written.]' \
+        '--log-format[The output format for the logs, can be: text, json]' \
+        '--log-level[Messages with this level and above will be logged. Valid levels are: trace, debug, info, warn, error, fatal, panic]' \
+        '--no-color[Disable colored output.]' \
+        {-v,--verbose}'[Print the logs on the standard output.]' \
+        ': :->cmd' \
+        '*:: :->subcmd'
+
+    case $state in
+    (cmd)
+        _commands
+        ;;
+    (subcmd)
+        case $line[1] in
+        (download)
+            _arduino-cli_core_download
+            ;;
+
+        (install)
+            _arduino-cli_core_install
+            ;;
+
+        (list)
+            _arduino-cli_core_list
+            ;;
+
+        (search)
+            _arduino-cli_core_search
+            ;;
+
+        (uninstall)
+            _arduino-cli_core_uninstall
+            ;;
+
+        (upgrade)
+            _arduino-cli_core_upgrade
+            ;;
+
+        esac
+        ;;
+     esac
+
+}
+
+function _arduino-cli_core_download {
+    _arguments \
+        {-h,--help}'[help for download]' \
+        '--additional-urls[Comma-separated list of additional URLs for the Boards Manager.]' \
+        '--config-file[The custom config file (if not specified the default will be used).]' \
+        '--format[The output format for the logs, can be: text, json, jsonmini, yaml (default "text")]' \
+        '--log-file[Path to the file where logs will be written.]' \
+        '--log-format[The output format for the logs, can be: text, json]' \
+        '--log-level[Messages with this level and above will be logged. Valid levels are: trace, debug, info, warn, error, fatal, panic]' \
+        '--no-color[Disable colored output.]' \
+        {-v,--verbose}'[Print the logs on the standard output.]' \
+        "*: :_files"
+
+}
+
+function _arduino-cli_core_install {
+    _arguments \
+        {-h,--help}'[help for install]' \
+        '--run-post-install[Force run of post-install scripts (if the CLI is not running interactively).]' \
+        '--skip-post-install[Force skip of post-install scripts (if the CLI is running interactively).]' \
+        '--additional-urls[Comma-separated list of additional URLs for the Boards Manager.]' \
+        '--config-file[The custom config file (if not specified the default will be used).]' \
+        '--format[The output format for the logs, can be: text, json, jsonmini, yaml (default "text")]' \
+        '--log-file[Path to the file where logs will be written.]' \
+        '--log-format[The output format for the logs, can be: text, json]' \
+        '--log-level[Messages with this level and above will be logged. Valid levels are: trace, debug, info, warn, error, fatal, panic]' \
+        '--no-color[Disable colored output.]' \
+        {-v,--verbose}'[Print the logs on the standard output.]' \
+        "*: :_files"
+
+}
+
+function _arduino-cli_core_list {
+    _arguments \
+        '--all[If set return all installable and installed cores, including manually installed.]' \
+        {-h,--help}'[help for list]' \
+        '--updatable[List updatable platforms.]' \
+        '--additional-urls[Comma-separated list of additional URLs for the Boards Manager.]' \
+        '--config-file[The custom config file (if not specified the default will be used).]' \
+        '--format[The output format for the logs, can be: text, json, jsonmini, yaml (default "text")]' \
+        '--log-file[Path to the file where logs will be written.]' \
+        '--log-format[The output format for the logs, can be: text, json]' \
+        '--log-level[Messages with this level and above will be logged. Valid levels are: trace, debug, info, warn, error, fatal, panic]' \
+        '--no-color[Disable colored output.]' \
+        {-v,--verbose}'[Print the logs on the standard output.]' \
+        "*: :_files"
+
+}
+
+function _arduino-cli_core_search {
+    _arguments \
+        {-a,--all}'[Show all available core versions.]' \
+        {-h,--help}'[help for search]' \
+        '--additional-urls[Comma-separated list of additional URLs for the Boards Manager.]' \
+        '--config-file[The custom config file (if not specified the default will be used).]' \
+        '--format[The output format for the logs, can be: text, json, jsonmini, yaml (default "text")]' \
+        '--log-file[Path to the file where logs will be written.]' \
+        '--log-format[The output format for the logs, can be: text, json]' \
+        '--log-level[Messages with this level and above will be logged. Valid levels are: trace, debug, info, warn, error, fatal, panic]' \
+        '--no-color[Disable colored output.]' \
+        {-v,--verbose}'[Print the logs on the standard output.]' \
+        "*: :_files"
+
+}
+
+function _arduino-cli_core_uninstall {
+    _arguments \
+        {-h,--help}'[help for uninstall]' \
+        '--additional-urls[Comma-separated list of additional URLs for the Boards Manager.]' \
+        '--config-file[The custom config file (if not specified the default will be used).]' \
+        '--format[The output format for the logs, can be: text, json, jsonmini, yaml (default "text")]' \
+        '--log-file[Path to the file where logs will be written.]' \
+        '--log-format[The output format for the logs, can be: text, json]' \
+        '--log-level[Messages with this level and above will be logged. Valid levels are: trace, debug, info, warn, error, fatal, panic]' \
+        '--no-color[Disable colored output.]' \
+        {-v,--verbose}'[Print the logs on the standard output.]' \
+        "*: :_files"
+
+}
+
+function _arduino-cli_core_upgrade {
+    _arguments \
+        {-h,--help}'[help for upgrade]' \
+        '--run-post-install[Force run of post-install scripts (if the CLI is not running interactively).]' \
+        '--skip-post-install[Force skip of post-install scripts (if the CLI is running interactively).]' \
+        '--additional-urls[Comma-separated list of additional URLs for the Boards Manager.]' \
+        '--config-file[The custom config file (if not specified the default will be used).]' \
+        '--format[The output format for the logs, can be: text, json, jsonmini, yaml (default "text")]' \
+        '--log-file[Path to the file where logs will be written.]' \
+        '--log-format[The output format for the logs, can be: text, json]' \
+        '--log-level[Messages with this level and above will be logged. Valid levels are: trace, debug, info, warn, error, fatal, panic]' \
+        '--no-color[Disable colored output.]' \
+        {-v,--verbose}'[Print the logs on the standard output.]' \
+        "*: :_files"
+
+}
+
+function _arduino-cli_daemon {
+    _arguments \
+        '--daemonize[Do not terminate daemon process if the parent process dies]' \
+        '--debug[Enable debug logging of gRPC calls]' \
+        '--debug-filter[Display only the provided gRPC calls]' \
+        {-h,--help}'[help for daemon]' \
+        '--ip[The IP address the daemon will listen to (default "127.0.0.1")]' \
+        '--port[The TCP port the daemon will listen to]' \
+        '--additional-urls[Comma-separated list of additional URLs for the Boards Manager.]' \
+        '--config-file[The custom config file (if not specified the default will be used).]' \
+        '--format[The output format for the logs, can be: text, json, jsonmini, yaml (default "text")]' \
+        '--log-file[Path to the file where logs will be written.]' \
+        '--log-format[The output format for the logs, can be: text, json]' \
+        '--log-level[Messages with this level and above will be logged. Valid levels are: trace, debug, info, warn, error, fatal, panic]' \
+        '--no-color[Disable colored output.]' \
+        {-v,--verbose}'[Print the logs on the standard output.]' \
+        "*: :_files"
+
+}
+
+function _arduino-cli_debug {
+    _arguments \
+        '--discovery-timeout[Max time to wait for port discovery, e.g.: 30s, 1m (default 5s)]' \
+        {-b,--fqbn}'[Fully Qualified Board Name, e.g.: arduino:avr:uno]' \
+        {-h,--help}'[help for debug]' \
+        {-I,--info}'[Show metadata about the debug session instead of starting the debugger.]' \
+        '--input-dir[Directory containing binaries for debug.]' \
+        '--interpreter[Debug interpreter e.g.: console, mi, mi1, mi2, mi3 (default "console")]' \
+        {-p,--port}'[Upload port address, e.g.: COM3 or /dev/ttyACM2]' \
+        {-P,--programmer}'[Programmer to use, e.g: atmel_ice]' \
+        {-l,--protocol}'[Upload port protocol, e.g: serial]' \
+        '--additional-urls[Comma-separated list of additional URLs for the Boards Manager.]' \
+        '--config-file[The custom config file (if not specified the default will be used).]' \
+        '--format[The output format for the logs, can be: text, json, jsonmini, yaml (default "text")]' \
+        '--log-file[Path to the file where logs will be written.]' \
+        '--log-format[The output format for the logs, can be: text, json]' \
+        '--log-level[Messages with this level and above will be logged. Valid levels are: trace, debug, info, warn, error, fatal, panic]' \
+        '--no-color[Disable colored output.]' \
+        {-v,--verbose}'[Print the logs on the standard output.]' \
+        "*: :_files"
+
+}
+
+
+function _arduino-cli_lib {
+    local line state
+
+    function _commands {
+        local -a commands
+        commands=(
+            'deps:Check dependencies status for the specified library.'
+            'download:Downloads one or more libraries without installing them.'
+            'examples:Shows the list of the examples for libraries.'
+            'install:Installs one or more specified libraries into the system.'
+            'list:Shows a list of installed libraries.'
+            'search:Searches for one or more libraries data.'
+            'uninstall:Uninstalls one or more libraries.'
+            'upgrade:Upgrades installed libraries.'
+        )
+        _describe 'command' commands
+    }
+ 
+
+    _arguments -C \
+        {-h,--help}'[help for lib]' \
+        '--additional-urls[Comma-separated list of additional URLs for the Boards Manager.]' \
+        '--config-file[The custom config file (if not specified the default will be used).]' \
+        '--format[The output format for the logs, can be: text, json, jsonmini, yaml (default "text")]' \
+        '--log-file[Path to the file where logs will be written.]' \
+        '--log-format[The output format for the logs, can be: text, json]' \
+        '--log-level[Messages with this level and above will be logged. Valid levels are: trace, debug, info, warn, error, fatal, panic]' \
+        '--no-color[Disable colored output.]' \
+        {-v,--verbose}'[Print the logs on the standard output.]' \
+        ': :->cmd' \
+        '*:: :->subcmd'
+
+    case $state in
+    (cmd)
+        _commands
+        ;;
+    (subcmd)
+        case $line[1] in
+        (deps)
+            _arduino-cli_lib_deps
+            ;;
+
+        (download)
+            _arduino-cli_lib_download
+            ;;
+
+        (examples)
+            _arduino-cli_lib_examples
+            ;;
+
+        (install)
+            _arduino-cli_lib_install
+            ;;
+
+        (list)
+            _arduino-cli_lib_list
+            ;;
+
+        (search)
+            _arduino-cli_lib_search
+            ;;
+
+        (uninstall)
+            _arduino-cli_lib_uninstall
+            ;;
+
+        (upgrade)
+            _arduino-cli_lib_upgrade
+            ;;
+
+        esac
+        ;;
+     esac
+
+}
+
+function _arduino-cli_lib_deps {
+    _arguments \
+        {-h,--help}'[help for deps]' \
+        '--additional-urls[Comma-separated list of additional URLs for the Boards Manager.]' \
+        '--config-file[The custom config file (if not specified the default will be used).]' \
+        '--format[The output format for the logs, can be: text, json, jsonmini, yaml (default "text")]' \
+        '--log-file[Path to the file where logs will be written.]' \
+        '--log-format[The output format for the logs, can be: text, json]' \
+        '--log-level[Messages with this level and above will be logged. Valid levels are: trace, debug, info, warn, error, fatal, panic]' \
+        '--no-color[Disable colored output.]' \
+        {-v,--verbose}'[Print the logs on the standard output.]' \
+        "*: :_files"
+
+}
+
+function _arduino-cli_lib_download {
+    _arguments \
+        {-h,--help}'[help for download]' \
+        '--additional-urls[Comma-separated list of additional URLs for the Boards Manager.]' \
+        '--config-file[The custom config file (if not specified the default will be used).]' \
+        '--format[The output format for the logs, can be: text, json, jsonmini, yaml (default "text")]' \
+        '--log-file[Path to the file where logs will be written.]' \
+        '--log-format[The output format for the logs, can be: text, json]' \
+        '--log-level[Messages with this level and above will be logged. Valid levels are: trace, debug, info, warn, error, fatal, panic]' \
+        '--no-color[Disable colored output.]' \
+        {-v,--verbose}'[Print the logs on the standard output.]' \
+        "*: :_files"
+
+}
+
+function _arduino-cli_lib_examples {
+    _arguments \
+        {-b,--fqbn}'[Fully Qualified Board Name, e.g.: arduino:avr:uno]' \
+        {-h,--help}'[help for examples]' \
+        '--additional-urls[Comma-separated list of additional URLs for the Boards Manager.]' \
+        '--config-file[The custom config file (if not specified the default will be used).]' \
+        '--format[The output format for the logs, can be: text, json, jsonmini, yaml (default "text")]' \
+        '--log-file[Path to the file where logs will be written.]' \
+        '--log-format[The output format for the logs, can be: text, json]' \
+        '--log-level[Messages with this level and above will be logged. Valid levels are: trace, debug, info, warn, error, fatal, panic]' \
+        '--no-color[Disable colored output.]' \
+        {-v,--verbose}'[Print the logs on the standard output.]' \
+        "*: :_files"
+
+}
+
+function _arduino-cli_lib_install {
+    _arguments \
+        '--git-url[Enter git url for libraries hosted on repositories]' \
+        {-h,--help}'[help for install]' \
+        '--no-deps[Do not install dependencies.]' \
+        '--zip-path[Enter a path to zip file]' \
+        '--additional-urls[Comma-separated list of additional URLs for the Boards Manager.]' \
+        '--config-file[The custom config file (if not specified the default will be used).]' \
+        '--format[The output format for the logs, can be: text, json, jsonmini, yaml (default "text")]' \
+        '--log-file[Path to the file where logs will be written.]' \
+        '--log-format[The output format for the logs, can be: text, json]' \
+        '--log-level[Messages with this level and above will be logged. Valid levels are: trace, debug, info, warn, error, fatal, panic]' \
+        '--no-color[Disable colored output.]' \
+        {-v,--verbose}'[Print the logs on the standard output.]' \
+        "*: :_files"
+
+}
+
+function _arduino-cli_lib_list {
+    _arguments \
+        '--all[Include built-in libraries (from platforms and IDE) in listing.]' \
+        {-b,--fqbn}'[Fully Qualified Board Name, e.g.: arduino:avr:uno]' \
+        {-h,--help}'[help for list]' \
+        '--updatable[List updatable libraries.]' \
+        '--additional-urls[Comma-separated list of additional URLs for the Boards Manager.]' \
+        '--config-file[The custom config file (if not specified the default will be used).]' \
+        '--format[The output format for the logs, can be: text, json, jsonmini, yaml (default "text")]' \
+        '--log-file[Path to the file where logs will be written.]' \
+        '--log-format[The output format for the logs, can be: text, json]' \
+        '--log-level[Messages with this level and above will be logged. Valid levels are: trace, debug, info, warn, error, fatal, panic]' \
+        '--no-color[Disable colored output.]' \
+        {-v,--verbose}'[Print the logs on the standard output.]' \
+        "*: :_files"
+
+}
+
+function _arduino-cli_lib_search {
+    _arguments \
+        {-h,--help}'[help for search]' \
+        '--names[Show library names only.]' \
+        '--additional-urls[Comma-separated list of additional URLs for the Boards Manager.]' \
+        '--config-file[The custom config file (if not specified the default will be used).]' \
+        '--format[The output format for the logs, can be: text, json, jsonmini, yaml (default "text")]' \
+        '--log-file[Path to the file where logs will be written.]' \
+        '--log-format[The output format for the logs, can be: text, json]' \
+        '--log-level[Messages with this level and above will be logged. Valid levels are: trace, debug, info, warn, error, fatal, panic]' \
+        '--no-color[Disable colored output.]' \
+        {-v,--verbose}'[Print the logs on the standard output.]' \
+        "*: :_files"
+
+}
+
+function _arduino-cli_lib_uninstall {
+    _arguments \
+        {-h,--help}'[help for uninstall]' \
+        '--additional-urls[Comma-separated list of additional URLs for the Boards Manager.]' \
+        '--config-file[The custom config file (if not specified the default will be used).]' \
+        '--format[The output format for the logs, can be: text, json, jsonmini, yaml (default "text")]' \
+        '--log-file[Path to the file where logs will be written.]' \
+        '--log-format[The output format for the logs, can be: text, json]' \
+        '--log-level[Messages with this level and above will be logged. Valid levels are: trace, debug, info, warn, error, fatal, panic]' \
+        '--no-color[Disable colored output.]' \
+        {-v,--verbose}'[Print the logs on the standard output.]' \
+        "*: :_files"
+
+}
+
+function _arduino-cli_lib_upgrade {
+    _arguments \
+        {-h,--help}'[help for upgrade]' \
+        '--additional-urls[Comma-separated list of additional URLs for the Boards Manager.]' \
+        '--config-file[The custom config file (if not specified the default will be used).]' \
+        '--format[The output format for the logs, can be: text, json, jsonmini, yaml (default "text")]' \
+        '--log-file[Path to the file where logs will be written.]' \
+        '--log-format[The output format for the logs, can be: text, json]' \
+        '--log-level[Messages with this level and above will be logged. Valid levels are: trace, debug, info, warn, error, fatal, panic]' \
+        '--no-color[Disable colored output.]' \
+        {-v,--verbose}'[Print the logs on the standard output.]' \
+        "*: :_files"
+
+}
+
+function _arduino-cli_monitor {
+    _arguments \
+        {-c,--config}'[Configuration of the port.]' \
+        '--describe[Show all the settings of the communication port.]' \
+        '--discovery-timeout[Max time to wait for port discovery, e.g.: 30s, 1m (default 5s)]' \
+        {-b,--fqbn}'[Fully Qualified Board Name, e.g.: arduino:avr:uno]' \
+        {-h,--help}'[help for monitor]' \
+        {-p,--port}'[Upload port address, e.g.: COM3 or /dev/ttyACM2]' \
+        {-l,--protocol}'[Upload port protocol, e.g: serial]' \
+        {-q,--quiet}'[Run in silent mode, show only monitor input and output.]' \
+        '--additional-urls[Comma-separated list of additional URLs for the Boards Manager.]' \
+        '--config-file[The custom config file (if not specified the default will be used).]' \
+        '--format[The output format for the logs, can be: text, json, jsonmini, yaml (default "text")]' \
+        '--log-file[Path to the file where logs will be written.]' \
+        '--log-format[The output format for the logs, can be: text, json]' \
+        '--log-level[Messages with this level and above will be logged. Valid levels are: trace, debug, info, warn, error, fatal, panic]' \
+        '--no-color[Disable colored output.]' \
+        {-v,--verbose}'[Print the logs on the standard output.]' \
+        "*: :_files"
+
+}
+
+function _arduino-cli_outdated {
+    _arguments \
+        {-h,--help}'[help for outdated]' \
+        '--additional-urls[Comma-separated list of additional URLs for the Boards Manager.]' \
+        '--config-file[The custom config file (if not specified the default will be used).]' \
+        '--format[The output format for the logs, can be: text, json, jsonmini, yaml (default "text")]' \
+        '--log-file[Path to the file where logs will be written.]' \
+        '--log-format[The output format for the logs, can be: text, json]' \
+        '--log-level[Messages with this level and above will be logged. Valid levels are: trace, debug, info, warn, error, fatal, panic]' \
+        '--no-color[Disable colored output.]' \
+        {-v,--verbose}'[Print the logs on the standard output.]' \
+        "*: :_files"
+
+}
+
+
+function _arduino-cli_sketch {
+    local line state
+
+    function _commands {
+        local -a commands
+        commands=(
+            'archive:Creates a zip file containing all sketch files.'
+            'new:Create a new Sketch'
+        )
+        _describe 'command' commands
+    }
+ 
+
+    _arguments -C \
+        {-h,--help}'[help for sketch]' \
+        '--additional-urls[Comma-separated list of additional URLs for the Boards Manager.]' \
+        '--config-file[The custom config file (if not specified the default will be used).]' \
+        '--format[The output format for the logs, can be: text, json, jsonmini, yaml (default "text")]' \
+        '--log-file[Path to the file where logs will be written.]' \
+        '--log-format[The output format for the logs, can be: text, json]' \
+        '--log-level[Messages with this level and above will be logged. Valid levels are: trace, debug, info, warn, error, fatal, panic]' \
+        '--no-color[Disable colored output.]' \
+        {-v,--verbose}'[Print the logs on the standard output.]' \
+        ': :->cmd' \
+        '*:: :->subcmd'
+
+    case $state in
+    (cmd)
+        _commands
+        ;;
+    (subcmd)
+        case $line[1] in
+        (archive)
+            _arduino-cli_sketch_archive
+            ;;
+
+        (new)
+            _arduino-cli_sketch_new
+            ;;
+
+        esac
+        ;;
+     esac
+
+}
+
+function _arduino-cli_sketch_archive {
+    _arguments \
+        {-h,--help}'[help for archive]' \
+        '--include-build-dir[Includes build directory in the archive.]' \
+        '--additional-urls[Comma-separated list of additional URLs for the Boards Manager.]' \
+        '--config-file[The custom config file (if not specified the default will be used).]' \
+        '--format[The output format for the logs, can be: text, json, jsonmini, yaml (default "text")]' \
+        '--log-file[Path to the file where logs will be written.]' \
+        '--log-format[The output format for the logs, can be: text, json]' \
+        '--log-level[Messages with this level and above will be logged. Valid levels are: trace, debug, info, warn, error, fatal, panic]' \
+        '--no-color[Disable colored output.]' \
+        {-v,--verbose}'[Print the logs on the standard output.]' \
+        "*: :_files"
+
+}
+
+function _arduino-cli_sketch_new {
+    _arguments \
+        {-h,--help}'[help for new]' \
+        '--additional-urls[Comma-separated list of additional URLs for the Boards Manager.]' \
+        '--config-file[The custom config file (if not specified the default will be used).]' \
+        '--format[The output format for the logs, can be: text, json, jsonmini, yaml (default "text")]' \
+        '--log-file[Path to the file where logs will be written.]' \
+        '--log-format[The output format for the logs, can be: text, json]' \
+        '--log-level[Messages with this level and above will be logged. Valid levels are: trace, debug, info, warn, error, fatal, panic]' \
+        '--no-color[Disable colored output.]' \
+        {-v,--verbose}'[Print the logs on the standard output.]' \
+        "*: :_files"
+
+}
+
+function _arduino-cli_update {
+    _arguments \
+        {-h,--help}'[help for update]' \
+        '--show-outdated[Show outdated cores and libraries after index update]' \
+        '--additional-urls[Comma-separated list of additional URLs for the Boards Manager.]' \
+        '--config-file[The custom config file (if not specified the default will be used).]' \
+        '--format[The output format for the logs, can be: text, json, jsonmini, yaml (default "text")]' \
+        '--log-file[Path to the file where logs will be written.]' \
+        '--log-format[The output format for the logs, can be: text, json]' \
+        '--log-level[Messages with this level and above will be logged. Valid levels are: trace, debug, info, warn, error, fatal, panic]' \
+        '--no-color[Disable colored output.]' \
+        {-v,--verbose}'[Print the logs on the standard output.]' \
+        "*: :_files"
+
+}
+
+function _arduino-cli_upgrade {
+    _arguments \
+        {-h,--help}'[help for upgrade]' \
+        '--run-post-install[Force run of post-install scripts (if the CLI is not running interactively).]' \
+        '--skip-post-install[Force skip of post-install scripts (if the CLI is running interactively).]' \
+        '--additional-urls[Comma-separated list of additional URLs for the Boards Manager.]' \
+        '--config-file[The custom config file (if not specified the default will be used).]' \
+        '--format[The output format for the logs, can be: text, json, jsonmini, yaml (default "text")]' \
+        '--log-file[Path to the file where logs will be written.]' \
+        '--log-format[The output format for the logs, can be: text, json]' \
+        '--log-level[Messages with this level and above will be logged. Valid levels are: trace, debug, info, warn, error, fatal, panic]' \
+        '--no-color[Disable colored output.]' \
+        {-v,--verbose}'[Print the logs on the standard output.]' \
+        "*: :_files"
+
+}
+
+function _arduino-cli_upload {
+    _arguments \
+        '--discovery-timeout[Max time to wait for port discovery, e.g.: 30s, 1m (default 5s)]' \
+        {-b,--fqbn}'[Fully Qualified Board Name, e.g.: arduino:avr:uno]' \
+        {-h,--help}'[help for upload]' \
+        '--input-dir[Directory containing binaries to upload.]' \
+        {-i,--input-file}'[Binary file to upload.]' \
+        {-p,--port}'[Upload port address, e.g.: COM3 or /dev/ttyACM2]' \
+        {-P,--programmer}'[Programmer to use, e.g: atmel_ice]' \
+        {-l,--protocol}'[Upload port protocol, e.g: serial]' \
+        {-t,--verify}'[Verify uploaded binary after the upload.]' \
+        '--additional-urls[Comma-separated list of additional URLs for the Boards Manager.]' \
+        '--config-file[The custom config file (if not specified the default will be used).]' \
+        '--format[The output format for the logs, can be: text, json, jsonmini, yaml (default "text")]' \
+        '--log-file[Path to the file where logs will be written.]' \
+        '--log-format[The output format for the logs, can be: text, json]' \
+        '--log-level[Messages with this level and above will be logged. Valid levels are: trace, debug, info, warn, error, fatal, panic]' \
+        '--no-color[Disable colored output.]' \
+        {-v,--verbose}'[Print the logs on the standard output.]' \
+        "*: :_files"
+
+}
+
+function _arduino-cli_version {
+    _arguments \
+        {-h,--help}'[help for version]' \
+        '--additional-urls[Comma-separated list of additional URLs for the Boards Manager.]' \
+        '--config-file[The custom config file (if not specified the default will be used).]' \
+        '--format[The output format for the logs, can be: text, json, jsonmini, yaml (default "text")]' \
+        '--log-file[Path to the file where logs will be written.]' \
+        '--log-format[The output format for the logs, can be: text, json]' \
+        '--log-level[Messages with this level and above will be logged. Valid levels are: trace, debug, info, warn, error, fatal, panic]' \
+        '--no-color[Disable colored output.]' \
+        {-v,--verbose}'[Print the logs on the standard output.]' \
+        "*: :_files"
+
+}
+
+_arduino-cli "$@"
+

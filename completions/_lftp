@@ -1,0 +1,22 @@
+#compdef lftp
+
+# Auto-generated with h2o
+
+function _lftp {
+    _arguments \
+        '-f[execute commands from the file and exit]':file:_files \
+        '-c[execute the commands and exit]' \
+        '--norc[don'\''t execute rc files from the home directory]' \
+        '--help[print this help and exit]' \
+        '--version[print lftp version and exit]' \
+        '-e[execute the command just after selecting]' \
+        '-u[use the user/password for authentication]' \
+        '-p[use the port for connection]' \
+        '-s[assign the connection to this slot]' \
+        '-d[switch on debugging mode]' \
+        "*: :_files"
+
+}
+
+_lftp "$@"
+

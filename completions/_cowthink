@@ -1,0 +1,27 @@
+#compdef cowthink
+
+# Auto-generated with h2o
+
+function _cowthink {
+    _arguments \
+        '-W[Word wrapping size (default: 40)]' \
+        '-n[No word wrapping]' \
+        '-b[Borg cow]' \
+        '-d[Dead cow]' \
+        '-g[Greedy cow]' \
+        '-p[Paranoid cow]' \
+        '-s[Stoned cow]' \
+        '-t[Tired cow]' \
+        '-w[Wired cow]' \
+        '-y[Young cow]' \
+        '-e[Specify eye appearance (default: '\''oo'\'')]' \
+        '-T[Specify tongue appearance]' \
+        '-f[Specifies cow picture file]':file:_files \
+        '-l[List all cowfiles]' \
+        '-h[Show help]' \
+        "*: :_files"
+
+}
+
+_cowthink "$@"
+

@@ -1,0 +1,395 @@
+#compdef ffsend
+
+# Auto-generated with h2o
+
+
+function _ffsend {
+    local line state
+
+    function _commands {
+        local -a commands
+        commands=(
+            'upload:Upload files \[aliases: u, up\]'
+            'download:Download files \[aliases: d, down\]'
+            'debug:View debug information \[aliases: dbg\]'
+            'delete:Delete a shared file \[aliases: del, rm\]'
+            'exists:Check whether a remote file exists \[aliases: e\]'
+            'generate:Generate assets \[aliases: gen\]'
+            'help:Prints this message or the help of the given subcommand(s)'
+            'history:View file history \[aliases: h\]'
+            'info:Fetch info about a shared file \[aliases: i\]'
+            'parameters:Change parameters of a shared file \[aliases: params\]'
+            'password:Change the password of a shared file \[aliases: pass, p\]'
+            'version:Determine the Send server version \[aliases: v\]'
+        )
+        _describe 'command' commands
+    }
+ 
+
+    _arguments -C \
+        {-f,--force}'[Force the action, ignore warnings]' \
+        {-h,--help}'[Prints help information]' \
+        {-i,--incognito}'[Don'\''t update local history for actions]' \
+        {-I,--no-interact}'[Not interactive, do not prompt]' \
+        {-q,--quiet}'[Produce output suitable for logging and automation]' \
+        {-V,--version}'[Prints version information]' \
+        {-v,--verbose}'[Enable verbose information and logging]' \
+        {-y,--yes}'[Assume yes for prompts]' \
+        {-A,--api}'[Server API version to use, one of: 2, 3: Send API versions auto, -: probe server to determine \[env: FFSEND_API\]]' \
+        '--basic-auth[Protected proxy HTTP basic authentication credentials (not FxA) \[env: FFSEND_BASIC_AUTH\]]' \
+        {-H,--history}'[Use the specified history file \[env: FFSEND_HISTORY\]]':file:_files \
+        {-t,--timeout}'[Request timeout (0 to disable) \[env: FFSEND_TIMEOUT\]]' \
+        {-T,--transfer-timeout}'[Transfer timeout (0 to disable) \[env: FFSEND_TRANSFER_TIMEOUT\]]' \
+        ': :->cmd' \
+        '*:: :->subcmd'
+
+    case $state in
+    (cmd)
+        _commands
+        ;;
+    (subcmd)
+        case $line[1] in
+        (upload)
+            _ffsend_upload
+            ;;
+
+        (download)
+            _ffsend_download
+            ;;
+
+        (debug)
+            _ffsend_debug
+            ;;
+
+        (delete)
+            _ffsend_delete
+            ;;
+
+        (exists)
+            _ffsend_exists
+            ;;
+
+        (generate)
+            _ffsend_generate
+            ;;
+
+        (help)
+            _ffsend_help
+            ;;
+
+        (history)
+            _ffsend_history
+            ;;
+
+        (info)
+            _ffsend_info
+            ;;
+
+        (parameters)
+            _ffsend_parameters
+            ;;
+
+        (password)
+            _ffsend_password
+            ;;
+
+        (version)
+            _ffsend_version
+            ;;
+
+        esac
+        ;;
+     esac
+
+}
+
+function _ffsend_upload {
+    _arguments \
+        {-a,--archive}'[Archive the upload in a single file]' \
+        {-c,--copy}'[Copy the share link to your clipboard]' \
+        {-C,--copy-cmd}'[Copy the ffsend download command to your clipboard]' \
+        {-D,--delete}'[Delete local file after upload]' \
+        {-f,--force}'[Force the action, ignore warnings]' \
+        {-P,--gen-passphrase}'[Protect the file with a generated passphrase]' \
+        '--help[Prints help information]' \
+        {-i,--incognito}'[Don'\''t update local history for actions]' \
+        {-I,--no-interact}'[Not interactive, do not prompt]' \
+        {-o,--open}'[Open the share link in your browser]' \
+        {-Q,--qrcode}'[Print a QR code for the share URL]' \
+        {-q,--quiet}'[Produce output suitable for logging and automation]' \
+        {-S,--shorten}'[Shorten share URLs with a public service]' \
+        {-v,--verbose}'[Enable verbose information and logging]' \
+        {-y,--yes}'[Assume yes for prompts]' \
+        {-A,--api}'[Server API version to use, one of: 2, 3: Send API versions auto, -: probe server to determine \[env: FFSEND_API\]]' \
+        '--basic-auth[Protected proxy HTTP basic authentication credentials (not FxA) \[env: FFSEND_BASIC_AUTH\]]' \
+        {-d,--download-limit}'[The file download limit \[env: FFSEND_DOWNLOAD_LIMIT=\]]' \
+        {-e,--expiry-time}'[The file expiry time \[env: FFSEND_EXPIRY_TIME=\]]' \
+        {-H,--history}'[Use the specified history file \[env: FFSEND_HISTORY\]]':file:_files \
+        {-h,--host}'[The remote host to upload to \[env: FFSEND_HOST\] \[default: https://send.vis.ee/\]]' \
+        {-n,--name}'[Rename the file being uploaded]' \
+        {-p,--password}'[Protect the file with a password]' \
+        {-t,--timeout}'[Request timeout (0 to disable) \[env: FFSEND_TIMEOUT\]]' \
+        {-T,--transfer-timeout}'[Transfer timeout (0 to disable) \[env: FFSEND_TRANSFER_TIMEOUT\]]' \
+        "*: :_files"
+
+}
+
+function _ffsend_download {
+    _arguments \
+        {-e,--extract}'[Extract an archived file]' \
+        {-f,--force}'[Force the action, ignore warnings]' \
+        {-h,--help}'[Prints help information]' \
+        {-i,--incognito}'[Don'\''t update local history for actions]' \
+        {-I,--no-interact}'[Not interactive, do not prompt]' \
+        {-q,--quiet}'[Produce output suitable for logging and automation]' \
+        {-v,--verbose}'[Enable verbose information and logging]' \
+        {-y,--yes}'[Assume yes for prompts]' \
+        {-A,--api}'[Server API version to use, one of: 2, 3: Send API versions auto, -: probe server to determine \[env: FFSEND_API\]]' \
+        '--basic-auth[Protected proxy HTTP basic authentication credentials (not FxA) \[env: FFSEND_BASIC_AUTH\]]' \
+        {-H,--history}'[Use the specified history file \[env: FFSEND_HISTORY\]]':file:_files \
+        {-o,--output}'[Output file or directory]':file:_files \
+        {-p,--password}'[Unlock a password protected file]' \
+        {-t,--timeout}'[Request timeout (0 to disable) \[env: FFSEND_TIMEOUT\]]' \
+        {-T,--transfer-timeout}'[Transfer timeout (0 to disable) \[env: FFSEND_TRANSFER_TIMEOUT\]]' \
+        "*: :_files"
+
+}
+
+function _ffsend_debug {
+    _arguments \
+        {-f,--force}'[Force the action, ignore warnings]' \
+        '--help[Prints help information]' \
+        {-i,--incognito}'[Don'\''t update local history for actions]' \
+        {-I,--no-interact}'[Not interactive, do not prompt]' \
+        {-q,--quiet}'[Produce output suitable for logging and automation]' \
+        {-v,--verbose}'[Enable verbose information and logging]' \
+        {-y,--yes}'[Assume yes for prompts]' \
+        {-A,--api}'[Server API version to use, one of: 2, 3: Send API versions auto, -: probe server to determine \[env: FFSEND_API\]]' \
+        '--basic-auth[Protected proxy HTTP basic authentication credentials (not FxA) \[env: FFSEND_BASIC_AUTH\]]' \
+        {-H,--history}'[Use the specified history file \[env: FFSEND_HISTORY\]]':file:_files \
+        {-t,--timeout}'[Request timeout (0 to disable) \[env: FFSEND_TIMEOUT\]]' \
+        {-T,--transfer-timeout}'[Transfer timeout (0 to disable) \[env: FFSEND_TRANSFER_TIMEOUT\]]' \
+        "*: :_files"
+
+}
+
+function _ffsend_delete {
+    _arguments \
+        {-f,--force}'[Force the action, ignore warnings]' \
+        {-h,--help}'[Prints help information]' \
+        {-i,--incognito}'[Don'\''t update local history for actions]' \
+        {-I,--no-interact}'[Not interactive, do not prompt]' \
+        {-q,--quiet}'[Produce output suitable for logging and automation]' \
+        {-v,--verbose}'[Enable verbose information and logging]' \
+        {-y,--yes}'[Assume yes for prompts]' \
+        {-A,--api}'[Server API version to use, one of: 2, 3: Send API versions auto, -: probe server to determine \[env: FFSEND_API\]]' \
+        '--basic-auth[Protected proxy HTTP basic authentication credentials (not FxA) \[env: FFSEND_BASIC_AUTH\]]' \
+        {-H,--history}'[Use the specified history file \[env: FFSEND_HISTORY\]]':file:_files \
+        {-o,--owner}'[Specify the file owner token]' \
+        {-t,--timeout}'[Request timeout (0 to disable) \[env: FFSEND_TIMEOUT\]]' \
+        {-T,--transfer-timeout}'[Transfer timeout (0 to disable) \[env: FFSEND_TRANSFER_TIMEOUT\]]' \
+        "*: :_files"
+
+}
+
+function _ffsend_exists {
+    _arguments \
+        {-f,--force}'[Force the action, ignore warnings]' \
+        {-h,--help}'[Prints help information]' \
+        {-i,--incognito}'[Don'\''t update local history for actions]' \
+        {-I,--no-interact}'[Not interactive, do not prompt]' \
+        {-q,--quiet}'[Produce output suitable for logging and automation]' \
+        {-v,--verbose}'[Enable verbose information and logging]' \
+        {-y,--yes}'[Assume yes for prompts]' \
+        {-A,--api}'[Server API version to use, one of: 2, 3: Send API versions auto, -: probe server to determine \[env: FFSEND_API\]]' \
+        '--basic-auth[Protected proxy HTTP basic authentication credentials (not FxA) \[env: FFSEND_BASIC_AUTH\]]' \
+        {-H,--history}'[Use the specified history file \[env: FFSEND_HISTORY\]]':file:_files \
+        {-t,--timeout}'[Request timeout (0 to disable) \[env: FFSEND_TIMEOUT\]]' \
+        {-T,--transfer-timeout}'[Transfer timeout (0 to disable) \[env: FFSEND_TRANSFER_TIMEOUT\]]' \
+        "*: :_files"
+
+}
+
+
+function _ffsend_generate {
+    local line state
+
+    function _commands {
+        local -a commands
+        commands=(
+            'completions:Shell completions'
+            'help:Prints this message or the help of the given subcommand(s)'
+        )
+        _describe 'command' commands
+    }
+ 
+
+    _arguments -C \
+        {-f,--force}'[Force the action, ignore warnings]' \
+        {-h,--help}'[Prints help information]' \
+        {-i,--incognito}'[Don'\''t update local history for actions]' \
+        {-I,--no-interact}'[Not interactive, do not prompt]' \
+        {-q,--quiet}'[Produce output suitable for logging and automation]' \
+        {-v,--verbose}'[Enable verbose information and logging]' \
+        {-y,--yes}'[Assume yes for prompts]' \
+        {-A,--api}'[Server API version to use, one of: 2, 3: Send API versions auto, -: probe server to determine \[env: FFSEND_API\]]' \
+        '--basic-auth[Protected proxy HTTP basic authentication credentials (not FxA) \[env: FFSEND_BASIC_AUTH\]]' \
+        {-H,--history}'[Use the specified history file \[env: FFSEND_HISTORY\]]':file:_files \
+        {-t,--timeout}'[Request timeout (0 to disable) \[env: FFSEND_TIMEOUT\]]' \
+        {-T,--transfer-timeout}'[Transfer timeout (0 to disable) \[env: FFSEND_TRANSFER_TIMEOUT\]]' \
+        ': :->cmd' \
+        '*:: :->subcmd'
+
+    case $state in
+    (cmd)
+        _commands
+        ;;
+    (subcmd)
+        case $line[1] in
+        (completions)
+            _ffsend_generate_completions
+            ;;
+
+        (help)
+            _ffsend_generate_help
+            ;;
+
+        esac
+        ;;
+     esac
+
+}
+
+function _ffsend_generate_completions {
+    _arguments \
+        {-f,--force}'[Force the action, ignore warnings]' \
+        {-h,--help}'[Prints help information]' \
+        {-i,--incognito}'[Don'\''t update local history for actions]' \
+        {-I,--no-interact}'[Not interactive, do not prompt]' \
+        {-q,--quiet}'[Produce output suitable for logging and automation]' \
+        {-v,--verbose}'[Enable verbose information and logging]' \
+        {-y,--yes}'[Assume yes for prompts]' \
+        {-A,--api}'[Server API version to use, one of: 2, 3: Send API versions auto, -: probe server to determine \[env: FFSEND_API\]]' \
+        '--basic-auth[Protected proxy HTTP basic authentication credentials (not FxA) \[env: FFSEND_BASIC_AUTH\]]' \
+        {-H,--history}'[Use the specified history file \[env: FFSEND_HISTORY\]]':file:_files \
+        {-o,--output}'[Shell completion files output directory]':file:_files \
+        {-t,--timeout}'[Request timeout (0 to disable) \[env: FFSEND_TIMEOUT\]]' \
+        {-T,--transfer-timeout}'[Transfer timeout (0 to disable) \[env: FFSEND_TRANSFER_TIMEOUT\]]' \
+        "*: :_files"
+
+}
+
+function _ffsend_generate_help {
+    _arguments \
+        "*: :_files"
+
+}
+
+function _ffsend_help {
+    _arguments \
+        "*: :_files"
+
+}
+
+function _ffsend_history {
+    _arguments \
+        {-C,--clear}'[Clear all history]' \
+        {-f,--force}'[Force the action, ignore warnings]' \
+        {-h,--help}'[Prints help information]' \
+        {-i,--incognito}'[Don'\''t update local history for actions]' \
+        {-I,--no-interact}'[Not interactive, do not prompt]' \
+        {-q,--quiet}'[Produce output suitable for logging and automation]' \
+        {-v,--verbose}'[Enable verbose information and logging]' \
+        {-y,--yes}'[Assume yes for prompts]' \
+        {-A,--api}'[Server API version to use, one of: 2, 3: Send API versions auto, -: probe server to determine \[env: FFSEND_API\]]' \
+        '--basic-auth[Protected proxy HTTP basic authentication credentials (not FxA) \[env: FFSEND_BASIC_AUTH\]]' \
+        {-H,--history}'[Use the specified history file \[env: FFSEND_HISTORY\]]':file:_files \
+        {-R,--rm}'[Remove history entry]' \
+        {-t,--timeout}'[Request timeout (0 to disable) \[env: FFSEND_TIMEOUT\]]' \
+        {-T,--transfer-timeout}'[Transfer timeout (0 to disable) \[env: FFSEND_TRANSFER_TIMEOUT\]]' \
+        "*: :_files"
+
+}
+
+function _ffsend_info {
+    _arguments \
+        {-f,--force}'[Force the action, ignore warnings]' \
+        {-h,--help}'[Prints help information]' \
+        {-i,--incognito}'[Don'\''t update local history for actions]' \
+        {-I,--no-interact}'[Not interactive, do not prompt]' \
+        {-q,--quiet}'[Produce output suitable for logging and automation]' \
+        {-v,--verbose}'[Enable verbose information and logging]' \
+        {-y,--yes}'[Assume yes for prompts]' \
+        {-A,--api}'[Server API version to use, one of: 2, 3: Send API versions auto, -: probe server to determine \[env: FFSEND_API\]]' \
+        '--basic-auth[Protected proxy HTTP basic authentication credentials (not FxA) \[env: FFSEND_BASIC_AUTH\]]' \
+        {-H,--history}'[Use the specified history file \[env: FFSEND_HISTORY\]]':file:_files \
+        {-o,--owner}'[Specify the file owner token]' \
+        {-p,--password}'[Unlock a password protected file]' \
+        {-t,--timeout}'[Request timeout (0 to disable) \[env: FFSEND_TIMEOUT\]]' \
+        {-T,--transfer-timeout}'[Transfer timeout (0 to disable) \[env: FFSEND_TRANSFER_TIMEOUT\]]' \
+        "*: :_files"
+
+}
+
+function _ffsend_parameters {
+    _arguments \
+        {-f,--force}'[Force the action, ignore warnings]' \
+        {-h,--help}'[Prints help information]' \
+        {-i,--incognito}'[Don'\''t update local history for actions]' \
+        {-I,--no-interact}'[Not interactive, do not prompt]' \
+        {-q,--quiet}'[Produce output suitable for logging and automation]' \
+        {-v,--verbose}'[Enable verbose information and logging]' \
+        {-y,--yes}'[Assume yes for prompts]' \
+        {-A,--api}'[Server API version to use, one of: 2, 3: Send API versions auto, -: probe server to determine \[env: FFSEND_API\]]' \
+        '--basic-auth[Protected proxy HTTP basic authentication credentials (not FxA) \[env: FFSEND_BASIC_AUTH\]]' \
+        {-d,--download-limit}'[The file download limit \[env: FFSEND_DOWNLOAD_LIMIT=\]]' \
+        {-H,--history}'[Use the specified history file \[env: FFSEND_HISTORY\]]':file:_files \
+        {-o,--owner}'[Specify the file owner token]' \
+        {-t,--timeout}'[Request timeout (0 to disable) \[env: FFSEND_TIMEOUT\]]' \
+        {-T,--transfer-timeout}'[Transfer timeout (0 to disable) \[env: FFSEND_TRANSFER_TIMEOUT\]]' \
+        "*: :_files"
+
+}
+
+function _ffsend_password {
+    _arguments \
+        {-f,--force}'[Force the action, ignore warnings]' \
+        {-P,--gen-passphrase}'[Protect the file with a generated passphrase]' \
+        {-h,--help}'[Prints help information]' \
+        {-i,--incognito}'[Don'\''t update local history for actions]' \
+        {-I,--no-interact}'[Not interactive, do not prompt]' \
+        {-q,--quiet}'[Produce output suitable for logging and automation]' \
+        {-v,--verbose}'[Enable verbose information and logging]' \
+        {-y,--yes}'[Assume yes for prompts]' \
+        {-A,--api}'[Server API version to use, one of: 2, 3: Send API versions auto, -: probe server to determine \[env: FFSEND_API\]]' \
+        '--basic-auth[Protected proxy HTTP basic authentication credentials (not FxA) \[env: FFSEND_BASIC_AUTH\]]' \
+        {-H,--history}'[Use the specified history file \[env: FFSEND_HISTORY\]]':file:_files \
+        {-o,--owner}'[Specify the file owner token]' \
+        {-p,--password}'[Specify a password, do not prompt]' \
+        {-t,--timeout}'[Request timeout (0 to disable) \[env: FFSEND_TIMEOUT\]]' \
+        {-T,--transfer-timeout}'[Transfer timeout (0 to disable) \[env: FFSEND_TRANSFER_TIMEOUT\]]' \
+        "*: :_files"
+
+}
+
+function _ffsend_version {
+    _arguments \
+        {-f,--force}'[Force the action, ignore warnings]' \
+        '--help[Prints help information]' \
+        {-i,--incognito}'[Don'\''t update local history for actions]' \
+        {-I,--no-interact}'[Not interactive, do not prompt]' \
+        {-q,--quiet}'[Produce output suitable for logging and automation]' \
+        {-v,--verbose}'[Enable verbose information and logging]' \
+        {-y,--yes}'[Assume yes for prompts]' \
+        {-A,--api}'[Server API version to use, one of: 2, 3: Send API versions auto, -: probe server to determine \[env: FFSEND_API\]]' \
+        '--basic-auth[Protected proxy HTTP basic authentication credentials (not FxA) \[env: FFSEND_BASIC_AUTH\]]' \
+        {-H,--history}'[Use the specified history file \[env: FFSEND_HISTORY\]]':file:_files \
+        {-h,--host}'[The remote host to upload to \[env: FFSEND_HOST\] \[default: https://send.vis.ee/\]]' \
+        {-t,--timeout}'[Request timeout (0 to disable) \[env: FFSEND_TIMEOUT\]]' \
+        {-T,--transfer-timeout}'[Transfer timeout (0 to disable) \[env: FFSEND_TRANSFER_TIMEOUT\]]' \
+        "*: :_files"
+
+}
+
+_ffsend "$@"
+

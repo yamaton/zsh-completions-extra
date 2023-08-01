@@ -1,0 +1,41 @@
+#compdef lsblk
+
+# Auto-generated with h2o
+
+function _lsblk {
+    _arguments \
+        {-D,--discard}'[print discard capabilities]' \
+        {-E,--dedup}'[de-duplicate output by <column>]' \
+        {-I,--include}'[show only devices with specified major numbers]' \
+        {-J,--json}'[use JSON output format]' \
+        {-O,--output-all}'[output all columns]' \
+        {-P,--pairs}'[use key="value" output format]' \
+        {-S,--scsi}'[output info about SCSI devices]' \
+        {-T,--tree}'[use tree format output]' \
+        {-a,--all}'[print all devices]' \
+        {-b,--bytes}'[print SIZE in bytes rather than in human readable format]' \
+        {-d,--nodeps}'[don'\''t print slaves or holders]' \
+        {-e,--exclude}'[exclude devices by major number (default: RAM disks)]' \
+        {-f,--fs}'[output info about filesystems]' \
+        {-i,--ascii}'[use ascii characters only]' \
+        {-l,--list}'[use list format output]' \
+        {-M,--merge}'[group parents of sub-trees (usable for RAIDs, Multi-path)]' \
+        {-m,--perms}'[output info about permissions]' \
+        {-n,--noheadings}'[don'\''t print headings]' \
+        {-o,--output}'[output columns]' \
+        {-p,--paths}'[print complete device path]' \
+        {-r,--raw}'[use raw output format]' \
+        {-s,--inverse}'[inverse dependencies]' \
+        {-t,--topology}'[output info about topology]' \
+        {-w,--width}'[specifies output width as number of characters]' \
+        {-x,--sort}'[sort output by <column>]' \
+        {-z,--zoned}'[print zone model]' \
+        '--sysroot[use specified directory as system root]':file:_files \
+        {-h,--help}'[display this help]' \
+        {-V,--version}'[display version]' \
+        "*: :_files"
+
+}
+
+_lsblk "$@"
+

@@ -1,0 +1,300 @@
+#compdef asdf
+
+# Auto-generated with h2o
+
+
+function _asdf {
+    local line state
+
+    function _commands {
+        local -a commands
+        commands=(
+            'plugin:'
+            'install:Install all the package versions listed in the .tool-versions file'
+            'uninstall:Remove a specific version of a package'
+            'current:Display current version set'
+            'where:Display install path for an installed or current version'
+            'which:Display the path to an executable'
+            'local:Set the package local version'
+            'global:Set the package global version'
+            'shell:Set the package version to `ASDF_${LANG}_VERSION` in the current shell'
+            'latest:Show latest stable version of a package / all packages'
+            'list:List installed versions of a package'
+            'help:Output documentation for plugin and tool'
+            'exec:Executes the command shim for current version'
+            'env:Runs util (default: `env`) inside the environment used for command shim execution'
+            'info:Print OS, Shell and ASDF debug information'
+            'reshim:Recreate shims for version of a package'
+            'shim-versions:List the plugins and versions that provide a command'
+            'update:Update asdf'
+        )
+        _describe 'command' commands
+    }
+ 
+
+    _arguments -C \
+        ': :->cmd' \
+        '*:: :->subcmd'
+
+    case $state in
+    (cmd)
+        _commands
+        ;;
+    (subcmd)
+        case $line[1] in
+        (plugin)
+            _asdf_plugin
+            ;;
+
+        (install)
+            _asdf_install
+            ;;
+
+        (uninstall)
+            _asdf_uninstall
+            ;;
+
+        (current)
+            _asdf_current
+            ;;
+
+        (where)
+            _asdf_where
+            ;;
+
+        (which)
+            _asdf_which
+            ;;
+
+        (local)
+            _asdf_local
+            ;;
+
+        (global)
+            _asdf_global
+            ;;
+
+        (shell)
+            _asdf_shell
+            ;;
+
+        (latest)
+            _asdf_latest
+            ;;
+
+        (list)
+            _asdf_list
+            ;;
+
+        (help)
+            _asdf_help
+            ;;
+
+        (exec)
+            _asdf_exec
+            ;;
+
+        (env)
+            _asdf_env
+            ;;
+
+        (info)
+            _asdf_info
+            ;;
+
+        (reshim)
+            _asdf_reshim
+            ;;
+
+        (shim-versions)
+            _asdf_shim-versions
+            ;;
+
+        (update)
+            _asdf_update
+            ;;
+
+        esac
+        ;;
+     esac
+
+}
+
+
+function _asdf_plugin {
+    local line state
+
+    function _commands {
+        local -a commands
+        commands=(
+            'add:Add a plugin'
+            'list:List installed plugins'
+            'remove:Remove plugin and package versions'
+            'update:Update a plugin'
+        )
+        _describe 'command' commands
+    }
+ 
+
+    _arguments -C \
+        ': :->cmd' \
+        '*:: :->subcmd'
+
+    case $state in
+    (cmd)
+        _commands
+        ;;
+    (subcmd)
+        case $line[1] in
+        (add)
+            _asdf_plugin_add
+            ;;
+
+        (list)
+            _asdf_plugin_list
+            ;;
+
+        (remove)
+            _asdf_plugin_remove
+            ;;
+
+        (update)
+            _asdf_plugin_update
+            ;;
+
+        esac
+        ;;
+     esac
+
+}
+
+function _asdf_plugin_add {
+    _arguments \
+        "*: :_files"
+
+}
+
+function _asdf_plugin_list {
+    _arguments \
+        '--urls[Show git URLs]' \
+        '--refs[Show git-ref]' \
+        "*: :_files"
+
+}
+
+function _asdf_plugin_remove {
+    _arguments \
+        "*: :_files"
+
+}
+
+function _asdf_plugin_update {
+    _arguments \
+        "*: :_files"
+
+}
+
+function _asdf_install {
+    _arguments \
+        "*: :_files"
+
+}
+
+function _asdf_uninstall {
+    _arguments \
+        "*: :_files"
+
+}
+
+function _asdf_current {
+    _arguments \
+        "*: :_files"
+
+}
+
+function _asdf_where {
+    _arguments \
+        "*: :_files"
+
+}
+
+function _asdf_which {
+    _arguments \
+        "*: :_files"
+
+}
+
+function _asdf_local {
+    _arguments \
+        "*: :_files"
+
+}
+
+function _asdf_global {
+    _arguments \
+        "*: :_files"
+
+}
+
+function _asdf_shell {
+    _arguments \
+        "*: :_files"
+
+}
+
+function _asdf_latest {
+    _arguments \
+        "*: :_files"
+
+}
+
+function _asdf_list {
+    _arguments \
+        "*: :_files"
+
+}
+
+function _asdf_help {
+    _arguments \
+        "*: :_files"
+
+}
+
+function _asdf_exec {
+    _arguments \
+        "*: :_files"
+
+}
+
+function _asdf_env {
+    _arguments \
+        "*: :_files"
+
+}
+
+function _asdf_info {
+    _arguments \
+        "*: :_files"
+
+}
+
+function _asdf_reshim {
+    _arguments \
+        "*: :_files"
+
+}
+
+function _asdf_shim-versions {
+    _arguments \
+        "*: :_files"
+
+}
+
+function _asdf_update {
+    _arguments \
+        "*: :_files"
+
+}
+
+_asdf "$@"
+

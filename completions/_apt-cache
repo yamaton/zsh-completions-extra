@@ -1,0 +1,206 @@
+#compdef apt-cache
+
+# Auto-generated with h2o
+
+
+function _apt-cache {
+    local line state
+
+    function _commands {
+        local -a commands
+        commands=(
+            'gencaches:Show source records'
+            'showsrc:Show source records'
+            'dump:Show a short listing of every package in the cache'
+            'dumpavail:Print out an available list to stdout'
+            'unmet:Display a summary of all unmet dependencies in the package cache.'
+            'show:Show a readable record for the package'
+            'search:Search the package list for a regex pattern'
+            'depends:Show raw dependency information for a package'
+            'rdepends:Show reverse dependency information for a package'
+            'pkgnames:List the names of all packages in the system'
+            'dotty:Generates output for use by dotty from the GraphViz package'
+            'xvcg:The same as dotty, only for xvcg from the VCG tool'
+            'policy:Show policy settings'
+            'madison:Mimic the output format and a subset of the functionality of the Debian archive management tool, madison'
+        )
+        _describe 'command' commands
+    }
+ 
+
+    _arguments -C \
+        {-p,--pkg-cache}'[Select the file to store the package cache. The package cache is the primary cache used by all operations. Configuration Item: Dir::Cache::pkgcache.]' \
+        {-s,--src-cache}'[Select the file to store the source cache. The source is used only by gencaches and it stores a parsed version of the package information from remote sources. When building the package cache the source cache is used to avoid reparsing all of the package files. Configuration Item: Dir::Cache::srcpkgcache.]' \
+        {-q,--quiet}'[Quiet; produces output suitable for logging, omitting progress indicators. More q'\''s will produce more quietness up to a maximum of 2. You can also use -q=# to set the quietness level, overriding the configuration file. Configuration Item: quiet.]' \
+        {-i,--important}'[Print only important dependencies; for use with unmet and depends. Causes only Depends and Pre-Depends relations to be printed. Configuration Item: APT::Cache::Important.]' \
+        {--no-pre-depends,--no-depends,--no-recommends,--no-suggests,--no-conflicts,--no-breaks,--no-replaces,--no-enhances}'[Per default the depends and rdepends print all dependencies. This can be tweaked with these flags which will omit the specified dependency type. Configuration Item: APT::Cache::ShowDependencyType e.g. APT::Cache::ShowRecommends.]' \
+        '--implicit[Per default depends and rdepends print only dependencies explicitly expressed in the metadata. With this flag it will also show dependencies implicitly added based on the encountered data. A Conflicts: foo e.g. expresses implicitly that this package also conflicts with the package foo from any other architecture. Configuration Item: APT::Cache::ShowImplicit.]' \
+        {-f,--full}'[Print full package records when searching. Configuration Item: APT::Cache::ShowFull.]' \
+        {-a,--all-versions}'[Print full records for all available versions. This is the default; to turn it off, use --no-all-versions. If --no-all-versions is specified, only the candidate version will be displayed (the one which would be selected for installation). This option is only applicable to the show command. Configuration Item: APT::Cache::AllVersions.]' \
+        {-g,--generate}'[Perform automatic package cache regeneration, rather than use the cache as it is. This is the default; to turn it off, use --no-generate. Configuration Item: APT::Cache::Generate.]' \
+        {--names-only,-n}'[Only search on the package and provided package names, not the long descriptions. Configuration Item: APT::Cache::NamesOnly.]' \
+        '--all-names[Make pkgnames print all names, including virtual packages and missing dependencies. Configuration Item: APT::Cache::AllNames.]' \
+        '--recurse[Make depends and rdepends recursive so that all packages mentioned are printed once. Configuration Item: APT::Cache::RecurseDepends.]' \
+        '--installed[Limit the output of depends and rdepends to packages which are currently installed. Configuration Item: APT::Cache::Installed.]' \
+        '--with-source[Adds the given file as a source for metadata. Can be repeated to add multiple files. Supported are currently *.deb, *.dsc, *.changes, Sources and Packages files as well as source package directories. Files are matched based on their name only, not their content!]':file:_files \
+        {-h,--help}'[Show a short usage summary.]' \
+        {-v,--version}'[Show the program version.]' \
+        {-c,--config-file}'[Configuration File; Specify a configuration file to use. The program will read the default configuration file and then this configuration file. If configuration settings need to be set before the default configuration files are parsed specify a file with the APT_CONFIG environment variable. See apt.conf(5) for syntax information.]' \
+        {-o,--option}'[Set a Configuration Option; This will set an arbitrary configuration option. The syntax is -o Foo::Bar=bar. -o and --option can be used multiple times to set different options.]' \
+        ': :->cmd' \
+        '*:: :->subcmd'
+
+    case $state in
+    (cmd)
+        _commands
+        ;;
+    (subcmd)
+        case $line[1] in
+        (gencaches)
+            _apt-cache_gencaches
+            ;;
+
+        (showsrc)
+            _apt-cache_showsrc
+            ;;
+
+        (dump)
+            _apt-cache_dump
+            ;;
+
+        (dumpavail)
+            _apt-cache_dumpavail
+            ;;
+
+        (unmet)
+            _apt-cache_unmet
+            ;;
+
+        (show)
+            _apt-cache_show
+            ;;
+
+        (search)
+            _apt-cache_search
+            ;;
+
+        (depends)
+            _apt-cache_depends
+            ;;
+
+        (rdepends)
+            _apt-cache_rdepends
+            ;;
+
+        (pkgnames)
+            _apt-cache_pkgnames
+            ;;
+
+        (dotty)
+            _apt-cache_dotty
+            ;;
+
+        (xvcg)
+            _apt-cache_xvcg
+            ;;
+
+        (policy)
+            _apt-cache_policy
+            ;;
+
+        (madison)
+            _apt-cache_madison
+            ;;
+
+        esac
+        ;;
+     esac
+
+}
+
+function _apt-cache_gencaches {
+    _arguments \
+        "*: :_files"
+
+}
+
+function _apt-cache_showsrc {
+    _arguments \
+        "*: :_files"
+
+}
+
+function _apt-cache_dump {
+    _arguments \
+        "*: :_files"
+
+}
+
+function _apt-cache_dumpavail {
+    _arguments \
+        "*: :_files"
+
+}
+
+function _apt-cache_unmet {
+    _arguments \
+        "*: :_files"
+
+}
+
+function _apt-cache_show {
+    _arguments \
+        "*: :_files"
+
+}
+
+function _apt-cache_search {
+    _arguments \
+        "*: :_files"
+
+}
+
+function _apt-cache_depends {
+    _arguments \
+        "*: :_files"
+
+}
+
+function _apt-cache_rdepends {
+    _arguments \
+        "*: :_files"
+
+}
+
+function _apt-cache_pkgnames {
+    _arguments \
+        "*: :_files"
+
+}
+
+function _apt-cache_dotty {
+    _arguments \
+        "*: :_files"
+
+}
+
+function _apt-cache_xvcg {
+    _arguments \
+        "*: :_files"
+
+}
+
+function _apt-cache_policy {
+    _arguments \
+        "*: :_files"
+
+}
+
+function _apt-cache_madison {
+    _arguments \
+        "*: :_files"
+
+}
+
+_apt-cache "$@"
+

@@ -1,0 +1,131 @@
+#compdef ctest
+
+# Auto-generated with h2o
+
+function _ctest {
+    _arguments \
+        '--preset[Read arguments from a test preset.]' \
+        '--list-presets[List available test presets.]' \
+        {-C,--build-config}'[Choose configuration to test.]' \
+        '--progress[Enable short progress output from tests.]' \
+        {-V,--verbose}'[Enable verbose output from tests.]' \
+        {-VV,--extra-verbose}'[Enable more verbose output from tests.]' \
+        '--debug[Displaying more verbose internals of CTest.]' \
+        '--output-on-failure[Output anything outputted by the test]' \
+        '--stop-on-failure[Stop running the tests after one has failed.]' \
+        '--test-output-size-passed[Limit the output for passed tests to <size>]' \
+        '--test-output-size-failed[Limit the output for failed tests to <size>]' \
+        '-F[Enable failover.]' \
+        {-j,--parallel}'[Run the tests in parallel using the given]' \
+        {-j,--parallel}'[Run the tests in parallel using the given   number of jobs.]' \
+        {-Q,--quiet}'[Make ctest quiet.]' \
+        {-O,--output-log}'[Output to log file]':file:_files \
+        '--output-junit[Output test results to JUnit XML file.]':file:_files \
+        {-N,--show-only}'[Disable actual execution of tests. The]' \
+        {-N,--show-only}'[Disable actual execution of tests. The]' \
+        {-L,--label-regex}'[Run tests with labels matching regular]' \
+        {-R,--tests-regex}'[Run tests matching regular expression.]' \
+        {-E,--exclude-regex}'[Exclude tests matching regular expression.]' \
+        {-LE,--label-exclude}'[Exclude tests with labels matching regular]' \
+        {-FA,--fixture-exclude-any}'[Do not automatically add any tests for]' \
+        {-FS,--fixture-exclude-setup}'[Do not automatically add setup tests for]' \
+        {-FC,--fixture-exclude-cleanup}'[Do not automatically add cleanup tests for]' \
+        {-D,--dashboard}'[Execute dashboard test]' \
+        '-D[Define a variable for script mode]' \
+        {-M,--test-model}'[Sets the model for a dashboard]' \
+        {-T,--test-action}'[Sets the dashboard action to perform]' \
+        '--group[Specify what build group on the dashboard]' \
+        {-S,--script}'[Execute a dashboard for a configuration]' \
+        {-SP,--script-new-process}'[Execute a dashboard for a configuration]' \
+        {-U,--union}'[Take the Union of -I and -R]' \
+        '--rerun-failed[Run only the tests that failed previously]' \
+        {--repeat,--repeat-until-fail}'[Require each test to run <n> times without]' \
+        '--repeat[Allow each test to run up to <n> times in]' \
+        '--repeat[Allow each test to run up to <n> times if it]' \
+        '--max-width[Set the max width for a test name to output]' \
+        '--interactive-debug-mode[Set the interactive mode to 0 or 1.]' \
+        '--interactive-debug-mode[Set the interactive mode to 0 or 1.]' \
+        '--resource-spec-file[Set the resource spec file to use.]':file:_files \
+        '--no-label-summary[Disable timing summary information for]' \
+        '--no-subproject-summary[Disable timing summary information for]' \
+        '--test-dir[Specify the directory in which to look for]':file:_files \
+        '--build-and-test[Configure, build and run a test.]' \
+        '--build-target[Specify a specific target to build.]' \
+        '--build-nocmake[Run the build without running cmake first.]' \
+        '--build-run-dir[Specify directory to run programs from.]' \
+        '--build-two-config[Run CMake twice]' \
+        '--build-exe-dir[Specify the directory for the executable.]' \
+        '--build-generator[Specify the generator to use.]' \
+        '--build-generator-platform[Specify the generator-specific platform.]' \
+        '--build-generator-toolset[Specify the generator-specific toolset.]' \
+        '--build-project[Specify the name of the project to build.]' \
+        '--build-makeprogram[Specify the make program to use.]' \
+        '--build-noclean[Skip the make clean step.]' \
+        '--build-config-sample[A sample executable to use to determine the]' \
+        '--build-options[Add extra options to the build step.]' \
+        '--test-command[The test to run with the --build-and-test]' \
+        '--test-timeout[The time limit in seconds, internal use]' \
+        '--test-load[CPU load threshold for starting new parallel]' \
+        '--tomorrow-tag[Nightly or experimental starts with next day]' \
+        '--overwrite[Overwrite CTest configuration option.]' \
+        '--extra-submit[Submit extra files to the dashboard.]':file:_files \
+        '--force-new-ctest-process[Run child CTest instances as new processes]' \
+        '--schedule-random[Use a random order for scheduling tests]' \
+        '--submit-index[Submit individual dashboard tests with]' \
+        '--timeout[Set the default test timeout.]' \
+        '--stop-time[Set a time at which all tests should stop]' \
+        '--http1.0[Submit using HTTP 1.0.]' \
+        '--no-compress-output[Do not compress test output when submitting.]' \
+        '--print-labels[Print all available test labels.]' \
+        '--no-tests[Regard no tests found either as '\''error'\'' or]' \
+        '--no-tests[Regard no tests found either as '\''error'\'' or]' \
+        '--help-full[Print all help manuals and exit.]' \
+        '--help-full[Print all help manuals and exit.]' \
+        '--help-manual[\[<f>\] = Print one help manual and exit.]' \
+        '--help-manual[Print one help manual and exit.]' \
+        '--help-manual[Print one help manual and exit.]' \
+        '--help-manual-list[List help manuals available and exit.]' \
+        '--help-manual-list[List help manuals available and exit.]' \
+        '--help-command[\[<f>\] = Print help for one command and exit.]' \
+        '--help-command[Print help for one command and exit.]' \
+        '--help-command[Print help for one command and exit.]' \
+        '--help-command-list[List commands with help available and exit.]' \
+        '--help-command-list[List commands with help available and exit.]' \
+        '--help-commands[Print cmake-commands manual and exit.]' \
+        '--help-commands[Print cmake-commands manual and exit.]' \
+        '--help-module[\[<f>\] = Print help for one module and exit.]' \
+        '--help-module[Print help for one module and exit.]' \
+        '--help-module[Print help for one module and exit.]' \
+        '--help-module-list[List modules with help available and exit.]' \
+        '--help-module-list[List modules with help available and exit.]' \
+        '--help-modules[Print cmake-modules manual and exit.]' \
+        '--help-modules[Print cmake-modules manual and exit.]' \
+        '--help-policy[\[<f>\] = Print help for one policy and exit.]' \
+        '--help-policy[Print help for one policy and exit.]' \
+        '--help-policy[Print help for one policy and exit.]' \
+        '--help-policy-list[List policies with help available and exit.]' \
+        '--help-policy-list[List policies with help available and exit.]' \
+        '--help-policies[Print cmake-policies manual and exit.]' \
+        '--help-policies[Print cmake-policies manual and exit.]' \
+        '--help-property[\[<f>\] = Print help for one property and exit.]' \
+        '--help-property[Print help for one property and exit.]' \
+        '--help-property[Print help for one property and exit.]' \
+        '--help-property[Print help for one property and exit.   --help-property-list \[<f>\] = List properties with help available and]' \
+        '--help-property[<f> = Print help for one property and exit.   --help-property-list \[<f>\] = List properties with help available and]' \
+        '--help-property[Print help for one property and exit.   --help-property-list \[<f>\] = List properties with help available and]' \
+        '--help-property-list[List properties with help available and]' \
+        '--help-property-list[List properties with help available and]' \
+        '--help-properties[Print cmake-properties manual and exit.]' \
+        '--help-properties[Print cmake-properties manual and exit.]' \
+        '--help-variable[Print help for one variable and exit.]' \
+        '--help-variable[Print help for one variable and exit.]' \
+        '--help-variable-list[List variables with help available and exit.]' \
+        '--help-variable-list[List variables with help available and exit.]' \
+        '--help-variables[Print cmake-variables manual and exit.]' \
+        '--help-variables[Print cmake-variables manual and exit.]' \
+        "*: :_files"
+
+}
+
+_ctest "$@"
+

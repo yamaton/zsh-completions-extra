@@ -1,0 +1,17 @@
+#compdef base32
+
+# Auto-generated with h2o
+
+function _base32 {
+    _arguments \
+        {-d,--decode}'[decode data]' \
+        {-i,--ignore-garbage}'[when decoding, ignore non-alphabet characters]' \
+        {-w,--wrap}'[wrap encoded lines after COLS character (default 76). Use 0 to disable line wrapping]' \
+        '--help[display this help and exit]' \
+        '--version[output version information and exit]' \
+        "*: :_files"
+
+}
+
+_base32 "$@"
+

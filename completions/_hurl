@@ -1,0 +1,55 @@
+#compdef hurl
+
+# Auto-generated with h2o
+
+function _hurl {
+    _arguments \
+        '--cacert[CA certificate to verify peer against (PEM format)]':file:_files \
+        {-E,--cert}'[Client certificate file and password]' \
+        '--key[Private key file name]' \
+        '--color[Colorize output]' \
+        '--compressed[Request compressed response (using deflate or gzip)]' \
+        '--connect-timeout[Maximum time allowed for connection \[default: 300\]]' \
+        '--connect-to[For a request to the given HOST1:PORT1 pair, connect to HOST2:PORT2 instead]' \
+        {-b,--cookie}'[Read cookies from FILE]':file:_files \
+        {-c,--cookie-jar}'[Write cookies to FILE after running the session (only for one session)]':file:_files \
+        '--error-format[Control the format of error messages \[default: short\] \[possible values: short, long\]]' \
+        '--fail-at-end[Fail at end]' \
+        '--file-root[Set root filesystem to import files \[default: current directory\]]':file:_files \
+        {-L,--location}'[Follow redirects]' \
+        '--glob[Specify input files that match the given GLOB. Multiple glob flags may be used]' \
+        '--ignore-asserts[Ignore asserts defined in the Hurl file]' \
+        {-i,--include}'[Include the HTTP headers in the output]' \
+        {-k,--insecure}'[Allow insecure SSL connections]' \
+        '--interactive[Turn on interactive mode]' \
+        '--json[Output each Hurl file result to JSON]' \
+        '--max-redirs[Maximum number of redirects allowed, -1 for unlimited redirects \[default: 50\]]' \
+        {-m,--max-time}'[Maximum time allowed for the transfer \[default: 300\]]' \
+        '--no-color[Do not colorize output]' \
+        '--no-output[Suppress output. By default, Hurl outputs the body of the last response]' \
+        '--noproxy[List of hosts which do not use proxy]' \
+        {-o,--output}'[Write to FILE instead of stdout]':file:_files \
+        '--path_as_is[Tell Hurl to not handle sequences of /../ or /./ in the given URL path]' \
+        {-x,--proxy}'[Use proxy on given protocol/host/port]' \
+        '--report-html[Generate HTML report to DIR]':file:_files \
+        '--report-junit[Write a Junit XML report to FILE]':file:_files \
+        '--resolve[Provide a custom address for a specific host and port pair]' \
+        '--retry[Maximum number of retries, 0 for no retries, -1 for unlimited retries \[default: 0\]]' \
+        '--retry-interval[Interval in milliseconds before a retry \[default: 1000\]]' \
+        '--ssl-no-revoke[(Windows) This option tells Hurl to disable certificate revocation checks. WARNING: this option loosens the SSL security, and by using this flag you ask for exactly that.]' \
+        '--test[Activate test mode]' \
+        '--to-entry[Execute Hurl file to ENTRY_NUMBER (starting at 1)]' \
+        {-A,--user-agent}'[Specify the User-Agent string to send to the HTTP server]' \
+        {-u,--user}'[Add basic Authentication header to each request]' \
+        '--variable[Define a variable]' \
+        '--variables-file[Define a properties file in which you define your variables]':file:_files \
+        '--verbose[Turn verbose]' \
+        '--very-verbose[Turn on verbose output, including HTTP response and libcurl logs]' \
+        {-h,--help}'[Print help]' \
+        {-V,--version}'[Print version]' \
+        "*: :_files"
+
+}
+
+_hurl "$@"
+

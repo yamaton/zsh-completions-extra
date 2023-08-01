@@ -1,0 +1,669 @@
+#compdef k3d
+
+# Auto-generated with h2o
+
+
+function _k3d {
+    local line state
+
+    function _commands {
+        local -a commands
+        commands=(
+            'cluster:Manage cluster(s)'
+            'completion:Generate completion scripts for \[bash, zsh, fish, powershell | psh\]'
+            'config:Work with config file(s)'
+            'help:Help about any command'
+            'image:Handle container images.'
+            'kubeconfig:Manage kubeconfig(s)'
+            'node:Manage node(s)'
+            'registry:Manage registry/registries'
+            'version:Show k3d and default k3s version'
+        )
+        _describe 'command' commands
+    }
+ 
+
+    _arguments -C \
+        {-h,--help}'[help for k3d]' \
+        '--timestamps[Enable Log timestamps]' \
+        '--trace[Enable super verbose output (trace logging)]' \
+        '--verbose[Enable verbose output (debug logging)]' \
+        '--version[Show k3d and default k3s version]' \
+        ': :->cmd' \
+        '*:: :->subcmd'
+
+    case $state in
+    (cmd)
+        _commands
+        ;;
+    (subcmd)
+        case $line[1] in
+        (cluster)
+            _k3d_cluster
+            ;;
+
+        (completion)
+            _k3d_completion
+            ;;
+
+        (config)
+            _k3d_config
+            ;;
+
+        (help)
+            _k3d_help
+            ;;
+
+        (image)
+            _k3d_image
+            ;;
+
+        (kubeconfig)
+            _k3d_kubeconfig
+            ;;
+
+        (node)
+            _k3d_node
+            ;;
+
+        (registry)
+            _k3d_registry
+            ;;
+
+        (version)
+            _k3d_version
+            ;;
+
+        esac
+        ;;
+     esac
+
+}
+
+
+function _k3d_cluster {
+    local line state
+
+    function _commands {
+        local -a commands
+        commands=(
+            'create:Create a new cluster'
+            'delete:Delete cluster(s).'
+            'edit:\[EXPERIMENTAL\] Edit cluster(s).'
+            'list:List cluster(s)'
+            'start:Start existing k3d cluster(s)'
+            'stop:Stop existing k3d cluster(s)'
+        )
+        _describe 'command' commands
+    }
+ 
+
+    _arguments -C \
+        {-h,--help}'[help for cluster]' \
+        '--timestamps[Enable Log timestamps]' \
+        '--trace[Enable super verbose output (trace logging)]' \
+        '--verbose[Enable verbose output (debug logging)]' \
+        ': :->cmd' \
+        '*:: :->subcmd'
+
+    case $state in
+    (cmd)
+        _commands
+        ;;
+    (subcmd)
+        case $line[1] in
+        (create)
+            _k3d_cluster_create
+            ;;
+
+        (delete)
+            _k3d_cluster_delete
+            ;;
+
+        (edit)
+            _k3d_cluster_edit
+            ;;
+
+        (list)
+            _k3d_cluster_list
+            ;;
+
+        (start)
+            _k3d_cluster_start
+            ;;
+
+        (stop)
+            _k3d_cluster_stop
+            ;;
+
+        esac
+        ;;
+     esac
+
+}
+
+function _k3d_cluster_create {
+    _arguments \
+        {-a,--agents}'[Specify how many agents you want to create]' \
+        '--agents-memory[Memory limit imposed on the agents nodes \[From docker\]]' \
+        '--api-port[Specify the Kubernetes API server port exposed on the LoadBalancer (Format: \[HOST:\]HOSTPORT)]' \
+        '--api-port[Specify the Kubernetes API server port exposed on the LoadBalancer (Format: \[HOST:\]HOSTPORT)]' \
+        {-c,--config}'[Path of a config file to use]' \
+        '--gpus[GPU devices to add to the cluster node containers ('\''all'\'' to pass all GPUs) \[From docker\]]' \
+        {-h,--help}'[help for create]' \
+        '--host-alias[Add ip:host\[,host,...\] mappings]' \
+        '--host-alias[Add ip:host\[,host,...\] mappings]' \
+        '--host-pid-mode[Enable host pid mode of server(s) and agent(s)]' \
+        {-i,--image}'[Specify k3s image that you want to use for the nodes]' \
+        '--k3s-arg[Additional args passed to k3s command (Format: ARG@NODEFILTER\[;@NODEFILTER\])]' \
+        '--kubeconfig-switch-context[Directly switch the default kubeconfig'\''s current-context to the new cluster'\''s context (requires --kubeconfig-update-default) (default true)]' \
+        '--kubeconfig-update-default[Directly update the default kubeconfig with the new cluster'\''s context (default true)]' \
+        '--lb-config-override[Use dotted YAML path syntax to override nginx loadbalancer settings]' \
+        '--network[Join an existing network]' \
+        '--no-image-volume[Disable the creation of a volume for importing images]' \
+        '--no-lb[Disable the creation of a LoadBalancer in front of the server nodes]' \
+        '--no-rollback[Disable the automatic rollback actions, if anything goes wrong]' \
+        '--registry-config[Specify path to an extra registries.yaml file]' \
+        '--registry-use[Connect to one or more k3d-managed registries running locally]' \
+        {-s,--servers}'[Specify how many servers you want to create]' \
+        '--servers-memory[Memory limit imposed on the server nodes \[From docker\]]' \
+        '--subnet[\[Experimental: IPAM\] Define a subnet for the newly created container network (Example: 172.28.0.0/16)]' \
+        '--timeout[Rollback changes if cluster couldn'\''t be created in specified duration.]' \
+        '--token[Specify a cluster token. By default, we generate one.]' \
+        '--wait[Wait for the server(s) to be ready before returning. Use '\''--timeout DURATION'\'' to not wait forever. (default true)]' \
+        '--timestamps[Enable Log timestamps]' \
+        '--trace[Enable super verbose output (trace logging)]' \
+        '--verbose[Enable verbose output (debug logging)]' \
+        "*: :_files"
+
+}
+
+function _k3d_cluster_delete {
+    _arguments \
+        {-a,--all}'[Delete all existing clusters]' \
+        {-c,--config}'[Path of a config file to use]' \
+        {-h,--help}'[help for delete]' \
+        '--timestamps[Enable Log timestamps]' \
+        '--trace[Enable super verbose output (trace logging)]' \
+        '--verbose[Enable verbose output (debug logging)]' \
+        "*: :_files"
+
+}
+
+function _k3d_cluster_edit {
+    _arguments \
+        {-h,--help}'[help for edit]' \
+        '--timestamps[Enable Log timestamps]' \
+        '--trace[Enable super verbose output (trace logging)]' \
+        '--verbose[Enable verbose output (debug logging)]' \
+        "*: :_files"
+
+}
+
+function _k3d_cluster_list {
+    _arguments \
+        {-h,--help}'[help for list]' \
+        '--no-headers[Disable headers]' \
+        {-o,--output}'[Output format. One of: json|yaml]' \
+        '--token[Print k3s cluster token]' \
+        '--timestamps[Enable Log timestamps]' \
+        '--trace[Enable super verbose output (trace logging)]' \
+        '--verbose[Enable verbose output (debug logging)]' \
+        "*: :_files"
+
+}
+
+function _k3d_cluster_start {
+    _arguments \
+        {-a,--all}'[Start all existing clusters]' \
+        {-h,--help}'[help for start]' \
+        '--timeout[Maximum waiting time for '\''--wait'\'' before canceling/returning.]' \
+        '--wait[Wait for the server(s) (and loadbalancer) to be ready before returning. (default true)]' \
+        '--timestamps[Enable Log timestamps]' \
+        '--trace[Enable super verbose output (trace logging)]' \
+        '--verbose[Enable verbose output (debug logging)]' \
+        "*: :_files"
+
+}
+
+function _k3d_cluster_stop {
+    _arguments \
+        {-a,--all}'[Stop all existing clusters]' \
+        {-h,--help}'[help for stop]' \
+        '--timestamps[Enable Log timestamps]' \
+        '--trace[Enable super verbose output (trace logging)]' \
+        '--verbose[Enable verbose output (debug logging)]' \
+        "*: :_files"
+
+}
+
+function _k3d_completion {
+    _arguments \
+        {-h,--help}'[help for completion]' \
+        '--timestamps[Enable Log timestamps]' \
+        '--trace[Enable super verbose output (trace logging)]' \
+        '--verbose[Enable verbose output (debug logging)]' \
+        "*: :_files"
+
+}
+
+function _k3d_config {
+    _arguments \
+        {-h,--help}'[help for config]' \
+        '--timestamps[Enable Log timestamps]' \
+        '--trace[Enable super verbose output (trace logging)]' \
+        '--verbose[Enable verbose output (debug logging)]' \
+        "*: :_files"
+
+}
+
+function _k3d_help {
+    _arguments \
+        {-h,--help}'[help for help]' \
+        '--timestamps[Enable Log timestamps]' \
+        '--trace[Enable super verbose output (trace logging)]' \
+        '--verbose[Enable verbose output (debug logging)]' \
+        "*: :_files"
+
+}
+
+
+function _k3d_image {
+    local line state
+
+    function _commands {
+        local -a commands
+        commands=(
+            'import:Import image(s) from docker into k3d cluster(s).'
+        )
+        _describe 'command' commands
+    }
+ 
+
+    _arguments -C \
+        {-h,--help}'[help for image]' \
+        '--timestamps[Enable Log timestamps]' \
+        '--trace[Enable super verbose output (trace logging)]' \
+        '--verbose[Enable verbose output (debug logging)]' \
+        ': :->cmd' \
+        '*:: :->subcmd'
+
+    case $state in
+    (cmd)
+        _commands
+        ;;
+    (subcmd)
+        case $line[1] in
+        (import)
+            _k3d_image_import
+            ;;
+
+        esac
+        ;;
+     esac
+
+}
+
+function _k3d_image_import {
+    _arguments \
+        {-c,--cluster}'[Select clusters to load the image to. (default \[k3s-default\])]' \
+        {-h,--help}'[help for import]' \
+        {-k,--keep-tarball}'[Do not delete the tarball containing the saved images from the shared volume]' \
+        {-t,--keep-tools}'[Do not delete the tools node after import]' \
+        {-m,--mode}'[Which method to use to import images into the cluster \[auto, direct, tools\]. See https://k3d.io/usage/guides/importing_images/ (default "tools-node")]' \
+        '--timestamps[Enable Log timestamps]' \
+        '--trace[Enable super verbose output (trace logging)]' \
+        '--verbose[Enable verbose output (debug logging)]' \
+        "*: :_files"
+
+}
+
+
+function _k3d_kubeconfig {
+    local line state
+
+    function _commands {
+        local -a commands
+        commands=(
+            'get:Print kubeconfig(s) from cluster(s).'
+            'merge:Write/Merge kubeconfig(s) from cluster(s) into new or existing kubeconfig/file.'
+        )
+        _describe 'command' commands
+    }
+ 
+
+    _arguments -C \
+        {-h,--help}'[help for kubeconfig]' \
+        '--timestamps[Enable Log timestamps]' \
+        '--trace[Enable super verbose output (trace logging)]' \
+        '--verbose[Enable verbose output (debug logging)]' \
+        ': :->cmd' \
+        '*:: :->subcmd'
+
+    case $state in
+    (cmd)
+        _commands
+        ;;
+    (subcmd)
+        case $line[1] in
+        (get)
+            _k3d_kubeconfig_get
+            ;;
+
+        (merge)
+            _k3d_kubeconfig_merge
+            ;;
+
+        esac
+        ;;
+     esac
+
+}
+
+function _k3d_kubeconfig_get {
+    _arguments \
+        {-a,--all}'[Output kubeconfigs from all existing clusters]' \
+        {-h,--help}'[help for get]' \
+        '--timestamps[Enable Log timestamps]' \
+        '--trace[Enable super verbose output (trace logging)]' \
+        '--verbose[Enable verbose output (debug logging)]' \
+        "*: :_files"
+
+}
+
+function _k3d_kubeconfig_merge {
+    _arguments \
+        {-a,--all}'[Get kubeconfigs from all existing clusters]' \
+        {-h,--help}'[help for merge]' \
+        {-d,--kubeconfig-merge-default}'[Merge into the default kubeconfig ($KUBECONFIG or ~/.kube/config)]' \
+        {-s,--kubeconfig-switch-context}'[Switch to new context (default true)]' \
+        {-o,--output}'[Define output \[ - | FILE \] (default from $KUBECONFIG or ~/.kube/config]' \
+        '--overwrite[\[Careful!\] Overwrite existing file, ignoring its contents]' \
+        {-u,--update}'[Update conflicting fields in existing kubeconfig (default true)]' \
+        '--timestamps[Enable Log timestamps]' \
+        '--trace[Enable super verbose output (trace logging)]' \
+        '--verbose[Enable verbose output (debug logging)]' \
+        "*: :_files"
+
+}
+
+
+function _k3d_node {
+    local line state
+
+    function _commands {
+        local -a commands
+        commands=(
+            'create:Create a new k3s node in docker'
+            'delete:Delete node(s).'
+            'edit:\[EXPERIMENTAL\] Edit node(s).'
+            'list:List node(s)'
+            'start:Start an existing k3d node'
+            'stop:Stop an existing k3d node'
+        )
+        _describe 'command' commands
+    }
+ 
+
+    _arguments -C \
+        {-h,--help}'[help for node]' \
+        '--timestamps[Enable Log timestamps]' \
+        '--trace[Enable super verbose output (trace logging)]' \
+        '--verbose[Enable verbose output (debug logging)]' \
+        ': :->cmd' \
+        '*:: :->subcmd'
+
+    case $state in
+    (cmd)
+        _commands
+        ;;
+    (subcmd)
+        case $line[1] in
+        (create)
+            _k3d_node_create
+            ;;
+
+        (delete)
+            _k3d_node_delete
+            ;;
+
+        (edit)
+            _k3d_node_edit
+            ;;
+
+        (list)
+            _k3d_node_list
+            ;;
+
+        (start)
+            _k3d_node_start
+            ;;
+
+        (stop)
+            _k3d_node_stop
+            ;;
+
+        esac
+        ;;
+     esac
+
+}
+
+function _k3d_node_create {
+    _arguments \
+        {-c,--cluster}'[Cluster URL or k3d cluster name to connect to. (default "k3s-default")]' \
+        {-h,--help}'[help for create]' \
+        {-i,--image}'[Specify k3s image used for the node(s) (default: copied from existing node)]' \
+        '--k3s-arg[Additional args passed to k3d command]' \
+        '--k3s-node-label[Specify k3s node labels in format "foo=bar"]' \
+        '--memory[Memory limit imposed on the node \[From docker\]]' \
+        {-n,--network}'[Add node to (another) runtime network]' \
+        '--replicas[Number of replicas of this node specification. (default 1)]' \
+        '--role[Specify node role \[server, agent\] (default "agent")]' \
+        '--runtime-label[Specify container runtime labels in format "foo=bar"]' \
+        '--timeout[Maximum waiting time for '\''--wait'\'' before canceling/returning.]' \
+        {-t,--token}'[Override cluster token (required when connecting to an external cluster)]' \
+        '--wait[Wait for the node(s) to be ready before returning. (default true)]' \
+        '--timestamps[Enable Log timestamps]' \
+        '--trace[Enable super verbose output (trace logging)]' \
+        '--verbose[Enable verbose output (debug logging)]' \
+        "*: :_files"
+
+}
+
+function _k3d_node_delete {
+    _arguments \
+        {-a,--all}'[Delete all existing nodes]' \
+        {-h,--help}'[help for delete]' \
+        {-r,--registries}'[Also delete registries]' \
+        '--timestamps[Enable Log timestamps]' \
+        '--trace[Enable super verbose output (trace logging)]' \
+        '--verbose[Enable verbose output (debug logging)]' \
+        "*: :_files"
+
+}
+
+function _k3d_node_edit {
+    _arguments \
+        {-h,--help}'[help for edit]' \
+        '--timestamps[Enable Log timestamps]' \
+        '--trace[Enable super verbose output (trace logging)]' \
+        '--verbose[Enable verbose output (debug logging)]' \
+        "*: :_files"
+
+}
+
+function _k3d_node_list {
+    _arguments \
+        {-h,--help}'[help for list]' \
+        '--no-headers[Disable headers]' \
+        {-o,--output}'[Output format. One of: json|yaml]' \
+        '--timestamps[Enable Log timestamps]' \
+        '--trace[Enable super verbose output (trace logging)]' \
+        '--verbose[Enable verbose output (debug logging)]' \
+        "*: :_files"
+
+}
+
+function _k3d_node_start {
+    _arguments \
+        {-h,--help}'[help for start]' \
+        '--timestamps[Enable Log timestamps]' \
+        '--trace[Enable super verbose output (trace logging)]' \
+        '--verbose[Enable verbose output (debug logging)]' \
+        "*: :_files"
+
+}
+
+function _k3d_node_stop {
+    _arguments \
+        {-h,--help}'[help for stop]' \
+        '--timestamps[Enable Log timestamps]' \
+        '--trace[Enable super verbose output (trace logging)]' \
+        '--verbose[Enable verbose output (debug logging)]' \
+        "*: :_files"
+
+}
+
+
+function _k3d_registry {
+    local line state
+
+    function _commands {
+        local -a commands
+        commands=(
+            'create:Create a new registry'
+            'delete:Delete registry/registries.'
+            'list:List registries'
+        )
+        _describe 'command' commands
+    }
+ 
+
+    _arguments -C \
+        {-h,--help}'[help for registry]' \
+        '--timestamps[Enable Log timestamps]' \
+        '--trace[Enable super verbose output (trace logging)]' \
+        '--verbose[Enable verbose output (debug logging)]' \
+        ': :->cmd' \
+        '*:: :->subcmd'
+
+    case $state in
+    (cmd)
+        _commands
+        ;;
+    (subcmd)
+        case $line[1] in
+        (create)
+            _k3d_registry_create
+            ;;
+
+        (delete)
+            _k3d_registry_delete
+            ;;
+
+        (list)
+            _k3d_registry_list
+            ;;
+
+        esac
+        ;;
+     esac
+
+}
+
+function _k3d_registry_create {
+    _arguments \
+        '--default-network[Specify the network connected to the registry (default "bridge")]' \
+        {-h,--help}'[help for create]' \
+        {-i,--image}'[Specify image used for the registry (default "docker.io/library/registry:2")]' \
+        '--no-help[Disable the help text (How-To use the registry)]' \
+        {-p,--port}'[Select which port the registry should be listening on on your machine (localhost) (Format: \[HOST:\]HOSTPORT)]' \
+        '--proxy-password[Specify the password of the proxied remote registry]' \
+        '--proxy-remote-url[Specify the url of the proxied remote registry]' \
+        '--proxy-username[Specify the username of the proxied remote registry]' \
+        {-v,--volume}'[Mount volumes into the registry node (Format: \[SOURCE:\]DEST]' \
+        '--timestamps[Enable Log timestamps]' \
+        '--trace[Enable super verbose output (trace logging)]' \
+        '--verbose[Enable verbose output (debug logging)]' \
+        "*: :_files"
+
+}
+
+function _k3d_registry_delete {
+    _arguments \
+        {-a,--all}'[Delete all existing registries]' \
+        {-h,--help}'[help for delete]' \
+        '--timestamps[Enable Log timestamps]' \
+        '--trace[Enable super verbose output (trace logging)]' \
+        '--verbose[Enable verbose output (debug logging)]' \
+        "*: :_files"
+
+}
+
+function _k3d_registry_list {
+    _arguments \
+        {-h,--help}'[help for list]' \
+        '--no-headers[Disable headers]' \
+        {-o,--output}'[Output format. One of: json|yaml]' \
+        '--timestamps[Enable Log timestamps]' \
+        '--trace[Enable super verbose output (trace logging)]' \
+        '--verbose[Enable verbose output (debug logging)]' \
+        "*: :_files"
+
+}
+
+
+function _k3d_version {
+    local line state
+
+    function _commands {
+        local -a commands
+        commands=(
+            'list:List k3d/K3s versions'
+        )
+        _describe 'command' commands
+    }
+ 
+
+    _arguments -C \
+        {-h,--help}'[help for version]' \
+        '--timestamps[Enable Log timestamps]' \
+        '--trace[Enable super verbose output (trace logging)]' \
+        '--verbose[Enable verbose output (debug logging)]' \
+        ': :->cmd' \
+        '*:: :->subcmd'
+
+    case $state in
+    (cmd)
+        _commands
+        ;;
+    (subcmd)
+        case $line[1] in
+        (list)
+            _k3d_version_list
+            ;;
+
+        esac
+        ;;
+     esac
+
+}
+
+function _k3d_version_list {
+    _arguments \
+        {-e,--exclude}'[Exclude Regexp (default excludes pre-releases and arch-specific tags) (default ".+(rc|engine|alpha|beta|dev|test|arm|arm64|amd64).*")]' \
+        {-f,--format}'[Output Format (default "raw")]' \
+        {-h,--help}'[help for list]' \
+        {-i,--include}'[Include Regexp (default includes everything (default ".*")]' \
+        {-l,--limit}'[Limit number of tags in output (0 = unlimited)]' \
+        {-s,--sort}'[Sort Mode (asc | desc | off) (default "desc")]' \
+        '--timestamps[Enable Log timestamps]' \
+        '--trace[Enable super verbose output (trace logging)]' \
+        '--verbose[Enable verbose output (debug logging)]' \
+        "*: :_files"
+
+}
+
+_k3d "$@"
+

@@ -1,0 +1,24 @@
+#compdef date
+
+# Auto-generated with h2o
+
+function _date {
+    _arguments \
+        {-d,--date}'[display time described by STRING, not '\''now'\'']' \
+        '--debug[annotate the parsed date, and warn about questionable usage to stderr]' \
+        {-f,--file}'[like --date; once for each line of DATEFILE]':file:_files \
+        {-I,--iso-8601}'[output date/time in ISO 8601 format. FMT='\''date'\'' for date only (the default), '\''hours'\'', '\''minutes'\'', '\''seconds'\'', or '\''ns'\'' for date and time to the indicated precision. Example: 2006-08-14T02:34:56-06:00]' \
+        {-R,--rfc-email}'[output date and time in RFC 5322 format. Example: Mon, 14 Aug 2006 02:34:56 -0600]' \
+        '--rfc-3339[output date/time in RFC 3339 format. FMT='\''date'\'', '\''seconds'\'', or '\''ns'\'' for date and time to the indicated precision. Example: 2006-08-14 02:34:56-06:00]' \
+        {-r,--reference}'[display the last modification time of FILE]':file:_files \
+        {-s,--set}'[set time described by STRING]' \
+        {-u,--utc,--universal}'[print or set Coordinated Universal Time (UTC)]' \
+        '--help[display this help and exit]' \
+        '--version[output version information and exit]' \
+        '-[(hyphen) do not pad the field]' \
+        "*: :_files"
+
+}
+
+_date "$@"
+

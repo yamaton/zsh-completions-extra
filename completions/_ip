@@ -1,0 +1,600 @@
+#compdef ip
+
+# Auto-generated with h2o
+
+
+function _ip {
+    local line state
+
+    function _commands {
+        local -a commands
+        commands=(
+            'address:protocol (IP or IPv6) address on a device.'
+            'addrlabel:label configuration for protocol address selection.'
+            'ioam:manage IOAM namespaces and IOAM schemas.'
+            'l2tp:tunnel ethernet over IP (L2TPv3).'
+            'link:network device.'
+            'maddress:multicast address.'
+            'monitor:watch for netlink messages.'
+            'mptcp:manage MPTCP path manager.'
+            'mroute:multicast routing cache entry.'
+            'neighbour:manage ARP or NDISC cache entries.'
+            'netns:manage network namespaces.'
+            'ntable:manage the neighbor cache'\''s operation.'
+            'route:routing table entry.'
+            'rule:rule in routing policy database.'
+            'tcp_metrics:manage TCP Metrics'
+            'token:manage tokenized interface identifiers.'
+            'tunnel:tunnel over IP.'
+            'vrf:manage virtual routing and forwarding devices.'
+            'xfrm:manage IPSec policies.'
+        )
+        _describe 'command' commands
+    }
+ 
+
+    _arguments -C \
+        '-f[{ inet | inet6 | link } | -4 | -6 | -B | -0 | -l\[oops\] { maximum-addr-flush-at‐]' \
+        '-family[{ inet | inet6 | link } | -4 | -6 | -B | -0 | -l\[oops\] { maximum-addr-flush-at‐]' \
+        '-f[| -4 | -6 | -B | -0 | -l\[oops\] { maximum-addr-flush-at‐]' \
+        '-family[| -4 | -6 | -B | -0 | -l\[oops\] { maximum-addr-flush-at‐]' \
+        '-N[| -a\[ll\] | -c\[olor\] | -br\[ief\] | -j\[son\] | -p\[retty\] }]' \
+        '-Numeric[| -a\[ll\] | -c\[olor\] | -br\[ief\] | -j\[son\] | -p\[retty\] }]' \
+        {-V,-Version}'[Print the version of the ip utility and exit.]' \
+        {-h,-human,-human-readable}'[output statistics with human readable values followed by suffix.]' \
+        {-b,-batch}'[Read commands from provided file or standard input and invoke them. First failure will cause termination of ip.]':file:_files \
+        '-force[Don'\''t terminate ip on errors in batch mode. If there were any errors during execution of the commands, the application return code will be non zero.]' \
+        {-s,-stats,-statistics}'[Output more information. If the option appears twice or more, the amount of information increases. As a rule, the information is statistics or some time values.]' \
+        {-d,-details}'[Output more detailed information.]' \
+        {-l,-loops}'[Specify maximum number of loops the '\''ip address flush'\'' logic will attempt before giving up. The default is 10. Zero (0) means loop until all addresses are removed.]' \
+        {-f,-family}'[Specifies the protocol family to use. The protocol family identifier can be one of inet, inet6, bridge, mpls or link. If this option is not present, the protocol family is guessed from other arguments. If the rest of the command line does not give enough information to guess the family, ip falls back to the default one, usually inet or any. link is a special family identifier meaning that no networking protocol is involved.]' \
+        '-4[shortcut for -family inet.]' \
+        '-6[shortcut for -family inet6.]' \
+        '-B[shortcut for -family bridge.]' \
+        '-M[shortcut for -family mpls.]' \
+        '-0[shortcut for -family link.]' \
+        {-o,-oneline}'[output each record on a single line, replacing line feeds with the '\''\'\'' character. This is convenient when you want to count records with wc(1) or to grep(1) the output.]' \
+        {-r,-resolve}'[use the system'\''s name resolver to print DNS names instead of host addresses.]' \
+        {-n,-netns}'[switches ip to the specified network namespace NETNS. Actually it just simplifies executing of:]' \
+        {-a,-all}'[executes specified command over all objects, it depends if command supports this option.]' \
+        {-t,-timestamp}'[display current time when using monitor option.]' \
+        {-ts,-tshort}'[Like -timestamp, but use shorter format.]' \
+        {-rc,-rcvbuf}'[Set the netlink socket receive buffer size, defaults to 1MB.]' \
+        '-iec[print human readable rates in IEC units (e.g. 1Ki = 1024).]' \
+        {-br,-brief}'[Print only basic information in a tabular format for better readability. This option is currently only supported by ip addr show , ip link show & ip neigh show commands.]' \
+        {-j,-json}'[Output results in JavaScript Object Notation (JSON).]' \
+        {-p,-pretty}'[The default JSON format is compact and more efficient to parse but hard for most users to read. This flag adds indentation for readability.]' \
+        ': :->cmd' \
+        '*:: :->subcmd'
+
+    case $state in
+    (cmd)
+        _commands
+        ;;
+    (subcmd)
+        case $line[1] in
+        (address)
+            _ip_address
+            ;;
+
+        (addrlabel)
+            _ip_addrlabel
+            ;;
+
+        (ioam)
+            _ip_ioam
+            ;;
+
+        (l2tp)
+            _ip_l2tp
+            ;;
+
+        (link)
+            _ip_link
+            ;;
+
+        (maddress)
+            _ip_maddress
+            ;;
+
+        (monitor)
+            _ip_monitor
+            ;;
+
+        (mptcp)
+            _ip_mptcp
+            ;;
+
+        (mroute)
+            _ip_mroute
+            ;;
+
+        (neighbour)
+            _ip_neighbour
+            ;;
+
+        (netns)
+            _ip_netns
+            ;;
+
+        (ntable)
+            _ip_ntable
+            ;;
+
+        (route)
+            _ip_route
+            ;;
+
+        (rule)
+            _ip_rule
+            ;;
+
+        (tcp_metrics)
+            _ip_tcp_metrics
+            ;;
+
+        (token)
+            _ip_token
+            ;;
+
+        (tunnel)
+            _ip_tunnel
+            ;;
+
+        (vrf)
+            _ip_vrf
+            ;;
+
+        (xfrm)
+            _ip_xfrm
+            ;;
+
+        esac
+        ;;
+     esac
+
+}
+
+
+function _ip_address {
+    local line state
+
+    function _commands {
+        local -a commands
+        commands=(
+            'add:add object'
+            'del:delete object'
+            'show:show object'
+        )
+        _describe 'command' commands
+    }
+ 
+
+    _arguments -C \
+        '-tentative[(IPv6 only) only list addresses which are not in the process of duplicate address detection currently.]' \
+        '-deprecated[(IPv6 only) only list addresses not being deprecated.]' \
+        '-dadfailed[(IPv6 only) only list addresses which have not failed duplicate address detection.]' \
+        {-temporary,-secondary}'[These flags are aliases for primary.]' \
+        '-temporary[These flags are aliases for primary.]' \
+        '-primary[This is an alias for temporary or secondary.]' \
+        ': :->cmd' \
+        '*:: :->subcmd'
+
+    case $state in
+    (cmd)
+        _commands
+        ;;
+    (subcmd)
+        case $line[1] in
+        (add)
+            _ip_address_add
+            ;;
+
+        (del)
+            _ip_address_del
+            ;;
+
+        (show)
+            _ip_address_show
+            ;;
+
+        esac
+        ;;
+     esac
+
+}
+
+function _ip_address_add {
+    _arguments \
+        "*: :_files"
+
+}
+
+function _ip_address_del {
+    _arguments \
+        "*: :_files"
+
+}
+
+function _ip_address_show {
+    _arguments \
+        "*: :_files"
+
+}
+
+
+function _ip_addrlabel {
+    local line state
+
+    function _commands {
+        local -a commands
+        commands=(
+            'add:add object'
+            'del:delete object'
+            'show:show object'
+        )
+        _describe 'command' commands
+    }
+ 
+
+    _arguments -C \
+        ': :->cmd' \
+        '*:: :->subcmd'
+
+    case $state in
+    (cmd)
+        _commands
+        ;;
+    (subcmd)
+        case $line[1] in
+        (add)
+            _ip_addrlabel_add
+            ;;
+
+        (del)
+            _ip_addrlabel_del
+            ;;
+
+        (show)
+            _ip_addrlabel_show
+            ;;
+
+        esac
+        ;;
+     esac
+
+}
+
+function _ip_addrlabel_add {
+    _arguments \
+        "*: :_files"
+
+}
+
+function _ip_addrlabel_del {
+    _arguments \
+        "*: :_files"
+
+}
+
+function _ip_addrlabel_show {
+    _arguments \
+        "*: :_files"
+
+}
+
+
+function _ip_ioam {
+    local line state
+
+    function _commands {
+        local -a commands
+        commands=(
+            'namespace:namespace'
+            'schema:schema'
+        )
+        _describe 'command' commands
+    }
+ 
+
+    _arguments -C \
+        ': :->cmd' \
+        '*:: :->subcmd'
+
+    case $state in
+    (cmd)
+        _commands
+        ;;
+    (subcmd)
+        case $line[1] in
+        (namespace)
+            _ip_ioam_namespace
+            ;;
+
+        (schema)
+            _ip_ioam_schema
+            ;;
+
+        esac
+        ;;
+     esac
+
+}
+
+
+function _ip_ioam_namespace {
+    local line state
+
+    function _commands {
+        local -a commands
+        commands=(
+            'add:add object'
+            'del:delete object'
+            'show:show object'
+        )
+        _describe 'command' commands
+    }
+ 
+
+    _arguments -C \
+        ': :->cmd' \
+        '*:: :->subcmd'
+
+    case $state in
+    (cmd)
+        _commands
+        ;;
+    (subcmd)
+        case $line[1] in
+        (add)
+            _ip_ioam_namespace_add
+            ;;
+
+        (del)
+            _ip_ioam_namespace_del
+            ;;
+
+        (show)
+            _ip_ioam_namespace_show
+            ;;
+
+        esac
+        ;;
+     esac
+
+}
+
+function _ip_ioam_namespace_add {
+    _arguments \
+        "*: :_files"
+
+}
+
+function _ip_ioam_namespace_del {
+    _arguments \
+        "*: :_files"
+
+}
+
+function _ip_ioam_namespace_show {
+    _arguments \
+        "*: :_files"
+
+}
+
+
+function _ip_ioam_schema {
+    local line state
+
+    function _commands {
+        local -a commands
+        commands=(
+            'add:add object'
+            'del:delete object'
+            'show:show object'
+        )
+        _describe 'command' commands
+    }
+ 
+
+    _arguments -C \
+        ': :->cmd' \
+        '*:: :->subcmd'
+
+    case $state in
+    (cmd)
+        _commands
+        ;;
+    (subcmd)
+        case $line[1] in
+        (add)
+            _ip_ioam_schema_add
+            ;;
+
+        (del)
+            _ip_ioam_schema_del
+            ;;
+
+        (show)
+            _ip_ioam_schema_show
+            ;;
+
+        esac
+        ;;
+     esac
+
+}
+
+function _ip_ioam_schema_add {
+    _arguments \
+        "*: :_files"
+
+}
+
+function _ip_ioam_schema_del {
+    _arguments \
+        "*: :_files"
+
+}
+
+function _ip_ioam_schema_show {
+    _arguments \
+        "*: :_files"
+
+}
+
+
+function _ip_l2tp {
+    local line state
+
+    function _commands {
+        local -a commands
+        commands=(
+            'add:add object'
+            'del:delete object'
+            'show:show object'
+        )
+        _describe 'command' commands
+    }
+ 
+
+    _arguments -C \
+        ': :->cmd' \
+        '*:: :->subcmd'
+
+    case $state in
+    (cmd)
+        _commands
+        ;;
+    (subcmd)
+        case $line[1] in
+        (add)
+            _ip_l2tp_add
+            ;;
+
+        (del)
+            _ip_l2tp_del
+            ;;
+
+        (show)
+            _ip_l2tp_show
+            ;;
+
+        esac
+        ;;
+     esac
+
+}
+
+function _ip_l2tp_add {
+    _arguments \
+        "*: :_files"
+
+}
+
+function _ip_l2tp_del {
+    _arguments \
+        "*: :_files"
+
+}
+
+function _ip_l2tp_show {
+    _arguments \
+        "*: :_files"
+
+}
+
+function _ip_link {
+    _arguments \
+        "*: :_files"
+
+}
+
+function _ip_maddress {
+    _arguments \
+        "*: :_files"
+
+}
+
+function _ip_monitor {
+    _arguments \
+        {-t,-timestamp}'[Prints timestamp before the event message on the separated line in format:]' \
+        {-ts,-tshort}'[Prints short timestamp before the event message on the same line in format:]' \
+        "*: :_files"
+
+}
+
+function _ip_mptcp {
+    _arguments \
+        "*: :_files"
+
+}
+
+function _ip_mroute {
+    _arguments \
+        "*: :_files"
+
+}
+
+function _ip_neighbour {
+    _arguments \
+        "*: :_files"
+
+}
+
+function _ip_netns {
+    _arguments \
+        "*: :_files"
+
+}
+
+function _ip_ntable {
+    _arguments \
+        "*: :_files"
+
+}
+
+function _ip_route {
+    _arguments \
+        "*: :_files"
+
+}
+
+function _ip_rule {
+    _arguments \
+        "*: :_files"
+
+}
+
+function _ip_tcp_metrics {
+    _arguments \
+        "*: :_files"
+
+}
+
+function _ip_token {
+    _arguments \
+        "*: :_files"
+
+}
+
+function _ip_tunnel {
+    _arguments \
+        "*: :_files"
+
+}
+
+function _ip_vrf {
+    _arguments \
+        "*: :_files"
+
+}
+
+function _ip_xfrm {
+    _arguments \
+        "*: :_files"
+
+}
+
+_ip "$@"
+

@@ -1,0 +1,1227 @@
+#compdef fly
+
+# Auto-generated with h2o
+
+
+function _fly {
+    local line state
+
+    function _commands {
+        local -a commands
+        commands=(
+            'abort-build:Abort a build (aliases: ab)'
+            'active-users:List the active users since a date or for the past 2 months (aliases: au)'
+            'archive-pipeline:Archive a pipeline (aliases: ap)'
+            'builds:List builds data (aliases: bs)'
+            'check-resource:Check a resource (aliases: cr)'
+            'check-resource-type:Check a resource-type (aliases: crt)'
+            'checklist:Print a Checkfile of the given pipeline (aliases: cl)'
+            'clear-resource-cache:Clear cache of a resource (aliases: crc)'
+            'clear-task-cache:Clears cache from a task container (aliases: ctc)'
+            'clear-versions:Clear versions of a resource or resource type (aliases: cv)'
+            'completion:generate shell completion code'
+            'containers:Print the active containers (aliases: cs)'
+            'curl:curl the api (aliases: c)'
+            'delete-target:Delete target (aliases: dtg)'
+            'destroy-pipeline:Destroy a pipeline (aliases: dp)'
+            'destroy-team:Destroy a team and delete all of its data (aliases: dt)'
+            'disable-resource-version:Disable a version of a resource (aliases: drv)'
+            'edit-target:Edit a target (aliases: etg)'
+            'enable-resource-version:Enable a version of a resource (aliases: erv)'
+            'execute:Execute a one-off build using local bits (aliases: e)'
+            'expose-pipeline:Make a pipeline publicly viewable (aliases: ep)'
+            'format-pipeline:Format a pipeline config (aliases: fp)'
+            'get-pipeline:Get a pipeline'\''s current configuration (aliases: gp)'
+            'get-team:Show team configuration (aliases: gt)'
+            'help:Print this help message'
+            'hide-pipeline:Hide a pipeline from the public (aliases: hp)'
+            'hijack:Execute a command in a container (aliases: intercept, i)'
+            'jobs:List the jobs in the pipelines (aliases: js)'
+            'land-worker:Land a worker (aliases: lw)'
+            'login:Authenticate with the target (aliases: l)'
+            'logout:Release authentication with the target (aliases: o)'
+            'order-instanced-pipelines:Orders instanced pipelines within an instance group (aliases: oip)'
+            'order-pipelines:Orders pipelines (aliases: op)'
+            'pause-job:Pause a job (aliases: pj)'
+            'pause-pipeline:Pause a pipeline (aliases: pp)'
+            'paused-jobs:List the paused jobs in the pipelines (aliases: pjs)'
+            'paused-pipelines:List the configured paused pipelines (aliases: pps)'
+            'pin-resource:Pin a version to a resource (aliases: pr)'
+            'pipelines:List the configured pipelines (aliases: ps)'
+            'prune-worker:Prune a stalled, landing, landed, or retiring worker (aliases: pw)'
+            'rename-pipeline:Rename a pipeline (aliases: rp)'
+            'rename-team:Rename a team (aliases: rt)'
+            'rerun-build:Rerun a build (aliases: rb)'
+            'resource-versions:List the versions of a resource (aliases: rvs)'
+            'resources:List the resources in the pipeline (aliases: rs)'
+            'schedule-job:Request the scheduler to run for a job. Introduced as a recovery command for the v6.0 scheduler. (aliases: sj)'
+            'set-pipeline:Create or update a pipeline'\''s configuration (aliases: sp)'
+            'set-team:Create or modify a team to have the given credentials (aliases: st)'
+            'status:Login status'
+            'sync:Download and replace the current fly from the target (aliases: s)'
+            'targets:List saved targets (aliases: ts)'
+            'teams:List the configured teams (aliases: t)'
+            'trigger-job:Start a job in a pipeline (aliases: tj)'
+            'unpause-job:Unpause a job (aliases: uj)'
+            'unpause-pipeline:Un-pause a pipeline (aliases: up)'
+            'unpin-resource:Unpin a resource (aliases: ur)'
+            'userinfo:User information'
+            'validate-pipeline:Validate a pipeline config (aliases: vp)'
+            'volumes:List the active volumes (aliases: vs)'
+            'watch:Stream a build'\''s output (aliases: w)'
+            'workers:List the registered workers (aliases: ws)'
+        )
+        _describe 'command' commands
+    }
+ 
+
+    _arguments -C \
+        {-t,--target}'[Concourse target name]' \
+        {-v,--version}'[Print the version of Fly and exit]' \
+        '--verbose[Print API requests and responses]' \
+        '--print-table-headers[Print table headers even for redirected output]' \
+        {-h,--help}'[Show this help message]' \
+        ': :->cmd' \
+        '*:: :->subcmd'
+
+    case $state in
+    (cmd)
+        _commands
+        ;;
+    (subcmd)
+        case $line[1] in
+        (abort-build)
+            _fly_abort-build
+            ;;
+
+        (active-users)
+            _fly_active-users
+            ;;
+
+        (archive-pipeline)
+            _fly_archive-pipeline
+            ;;
+
+        (builds)
+            _fly_builds
+            ;;
+
+        (check-resource)
+            _fly_check-resource
+            ;;
+
+        (check-resource-type)
+            _fly_check-resource-type
+            ;;
+
+        (checklist)
+            _fly_checklist
+            ;;
+
+        (clear-resource-cache)
+            _fly_clear-resource-cache
+            ;;
+
+        (clear-task-cache)
+            _fly_clear-task-cache
+            ;;
+
+        (clear-versions)
+            _fly_clear-versions
+            ;;
+
+        (completion)
+            _fly_completion
+            ;;
+
+        (containers)
+            _fly_containers
+            ;;
+
+        (curl)
+            _fly_curl
+            ;;
+
+        (delete-target)
+            _fly_delete-target
+            ;;
+
+        (destroy-pipeline)
+            _fly_destroy-pipeline
+            ;;
+
+        (destroy-team)
+            _fly_destroy-team
+            ;;
+
+        (disable-resource-version)
+            _fly_disable-resource-version
+            ;;
+
+        (edit-target)
+            _fly_edit-target
+            ;;
+
+        (enable-resource-version)
+            _fly_enable-resource-version
+            ;;
+
+        (execute)
+            _fly_execute
+            ;;
+
+        (expose-pipeline)
+            _fly_expose-pipeline
+            ;;
+
+        (format-pipeline)
+            _fly_format-pipeline
+            ;;
+
+        (get-pipeline)
+            _fly_get-pipeline
+            ;;
+
+        (get-team)
+            _fly_get-team
+            ;;
+
+        (help)
+            _fly_help
+            ;;
+
+        (hide-pipeline)
+            _fly_hide-pipeline
+            ;;
+
+        (hijack)
+            _fly_hijack
+            ;;
+
+        (jobs)
+            _fly_jobs
+            ;;
+
+        (land-worker)
+            _fly_land-worker
+            ;;
+
+        (login)
+            _fly_login
+            ;;
+
+        (logout)
+            _fly_logout
+            ;;
+
+        (order-instanced-pipelines)
+            _fly_order-instanced-pipelines
+            ;;
+
+        (order-pipelines)
+            _fly_order-pipelines
+            ;;
+
+        (pause-job)
+            _fly_pause-job
+            ;;
+
+        (pause-pipeline)
+            _fly_pause-pipeline
+            ;;
+
+        (paused-jobs)
+            _fly_paused-jobs
+            ;;
+
+        (paused-pipelines)
+            _fly_paused-pipelines
+            ;;
+
+        (pin-resource)
+            _fly_pin-resource
+            ;;
+
+        (pipelines)
+            _fly_pipelines
+            ;;
+
+        (prune-worker)
+            _fly_prune-worker
+            ;;
+
+        (rename-pipeline)
+            _fly_rename-pipeline
+            ;;
+
+        (rename-team)
+            _fly_rename-team
+            ;;
+
+        (rerun-build)
+            _fly_rerun-build
+            ;;
+
+        (resource-versions)
+            _fly_resource-versions
+            ;;
+
+        (resources)
+            _fly_resources
+            ;;
+
+        (schedule-job)
+            _fly_schedule-job
+            ;;
+
+        (set-pipeline)
+            _fly_set-pipeline
+            ;;
+
+        (set-team)
+            _fly_set-team
+            ;;
+
+        (status)
+            _fly_status
+            ;;
+
+        (sync)
+            _fly_sync
+            ;;
+
+        (targets)
+            _fly_targets
+            ;;
+
+        (teams)
+            _fly_teams
+            ;;
+
+        (trigger-job)
+            _fly_trigger-job
+            ;;
+
+        (unpause-job)
+            _fly_unpause-job
+            ;;
+
+        (unpause-pipeline)
+            _fly_unpause-pipeline
+            ;;
+
+        (unpin-resource)
+            _fly_unpin-resource
+            ;;
+
+        (userinfo)
+            _fly_userinfo
+            ;;
+
+        (validate-pipeline)
+            _fly_validate-pipeline
+            ;;
+
+        (volumes)
+            _fly_volumes
+            ;;
+
+        (watch)
+            _fly_watch
+            ;;
+
+        (workers)
+            _fly_workers
+            ;;
+
+        esac
+        ;;
+     esac
+
+}
+
+function _fly_abort-build {
+    _arguments \
+        {-t,--target}'[Concourse target name]' \
+        {-v,--version}'[Print the version of Fly and exit]' \
+        '--verbose[Print API requests and responses]' \
+        '--print-table-headers[Print table headers even for redirected output]' \
+        {-h,--help}'[Show this help message]' \
+        {-j,--job}'[Name of a job to cancel]' \
+        {-b,--build}'[If job is specified: build number to cancel. If job not specified: build id]' \
+        '--team[Name of the team to which the pipeline belongs, if different from the target default]' \
+        "*: :_files"
+
+}
+
+function _fly_active-users {
+    _arguments \
+        {-t,--target}'[Concourse target name]' \
+        {-v,--version}'[Print the version of Fly and exit]' \
+        '--verbose[Print API requests and responses]' \
+        '--print-table-headers[Print table headers even for redirected output]' \
+        {-h,--help}'[Show this help message]' \
+        '--since[Start date range of returned users'\'' last login, defaults to 2 months from today'\'']' \
+        '--json[Print command result as JSON]' \
+        "*: :_files"
+
+}
+
+function _fly_archive-pipeline {
+    _arguments \
+        {-t,--target}'[Concourse target name]' \
+        {-v,--version}'[Print the version of Fly and exit]' \
+        '--verbose[Print API requests and responses]' \
+        '--print-table-headers[Print table headers even for redirected output]' \
+        {-h,--help}'[Show this help message]' \
+        {-p,--pipeline}'[Pipeline to archive]' \
+        {-a,--all}'[Archive all pipelines]' \
+        {-n,--non-interactive}'[Skips interactions, uses default values]' \
+        '--team[Name of the team to which the pipeline belongs, if different from the target default]' \
+        "*: :_files"
+
+}
+
+function _fly_builds {
+    _arguments \
+        {-t,--target}'[Concourse target name]' \
+        {-v,--version}'[Print the version of Fly and exit]' \
+        '--verbose[Print API requests and responses]' \
+        '--print-table-headers[Print table headers even for redirected output]' \
+        {-h,--help}'[Show this help message]' \
+        {-a,--all-teams}'[Show builds for the all teams that user has access to]' \
+        {-c,--count}'[Number of builds you want to limit the return to (default: 50)]' \
+        '--current-team[Show builds for the currently targeted team]' \
+        {-j,--job}'[Name of a job to get builds for]' \
+        '--json[Print command result as JSON]' \
+        {-p,--pipeline}'[Name of a pipeline to get builds for]' \
+        {-n,--team}'[Show builds for these teams]' \
+        '--since[Start of the range to filter builds]' \
+        '--until[End of the range to filter builds]' \
+        "*: :_files"
+
+}
+
+function _fly_check-resource {
+    _arguments \
+        {-t,--target}'[Concourse target name]' \
+        {-v,--version}'[Print the version of Fly and exit]' \
+        '--verbose[Print API requests and responses]' \
+        '--print-table-headers[Print table headers even for redirected output]' \
+        {-h,--help}'[Show this help message]' \
+        {-r,--resource}'[Name of a resource to check version for]' \
+        {-f,--from}'[Version of the resource to check from, e.g. ref:abcd or path:thing-1.2.3.tgz]' \
+        {-a,--async}'[Return the check without waiting for its result]' \
+        '--shallow[Check the resource itself only]' \
+        '--team[Name of the team to which the pipeline belongs, if different from the target default]' \
+        "*: :_files"
+
+}
+
+function _fly_check-resource-type {
+    _arguments \
+        {-t,--target}'[Concourse target name]' \
+        {-v,--version}'[Print the version of Fly and exit]' \
+        '--verbose[Print API requests and responses]' \
+        '--print-table-headers[Print table headers even for redirected output]' \
+        {-h,--help}'[Show this help message]' \
+        {-r,--resource-type}'[Name of a resource-type to check]' \
+        {-f,--from}'[Version of the resource type to check from, e.g. digest:sha256@...]' \
+        {-a,--async}'[Return the check without waiting for its result]' \
+        '--shallow[Check the resource type itself only]' \
+        '--team[Name of the team to which the pipeline belongs, if different from the target default]' \
+        "*: :_files"
+
+}
+
+function _fly_checklist {
+    _arguments \
+        {-t,--target}'[Concourse target name]' \
+        {-v,--version}'[Print the version of Fly and exit]' \
+        '--verbose[Print API requests and responses]' \
+        '--print-table-headers[Print table headers even for redirected output]' \
+        {-h,--help}'[Show this help message]' \
+        {-p,--pipeline}'[The pipeline from which to generate the Checkfile]' \
+        '--team[Name of the team to which the pipeline belongs, if different from the target default]' \
+        "*: :_files"
+
+}
+
+function _fly_clear-resource-cache {
+    _arguments \
+        {-t,--target}'[Concourse target name]' \
+        {-v,--version}'[Print the version of Fly and exit]' \
+        '--verbose[Print API requests and responses]' \
+        '--print-table-headers[Print table headers even for redirected output]' \
+        {-h,--help}'[Show this help message]' \
+        {-r,--resource}'[Name of a resource to clear cache]' \
+        {-v,--version}'[Version of the resource to check from, e.g. digest:sha256@..., in case a version is not specified the command will delete all the resource caches for that resource]' \
+        "*: :_files"
+
+}
+
+function _fly_clear-task-cache {
+    _arguments \
+        {-t,--target}'[Concourse target name]' \
+        {-v,--version}'[Print the version of Fly and exit]' \
+        '--verbose[Print API requests and responses]' \
+        '--print-table-headers[Print table headers even for redirected output]' \
+        {-h,--help}'[Show this help message]' \
+        {-j,--job}'[Job to clear cache from]' \
+        {-s,--step}'[Step name to clear cache from]' \
+        {-c,--cache-path}'[Cache directory to clear out]' \
+        {-n,--non-interactive}'[Destroy the task cache(s) without confirmation]' \
+        "*: :_files"
+
+}
+
+function _fly_clear-versions {
+    _arguments \
+        {-t,--target}'[Concourse target name]' \
+        {-v,--version}'[Print the version of Fly and exit]' \
+        '--verbose[Print API requests and responses]' \
+        '--print-table-headers[Print table headers even for redirected output]' \
+        {-h,--help}'[Show this help message]' \
+        '--resource[Name of a resource to clear versions]' \
+        '--resource-type[Name of a resource type to clear versions]' \
+        "*: :_files"
+
+}
+
+function _fly_completion {
+    _arguments \
+        {-t,--target}'[Concourse target name]' \
+        {-v,--version}'[Print the version of Fly and exit]' \
+        '--verbose[Print API requests and responses]' \
+        '--print-table-headers[Print table headers even for redirected output]' \
+        {-h,--help}'[Show this help message]' \
+        "*: :_files"
+
+}
+
+function _fly_containers {
+    _arguments \
+        {-t,--target}'[Concourse target name]' \
+        {-v,--version}'[Print the version of Fly and exit]' \
+        '--verbose[Print API requests and responses]' \
+        '--print-table-headers[Print table headers even for redirected output]' \
+        {-h,--help}'[Show this help message]' \
+        '--json[Print command result as JSON]' \
+        "*: :_files"
+
+}
+
+function _fly_curl {
+    _arguments \
+        {-t,--target}'[Concourse target name]' \
+        {-v,--version}'[Print the version of Fly and exit]' \
+        '--verbose[Print API requests and responses]' \
+        '--print-table-headers[Print table headers even for redirected output]' \
+        {-h,--help}'[Show this help message]' \
+        '--print-and-exit[Print curl command and exit]' \
+        "*: :_files"
+
+}
+
+function _fly_delete-target {
+    _arguments \
+        {-t,--target}'[Concourse target name]' \
+        {-v,--version}'[Print the version of Fly and exit]' \
+        '--verbose[Print API requests and responses]' \
+        '--print-table-headers[Print table headers even for redirected output]' \
+        {-h,--help}'[Show this help message]' \
+        {-a,--all}'[Delete all targets]' \
+        "*: :_files"
+
+}
+
+function _fly_destroy-pipeline {
+    _arguments \
+        {-t,--target}'[Concourse target name]' \
+        {-v,--version}'[Print the version of Fly and exit]' \
+        '--verbose[Print API requests and responses]' \
+        '--print-table-headers[Print table headers even for redirected output]' \
+        {-h,--help}'[Show this help message]' \
+        {-p,--pipeline}'[Pipeline to destroy]' \
+        {-n,--non-interactive}'[Destroy the pipeline without confirmation]' \
+        '--team[Name of the team to which the pipeline belongs, if different from the target default]' \
+        "*: :_files"
+
+}
+
+function _fly_destroy-team {
+    _arguments \
+        {-t,--target}'[Concourse target name]' \
+        {-v,--version}'[Print the version of Fly and exit]' \
+        '--verbose[Print API requests and responses]' \
+        '--print-table-headers[Print table headers even for redirected output]' \
+        {-h,--help}'[Show this help message]' \
+        {-n,--team-name}'[The team to delete]' \
+        '--non-interactive[Force apply configuration]' \
+        "*: :_files"
+
+}
+
+function _fly_disable-resource-version {
+    _arguments \
+        {-t,--target}'[Concourse target name]' \
+        {-v,--version}'[Print the version of Fly and exit]' \
+        '--verbose[Print API requests and responses]' \
+        '--print-table-headers[Print table headers even for redirected output]' \
+        {-h,--help}'[Show this help message]' \
+        {-r,--resource}'[Name of the resource]' \
+        {-v,--version}'[Version of the resource to disable. The given key value pair(s) has to be an exact match but not all fields are needed. In the case of multiple resource versions matched, it will disable the latest one.]' \
+        "*: :_files"
+
+}
+
+function _fly_edit-target {
+    _arguments \
+        {-t,--target}'[Concourse target name]' \
+        {-v,--version}'[Print the version of Fly and exit]' \
+        '--verbose[Print API requests and responses]' \
+        '--print-table-headers[Print table headers even for redirected output]' \
+        {-h,--help}'[Show this help message]' \
+        '--target-name[Update target name]' \
+        {-u,--concourse-url}'[Update concourse URL]' \
+        {-n,--team-name}'[Update team name]' \
+        "*: :_files"
+
+}
+
+function _fly_enable-resource-version {
+    _arguments \
+        {-t,--target}'[Concourse target name]' \
+        {-v,--version}'[Print the version of Fly and exit]' \
+        '--verbose[Print API requests and responses]' \
+        '--print-table-headers[Print table headers even for redirected output]' \
+        {-h,--help}'[Show this help message]' \
+        {-r,--resource}'[Name of the resource]' \
+        {-v,--version}'[Version of the resource to enable. The given key value pair(s) has to be an exact match but not all fields are needed. In the case of multiple resource versions matched, it will enable the latest one.]' \
+        "*: :_files"
+
+}
+
+function _fly_execute {
+    _arguments \
+        {-t,--target}'[Concourse target name]' \
+        {-v,--version}'[Print the version of Fly and exit]' \
+        '--verbose[Print API requests and responses]' \
+        '--print-table-headers[Print table headers even for redirected output]' \
+        {-h,--help}'[Show this help message]' \
+        {-c,--config}'[The task config to execute]' \
+        {-p,--privileged}'[Run the task with full privileges]' \
+        '--include-ignored[Including .gitignored paths. Disregards .gitignore entries and uploads everything]' \
+        {-i,--input}'[An input to provide to the task (can be specified multiple times)]':file:_files \
+        {-m,--input-mapping}'[Map a resource to a different name as task input]' \
+        {-j,--inputs-from}'[A job to base the inputs on]' \
+        {-o,--output}'[An output to fetch from the task (can be specified multiple times)]':file:_files \
+        '--image[Image resource for the one-off build]' \
+        '--tag[A tag for a specific environment (can be specified multiple times)]' \
+        {-v,--var}'[Specify a string value to set for a variable in the pipeline]' \
+        {-y,--yaml-var}'[Specify a YAML value to set for a variable in the pipeline]' \
+        {-l,--load-vars-from}'[Variable flag that can be used for filling in template values in configuration from a YAML file]' \
+        "*: :_files"
+
+}
+
+function _fly_expose-pipeline {
+    _arguments \
+        {-t,--target}'[Concourse target name]' \
+        {-v,--version}'[Print the version of Fly and exit]' \
+        '--verbose[Print API requests and responses]' \
+        '--print-table-headers[Print table headers even for redirected output]' \
+        {-h,--help}'[Show this help message]' \
+        {-p,--pipeline}'[Pipeline to expose]' \
+        '--team[Name of the team to which the pipeline belongs, if different from the target default]' \
+        "*: :_files"
+
+}
+
+function _fly_format-pipeline {
+    _arguments \
+        {-t,--target}'[Concourse target name]' \
+        {-v,--version}'[Print the version of Fly and exit]' \
+        '--verbose[Print API requests and responses]' \
+        '--print-table-headers[Print table headers even for redirected output]' \
+        {-h,--help}'[Show this help message]' \
+        {-c,--config}'[Pipeline configuration file]' \
+        {-w,--write}'[Do not print to stdout; overwrite the file in place]' \
+        "*: :_files"
+
+}
+
+function _fly_get-pipeline {
+    _arguments \
+        {-t,--target}'[Concourse target name]' \
+        {-v,--version}'[Print the version of Fly and exit]' \
+        '--verbose[Print API requests and responses]' \
+        '--print-table-headers[Print table headers even for redirected output]' \
+        {-h,--help}'[Show this help message]' \
+        {-p,--pipeline}'[Get configuration of this pipeline]' \
+        {-j,--json}'[Print config as json instead of yaml]' \
+        '--team[Name of the team to which the pipeline belongs, if different from the target default]' \
+        "*: :_files"
+
+}
+
+function _fly_get-team {
+    _arguments \
+        {-t,--target}'[Concourse target name]' \
+        {-v,--version}'[Print the version of Fly and exit]' \
+        '--verbose[Print API requests and responses]' \
+        '--print-table-headers[Print table headers even for redirected output]' \
+        {-h,--help}'[Show this help message]' \
+        {-n,--team-name}'[Get configuration of this team]' \
+        {-j,--json}'[Print command result as JSON]' \
+        "*: :_files"
+
+}
+
+function _fly_help {
+    _arguments \
+        {-t,--target}'[Concourse target name]' \
+        {-v,--version}'[Print the version of Fly and exit]' \
+        '--verbose[Print API requests and responses]' \
+        '--print-table-headers[Print table headers even for redirected output]' \
+        {-h,--help}'[Show this help message]' \
+        "*: :_files"
+
+}
+
+function _fly_hide-pipeline {
+    _arguments \
+        {-t,--target}'[Concourse target name]' \
+        {-v,--version}'[Print the version of Fly and exit]' \
+        '--verbose[Print API requests and responses]' \
+        '--print-table-headers[Print table headers even for redirected output]' \
+        {-h,--help}'[Show this help message]' \
+        {-p,--pipeline}'[Pipeline to hide]' \
+        '--team[Name of the team to which the pipeline belongs, if different from the target default]' \
+        "*: :_files"
+
+}
+
+function _fly_hijack {
+    _arguments \
+        {-t,--target}'[Concourse target name]' \
+        {-v,--version}'[Print the version of Fly and exit]' \
+        '--verbose[Print API requests and responses]' \
+        '--print-table-headers[Print table headers even for redirected output]' \
+        {-h,--help}'[Show this help message]' \
+        {-j,--job}'[Name of a job to hijack]' \
+        '--handle[Handle id of a job to hijack]' \
+        {-c,--check}'[Name of a resource'\''s checking container to hijack]' \
+        {-u,--url}'[URL for the build, job, or check container to hijack]' \
+        {-b,--build}'[Build number within the job, or global build ID]' \
+        {-s,--step}'[Name of step to hijack (e.g. build, unit, resource name)]' \
+        '--step-type[Type of step to hijack (e.g. get, put, task)]' \
+        {-a,--attempt}'[Attempt number of step to hijack.]' \
+        '--team[Name of the team to which the container belongs, if different from the target default]' \
+        "*: :_files"
+
+}
+
+function _fly_jobs {
+    _arguments \
+        {-t,--target}'[Concourse target name]' \
+        {-v,--version}'[Print the version of Fly and exit]' \
+        '--verbose[Print API requests and responses]' \
+        '--print-table-headers[Print table headers even for redirected output]' \
+        {-h,--help}'[Show this help message]' \
+        {-p,--pipeline}'[Get jobs in this pipeline]' \
+        '--json[Print command result as JSON]' \
+        '--team[Name of the team to which the pipeline belongs, if different from the target default]' \
+        "*: :_files"
+
+}
+
+function _fly_land-worker {
+    _arguments \
+        {-t,--target}'[Concourse target name]' \
+        {-v,--version}'[Print the version of Fly and exit]' \
+        '--verbose[Print API requests and responses]' \
+        '--print-table-headers[Print table headers even for redirected output]' \
+        {-h,--help}'[Show this help message]' \
+        {-w,--worker}'[Worker to land]' \
+        "*: :_files"
+
+}
+
+function _fly_login {
+    _arguments \
+        {-t,--target}'[Concourse target name]' \
+        {-v,--version}'[Print the version of Fly and exit]' \
+        '--verbose[Print API requests and responses]' \
+        '--print-table-headers[Print table headers even for redirected output]' \
+        {-h,--help}'[Show this help message]' \
+        {-c,--concourse-url}'[Concourse URL to authenticate with]' \
+        {-k,--insecure}'[Skip verification of the endpoint'\''s SSL certificate]' \
+        {-u,--username}'[Username for basic auth]' \
+        {-p,--password}'[Password for basic auth]' \
+        {-n,--team-name}'[Team to authenticate with]' \
+        '--ca-cert[Path to Concourse PEM-encoded CA certificate file.]' \
+        '--client-cert[Path to a PEM-encoded client certificate file.]' \
+        '--client-key[Path to a PEM-encoded client key file.]' \
+        {-b,--open-browser}'[Open browser to the auth endpoint]' \
+        "*: :_files"
+
+}
+
+function _fly_logout {
+    _arguments \
+        {-t,--target}'[Concourse target name]' \
+        {-v,--version}'[Print the version of Fly and exit]' \
+        '--verbose[Print API requests and responses]' \
+        '--print-table-headers[Print table headers even for redirected output]' \
+        {-h,--help}'[Show this help message]' \
+        {-a,--all}'[Logout of all targets]' \
+        "*: :_files"
+
+}
+
+function _fly_order-instanced-pipelines {
+    _arguments \
+        {-t,--target}'[Concourse target name]' \
+        {-v,--version}'[Print the version of Fly and exit]' \
+        '--verbose[Print API requests and responses]' \
+        '--print-table-headers[Print table headers even for redirected output]' \
+        {-h,--help}'[Show this help message]' \
+        {-g,--group}'[Name of the instance group]' \
+        {-p,--pipeline}'[Instance vars identifying pipeline (can be specified multiple times to provide relative ordering)]' \
+        '--team[Name of the team to which the pipelines belong, if different from the target default]' \
+        "*: :_files"
+
+}
+
+function _fly_order-pipelines {
+    _arguments \
+        {-t,--target}'[Concourse target name]' \
+        {-v,--version}'[Print the version of Fly and exit]' \
+        '--verbose[Print API requests and responses]' \
+        '--print-table-headers[Print table headers even for redirected output]' \
+        {-h,--help}'[Show this help message]' \
+        {-a,--alphabetical}'[Order all pipelines alphabetically]' \
+        {-p,--pipeline}'[Name of pipeline (can be specified multiple times to provide relative ordering)]' \
+        '--team[Name of the team to which the pipelines belong, if different from the target default]' \
+        "*: :_files"
+
+}
+
+function _fly_pause-job {
+    _arguments \
+        {-t,--target}'[Concourse target name]' \
+        {-v,--version}'[Print the version of Fly and exit]' \
+        '--verbose[Print API requests and responses]' \
+        '--print-table-headers[Print table headers even for redirected output]' \
+        {-h,--help}'[Show this help message]' \
+        {-j,--job}'[Name of a job to pause]' \
+        '--team[Name of the team to which the job belongs, if different from the target default]' \
+        "*: :_files"
+
+}
+
+function _fly_pause-pipeline {
+    _arguments \
+        {-t,--target}'[Concourse target name]' \
+        {-v,--version}'[Print the version of Fly and exit]' \
+        '--verbose[Print API requests and responses]' \
+        '--print-table-headers[Print table headers even for redirected output]' \
+        {-h,--help}'[Show this help message]' \
+        {-p,--pipeline}'[Pipeline to pause]' \
+        {-a,--all}'[Pause all pipelines]' \
+        '--team[Name of the team to which the pipeline belongs, if different from the target default]' \
+        "*: :_files"
+
+}
+
+function _fly_paused-jobs {
+    _arguments \
+        {-t,--target}'[Concourse target name]' \
+        {-v,--version}'[Print the version of Fly and exit]' \
+        '--verbose[Print API requests and responses]' \
+        '--print-table-headers[Print table headers even for redirected output]' \
+        {-h,--help}'[Show this help message]' \
+        {-p,--pipeline}'[Get jobs in this pipeline]' \
+        '--json[Print command result as JSON]' \
+        '--team[Name of the team to which the pipeline belongs, if different from the target default]' \
+        "*: :_files"
+
+}
+
+function _fly_paused-pipelines {
+    _arguments \
+        {-t,--target}'[Concourse target name]' \
+        {-v,--version}'[Print the version of Fly and exit]' \
+        '--verbose[Print API requests and responses]' \
+        '--print-table-headers[Print table headers even for redirected output]' \
+        {-h,--help}'[Show this help message]' \
+        {-a,--all}'[Show pipelines across all teams]' \
+        '--json[Print command result as JSON]' \
+        "*: :_files"
+
+}
+
+function _fly_pin-resource {
+    _arguments \
+        {-t,--target}'[Concourse target name]' \
+        {-v,--version}'[Print the version of Fly and exit]' \
+        '--verbose[Print API requests and responses]' \
+        '--print-table-headers[Print table headers even for redirected output]' \
+        {-h,--help}'[Show this help message]' \
+        {-r,--resource}'[Name of the resource]' \
+        {-v,--version}'[Version of the resource to pin. The given key value pair(s) has to be an exact match but not all fields are needed. In the case of multiple resource versions matched, it will pin the latest one.]' \
+        {-c,--comment}'[Message to be saved to the pinned resource. Resource has to be pinned otherwise --version should be specified to pin the resource first.]' \
+        "*: :_files"
+
+}
+
+function _fly_pipelines {
+    _arguments \
+        {-t,--target}'[Concourse target name]' \
+        {-v,--version}'[Print the version of Fly and exit]' \
+        '--verbose[Print API requests and responses]' \
+        '--print-table-headers[Print table headers even for redirected output]' \
+        {-h,--help}'[Show this help message]' \
+        {-a,--all}'[Show pipelines across all teams]' \
+        '--include-archived[Show archived pipelines]' \
+        '--json[Print command result as JSON]' \
+        "*: :_files"
+
+}
+
+function _fly_prune-worker {
+    _arguments \
+        {-t,--target}'[Concourse target name]' \
+        {-v,--version}'[Print the version of Fly and exit]' \
+        '--verbose[Print API requests and responses]' \
+        '--print-table-headers[Print table headers even for redirected output]' \
+        {-h,--help}'[Show this help message]' \
+        {-w,--worker}'[Worker to prune]' \
+        {-a,--all-stalled}'[Prune all stalled workers]' \
+        "*: :_files"
+
+}
+
+function _fly_rename-pipeline {
+    _arguments \
+        {-t,--target}'[Concourse target name]' \
+        {-v,--version}'[Print the version of Fly and exit]' \
+        '--verbose[Print API requests and responses]' \
+        '--print-table-headers[Print table headers even for redirected output]' \
+        {-h,--help}'[Show this help message]' \
+        {-o,--old-name}'[Existing pipeline or instance group to rename]' \
+        {-n,--new-name}'[New name for the pipeline or instance group]' \
+        "*: :_files"
+
+}
+
+function _fly_rename-team {
+    _arguments \
+        {-t,--target}'[Concourse target name]' \
+        {-v,--version}'[Print the version of Fly and exit]' \
+        '--verbose[Print API requests and responses]' \
+        '--print-table-headers[Print table headers even for redirected output]' \
+        {-h,--help}'[Show this help message]' \
+        {-o,--old-name}'[Current team name]' \
+        {-n,--new-name}'[New team name]' \
+        "*: :_files"
+
+}
+
+function _fly_rerun-build {
+    _arguments \
+        {-t,--target}'[Concourse target name]' \
+        {-v,--version}'[Print the version of Fly and exit]' \
+        '--verbose[Print API requests and responses]' \
+        '--print-table-headers[Print table headers even for redirected output]' \
+        {-h,--help}'[Show this help message]' \
+        {-j,--job}'[Name of the job that you want to rerun a build for]' \
+        {-b,--build}'[The number of the build to rerun]' \
+        {-w,--watch}'[Start watching the rerun build output]' \
+        "*: :_files"
+
+}
+
+function _fly_resource-versions {
+    _arguments \
+        {-t,--target}'[Concourse target name]' \
+        {-v,--version}'[Print the version of Fly and exit]' \
+        '--verbose[Print API requests and responses]' \
+        '--print-table-headers[Print table headers even for redirected output]' \
+        {-h,--help}'[Show this help message]' \
+        {-c,--count}'[Number of versions you want to limit the return to (default: 50)]' \
+        {-r,--resource}'[Name of a resource to get versions for]' \
+        '--json[Print command result as JSON]' \
+        '--team[Name of the team to which the pipeline belongs, if different from the target default]' \
+        "*: :_files"
+
+}
+
+function _fly_resources {
+    _arguments \
+        {-t,--target}'[Concourse target name]' \
+        {-v,--version}'[Print the version of Fly and exit]' \
+        '--verbose[Print API requests and responses]' \
+        '--print-table-headers[Print table headers even for redirected output]' \
+        {-h,--help}'[Show this help message]' \
+        {-p,--pipeline}'[Get resources in this pipeline]' \
+        '--json[Print command result as JSON]' \
+        '--team[Name of the team to which the pipeline belongs, if different from the target default]' \
+        "*: :_files"
+
+}
+
+function _fly_schedule-job {
+    _arguments \
+        {-t,--target}'[Concourse target name]' \
+        {-v,--version}'[Print the version of Fly and exit]' \
+        '--verbose[Print API requests and responses]' \
+        '--print-table-headers[Print table headers even for redirected output]' \
+        {-h,--help}'[Show this help message]' \
+        {-j,--job}'[Name of a job to schedule]' \
+        "*: :_files"
+
+}
+
+function _fly_set-pipeline {
+    _arguments \
+        {-t,--target}'[Concourse target name]' \
+        {-v,--version}'[Print the version of Fly and exit]' \
+        '--verbose[Print API requests and responses]' \
+        '--print-table-headers[Print table headers even for redirected output]' \
+        {-h,--help}'[Show this help message]' \
+        {-n,--non-interactive}'[Skips interactions, uses default values]' \
+        '--no-color[Disable color output]' \
+        {-d,--dry-run}'[Run a set pipeline step but in dry-run mode]' \
+        '--check-creds[Validate credential variables against credential manager]' \
+        {-p,--pipeline}'[Pipeline to configure]' \
+        {-c,--config}'[Pipeline configuration file, "-" stands for stdin]' \
+        {-v,--var}'[Specify a string value to set for a variable in the pipeline]' \
+        {-y,--yaml-var}'[Specify a YAML value to set for a variable in the pipeline]' \
+        {-l,--load-vars-from}'[Variable flag that can be used for filling in template values in configuration from a YAML file]' \
+        '--team[Name of the team to which the pipeline belongs, if different from the target default]' \
+        "*: :_files"
+
+}
+
+function _fly_set-team {
+    _arguments \
+        {-t,--target}'[Concourse target name]' \
+        {-v,--version}'[Print the version of Fly and exit]' \
+        '--verbose[Print API requests and responses]' \
+        '--print-table-headers[Print table headers even for redirected output]' \
+        {-h,--help}'[Show this help message]' \
+        {-n,--team-name}'[The team to create or modify]' \
+        '--non-interactive[Force apply configuration]' \
+        '--local-user[A whitelisted local concourse user. These are the users you'\''ve added at web startup with the --add-local-user flag.]' \
+        {-c,--config}'[Configuration file for specifying team params]' \
+        '--bitbucket-cloud-user[A whitelisted Bitbucket Cloud user]' \
+        '--bitbucket-cloud-team[A whitelisted Bitbucket Cloud team]' \
+        '--cf-user[A whitelisted CloudFoundry user]' \
+        '--cf-org[A whitelisted CloudFoundry org]' \
+        '--cf-space[(Deprecated) A whitelisted CloudFoundry space for users with the '\''developer'\'' role]' \
+        '--cf-space-with-any-role[A whitelisted CloudFoundry space for users with any role]' \
+        '--cf-space-with-developer-role[A whitelisted CloudFoundry space for users with the '\''developer'\'' role]' \
+        '--cf-space-with-auditor-role[A whitelisted CloudFoundry space for users with the '\''auditor'\'' role]' \
+        '--cf-space-with-manager-role[A whitelisted CloudFoundry space for users with the '\''manager'\'' role]' \
+        '--cf-space-guid[A whitelisted CloudFoundry space guid]' \
+        '--github-user[A whitelisted GitHub user]' \
+        '--github-org[A whitelisted GitHub org]' \
+        '--github-team[A whitelisted GitHub team]' \
+        '--gitlab-user[A whitelisted GitLab user]' \
+        '--gitlab-group[A whitelisted GitLab group]' \
+        '--ldap-user[A whitelisted LDAP user]' \
+        '--ldap-group[A whitelisted LDAP group]' \
+        '--microsoft-user[A whitelisted Microsoft user]' \
+        '--microsoft-group[A whitelisted Microsoft group]' \
+        '--oauth-user[A whitelisted OAuth2 user]' \
+        '--oauth-group[A whitelisted OAuth2 group]' \
+        '--oidc-user[A whitelisted OIDC user]' \
+        '--oidc-group[A whitelisted OIDC group]' \
+        '--saml-user[A whitelisted SAML user]' \
+        '--saml-group[A whitelisted SAML group]' \
+        "*: :_files"
+
+}
+
+function _fly_status {
+    _arguments \
+        {-t,--target}'[Concourse target name]' \
+        {-v,--version}'[Print the version of Fly and exit]' \
+        '--verbose[Print API requests and responses]' \
+        '--print-table-headers[Print table headers even for redirected output]' \
+        {-h,--help}'[Show this help message]' \
+        "*: :_files"
+
+}
+
+function _fly_sync {
+    _arguments \
+        {-t,--target}'[Concourse target name]' \
+        {-v,--version}'[Print the version of Fly and exit]' \
+        '--verbose[Print API requests and responses]' \
+        '--print-table-headers[Print table headers even for redirected output]' \
+        {-h,--help}'[Show this help message]' \
+        {-f,--force}'[Sync even if versions already match.]' \
+        {-c,--concourse-url}'[Concourse URL to sync with]' \
+        {-k,--insecure}'[Skip verification of the endpoint'\''s SSL certificate]' \
+        '--ca-cert[Path to Concourse PEM-encoded CA certificate file.]' \
+        '--client-cert[Path to a PEM-encoded client certificate file.]' \
+        '--client-key[Path to a PEM-encoded client key file.]' \
+        "*: :_files"
+
+}
+
+function _fly_targets {
+    _arguments \
+        {-t,--target}'[Concourse target name]' \
+        {-v,--version}'[Print the version of Fly and exit]' \
+        '--verbose[Print API requests and responses]' \
+        '--print-table-headers[Print table headers even for redirected output]' \
+        {-h,--help}'[Show this help message]' \
+        "*: :_files"
+
+}
+
+function _fly_teams {
+    _arguments \
+        {-t,--target}'[Concourse target name]' \
+        {-v,--version}'[Print the version of Fly and exit]' \
+        '--verbose[Print API requests and responses]' \
+        '--print-table-headers[Print table headers even for redirected output]' \
+        {-h,--help}'[Show this help message]' \
+        '--json[Print command result as JSON]' \
+        {-d,--details}'[Print authentication configuration]' \
+        "*: :_files"
+
+}
+
+function _fly_trigger-job {
+    _arguments \
+        {-t,--target}'[Concourse target name]' \
+        {-v,--version}'[Print the version of Fly and exit]' \
+        '--verbose[Print API requests and responses]' \
+        '--print-table-headers[Print table headers even for redirected output]' \
+        {-h,--help}'[Show this help message]' \
+        {-j,--job}'[Name of a job to trigger]' \
+        {-w,--watch}'[Start watching the build output]' \
+        '--team[Name of the team to which the job belongs, if different from the target default]' \
+        "*: :_files"
+
+}
+
+function _fly_unpause-job {
+    _arguments \
+        {-t,--target}'[Concourse target name]' \
+        {-v,--version}'[Print the version of Fly and exit]' \
+        '--verbose[Print API requests and responses]' \
+        '--print-table-headers[Print table headers even for redirected output]' \
+        {-h,--help}'[Show this help message]' \
+        {-j,--job}'[Name of a job to unpause]' \
+        '--team[Name of the team to which the job belongs, if different from the target default]' \
+        "*: :_files"
+
+}
+
+function _fly_unpause-pipeline {
+    _arguments \
+        {-t,--target}'[Concourse target name]' \
+        {-v,--version}'[Print the version of Fly and exit]' \
+        '--verbose[Print API requests and responses]' \
+        '--print-table-headers[Print table headers even for redirected output]' \
+        {-h,--help}'[Show this help message]' \
+        {-p,--pipeline}'[Pipeline to unpause]' \
+        {-a,--all}'[Unpause all pipelines]' \
+        '--team[Name of the team to which the pipeline belongs, if different from the target default]' \
+        "*: :_files"
+
+}
+
+function _fly_unpin-resource {
+    _arguments \
+        {-t,--target}'[Concourse target name]' \
+        {-v,--version}'[Print the version of Fly and exit]' \
+        '--verbose[Print API requests and responses]' \
+        '--print-table-headers[Print table headers even for redirected output]' \
+        {-h,--help}'[Show this help message]' \
+        {-r,--resource}'[Name of the resource]' \
+        "*: :_files"
+
+}
+
+function _fly_userinfo {
+    _arguments \
+        {-t,--target}'[Concourse target name]' \
+        {-v,--version}'[Print the version of Fly and exit]' \
+        '--verbose[Print API requests and responses]' \
+        '--print-table-headers[Print table headers even for redirected output]' \
+        {-h,--help}'[Show this help message]' \
+        '--json[Print command result as JSON]' \
+        "*: :_files"
+
+}
+
+function _fly_validate-pipeline {
+    _arguments \
+        {-t,--target}'[Concourse target name]' \
+        {-v,--version}'[Print the version of Fly and exit]' \
+        '--verbose[Print API requests and responses]' \
+        '--print-table-headers[Print table headers even for redirected output]' \
+        {-h,--help}'[Show this help message]' \
+        {-c,--config}'[Pipeline configuration file]' \
+        {-s,--strict}'[Fail on warnings]' \
+        {-o,--output}'[Output templated pipeline to stdout]' \
+        '--enable-across-step[Enable the experimental across step to be used in jobs. The API is subject to change.]' \
+        {-v,--var}'[Specify a string value to set for a variable in the pipeline]' \
+        {-y,--yaml-var}'[Specify a YAML value to set for a variable in the pipeline]' \
+        {-l,--load-vars-from}'[Variable flag that can be used for filling in template values in configuration from a YAML file]' \
+        "*: :_files"
+
+}
+
+function _fly_volumes {
+    _arguments \
+        {-t,--target}'[Concourse target name]' \
+        {-v,--version}'[Print the version of Fly and exit]' \
+        '--verbose[Print API requests and responses]' \
+        '--print-table-headers[Print table headers even for redirected output]' \
+        {-h,--help}'[Show this help message]' \
+        {-d,--details}'[Print additional information for each volume]' \
+        '--json[Print command result as JSON]' \
+        "*: :_files"
+
+}
+
+function _fly_watch {
+    _arguments \
+        {-t,--target}'[Concourse target name]' \
+        {-v,--version}'[Print the version of Fly and exit]' \
+        '--verbose[Print API requests and responses]' \
+        '--print-table-headers[Print table headers even for redirected output]' \
+        {-h,--help}'[Show this help message]' \
+        {-j,--job}'[Watches builds of the given job]' \
+        {-b,--build}'[Watches a specific build]' \
+        {-u,--url}'[URL for the build or job to watch]' \
+        {-t,--timestamps}'[Print with local timestamp]' \
+        '--ignore-event-parsing-errors[Ignore event parsing errors]' \
+        '--team[Name of the team to which the pipeline belongs, if different from the target default]' \
+        "*: :_files"
+
+}
+
+function _fly_workers {
+    _arguments \
+        {-t,--target}'[Concourse target name]' \
+        {-v,--version}'[Print the version of Fly and exit]' \
+        '--verbose[Print API requests and responses]' \
+        '--print-table-headers[Print table headers even for redirected output]' \
+        {-h,--help}'[Show this help message]' \
+        {-d,--details}'[Print additional information for each worker]' \
+        '--json[Print command result as JSON]' \
+        "*: :_files"
+
+}
+
+_fly "$@"
+

@@ -1,0 +1,113 @@
+#compdef dive
+
+# Auto-generated with h2o
+
+
+function _dive {
+    local line state
+
+    function _commands {
+        local -a commands
+        commands=(
+            'build:Builds and analyzes a docker image from a Dockerfile (this is a thin wrapper for the `docker build` command).'
+            'help:Help about any command'
+            'version:print the version number and exit (also --version)'
+        )
+        _describe 'command' commands
+    }
+ 
+
+    _arguments -C \
+        '--ci[Skip the interactive TUI and validate against CI rules (same as env var CI=true)]' \
+        '--ci-config[If CI=true in the environment, use the given yaml to drive validation rules. (default ".dive-ci")]' \
+        '--config[config file (default is $HOME/.dive.yaml, ~/.config/dive/*.yaml, or $XDG_CONFIG_HOME/dive.yaml)]' \
+        {-h,--help}'[help for dive]' \
+        '--highestUserWastedPercent[(only valid with --ci given) highest allowable percentage of bytes wasted (as a ratio between 0-1), otherwise CI validation will fail. (default "0.1")]' \
+        '--highestWastedBytes[(only valid with --ci given) highest allowable bytes wasted, otherwise CI validation will fail. (default "disabled")]' \
+        {-j,--json}'[Skip the interactive TUI and write the layer analysis statistics to a given file.]' \
+        '--lowestEfficiency[(only valid with --ci given) lowest allowable image efficiency (as a ratio between 0-1), otherwise CI validation will fail. (default "0.9")]' \
+        '--source[The container engine to fetch the image from. Allowed values: docker, podman, docker-archive (default "docker")]' \
+        {-v,--version}'[display version number]' \
+        ': :->cmd' \
+        '*:: :->subcmd'
+
+    case $state in
+    (cmd)
+        _commands
+        ;;
+    (subcmd)
+        case $line[1] in
+        (build)
+            _dive_build
+            ;;
+
+        (help)
+            _dive_help
+            ;;
+
+        (version)
+            _dive_version
+            ;;
+
+        esac
+        ;;
+     esac
+
+}
+
+function _dive_build {
+    _arguments \
+        '--add-host[Add a custom host-to-IP mapping (host:ip)]' \
+        '--build-arg[Set build-time variables]' \
+        '--cache-from[Images to consider as cache sources]' \
+        '--cgroup-parent[Optional parent cgroup for the container]' \
+        '--compress[Compress the build context using gzip]' \
+        '--cpu-period[Limit the CPU CFS (Completely Fair Scheduler) period]' \
+        '--cpu-quota[Limit the CPU CFS (Completely Fair Scheduler) quota]' \
+        {-c,--cpu-shares}'[CPU shares (relative weight)]' \
+        '--cpuset-cpus[CPUs in which to allow execution (0-3, 0,1)]' \
+        '--cpuset-mems[MEMs in which to allow execution (0-3, 0,1)]' \
+        '--disable-content-trust[Skip image verification (default true)]' \
+        {-f,--file}'[Name of the Dockerfile (Default is '\''PATH/Dockerfile'\'')]' \
+        '--force-rm[Always remove intermediate containers]' \
+        '--iidfile[Write the image ID to the file]' \
+        '--isolation[Container isolation technology]' \
+        '--label[Set metadata for an image]' \
+        {-m,--memory}'[Memory limit]' \
+        '--memory-swap[Swap limit equal to memory plus swap: '\''-1'\'' to enable unlimited swap]' \
+        '--network[Set the networking mode for the RUN instructions during build (default "default")]' \
+        '--no-cache[Do not use cache when building the image]' \
+        '--pull[Always attempt to pull a newer version of the image]' \
+        {-q,--quiet}'[Suppress the build output and print image ID on success]' \
+        '--rm[Remove intermediate containers after a successful build (default true)]' \
+        '--security-opt[Security options]' \
+        '--shm-size[Size of /dev/shm]' \
+        {-t,--tag}'[Name and optionally a tag in the '\''name:tag'\'' format]' \
+        '--target[Set the target build stage to build.]' \
+        '--ulimit[Ulimit options (default \[\])]' \
+        "*: :_files"
+
+}
+
+function _dive_help {
+    _arguments \
+        {-h,--help}'[help for help]' \
+        '--config[config file (default is $HOME/.dive.yaml, ~/.config/dive/*.yaml, or $XDG_CONFIG_HOME/dive.yaml)]' \
+        '--source[The container engine to fetch the image from. Allowed values: docker, podman, docker-archive (default "docker")]' \
+        {-v,--version}'[display version number]' \
+        "*: :_files"
+
+}
+
+function _dive_version {
+    _arguments \
+        {-h,--help}'[help for version]' \
+        '--config[config file (default is $HOME/.dive.yaml, ~/.config/dive/*.yaml, or $XDG_CONFIG_HOME/dive.yaml)]' \
+        '--source[The container engine to fetch the image from. Allowed values: docker, podman, docker-archive (default "docker")]' \
+        {-v,--version}'[display version number]' \
+        "*: :_files"
+
+}
+
+_dive "$@"
+

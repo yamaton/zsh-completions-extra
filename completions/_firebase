@@ -1,0 +1,1476 @@
+#compdef firebase
+
+# Auto-generated with h2o
+
+
+function _firebase {
+    local line state
+
+    function _commands {
+        local -a commands
+        commands=(
+            'appdistribution:distribute:upload a release binary'
+            'appdistribution:testers:add:add testers to project'
+            'appdistribution:testers:remove:remove testers from a project'
+            'apps:list:list the registered apps of a Firebase project. Optionally filter apps by \[platform\]: IOS, ANDROID or WEB (case insensitive)'
+            'apps:android:sha:list:list the SHA certificate hashes for a given app id.'
+            'apps:android:sha:create:add a SHA certificate hash for a given app id.'
+            'apps:android:sha:delete:delete a SHA certificate hash for a given app id.'
+            'auth:export:Export accounts from your Firebase project into a data file'
+            'auth:import:import users into your Firebase project from a data file(.csv or .json)'
+            'crashlytics:symbols:upload:upload symbols for native code, to symbolicate stack traces'
+            'crashlytics:mappingfile:generateid:generate a mapping file id and write it to an Android resource file, which will be built into the app'
+            'crashlytics:mappingfile:upload:upload a ProGuard/R8-compatible mapping file to deobfuscate stack traces'
+            'database:get:fetch and print JSON data at the specified path'
+            'database:instances:create:create a realtime database instance'
+            'database:instances:list:list realtime database instances, optionally filtered by a specified location'
+            'database:profile:profile the Realtime Database and generate a usage report'
+            'database:push:add a new JSON object to a list of data in your Firebase'
+            'database:remove:remove data from your Firebase at the specified path'
+            'database:set:store JSON data at the specified path via STDIN, arg, or file'
+            'database:settings:get:read the realtime database setting at path'
+            'database:settings:set:set the realtime database setting at path.'
+            'database:update:update some of the keys for the defined path in your Firebase'
+            'deploy:deploy code and assets to your Firebase project'
+            'emulators:exec:start the local Firebase emulators, run a test script, then shut down the emulators'
+            'emulators:export:export data from running emulators'
+            'emulators:start:start the local Firebase emulators'
+            'experimental:functions:shell:launch full Node shell with emulated functions. (Alias for `firebase functions:shell.)'
+            'experiments:list:list experiments'
+            'experiments:describe:enable an experiment on this machine'
+            'experiments:enable:enable an experiment on this machine'
+            'experiments:disable:disable an experiment on this machine'
+            'ext:display information on how to use ext commands and extensions installed to your project'
+            'ext:configure:configure an existing extension instance'
+            'ext:info:display information about an extension by name (extensionName@x.y.z for a specific version)'
+            'ext:export:export all Extension instances installed on a project to a local Firebase directory'
+            'ext:install:install an official extension if \[extensionName\] or \[extensionName@version\] is provided; or run with `-i` to see all available extensions.'
+            'ext:list:list all the extensions that are installed in your Firebase project'
+            'ext:uninstall:uninstall an extension that is installed in your Firebase project by instance ID'
+            'ext:update:update an existing extension instance to the latest version'
+            'firestore:delete:Delete data from Cloud Firestore.'
+            'firestore:indexes:List indexes in your project'\''s Cloud Firestore database.'
+            'functions:config:clone:clone environment config from another project'
+            'functions:config:export:Export environment config as environment variables in dotenv format'
+            'functions:config:get:fetch environment config stored at the given path'
+            'functions:config:set:set environment config with key=value syntax'
+            'functions:config:unset:unset environment config at the specified path(s)'
+            'functions:delete:delete one or more Cloud Functions by name or group name.'
+            'functions:log:read logs from deployed functions'
+            'functions:shell:launch full Node shell with emulated functions'
+            'functions:list:list all deployed functions in your Firebase project'
+            'functions:secrets:access:Access secret value given secret and its version. Defaults to accessing the latest version.'
+            'functions:secrets:destroy:Destroy a secret. Defaults to destroying the latest version.'
+            'functions:secrets:get:Get metadata for secret and its versions'
+            'functions:secrets:prune:Destroys unused secrets'
+            'functions:secrets:set:Create or update a secret for use in Cloud Functions for Firebase.'
+            'help:display help information'
+            'hosting:channel:create:create a Firebase Hosting channel'
+            'hosting:channel:delete:delete a Firebase Hosting channel'
+            'hosting:channel:deploy:deploy to a specific Firebase Hosting channel'
+            'hosting:channel:list:list all Firebase Hosting channels for your project'
+            'hosting:channel:open:opens the URL for a Firebase Hosting channel'
+            'hosting:clone:clone a version from one site to another'
+            'hosting:disable:stop serving web traffic to your Firebase Hosting site'
+            'hosting:sites:create:create a Firebase Hosting site'
+            'hosting:sites:delete:delete a Firebase Hosting site'
+            'hosting:sites:get:print info about a Firebase Hosting site'
+            'hosting:sites:list:list Firebase Hosting sites'
+            'init:Interactively configure the current directory as a Firebase project or initialize new features in an already configured Firebase project directory.'
+            'login:log the CLI into Firebase'
+            'login:add:authorize the CLI for an additional account'
+            'login:ci:generate an access token for use in non-interactive environments'
+            'login:list:list authorized CLI accounts'
+            'login:use:set the default account to use for this project directory'
+            'logout:log the CLI out of Firebase'
+            'open:quickly open a browser to relevant project resources'
+            'projects:addfirebase:add Firebase resources to a Google Cloud Platform project'
+            'projects:create:creates a new Google Cloud Platform project, then adds Firebase resources to the project'
+            'projects:list:list all Firebase projects you have access to'
+            'remoteconfig:get:get a Firebase project'\''s Remote Config template'
+            'remoteconfig:rollback:roll back a project'\''s published Remote Config template to the one specified by the provided version number'
+            'remoteconfig:versions:list:get a list of Remote Config template versions that have been published for a Firebase project'
+            'serve:start a local server for your static assets'
+            'setup:emulators:database:downloads the database emulator'
+            'setup:emulators:firestore:downloads the firestore emulator'
+            'setup:emulators:pubsub:downloads the pubsub emulator'
+            'setup:emulators:storage:downloads the storage emulator'
+            'setup:emulators:ui:downloads the ui emulator'
+            'target:display configured deploy targets for the current project'
+            'target:apply:apply a deploy target to a resource'
+            'target:clear:clear all resources from a named resource target'
+            'target:remove:remove a resource target'
+            'use:set an active Firebase project for your working directory'
+        )
+        _describe 'command' commands
+    }
+ 
+
+    _arguments -C \
+        {-V,--version}'[output the version number]' \
+        {-P,--project}'[the Firebase project to use for this command]' \
+        '--account[the Google account to use for authorization]' \
+        {-j,--json}'[output JSON instead of text, also triggers non-interactive mode]' \
+        '--token[DEPRECATED - will be removed in a future major version - supply an auth token for this command]' \
+        '--non-interactive[error out of the command instead of waiting for prompts]' \
+        {-i,--interactive}'[force prompts to be displayed]' \
+        '--debug[print verbose debug output and keep a debug log file]' \
+        {-c,--config}'[path to the firebase.json file to use for configuration]' \
+        {-h,--help}'[output usage information]' \
+        ': :->cmd' \
+        '*:: :->subcmd'
+
+    case $state in
+    (cmd)
+        _commands
+        ;;
+    (subcmd)
+        case $line[1] in
+        (appdistribution:distribute)
+            _firebase_appdistribution:distribute
+            ;;
+
+        (appdistribution:testers:add)
+            _firebase_appdistribution:testers:add
+            ;;
+
+        (appdistribution:testers:remove)
+            _firebase_appdistribution:testers:remove
+            ;;
+
+        (apps:list)
+            _firebase_apps:list
+            ;;
+
+        (apps:android:sha:list)
+            _firebase_apps:android:sha:list
+            ;;
+
+        (apps:android:sha:create)
+            _firebase_apps:android:sha:create
+            ;;
+
+        (apps:android:sha:delete)
+            _firebase_apps:android:sha:delete
+            ;;
+
+        (auth:export)
+            _firebase_auth:export
+            ;;
+
+        (auth:import)
+            _firebase_auth:import
+            ;;
+
+        (crashlytics:symbols:upload)
+            _firebase_crashlytics:symbols:upload
+            ;;
+
+        (crashlytics:mappingfile:generateid)
+            _firebase_crashlytics:mappingfile:generateid
+            ;;
+
+        (crashlytics:mappingfile:upload)
+            _firebase_crashlytics:mappingfile:upload
+            ;;
+
+        (database:get)
+            _firebase_database:get
+            ;;
+
+        (database:instances:create)
+            _firebase_database:instances:create
+            ;;
+
+        (database:instances:list)
+            _firebase_database:instances:list
+            ;;
+
+        (database:profile)
+            _firebase_database:profile
+            ;;
+
+        (database:push)
+            _firebase_database:push
+            ;;
+
+        (database:remove)
+            _firebase_database:remove
+            ;;
+
+        (database:set)
+            _firebase_database:set
+            ;;
+
+        (database:settings:get)
+            _firebase_database:settings:get
+            ;;
+
+        (database:settings:set)
+            _firebase_database:settings:set
+            ;;
+
+        (database:update)
+            _firebase_database:update
+            ;;
+
+        (deploy)
+            _firebase_deploy
+            ;;
+
+        (emulators:exec)
+            _firebase_emulators:exec
+            ;;
+
+        (emulators:export)
+            _firebase_emulators:export
+            ;;
+
+        (emulators:start)
+            _firebase_emulators:start
+            ;;
+
+        (experimental:functions:shell)
+            _firebase_experimental:functions:shell
+            ;;
+
+        (experiments:list)
+            _firebase_experiments:list
+            ;;
+
+        (experiments:describe)
+            _firebase_experiments:describe
+            ;;
+
+        (experiments:enable)
+            _firebase_experiments:enable
+            ;;
+
+        (experiments:disable)
+            _firebase_experiments:disable
+            ;;
+
+        (ext)
+            _firebase_ext
+            ;;
+
+        (ext:configure)
+            _firebase_ext:configure
+            ;;
+
+        (ext:info)
+            _firebase_ext:info
+            ;;
+
+        (ext:export)
+            _firebase_ext:export
+            ;;
+
+        (ext:install)
+            _firebase_ext:install
+            ;;
+
+        (ext:list)
+            _firebase_ext:list
+            ;;
+
+        (ext:uninstall)
+            _firebase_ext:uninstall
+            ;;
+
+        (ext:update)
+            _firebase_ext:update
+            ;;
+
+        (firestore:delete)
+            _firebase_firestore:delete
+            ;;
+
+        (firestore:indexes)
+            _firebase_firestore:indexes
+            ;;
+
+        (functions:config:clone)
+            _firebase_functions:config:clone
+            ;;
+
+        (functions:config:export)
+            _firebase_functions:config:export
+            ;;
+
+        (functions:config:get)
+            _firebase_functions:config:get
+            ;;
+
+        (functions:config:set)
+            _firebase_functions:config:set
+            ;;
+
+        (functions:config:unset)
+            _firebase_functions:config:unset
+            ;;
+
+        (functions:delete)
+            _firebase_functions:delete
+            ;;
+
+        (functions:log)
+            _firebase_functions:log
+            ;;
+
+        (functions:shell)
+            _firebase_functions:shell
+            ;;
+
+        (functions:list)
+            _firebase_functions:list
+            ;;
+
+        (functions:secrets:access)
+            _firebase_functions:secrets:access
+            ;;
+
+        (functions:secrets:destroy)
+            _firebase_functions:secrets:destroy
+            ;;
+
+        (functions:secrets:get)
+            _firebase_functions:secrets:get
+            ;;
+
+        (functions:secrets:prune)
+            _firebase_functions:secrets:prune
+            ;;
+
+        (functions:secrets:set)
+            _firebase_functions:secrets:set
+            ;;
+
+        (help)
+            _firebase_help
+            ;;
+
+        (hosting:channel:create)
+            _firebase_hosting:channel:create
+            ;;
+
+        (hosting:channel:delete)
+            _firebase_hosting:channel:delete
+            ;;
+
+        (hosting:channel:deploy)
+            _firebase_hosting:channel:deploy
+            ;;
+
+        (hosting:channel:list)
+            _firebase_hosting:channel:list
+            ;;
+
+        (hosting:channel:open)
+            _firebase_hosting:channel:open
+            ;;
+
+        (hosting:clone)
+            _firebase_hosting:clone
+            ;;
+
+        (hosting:disable)
+            _firebase_hosting:disable
+            ;;
+
+        (hosting:sites:create)
+            _firebase_hosting:sites:create
+            ;;
+
+        (hosting:sites:delete)
+            _firebase_hosting:sites:delete
+            ;;
+
+        (hosting:sites:get)
+            _firebase_hosting:sites:get
+            ;;
+
+        (hosting:sites:list)
+            _firebase_hosting:sites:list
+            ;;
+
+        (init)
+            _firebase_init
+            ;;
+
+        (login)
+            _firebase_login
+            ;;
+
+        (login:add)
+            _firebase_login:add
+            ;;
+
+        (login:ci)
+            _firebase_login:ci
+            ;;
+
+        (login:list)
+            _firebase_login:list
+            ;;
+
+        (login:use)
+            _firebase_login:use
+            ;;
+
+        (logout)
+            _firebase_logout
+            ;;
+
+        (open)
+            _firebase_open
+            ;;
+
+        (projects:addfirebase)
+            _firebase_projects:addfirebase
+            ;;
+
+        (projects:create)
+            _firebase_projects:create
+            ;;
+
+        (projects:list)
+            _firebase_projects:list
+            ;;
+
+        (remoteconfig:get)
+            _firebase_remoteconfig:get
+            ;;
+
+        (remoteconfig:rollback)
+            _firebase_remoteconfig:rollback
+            ;;
+
+        (remoteconfig:versions:list)
+            _firebase_remoteconfig:versions:list
+            ;;
+
+        (serve)
+            _firebase_serve
+            ;;
+
+        (setup:emulators:database)
+            _firebase_setup:emulators:database
+            ;;
+
+        (setup:emulators:firestore)
+            _firebase_setup:emulators:firestore
+            ;;
+
+        (setup:emulators:pubsub)
+            _firebase_setup:emulators:pubsub
+            ;;
+
+        (setup:emulators:storage)
+            _firebase_setup:emulators:storage
+            ;;
+
+        (setup:emulators:ui)
+            _firebase_setup:emulators:ui
+            ;;
+
+        (target)
+            _firebase_target
+            ;;
+
+        (target:apply)
+            _firebase_target:apply
+            ;;
+
+        (target:clear)
+            _firebase_target:clear
+            ;;
+
+        (target:remove)
+            _firebase_target:remove
+            ;;
+
+        (use)
+            _firebase_use
+            ;;
+
+        esac
+        ;;
+     esac
+
+}
+
+function _firebase_appdistribution:distribute {
+    _arguments \
+        '--app[the app id of your Firebase app]' \
+        '--release-notes[release notes to include]' \
+        '--release-notes-file[path to file with release notes]':file:_files \
+        '--testers[a comma separated list of tester emails to distribute to]' \
+        '--testers-file[path to file with a comma separated list of tester emails to distribute to]':file:_files \
+        '--groups[a comma separated list of group aliases to distribute to]' \
+        '--groups-file[path to file with a comma separated list of group aliases to distribute to]':file:_files \
+        {-h,--help}'[output usage information]' \
+        "*: :_files"
+
+}
+
+function _firebase_appdistribution:testers:add {
+    _arguments \
+        '--file[a path to a file containing a list of tester emails to be added]':file:_files \
+        {-h,--help}'[output usage information]' \
+        "*: :_files"
+
+}
+
+function _firebase_appdistribution:testers:remove {
+    _arguments \
+        '--file[a path to a file containing a list of tester emails to be removed]':file:_files \
+        {-h,--help}'[output usage information]' \
+        "*: :_files"
+
+}
+
+function _firebase_apps:list {
+    _arguments \
+        {-h,--help}'[output usage information]' \
+        "*: :_files"
+
+}
+
+function _firebase_apps:android:sha:list {
+    _arguments \
+        {-h,--help}'[output usage information]' \
+        "*: :_files"
+
+}
+
+function _firebase_apps:android:sha:create {
+    _arguments \
+        {-h,--help}'[output usage information]' \
+        "*: :_files"
+
+}
+
+function _firebase_apps:android:sha:delete {
+    _arguments \
+        {-h,--help}'[output usage information]' \
+        "*: :_files"
+
+}
+
+function _firebase_auth:export {
+    _arguments \
+        '--format[Format of exported data (csv, json). Ignored if <dataFile> has format extension.]' \
+        {-h,--help}'[output usage information]' \
+        "*: :_files"
+
+}
+
+function _firebase_auth:import {
+    _arguments \
+        '--hash-algo[specify the hash algorithm used in password for these accounts]' \
+        '--hash-key[specify the key used in hash algorithm]' \
+        '--salt-separator[specify the salt separator which will be appended to salt when verifying password. only used by SCRYPT now.]' \
+        '--rounds[specify how many rounds for hash calculation.]' \
+        '--mem-cost[specify the memory cost for firebase scrypt, or cpu/memory cost for standard scrypt]' \
+        '--parallelization[specify the parallelization for standard scrypt.]' \
+        '--block-size[specify the block size (normally is 8) for standard scrypt.]' \
+        '--dk-len[specify derived key length for standard scrypt.]' \
+        '--hash-input-order[specify the order of password and salt. Possible values are SALT_FIRST and PASSWORD_FIRST. MD5, SHA1, SHA256, SHA512, HMAC_MD5, HMAC_SHA1, HMAC_SHA256, HMAC_SHA512 support this flag.]' \
+        {-h,--help}'[output usage information]' \
+        "*: :_files"
+
+}
+
+function _firebase_crashlytics:symbols:upload {
+    _arguments \
+        '--app[the app id of your Firebase app]' \
+        '--generator[the symbol generator being used, default is breakpad]' \
+        '--dry-run[generate symbols without uploading them]' \
+        {-h,--help}'[output usage information]' \
+        "*: :_files"
+
+}
+
+function _firebase_crashlytics:mappingfile:generateid {
+    _arguments \
+        '--resource-file[path to the Android resource XML file that will be created or updated.]':file:_files \
+        {-h,--help}'[output usage information]' \
+        "*: :_files"
+
+}
+
+function _firebase_crashlytics:mappingfile:upload {
+    _arguments \
+        '--app[the app id of your Firebase app]' \
+        '--resource-file[path to the Android resource XML file that includes the mapping file id]':file:_files \
+        {-h,--help}'[output usage information]' \
+        "*: :_files"
+
+}
+
+function _firebase_database:get {
+    _arguments \
+        {-o,--output}'[save output to the specified file]':file:_files \
+        '--pretty[pretty print response]' \
+        '--shallow[return shallow response]' \
+        '--export[include priorities in the output response]' \
+        '--order-by[select a child key by which to order results]' \
+        '--order-by-key[order by key name]' \
+        '--order-by-value[order by primitive value]' \
+        '--limit-to-first[limit to the first <num> results]' \
+        '--limit-to-last[limit to the last <num> results]' \
+        '--start-at[start results at <val> (based on specified ordering)]' \
+        '--end-at[end results at <val> (based on specified ordering)]' \
+        '--equal-to[restrict results to <val> (based on specified ordering)]' \
+        '--instance[use the database <instance>.firebaseio.com (if omitted, use default database instance)]' \
+        {-h,--help}'[output usage information]' \
+        "*: :_files"
+
+}
+
+function _firebase_database:instances:create {
+    _arguments \
+        {-l,--location}'[(optional) location for the database instance, defaults to us-central1]' \
+        {-h,--help}'[output usage information]' \
+        "*: :_files"
+
+}
+
+function _firebase_database:instances:list {
+    _arguments \
+        {-h,--help}'[output usage information]' \
+        "*: :_files"
+
+}
+
+function _firebase_database:profile {
+    _arguments \
+        {-o,--output}'[save the output to the specified file]':file:_files \
+        {-d,--duration}'[collect database usage information for the specified number of seconds]' \
+        '--raw[output the raw stats collected as newline delimited json]' \
+        '--no-collapse[prevent collapsing similar paths into $wildcard locations]' \
+        {-i,--input}'[generate the report based on the specified file instead of streaming logs from the database]':file:_files \
+        '--instance[use the database <instance>.firebaseio.com (if omitted, use default database instance)]' \
+        {-h,--help}'[output usage information]' \
+        "*: :_files"
+
+}
+
+function _firebase_database:push {
+    _arguments \
+        {-d,--data}'[specify escaped JSON directly]' \
+        '--instance[use the database <instance>.firebaseio.com (if omitted, use default database instance)]' \
+        '--disable-triggers[suppress any Cloud functions triggered by this operation]' \
+        {-h,--help}'[output usage information]' \
+        "*: :_files"
+
+}
+
+function _firebase_database:remove {
+    _arguments \
+        {-f,--force}'[pass this option to bypass confirmation prompt]' \
+        '--instance[use the database <instance>.firebaseio.com (if omitted, use default database instance)]' \
+        '--disable-triggers[suppress any Cloud functions triggered by this operation]' \
+        {-h,--help}'[output usage information]' \
+        "*: :_files"
+
+}
+
+function _firebase_database:set {
+    _arguments \
+        {-d,--data}'[specify escaped JSON directly]' \
+        {-f,--force}'[pass this option to bypass confirmation prompt]' \
+        '--instance[use the database <instance>.firebaseio.com (if omitted, use default database instance)]' \
+        '--disable-triggers[suppress any Cloud functions triggered by this operation]' \
+        {-h,--help}'[output usage information]' \
+        "*: :_files"
+
+}
+
+function _firebase_database:settings:get {
+    _arguments \
+        '--instance[use the database <instance>.firebaseio.com (if omitted, uses default database instance)]' \
+        {-h,--help}'[output usage information]' \
+        "*: :_files"
+
+}
+
+function _firebase_database:settings:set {
+    _arguments \
+        '--instance[use the database <instance>.firebaseio.com (if omitted, use default database instance)]' \
+        {-h,--help}'[output usage information]' \
+        "*: :_files"
+
+}
+
+function _firebase_database:update {
+    _arguments \
+        {-d,--data}'[specify escaped JSON directly]' \
+        {-f,--force}'[pass this option to bypass confirmation prompt]' \
+        '--instance[use the database <instance>.firebaseio.com (if omitted, use default database instance)]' \
+        '--disable-triggers[suppress any Cloud functions triggered by this operation]' \
+        {-h,--help}'[output usage information]' \
+        "*: :_files"
+
+}
+
+function _firebase_deploy {
+    _arguments \
+        {-f,--force}'[delete Cloud Functions missing from the current working directory without confirmation]' \
+        {-p,--public}'[override the Hosting public directory specified in firebase.json]':file:_files \
+        {-m,--message}'[an optional message describing this deploy]' \
+        '--only[only deploy to specified, comma-separated targets (e.g. "hosting,storage"). For functions, can specify filters with colons to scope function deploys to only those functions (e.g. "--only functions:func1,functions:func2"). When filtering based on export groups (the exported module object keys), use dots to specify group names (e.g. "--only functions:group1.subgroup1,functions:group2)"]' \
+        '--except[deploy to all targets except specified (e.g. "database")]' \
+        {-h,--help}'[output usage information]' \
+        "*: :_files"
+
+}
+
+function _firebase_emulators:exec {
+    _arguments \
+        '--only[only specific emulators. This is a comma separated list of emulator names. Valid options are: \["auth","functions","firestore","database","hosting","pubsub","storage","eventarc"\]]' \
+        '--inspect-functions[emulate Cloud Functions in debug mode with the node inspector on the given port (9229 if not specified)]' \
+        '--import[import emulator data from a previous export (see emulators:export)]':file:_files \
+        '--export-on-exit[automatically export emulator data (emulators:export) when the emulators make a clean exit (SIGINT), when no dir is provided the location of --import \[dir\] is used]':file:_files \
+        '--ui[run the Emulator UI]' \
+        {-h,--help}'[output usage information]' \
+        "*: :_files"
+
+}
+
+function _firebase_emulators:export {
+    _arguments \
+        {-f,--force}'[overwrite any export data in the target directory]' \
+        '--only[only specific emulators. This is a comma separated list of emulator names. Valid options are: \["auth","functions","firestore","database","hosting","pubsub","storage","eventarc"\]]' \
+        {-h,--help}'[output usage information]' \
+        "*: :_files"
+
+}
+
+function _firebase_emulators:start {
+    _arguments \
+        '--only[only specific emulators. This is a comma separated list of emulator names. Valid options are: \["auth","functions","firestore","database","hosting","pubsub","storage","eventarc"\]]' \
+        '--inspect-functions[emulate Cloud Functions in debug mode with the node inspector on the given port (9229 if not specified)]' \
+        '--import[import emulator data from a previous export (see emulators:export)]':file:_files \
+        '--export-on-exit[automatically export emulator data (emulators:export) when the emulators make a clean exit (SIGINT), when no dir is provided the location of --import \[dir\] is used]':file:_files \
+        {-h,--help}'[output usage information]' \
+        "*: :_files"
+
+}
+
+function _firebase_experimental:functions:shell {
+    _arguments \
+        {-p,--port}'[the port on which to emulate functions (default: 5000) (default: 5000)]' \
+        {-h,--help}'[output usage information]' \
+        "*: :_files"
+
+}
+
+function _firebase_experiments:list {
+    _arguments \
+        {-h,--help}'[output usage information]' \
+        "*: :_files"
+
+}
+
+function _firebase_experiments:describe {
+    _arguments \
+        {-h,--help}'[output usage information]' \
+        "*: :_files"
+
+}
+
+function _firebase_experiments:enable {
+    _arguments \
+        {-h,--help}'[output usage information]' \
+        "*: :_files"
+
+}
+
+function _firebase_experiments:disable {
+    _arguments \
+        {-h,--help}'[output usage information]' \
+        "*: :_files"
+
+}
+
+function _firebase_ext {
+    _arguments \
+        {-h,--help}'[output usage information]' \
+        "*: :_files"
+
+}
+
+function _firebase_ext:configure {
+    _arguments \
+        {-f,--force}'[automatically accept all interactive prompts]' \
+        '--local[deprecated]' \
+        {-h,--help}'[output usage information]' \
+        "*: :_files"
+
+}
+
+function _firebase_ext:info {
+    _arguments \
+        '--markdown[output info in Markdown suitable for constructing a README file]' \
+        {-h,--help}'[output usage information]' \
+        "*: :_files"
+
+}
+
+function _firebase_ext:export {
+    _arguments \
+        {-f,--force}'[automatically accept all interactive prompts]' \
+        {-h,--help}'[output usage information]' \
+        "*: :_files"
+
+}
+
+function _firebase_ext:install {
+    _arguments \
+        '--local[deprecated]' \
+        {-f,--force}'[automatically accept all interactive prompts]' \
+        {-h,--help}'[output usage information]' \
+        "*: :_files"
+
+}
+
+function _firebase_ext:list {
+    _arguments \
+        {-h,--help}'[output usage information]' \
+        "*: :_files"
+
+}
+
+function _firebase_ext:uninstall {
+    _arguments \
+        '--local[deprecated]' \
+        {-f,--force}'[automatically accept all interactive prompts]' \
+        {-h,--help}'[output usage information]' \
+        "*: :_files"
+
+}
+
+function _firebase_ext:update {
+    _arguments \
+        '--local[deprecated]' \
+        {-f,--force}'[automatically accept all interactive prompts]' \
+        {-h,--help}'[output usage information]' \
+        "*: :_files"
+
+}
+
+function _firebase_firestore:delete {
+    _arguments \
+        {-r,--recursive}'[Recursive. Delete all documents and subcollections at and under the specified level. May not be passed along with --shallow.]' \
+        '--shallow[Shallow. Delete only documents at the specified level and ignore documents in subcollections. This action can potentially orphan documents nested in subcollections. May not be passed along with -r.]' \
+        '--all-collections[Delete all. Deletes the entire Firestore database, including all collections and documents. Any other flags or arguments will be ignored.]' \
+        {-f,--force}'[No confirmation. Otherwise, a confirmation prompt will appear.]' \
+        {-h,--help}'[output usage information]' \
+        "*: :_files"
+
+}
+
+function _firebase_firestore:indexes {
+    _arguments \
+        '--pretty[Pretty print. When not specified the indexes are printed in the JSON specification format.]' \
+        {-h,--help}'[output usage information]' \
+        "*: :_files"
+
+}
+
+function _firebase_functions:config:clone {
+    _arguments \
+        '--from[the project from which to clone configuration]' \
+        '--only[a comma-separated list of keys to clone]' \
+        '--except[a comma-separated list of keys to not clone]' \
+        {-h,--help}'[output usage information]' \
+        "*: :_files"
+
+}
+
+function _firebase_functions:config:export {
+    _arguments \
+        {-h,--help}'[output usage information]' \
+        "*: :_files"
+
+}
+
+function _firebase_functions:config:get {
+    _arguments \
+        {-h,--help}'[output usage information]' \
+        "*: :_files"
+
+}
+
+function _firebase_functions:config:set {
+    _arguments \
+        {-h,--help}'[output usage information]' \
+        "*: :_files"
+
+}
+
+function _firebase_functions:config:unset {
+    _arguments \
+        {-h,--help}'[output usage information]' \
+        "*: :_files"
+
+}
+
+function _firebase_functions:delete {
+    _arguments \
+        '--region[Specify region of the function to be deleted. If omitted, functions from all regions whose names match the filters will be deleted.]' \
+        {-f,--force}'[automatically accept all interactive prompts]' \
+        {-h,--help}'[output usage information]' \
+        "*: :_files"
+
+}
+
+function _firebase_functions:log {
+    _arguments \
+        '--only[only show logs of specified, comma-seperated functions (e.g. "funcA,funcB")]' \
+        {-n,--lines}'[specify number of log lines to fetch]' \
+        '--open[open logs page in web browser]' \
+        {-h,--help}'[output usage information]' \
+        "*: :_files"
+
+}
+
+function _firebase_functions:shell {
+    _arguments \
+        {-p,--port}'[the port on which to emulate functions]' \
+        '--inspect-functions[emulate Cloud Functions in debug mode with the node inspector on the given port (9229 if not specified)]' \
+        {-h,--help}'[output usage information]' \
+        "*: :_files"
+
+}
+
+function _firebase_functions:list {
+    _arguments \
+        {-h,--help}'[output usage information]' \
+        "*: :_files"
+
+}
+
+function _firebase_functions:secrets:access {
+    _arguments \
+        {-h,--help}'[output usage information]' \
+        "*: :_files"
+
+}
+
+function _firebase_functions:secrets:destroy {
+    _arguments \
+        {-f,--force}'[Destroys a secret without confirmation.]' \
+        {-h,--help}'[output usage information]' \
+        "*: :_files"
+
+}
+
+function _firebase_functions:secrets:get {
+    _arguments \
+        {-h,--help}'[output usage information]' \
+        "*: :_files"
+
+}
+
+function _firebase_functions:secrets:prune {
+    _arguments \
+        {-f,--force}'[Destroys unused secrets without prompt]' \
+        {-h,--help}'[output usage information]' \
+        "*: :_files"
+
+}
+
+function _firebase_functions:secrets:set {
+    _arguments \
+        {-f,--force}'[Automatically updates functions to use the new secret.]' \
+        '--data-file[File path from which to read secret data. Set to "-" to read the secret data from stdin.]':file:_files \
+        {-h,--help}'[output usage information]' \
+        "*: :_files"
+
+}
+
+
+function _firebase_help {
+    local line state
+
+    function _commands {
+        local -a commands
+        commands=(
+            'database:instances:list:list realtime database instances, optionally filtered by a specified location'
+            'ext:display information on how to use ext commands and extensions installed to your project'
+            'ext:list:list all the extensions that are installed in your Firebase project'
+            'functions:config:export:Export environment config as environment variables in dotenv format'
+            'functions:list:list all deployed functions in your Firebase project'
+            'hosting:sites:list:list Firebase Hosting sites'
+            'login:list:list authorized CLI accounts'
+            'projects:list:list all Firebase projects you have access to'
+            'setup:emulators:database:downloads the database emulator'
+            'setup:emulators:firestore:downloads the firestore emulator'
+            'setup:emulators:pubsub:downloads the pubsub emulator'
+            'setup:emulators:storage:downloads the storage emulator'
+            'setup:emulators:ui:downloads the ui emulator'
+        )
+        _describe 'command' commands
+    }
+ 
+
+    _arguments -C \
+        {-V,--version}'[output the version number]' \
+        {-P,--project}'[the Firebase project to use for this command]' \
+        '--account[the Google account to use for authorization]' \
+        {-j,--json}'[output JSON instead of text, also triggers non-interactive mode]' \
+        '--token[DEPRECATED - will be removed in a future major version - supply an auth token for this command]' \
+        '--non-interactive[error out of the command instead of waiting for prompts]' \
+        {-i,--interactive}'[force prompts to be displayed]' \
+        '--debug[print verbose debug output and keep a debug log file]' \
+        {-c,--config}'[path to the firebase.json file to use for configuration]':file:_files \
+        {-h,--help}'[output usage information]' \
+        ': :->cmd' \
+        '*:: :->subcmd'
+
+    case $state in
+    (cmd)
+        _commands
+        ;;
+    (subcmd)
+        case $line[1] in
+        (database:instances:list)
+            _firebase_help_database:instances:list
+            ;;
+
+        (ext)
+            _firebase_help_ext
+            ;;
+
+        (ext:list)
+            _firebase_help_ext:list
+            ;;
+
+        (functions:config:export)
+            _firebase_help_functions:config:export
+            ;;
+
+        (functions:list)
+            _firebase_help_functions:list
+            ;;
+
+        (hosting:sites:list)
+            _firebase_help_hosting:sites:list
+            ;;
+
+        (login:list)
+            _firebase_help_login:list
+            ;;
+
+        (projects:list)
+            _firebase_help_projects:list
+            ;;
+
+        (setup:emulators:database)
+            _firebase_help_setup:emulators:database
+            ;;
+
+        (setup:emulators:firestore)
+            _firebase_help_setup:emulators:firestore
+            ;;
+
+        (setup:emulators:pubsub)
+            _firebase_help_setup:emulators:pubsub
+            ;;
+
+        (setup:emulators:storage)
+            _firebase_help_setup:emulators:storage
+            ;;
+
+        (setup:emulators:ui)
+            _firebase_help_setup:emulators:ui
+            ;;
+
+        esac
+        ;;
+     esac
+
+}
+
+function _firebase_help_database:instances:list {
+    _arguments \
+        {-h,--help}'[output usage information]' \
+        "*: :_files"
+
+}
+
+function _firebase_help_ext {
+    _arguments \
+        {-h,--help}'[output usage information]' \
+        "*: :_files"
+
+}
+
+function _firebase_help_ext:list {
+    _arguments \
+        {-h,--help}'[output usage information]' \
+        "*: :_files"
+
+}
+
+function _firebase_help_functions:config:export {
+    _arguments \
+        {-h,--help}'[output usage information]' \
+        "*: :_files"
+
+}
+
+function _firebase_help_functions:list {
+    _arguments \
+        {-h,--help}'[output usage information]' \
+        "*: :_files"
+
+}
+
+function _firebase_help_hosting:sites:list {
+    _arguments \
+        {-h,--help}'[output usage information]' \
+        "*: :_files"
+
+}
+
+function _firebase_help_login:list {
+    _arguments \
+        {-h,--help}'[output usage information]' \
+        "*: :_files"
+
+}
+
+function _firebase_help_projects:list {
+    _arguments \
+        {-h,--help}'[output usage information]' \
+        "*: :_files"
+
+}
+
+function _firebase_help_setup:emulators:database {
+    _arguments \
+        {-h,--help}'[output usage information]' \
+        "*: :_files"
+
+}
+
+function _firebase_help_setup:emulators:firestore {
+    _arguments \
+        {-h,--help}'[output usage information]' \
+        "*: :_files"
+
+}
+
+function _firebase_help_setup:emulators:pubsub {
+    _arguments \
+        {-h,--help}'[output usage information]' \
+        "*: :_files"
+
+}
+
+function _firebase_help_setup:emulators:storage {
+    _arguments \
+        {-h,--help}'[output usage information]' \
+        "*: :_files"
+
+}
+
+function _firebase_help_setup:emulators:ui {
+    _arguments \
+        {-h,--help}'[output usage information]' \
+        "*: :_files"
+
+}
+
+function _firebase_hosting:channel:create {
+    _arguments \
+        {-e,--expires}'[duration string (e.g. 12h or 30d) for channel expiration, max 30d]' \
+        '--site[site for which to create the channel]' \
+        {-h,--help}'[output usage information]' \
+        "*: :_files"
+
+}
+
+function _firebase_hosting:channel:delete {
+    _arguments \
+        {-f,--force}'[automatically accept all interactive prompts]' \
+        '--site[site in which the channel exists]' \
+        {-h,--help}'[output usage information]' \
+        "*: :_files"
+
+}
+
+function _firebase_hosting:channel:deploy {
+    _arguments \
+        {-e,--expires}'[duration string (e.g. 12h, 30d) for channel expiration, max 30d; defaults to 7d]' \
+        '--only[only create previews for specified targets]' \
+        '--open[open a browser to the channel after deploying]' \
+        '--no-authorized-domains[do not sync channel domains with Firebase Auth]' \
+        {-h,--help}'[output usage information]' \
+        "*: :_files"
+
+}
+
+function _firebase_hosting:channel:list {
+    _arguments \
+        '--site[list channels for the specified site]' \
+        {-h,--help}'[output usage information]' \
+        "*: :_files"
+
+}
+
+function _firebase_hosting:channel:open {
+    _arguments \
+        '--site[the site to which the channel belongs]' \
+        {-h,--help}'[output usage information]' \
+        "*: :_files"
+
+}
+
+function _firebase_hosting:clone {
+    _arguments \
+        {-h,--help}'[output usage information]' \
+        "*: :_files"
+
+}
+
+function _firebase_hosting:disable {
+    _arguments \
+        {-f,--force}'[skip confirmation]' \
+        {-s,--site}'[the site to disable]' \
+        {-h,--help}'[output usage information]' \
+        "*: :_files"
+
+}
+
+function _firebase_hosting:sites:create {
+    _arguments \
+        '--app[specify an existing Firebase Web App ID]' \
+        {-h,--help}'[output usage information]' \
+        "*: :_files"
+
+}
+
+function _firebase_hosting:sites:delete {
+    _arguments \
+        {-f,--force}'[automatically accept all interactive prompts]' \
+        {-h,--help}'[output usage information]' \
+        "*: :_files"
+
+}
+
+function _firebase_hosting:sites:get {
+    _arguments \
+        {-h,--help}'[output usage information]' \
+        "*: :_files"
+
+}
+
+function _firebase_hosting:sites:list {
+    _arguments \
+        {-h,--help}'[output usage information]' \
+        "*: :_files"
+
+}
+
+function _firebase_init {
+    _arguments \
+        {-h,--help}'[output usage information]' \
+        "*: :_files"
+
+}
+
+function _firebase_login {
+    _arguments \
+        '--no-localhost[login from a device without an accessible localhost]' \
+        '--reauth[force reauthentication even if already logged in]' \
+        {-h,--help}'[output usage information]' \
+        "*: :_files"
+
+}
+
+function _firebase_login:add {
+    _arguments \
+        '--no-localhost[copy and paste a code instead of starting a local server for authentication]' \
+        {-h,--help}'[output usage information]' \
+        "*: :_files"
+
+}
+
+function _firebase_login:ci {
+    _arguments \
+        '--no-localhost[copy and paste a code instead of starting a local server for authentication]' \
+        {-h,--help}'[output usage information]' \
+        "*: :_files"
+
+}
+
+function _firebase_login:list {
+    _arguments \
+        {-h,--help}'[output usage information]' \
+        "*: :_files"
+
+}
+
+function _firebase_login:use {
+    _arguments \
+        {-h,--help}'[output usage information]' \
+        "*: :_files"
+
+}
+
+function _firebase_logout {
+    _arguments \
+        {-h,--help}'[output usage information]' \
+        "*: :_files"
+
+}
+
+function _firebase_open {
+    _arguments \
+        {-h,--help}'[output usage information]' \
+        "*: :_files"
+
+}
+
+function _firebase_projects:addfirebase {
+    _arguments \
+        {-h,--help}'[output usage information]' \
+        "*: :_files"
+
+}
+
+function _firebase_projects:create {
+    _arguments \
+        {-n,--display-name}'[(optional) display name for the project]' \
+        {-o,--organization}'[(optional) ID of the parent Google Cloud Platform organization under which to create this project]' \
+        {-f,--folder}'[(optional) ID of the parent Google Cloud Platform folder in which to create this project]' \
+        {-h,--help}'[output usage information]' \
+        "*: :_files"
+
+}
+
+function _firebase_projects:list {
+    _arguments \
+        {-h,--help}'[output usage information]' \
+        "*: :_files"
+
+}
+
+function _firebase_remoteconfig:get {
+    _arguments \
+        {-v,--version-number}'[grabs the specified version of the template]' \
+        {-o,--output}'[write config output to a filename (if omitted, will use the default file path)]':file:_files \
+        {-h,--help}'[output usage information]' \
+        "*: :_files"
+
+}
+
+function _firebase_remoteconfig:rollback {
+    _arguments \
+        {-v,--version-number}'[rollback to the specified version of the template]' \
+        {-f,--force}'[automatically accept all interactive prompts]' \
+        {-h,--help}'[output usage information]' \
+        "*: :_files"
+
+}
+
+function _firebase_remoteconfig:versions:list {
+    _arguments \
+        '--limit[limit the number of versions being returned. Pass '\''0'\'' to fetch all versions.]' \
+        {-h,--help}'[output usage information]' \
+        "*: :_files"
+
+}
+
+function _firebase_serve {
+    _arguments \
+        {-p,--port}'[the port on which to listen (default: 5000) (default: 5000)]' \
+        {-o,--host}'[the host on which to listen (default: localhost) (default: "localhost")]' \
+        '--only[only serve specified targets (valid targets are: hosting, functions)]' \
+        '--except[serve all except specified targets (valid targets are: hosting, functions)]' \
+        {-h,--help}'[output usage information]' \
+        "*: :_files"
+
+}
+
+function _firebase_setup:emulators:database {
+    _arguments \
+        {-h,--help}'[output usage information]' \
+        "*: :_files"
+
+}
+
+function _firebase_setup:emulators:firestore {
+    _arguments \
+        {-h,--help}'[output usage information]' \
+        "*: :_files"
+
+}
+
+function _firebase_setup:emulators:pubsub {
+    _arguments \
+        {-h,--help}'[output usage information]' \
+        "*: :_files"
+
+}
+
+function _firebase_setup:emulators:storage {
+    _arguments \
+        {-h,--help}'[output usage information]' \
+        "*: :_files"
+
+}
+
+function _firebase_setup:emulators:ui {
+    _arguments \
+        {-h,--help}'[output usage information]' \
+        "*: :_files"
+
+}
+
+function _firebase_target {
+    _arguments \
+        {-h,--help}'[output usage information]' \
+        "*: :_files"
+
+}
+
+function _firebase_target:apply {
+    _arguments \
+        {-h,--help}'[output usage information]' \
+        "*: :_files"
+
+}
+
+function _firebase_target:clear {
+    _arguments \
+        {-h,--help}'[output usage information]' \
+        "*: :_files"
+
+}
+
+function _firebase_target:remove {
+    _arguments \
+        {-h,--help}'[output usage information]' \
+        "*: :_files"
+
+}
+
+function _firebase_use {
+    _arguments \
+        '--add[create a new project alias interactively]' \
+        '--alias[create a new alias for the provided project id]' \
+        '--unalias[remove an already created project alias]' \
+        '--clear[clear the active project selection]' \
+        {-h,--help}'[output usage information]' \
+        "*: :_files"
+
+}
+
+_firebase "$@"
+

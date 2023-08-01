@@ -1,0 +1,16 @@
+#compdef gst-typefind-1.0
+
+# Auto-generated with h2o
+
+function _gst-typefind-1.0 {
+    _arguments \
+        {-h,--help}'[Show help options]' \
+        '--help-all[Show all help options]' \
+        '--help-gst[Show GStreamer Options]' \
+        '--version[Print version information and exit]' \
+        "*: :_files"
+
+}
+
+_gst-typefind-1.0 "$@"
+

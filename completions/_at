@@ -1,0 +1,26 @@
+#compdef at
+
+# Auto-generated with h2o
+
+function _at {
+    _arguments \
+        '-V[prints the version number to standard error and exit successfully.]' \
+        '-q[uses the specified queue. A queue designation consists of a single letter; valid queue designations range from a to z and A to Z. The a queue is the default for at and the b queue for batch. Queues with higher letters run with increased niceness. The special queue "=" is reserved for jobs which are currently running.]' \
+        '-m[Send mail to the user when the job has completed even if there was no output.]' \
+        '-M[Never send mail to the user.]' \
+        '-u[Sends mail to username rather than the current user.]' \
+        '-f[Reads the job from file rather than standard input.]':file:_files \
+        '-t[run the job at time, given in the format \[\[CC\]YY\]MMDDhhmm\[.ss\]]' \
+        '-l[Is an alias for atq.]' \
+        '-r[Is an alias for atrm.]' \
+        '-d[Is an alias for atrm.]' \
+        '-b[is an alias for batch.]' \
+        '-v[Shows the time the job will be executed before reading the job.]' \
+        '-c[cats the jobs listed on the command line to standard output.]' \
+        '-o[strftime-like time format used for the job list]' \
+        "*: :_files"
+
+}
+
+_at "$@"
+

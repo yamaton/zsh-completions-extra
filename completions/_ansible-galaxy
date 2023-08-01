@@ -1,0 +1,442 @@
+#compdef ansible-galaxy
+
+# Auto-generated with h2o
+
+
+function _ansible-galaxy {
+    local line state
+
+    function _commands {
+        local -a commands
+        commands=(
+            'collection:Manage an Ansible Galaxy collection.'
+            'role:Manage an Ansible Galaxy role.'
+        )
+        _describe 'command' commands
+    }
+ 
+
+    _arguments -C \
+        '--version[show program'\''s version number, config file location, configured module search path, module location, executable location and exit]' \
+        {-h,--help}'[show this help message and exit]' \
+        {-v,--verbose}'[Causes Ansible to print more debug messages. Adding multiple -v will increase the verbosity, the builtin plugins currently evaluate up to -vvvvvv. A reasonable level to start is -vvv, connection debugging might require -vvvv.]' \
+        ': :->cmd' \
+        '*:: :->subcmd'
+
+    case $state in
+    (cmd)
+        _commands
+        ;;
+    (subcmd)
+        case $line[1] in
+        (collection)
+            _ansible-galaxy_collection
+            ;;
+
+        (role)
+            _ansible-galaxy_role
+            ;;
+
+        esac
+        ;;
+     esac
+
+}
+
+
+function _ansible-galaxy_collection {
+    local line state
+
+    function _commands {
+        local -a commands
+        commands=(
+            'download:Download collections and their dependencies as a tarball for an offline install.'
+            'init:Initialize new collection with the base structure of a collection.'
+            'build:Build an Ansible collection artifact that can be published to Ansible Galaxy.'
+            'publish:Publish a collection artifact to Ansible Galaxy.'
+            'install:Install collection(s) from file(s), URL(s) or Ansible Galaxy'
+            'list:Show the name and version of each collection installed in the collections_path.'
+            'verify:Compare checksums with the collection(s) found on the server and the installed copy. This does not verify dependencies.'
+        )
+        _describe 'command' commands
+    }
+ 
+
+    _arguments -C \
+        {-h,--help}'[show this help message and exit]' \
+        ': :->cmd' \
+        '*:: :->subcmd'
+
+    case $state in
+    (cmd)
+        _commands
+        ;;
+    (subcmd)
+        case $line[1] in
+        (download)
+            _ansible-galaxy_collection_download
+            ;;
+
+        (init)
+            _ansible-galaxy_collection_init
+            ;;
+
+        (build)
+            _ansible-galaxy_collection_build
+            ;;
+
+        (publish)
+            _ansible-galaxy_collection_publish
+            ;;
+
+        (install)
+            _ansible-galaxy_collection_install
+            ;;
+
+        (list)
+            _ansible-galaxy_collection_list
+            ;;
+
+        (verify)
+            _ansible-galaxy_collection_verify
+            ;;
+
+        esac
+        ;;
+     esac
+
+}
+
+function _ansible-galaxy_collection_download {
+    _arguments \
+        {-h,--help}'[show this help message and exit]' \
+        {-s,--server}'[The Galaxy API server URL]' \
+        {--token,--api-key}'[The Ansible Galaxy API key which can be found at https://galaxy.ansible.com/me/preferences.]' \
+        {-c,--ignore-certs}'[Ignore SSL certificate validation errors.]' \
+        '--timeout[The time to wait for operations against the galaxy server, defaults to 60s.]' \
+        {-v,--verbose}'[Causes Ansible to print more debug messages. Adding multiple -v will increase the verbosity, the builtin plugins currently evaluate up to -vvvvvv. A reasonable level to start is -vvv, connection debugging might require -vvvv.]' \
+        '--clear-response-cache[Clear the existing server response cache.]' \
+        '--no-cache[Do not use the server response cache.]' \
+        {-n,--no-deps}'[Don'\''t download collection(s) listed as dependencies.]' \
+        {-p,--download-path}'[The directory to download the collections to.]':file:_files \
+        {-r,--requirements-file}'[A file containing a list of collections to be downloaded.]' \
+        '--pre[Include pre-release versions. Semantic versioning pre-releases are ignored by default]' \
+        "*: :_files"
+
+}
+
+function _ansible-galaxy_collection_init {
+    _arguments \
+        {-h,--help}'[show this help message and exit]' \
+        {-s,--server}'[The Galaxy API server URL]' \
+        {--token,--api-key}'[The Ansible Galaxy API key which can be found at https://galaxy.ansible.com/me/preferences.]' \
+        {-c,--ignore-certs}'[Ignore SSL certificate validation errors.]' \
+        '--timeout[The time to wait for operations against the galaxy server, defaults to 60s.]' \
+        {-v,--verbose}'[Causes Ansible to print more debug messages. Adding multiple -v will increase the verbosity, the builtin plugins currently evaluate up to -vvvvvv. A reasonable level to start is -vvv, connection debugging might require -vvvv.]' \
+        {-f,--force}'[Force overwriting an existing role or collection]' \
+        '--init-path[The path in which the skeleton collection will be created. The default is the current working directory.]':file:_files \
+        '--collection-skeleton[The path to a collection skeleton that the new collection should be based upon.]' \
+        "*: :_files"
+
+}
+
+function _ansible-galaxy_collection_build {
+    _arguments \
+        {-h,--help}'[show this help message and exit]' \
+        {-s,--server}'[The Galaxy API server URL]' \
+        {--token,--api-key}'[The Ansible Galaxy API key which can be found at https://galaxy.ansible.com/me/preferences.]' \
+        {-c,--ignore-certs}'[Ignore SSL certificate validation errors.]' \
+        '--timeout[The time to wait for operations against the galaxy server, defaults to 60s.]' \
+        {-v,--verbose}'[Causes Ansible to print more debug messages. Adding multiple -v will increase the verbosity, the builtin plugins currently evaluate up to -vvvvvv. A reasonable level to start is -vvv, connection debugging might require -vvvv.]' \
+        {-f,--force}'[Force overwriting an existing role or collection]' \
+        '--output-path[The path in which the collection is built to. The default is the current working directory.]':file:_files \
+        "*: :_files"
+
+}
+
+function _ansible-galaxy_collection_publish {
+    _arguments \
+        {-h,--help}'[show this help message and exit]' \
+        {-s,--server}'[The Galaxy API server URL]' \
+        {--token,--api-key}'[The Ansible Galaxy API key which can be found at https://galaxy.ansible.com/me/preferences.]' \
+        {-c,--ignore-certs}'[Ignore SSL certificate validation errors.]' \
+        '--timeout[The time to wait for operations against the galaxy server, defaults to 60s.]' \
+        {-v,--verbose}'[Causes Ansible to print more debug messages. Adding multiple -v will increase the verbosity, the builtin plugins currently evaluate up to -vvvvvv. A reasonable level to start is -vvv, connection debugging might require -vvvv.]' \
+        '--no-wait[Don'\''t wait for import validation results.]' \
+        '--import-timeout[The time to wait for the collection import process to finish.]' \
+        "*: :_files"
+
+}
+
+function _ansible-galaxy_collection_install {
+    _arguments \
+        {-h,--help}'[show this help message and exit]' \
+        {-s,--server}'[The Galaxy API server URL]' \
+        {--token,--api-key}'[The Ansible Galaxy API key which can be found at https://galaxy.ansible.com/me/preferences.]' \
+        {-c,--ignore-certs}'[Ignore SSL certificate validation errors.]' \
+        '--timeout[The time to wait for operations against the galaxy server, defaults to 60s.]' \
+        {-v,--verbose}'[Causes Ansible to print more debug messages. Adding multiple -v will increase the verbosity, the builtin plugins currently evaluate up to -vvvvvv. A reasonable level to start is -vvv, connection debugging might require -vvvv.]' \
+        {-f,--force}'[Force overwriting an existing role or collection]' \
+        '--clear-response-cache[Clear the existing server response cache.]' \
+        '--no-cache[Do not use the server response cache.]' \
+        {-i,--ignore-errors}'[Ignore errors during installation and continue with the next specified collection. This will not ignore dependency conflict errors.]' \
+        {-n,--no-deps}'[Don'\''t download collections listed as dependencies.]' \
+        '--force-with-deps[Force overwriting an existing collection and its dependencies.]' \
+        {-p,--collections-path}'[The path to the directory containing your collections.]':file:_files \
+        {-r,--requirements-file}'[A file containing a list of collections to be installed.]' \
+        '--pre[Include pre-release versions. Semantic versioning pre-releases are ignored by default]' \
+        {-U,--upgrade}'[Upgrade installed collection artifacts. This will also update dependencies unless --no-deps is provided]' \
+        '--keyring[The keyring used during signature verification]' \
+        '--disable-gpg-verify[Disable GPG signature verification when installing collections from a Galaxy server]' \
+        '--signature[An additional signature source to verify the authenticity of the MANIFEST.json before installing the collection from a Galaxy server. Use in conjunction with a positional collection name (mutually exclusive with --requirements-file).]' \
+        '--required-valid-signature-count[The number of signatures that must successfully verify the collection. This should be a positive integer or -1 to signify that all signatures must be used to verify the collection. Prepend the value with + to fail if no valid signatures are found for the collection (e.g. +all).]' \
+        '--ignore-signature-status-code[A status code to ignore during signature verification (for example, NO_PUBKEY). Provide this option multiple times to ignore a list of status codes. Descriptions for the choices can be seen at L(https://github.com/gpg/gnupg/blob/master/doc/DETAILS#general-status-codes).]' \
+        '--offline[Install collection artifacts (tarballs) without contacting any distribution servers. This does not apply to collections in remote Git repositories or URLs to remote tarballs.]' \
+        "*: :_files"
+
+}
+
+function _ansible-galaxy_collection_list {
+    _arguments \
+        {-h,--help}'[show this help message and exit]' \
+        {-s,--server}'[The Galaxy API server URL]' \
+        {--token,--api-key}'[The Ansible Galaxy API key which can be found at https://galaxy.ansible.com/me/preferences.]' \
+        {-c,--ignore-certs}'[Ignore SSL certificate validation errors.]' \
+        '--timeout[The time to wait for operations against the galaxy server, defaults to 60s.]' \
+        {-v,--verbose}'[Causes Ansible to print more debug messages. Adding multiple -v will increase the verbosity, the builtin plugins currently evaluate up to -vvvvvv. A reasonable level to start is -vvv, connection debugging might require -vvvv.]' \
+        {-p,--collections-path}'[One or more directories to search for collections in addition to the default COLLECTIONS_PATHS. Separate multiple paths with '\'':'\''.]':file:_files \
+        '--format[Format to display the list of collections in.]' \
+        "*: :_files"
+
+}
+
+function _ansible-galaxy_collection_verify {
+    _arguments \
+        {-h,--help}'[show this help message and exit]' \
+        {-s,--server}'[The Galaxy API server URL]' \
+        {--token,--api-key}'[The Ansible Galaxy API key which can be found at https://galaxy.ansible.com/me/preferences.]' \
+        {-c,--ignore-certs}'[Ignore SSL certificate validation errors.]' \
+        '--timeout[The time to wait for operations against the galaxy server, defaults to 60s.]' \
+        {-v,--verbose}'[Causes Ansible to print more debug messages. Adding multiple -v will increase the verbosity, the builtin plugins currently evaluate up to -vvvvvv. A reasonable level to start is -vvv, connection debugging might require -vvvv.]' \
+        {-p,--collections-path}'[One or more directories to search for collections in addition to the default COLLECTIONS_PATHS. Separate multiple paths with '\'':'\''.]':file:_files \
+        {-i,--ignore-errors}'[Ignore errors during verification and continue with the next specified collection.]' \
+        '--offline[Validate collection integrity locally without contacting server for canonical manifest hash.]' \
+        {-r,--requirements-file}'[A file containing a list of collections to be verified.]' \
+        '--keyring[The keyring used during signature verification]' \
+        '--signature[An additional signature source to verify the authenticity of the MANIFEST.json before using it to verify the rest of the contents of a collection from a Galaxy server. Use in conjunction with a positional collection name (mutually exclusive with --requirements-file).]' \
+        '--required-valid-signature-count[The number of signatures that must successfully verify the collection. This should be a positive integer or all to signify that all signatures must be used to verify the collection. Prepend the value with + to fail if no valid signatures are found for the collection (e.g. +all).]' \
+        '--ignore-signature-status-code[A status code to ignore during signature verification (for example, NO_PUBKEY). Provide this option multiple times to ignore a list of status codes. Descriptions for the choices can be seen at L(https://github.com/gpg/gnupg/blob/master/doc/DETAILS#general-status-codes).]' \
+        "*: :_files"
+
+}
+
+
+function _ansible-galaxy_role {
+    local line state
+
+    function _commands {
+        local -a commands
+        commands=(
+            'init:Initialize new role with the base structure of a role.'
+            'remove:Delete roles from roles_path.'
+            'delete:Removes the role from Galaxy. It does not remove or alter the actual GitHub repository.'
+            'list:Show the name and version of each role installed in the roles_path.'
+            'search:Search the Galaxy database by tags, platforms, author and multiple keywords.'
+            'import:Import a role into a galaxy server'
+            'setup:Manage the integration between Galaxy and the given source.'
+            'info:View more details about a specific role.'
+            'install:Install role(s) from file(s), URL(s) or Ansible Galaxy'
+        )
+        _describe 'command' commands
+    }
+ 
+
+    _arguments -C \
+        {-h,--help}'[show this help message and exit]' \
+        ': :->cmd' \
+        '*:: :->subcmd'
+
+    case $state in
+    (cmd)
+        _commands
+        ;;
+    (subcmd)
+        case $line[1] in
+        (init)
+            _ansible-galaxy_role_init
+            ;;
+
+        (remove)
+            _ansible-galaxy_role_remove
+            ;;
+
+        (delete)
+            _ansible-galaxy_role_delete
+            ;;
+
+        (list)
+            _ansible-galaxy_role_list
+            ;;
+
+        (search)
+            _ansible-galaxy_role_search
+            ;;
+
+        (import)
+            _ansible-galaxy_role_import
+            ;;
+
+        (setup)
+            _ansible-galaxy_role_setup
+            ;;
+
+        (info)
+            _ansible-galaxy_role_info
+            ;;
+
+        (install)
+            _ansible-galaxy_role_install
+            ;;
+
+        esac
+        ;;
+     esac
+
+}
+
+function _ansible-galaxy_role_init {
+    _arguments \
+        {-h,--help}'[show this help message and exit]' \
+        {-s,--server}'[The Galaxy API server URL]' \
+        {--token,--api-key}'[The Ansible Galaxy API key which can be found at https://galaxy.ansible.com/me/preferences.]' \
+        {-c,--ignore-certs}'[Ignore SSL certificate validation errors.]' \
+        '--timeout[The time to wait for operations against the galaxy server, defaults to 60s.]' \
+        {-v,--verbose}'[Causes Ansible to print more debug messages. Adding multiple -v will increase the verbosity, the builtin plugins currently evaluate up to -vvvvvv. A reasonable level to start is -vvv, connection debugging might require -vvvv.]' \
+        {-f,--force}'[Force overwriting an existing role or collection]' \
+        '--offline[Don'\''t query the galaxy API when creating roles]' \
+        '--init-path[The path in which the skeleton role will be created. The default is the current working directory.]':file:_files \
+        '--role-skeleton[The path to a role skeleton that the new role should be based upon.]' \
+        '--type[Initialize using an alternate role type. Valid types include: '\''container'\'', '\''apb'\'' and '\''network'\''.]' \
+        "*: :_files"
+
+}
+
+function _ansible-galaxy_role_remove {
+    _arguments \
+        {-h,--help}'[show this help message and exit]' \
+        {-s,--server}'[The Galaxy API server URL]' \
+        {--token,--api-key}'[The Ansible Galaxy API key which can be found at https://galaxy.ansible.com/me/preferences.]' \
+        {-c,--ignore-certs}'[Ignore SSL certificate validation errors.]' \
+        '--timeout[The time to wait for operations against the galaxy server, defaults to 60s.]' \
+        {-v,--verbose}'[Causes Ansible to print more debug messages. Adding multiple -v will increase the verbosity, the builtin plugins currently evaluate up to -vvvvvv. A reasonable level to start is -vvv, connection debugging might require -vvvv.]' \
+        {-p,--roles-path}'[The path to the directory containing your roles. The default is the first writable one configured via DEFAULT_ROLES_PATH: {{ ANSIBLE_HOME ~ "/roles:/usr/share/ansible/roles:/etc/ansible/roles" }}]':file:_files \
+        "*: :_files"
+
+}
+
+function _ansible-galaxy_role_delete {
+    _arguments \
+        {-h,--help}'[show this help message and exit]' \
+        {-s,--server}'[The Galaxy API server URL]' \
+        {--token,--api-key}'[The Ansible Galaxy API key which can be found at https://galaxy.ansible.com/me/preferences.]' \
+        {-c,--ignore-certs}'[Ignore SSL certificate validation errors.]' \
+        '--timeout[The time to wait for operations against the galaxy server, defaults to 60s.]' \
+        {-v,--verbose}'[Causes Ansible to print more debug messages. Adding multiple -v will increase the verbosity, the builtin plugins currently evaluate up to -vvvvvv. A reasonable level to start is -vvv, connection debugging might require -vvvv.]' \
+        "*: :_files"
+
+}
+
+function _ansible-galaxy_role_list {
+    _arguments \
+        {-h,--help}'[show this help message and exit]' \
+        {-s,--server}'[The Galaxy API server URL]' \
+        {--token,--api-key}'[The Ansible Galaxy API key which can be found at https://galaxy.ansible.com/me/preferences.]' \
+        {-c,--ignore-certs}'[Ignore SSL certificate validation errors.]' \
+        '--timeout[The time to wait for operations against the galaxy server, defaults to 60s.]' \
+        {-v,--verbose}'[Causes Ansible to print more debug messages. Adding multiple -v will increase the verbosity, the builtin plugins currently evaluate up to -vvvvvv. A reasonable level to start is -vvv, connection debugging might require -vvvv.]' \
+        {-p,--roles-path}'[The path to the directory containing your roles. The default is the first writable one configured via DEFAULT_ROLES_PATH: {{ ANSIBLE_HOME ~ "/roles:/usr/share/ansible/roles:/etc/ansible/roles" }}]':file:_files \
+        "*: :_files"
+
+}
+
+function _ansible-galaxy_role_search {
+    _arguments \
+        {-h,--help}'[show this help message and exit]' \
+        {-s,--server}'[The Galaxy API server URL]' \
+        {--token,--api-key}'[The Ansible Galaxy API key which can be found at https://galaxy.ansible.com/me/preferences.]' \
+        {-c,--ignore-certs}'[Ignore SSL certificate validation errors.]' \
+        '--timeout[The time to wait for operations against the galaxy server, defaults to 60s.]' \
+        {-v,--verbose}'[Causes Ansible to print more debug messages. Adding multiple -v will increase the verbosity, the builtin plugins currently evaluate up to -vvvvvv. A reasonable level to start is -vvv, connection debugging might require -vvvv.]' \
+        '--platforms[list of OS platforms to filter by]' \
+        '--galaxy-tags[list of galaxy tags to filter by]' \
+        '--author[GitHub username]' \
+        "*: :_files"
+
+}
+
+function _ansible-galaxy_role_import {
+    _arguments \
+        {-h,--help}'[show this help message and exit]' \
+        {-s,--server}'[The Galaxy API server URL]' \
+        {--token,--api-key}'[The Ansible Galaxy API key which can be found at https://galaxy.ansible.com/me/preferences.]' \
+        {-c,--ignore-certs}'[Ignore SSL certificate validation errors.]' \
+        '--timeout[The time to wait for operations against the galaxy server, defaults to 60s.]' \
+        {-v,--verbose}'[Causes Ansible to print more debug messages. Adding multiple -v will increase the verbosity, the builtin plugins currently evaluate up to -vvvvvv. A reasonable level to start is -vvv, connection debugging might require -vvvv.]' \
+        '--no-wait[Don'\''t wait for import results.]' \
+        '--branch[The name of a branch to import. Defaults to the repository'\''s default branch (usually master)]' \
+        '--role-name[The name the role should have, if different than the repo name]' \
+        '--status[Check the status of the most recent import request for given github_user/github_repo.]' \
+        "*: :_files"
+
+}
+
+function _ansible-galaxy_role_setup {
+    _arguments \
+        {-h,--help}'[show this help message and exit]' \
+        {-s,--server}'[The Galaxy API server URL]' \
+        {--token,--api-key}'[The Ansible Galaxy API key which can be found at https://galaxy.ansible.com/me/preferences.]' \
+        {-c,--ignore-certs}'[Ignore SSL certificate validation errors.]' \
+        '--timeout[The time to wait for operations against the galaxy server, defaults to 60s.]' \
+        {-v,--verbose}'[Causes Ansible to print more debug messages. Adding multiple -v will increase the verbosity, the builtin plugins currently evaluate up to -vvvvvv. A reasonable level to start is -vvv, connection debugging might require -vvvv.]' \
+        {-p,--roles-path}'[The path to the directory containing your roles. The default is the first writable one configured via DEFAULT_ROLES_PATH: {{ ANSIBLE_HOME ~ "/roles:/usr/share/ansible/roles:/etc/ansible/roles" }}]':file:_files \
+        '--remove[Remove the integration matching the provided ID value. Use --list to see ID values.]' \
+        '--list[List all of your integrations.]' \
+        "*: :_files"
+
+}
+
+function _ansible-galaxy_role_info {
+    _arguments \
+        {-h,--help}'[show this help message and exit]' \
+        {-s,--server}'[The Galaxy API server URL]' \
+        {--token,--api-key}'[The Ansible Galaxy API key which can be found at https://galaxy.ansible.com/me/preferences.]' \
+        {-c,--ignore-certs}'[Ignore SSL certificate validation errors.]' \
+        '--timeout[The time to wait for operations against the galaxy server, defaults to 60s.]' \
+        {-v,--verbose}'[Causes Ansible to print more debug messages. Adding multiple -v will increase the verbosity, the builtin plugins currently evaluate up to -vvvvvv. A reasonable level to start is -vvv, connection debugging might require -vvvv.]' \
+        {-p,--roles-path}'[The path to the directory containing your roles. The default is the first writable one configured via DEFAULT_ROLES_PATH: {{ ANSIBLE_HOME ~ "/roles:/usr/share/ansible/roles:/etc/ansible/roles" }}]':file:_files \
+        '--offline[Don'\''t query the galaxy API when creating roles]' \
+        "*: :_files"
+
+}
+
+function _ansible-galaxy_role_install {
+    _arguments \
+        {-h,--help}'[show this help message and exit]' \
+        {-s,--server}'[The Galaxy API server URL]' \
+        {--token,--api-key}'[The Ansible Galaxy API key which can be found at https://galaxy.ansible.com/me/preferences.]' \
+        {-c,--ignore-certs}'[Ignore SSL certificate validation errors.]' \
+        '--timeout[The time to wait for operations against the galaxy server, defaults to 60s.]' \
+        {-v,--verbose}'[Causes Ansible to print more debug messages. Adding multiple -v will increase the verbosity, the builtin plugins currently evaluate up to -vvvvvv. A reasonable level to start is -vvv, connection debugging might require -vvvv.]' \
+        {-f,--force}'[Force overwriting an existing role or collection]' \
+        {-p,--roles-path}'[The path to the directory containing your roles. The default is the first writable one configured via DEFAULT_ROLES_PATH: {{ ANSIBLE_HOME ~ "/roles:/usr/share/ansible/roles:/etc/ansible/roles" }}]':file:_files \
+        {-i,--ignore-errors}'[Ignore errors and continue with the next specified role.]' \
+        {-n,--no-deps}'[Don'\''t download roles listed as dependencies.]' \
+        '--force-with-deps[Force overwriting an existing role and its dependencies.]' \
+        {-r,--role-file}'[A file containing a list of roles to be installed.]' \
+        {-g,--keep-scm-meta}'[Use tar instead of the scm archive option when packaging the role.]' \
+        "*: :_files"
+
+}
+
+_ansible-galaxy "$@"
+

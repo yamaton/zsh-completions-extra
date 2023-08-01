@@ -1,0 +1,19 @@
+#compdef fairseq-score
+
+# Auto-generated with h2o
+
+function _fairseq-score {
+    _arguments \
+        {-h,--help}'[show this help message and exit]' \
+        {-s,--sys}'[system output]' \
+        {-r,--ref}'[references]' \
+        {-o,--order}'[consider ngrams up to this order]' \
+        '--ignore-case[case-insensitive scoring]' \
+        '--sacrebleu[score with sacrebleu]' \
+        '--sentence-bleu[report sentence-level BLEUs (i.e., with +1 smoothing)]' \
+        "*: :_files"
+
+}
+
+_fairseq-score "$@"
+

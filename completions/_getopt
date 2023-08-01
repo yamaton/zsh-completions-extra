@@ -1,0 +1,23 @@
+#compdef getopt
+
+# Auto-generated with h2o
+
+function _getopt {
+    _arguments \
+        {-a,--alternative}'[allow long options starting with single -]' \
+        {-l,--longoptions}'[the long options to be recognized]' \
+        {-n,--name}'[the name under which errors are reported]' \
+        {-o,--options}'[the short options to be recognized]' \
+        {-q,--quiet}'[disable error reporting by getopt(3)]' \
+        {-Q,--quiet-output}'[no normal output]' \
+        {-s,--shell}'[set quoting conventions to those of <shell>]' \
+        {-T,--test}'[test for getopt(1) version]' \
+        {-u,--unquoted}'[do not quote the output]' \
+        {-h,--help}'[display this help]' \
+        {-V,--version}'[display version]' \
+        "*: :_files"
+
+}
+
+_getopt "$@"
+

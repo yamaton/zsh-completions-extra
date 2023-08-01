@@ -1,0 +1,17 @@
+#compdef echo
+
+# Auto-generated with h2o
+
+function _echo {
+    _arguments \
+        '-n[do not output the trailing newline]' \
+        '-e[enable interpretation of backslash escapes]' \
+        '-E[disable interpretation of backslash escapes (default)]' \
+        '--help[display this help and exit]' \
+        '--version[output version information and exit]' \
+        "*: :_files"
+
+}
+
+_echo "$@"
+

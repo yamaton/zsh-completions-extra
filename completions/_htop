@@ -1,0 +1,24 @@
+#compdef htop
+
+# Auto-generated with h2o
+
+function _htop {
+    _arguments \
+        {-C,--no-color}'[Use a monochrome color scheme]' \
+        {-d,--delay}'[Set the delay between updates, in tenths of seconds]' \
+        {-F,--filter}'[Show only the commands matching the given filter]' \
+        {-h,--help}'[Print this help screen]' \
+        {-H,--highlight-changes}'[Highlight new and old processes]' \
+        {-M,--no-mouse}'[Disable the mouse]' \
+        {-p,--pid}'[Show only the given PIDs]' \
+        {-s,--sort-key}'[Sort by COLUMN in list view (try --sort-key=help for a list)]' \
+        {-t,--tree}'[Show the tree view (can be combined with -s)]' \
+        {-u,--user}'[Show only processes for a given user (or $USER)]' \
+        {-U,--no-unicode}'[Do not use unicode but plain ASCII]' \
+        {-V,--version}'[Print version info]' \
+        "*: :_files"
+
+}
+
+_htop "$@"
+

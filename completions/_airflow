@@ -1,0 +1,1677 @@
+#compdef airflow
+
+# Auto-generated with h2o
+
+
+function _airflow {
+    local line state
+
+    function _commands {
+        local -a commands
+        commands=(
+            'config:View configuration'
+            'connections:Manage connections'
+            'dags:Manage DAGs'
+            'db:Database operations'
+            'jobs:Manage jobs'
+            'pools:Manage pools'
+            'providers:Display providers'
+            'roles:Manage roles'
+            'tasks:Manage tasks'
+            'users:Manage users'
+            'variables:Manage variables'
+            'cheat-sheet:Display cheat sheet'
+            'dag-processor:Start a standalone Dag Processor instance'
+            'info:Show information about current Airflow and environment'
+            'kerberos:Start a kerberos ticket renewer'
+            'plugins:Dump information about loaded plugins'
+            'rotate-fernet-key:Rotate encrypted connection credentials and variables'
+            'scheduler:Start a scheduler instance'
+            'standalone:Run an all-in-one copy of Airflow'
+            'sync-perm:Update permissions for existing roles and optionally DAGs'
+            'triggerer:Start a triggerer instance'
+            'version:Show the version'
+            'webserver:Start a Airflow webserver instance'
+        )
+        _describe 'command' commands
+    }
+ 
+
+    _arguments -C \
+        {-h,--help}'[show this help message and exit]' \
+        ': :->cmd' \
+        '*:: :->subcmd'
+
+    case $state in
+    (cmd)
+        _commands
+        ;;
+    (subcmd)
+        case $line[1] in
+        (config)
+            _airflow_config
+            ;;
+
+        (connections)
+            _airflow_connections
+            ;;
+
+        (dags)
+            _airflow_dags
+            ;;
+
+        (db)
+            _airflow_db
+            ;;
+
+        (jobs)
+            _airflow_jobs
+            ;;
+
+        (pools)
+            _airflow_pools
+            ;;
+
+        (providers)
+            _airflow_providers
+            ;;
+
+        (roles)
+            _airflow_roles
+            ;;
+
+        (tasks)
+            _airflow_tasks
+            ;;
+
+        (users)
+            _airflow_users
+            ;;
+
+        (variables)
+            _airflow_variables
+            ;;
+
+        (cheat-sheet)
+            _airflow_cheat-sheet
+            ;;
+
+        (dag-processor)
+            _airflow_dag-processor
+            ;;
+
+        (info)
+            _airflow_info
+            ;;
+
+        (kerberos)
+            _airflow_kerberos
+            ;;
+
+        (plugins)
+            _airflow_plugins
+            ;;
+
+        (rotate-fernet-key)
+            _airflow_rotate-fernet-key
+            ;;
+
+        (scheduler)
+            _airflow_scheduler
+            ;;
+
+        (standalone)
+            _airflow_standalone
+            ;;
+
+        (sync-perm)
+            _airflow_sync-perm
+            ;;
+
+        (triggerer)
+            _airflow_triggerer
+            ;;
+
+        (version)
+            _airflow_version
+            ;;
+
+        (webserver)
+            _airflow_webserver
+            ;;
+
+        esac
+        ;;
+     esac
+
+}
+
+function _airflow_config {
+    _arguments \
+        {-h,--help}'[show this help message and exit]' \
+        "*: :_files"
+
+}
+
+
+function _airflow_connections {
+    local line state
+
+    function _commands {
+        local -a commands
+        commands=(
+            'add:Add a connection'
+            'delete:Delete a connection'
+            'export:Export all connections'
+            'get:Get a connection'
+            'import:Import connections from a file'
+            'list:List connections'
+        )
+        _describe 'command' commands
+    }
+ 
+
+    _arguments -C \
+        {-h,--help}'[show this help message and exit]' \
+        ': :->cmd' \
+        '*:: :->subcmd'
+
+    case $state in
+    (cmd)
+        _commands
+        ;;
+    (subcmd)
+        case $line[1] in
+        (add)
+            _airflow_connections_add
+            ;;
+
+        (delete)
+            _airflow_connections_delete
+            ;;
+
+        (export)
+            _airflow_connections_export
+            ;;
+
+        (get)
+            _airflow_connections_get
+            ;;
+
+        (import)
+            _airflow_connections_import
+            ;;
+
+        (list)
+            _airflow_connections_list
+            ;;
+
+        esac
+        ;;
+     esac
+
+}
+
+function _airflow_connections_add {
+    _arguments \
+        {-h,--help}'[show this help message and exit]' \
+        '--conn-description[Connection description, optional when adding a connection]' \
+        '--conn-extra[Connection `Extra` field, optional when adding a connection]' \
+        '--conn-host[Connection host, optional when adding a connection]' \
+        '--conn-json[Connection JSON, required to add a connection using JSON representation]' \
+        '--conn-login[Connection login, optional when adding a connection]' \
+        '--conn-password[Connection password, optional when adding a connection]' \
+        '--conn-port[Connection port, optional when adding a connection]' \
+        '--conn-schema[Connection schema, optional when adding a connection]' \
+        '--conn-type[Connection type, required to add a connection without conn_uri]' \
+        '--conn-uri[Connection URI, required to add a connection without conn_type]' \
+        "*: :_files"
+
+}
+
+
+function _airflow_connections_delete {
+    local line state
+
+    function _commands {
+        local -a commands
+        commands=(
+            'conn_id:Connection id, required to get/add/delete a connection'
+        )
+        _describe 'command' commands
+    }
+ 
+
+    _arguments -C \
+        {-h,--help}'[show this help message and exit]' \
+        '--color[Do emit colored output (default: auto)]' \
+        ': :->cmd' \
+        '*:: :->subcmd'
+
+    case $state in
+    (cmd)
+        _commands
+        ;;
+    (subcmd)
+        case $line[1] in
+        (conn_id)
+            _airflow_connections_delete_conn_id
+            ;;
+
+        esac
+        ;;
+     esac
+
+}
+
+function _airflow_connections_delete_conn_id {
+    _arguments \
+        {-h,--help}'[show this help message and exit]' \
+        '--color[Do emit colored output (default: auto)]' \
+        "*: :_files"
+
+}
+
+function _airflow_connections_export {
+    _arguments \
+        {-h,--help}'[show this help message and exit]' \
+        '--file-format[File format for the export]' \
+        '--format[Deprecated -- use `--file-format` instead. File format to use for the export.]' \
+        '--serialization-format[When exporting as `.env` format, defines how connections should be serialized. Default is `uri`.]' \
+        "*: :_files"
+
+}
+
+
+function _airflow_connections_get {
+    local line state
+
+    function _commands {
+        local -a commands
+        commands=(
+            'conn_id:Connection id, required to get/add/delete a connection'
+        )
+        _describe 'command' commands
+    }
+ 
+
+    _arguments -C \
+        {-h,--help}'[show this help message and exit]' \
+        '--color[Do emit colored output (default: auto)]' \
+        {-v,--verbose}'[Make logging output more verbose]' \
+        ': :->cmd' \
+        '*:: :->subcmd'
+
+    case $state in
+    (cmd)
+        _commands
+        ;;
+    (subcmd)
+        case $line[1] in
+        (conn_id)
+            _airflow_connections_get_conn_id
+            ;;
+
+        esac
+        ;;
+     esac
+
+}
+
+function _airflow_connections_get_conn_id {
+    _arguments \
+        {-h,--help}'[show this help message and exit]' \
+        '--color[Do emit colored output (default: auto)]' \
+        {-v,--verbose}'[Make logging output more verbose]' \
+        "*: :_files"
+
+}
+
+function _airflow_connections_import {
+    _arguments \
+        {-h,--help}'[show this help message and exit]' \
+        "*: :_files"
+
+}
+
+function _airflow_connections_list {
+    _arguments \
+        {-h,--help}'[show this help message and exit]' \
+        '--conn-id[If passed, only items with the specified connection ID will be displayed]' \
+        {-o,--output}'[Output format. Allowed values: json, yaml, plain, table (default: table)]' \
+        {-v,--verbose}'[Make logging output more verbose]' \
+        "*: :_files"
+
+}
+
+
+function _airflow_dags {
+    local line state
+
+    function _commands {
+        local -a commands
+        commands=(
+            'backfill:Run subsections of a DAG for a specified date range'
+            'delete:Delete all DB records related to the specified DAG'
+            'list:List all the DAGs'
+            'list-jobs:List the jobs'
+            'list-runs:List DAG runs given a DAG id'
+            'next-execution:Get the next execution datetimes of a DAG'
+            'pause:Pause a DAG'
+            'report:Show DagBag loading report'
+            'reserialize:Reserialize all DAGs by parsing the DagBag files'
+            'show:Displays DAG'\''s tasks with their dependencies'
+            'state:Get the status of a dag run'
+            'test:Execute one single DagRun'
+            'trigger:Trigger a DAG run'
+            'unpause:Resume a paused DAG'
+        )
+        _describe 'command' commands
+    }
+ 
+
+    _arguments -C \
+        {-h,--help}'[show this help message and exit]' \
+        ': :->cmd' \
+        '*:: :->subcmd'
+
+    case $state in
+    (cmd)
+        _commands
+        ;;
+    (subcmd)
+        case $line[1] in
+        (backfill)
+            _airflow_dags_backfill
+            ;;
+
+        (delete)
+            _airflow_dags_delete
+            ;;
+
+        (list)
+            _airflow_dags_list
+            ;;
+
+        (list-jobs)
+            _airflow_dags_list-jobs
+            ;;
+
+        (list-runs)
+            _airflow_dags_list-runs
+            ;;
+
+        (next-execution)
+            _airflow_dags_next-execution
+            ;;
+
+        (pause)
+            _airflow_dags_pause
+            ;;
+
+        (report)
+            _airflow_dags_report
+            ;;
+
+        (reserialize)
+            _airflow_dags_reserialize
+            ;;
+
+        (show)
+            _airflow_dags_show
+            ;;
+
+        (state)
+            _airflow_dags_state
+            ;;
+
+        (test)
+            _airflow_dags_test
+            ;;
+
+        (trigger)
+            _airflow_dags_trigger
+            ;;
+
+        (unpause)
+            _airflow_dags_unpause
+            ;;
+
+        esac
+        ;;
+     esac
+
+}
+
+function _airflow_dags_backfill {
+    _arguments \
+        {-h,--help}'[show this help message and exit]' \
+        {-c,--conf}'[JSON string that gets pickled into the DagRun'\''s conf attribute]' \
+        '--continue-on-failures[if set, the backfill will keep going even if some of the tasks failed]' \
+        '--delay-on-limit[Amount of time in seconds to wait when the limit on maximum active dag runs (max_active_runs) has been reached before trying to execute a dag run again]' \
+        {-x,--donot-pickle}'[Do not attempt to pickle the DAG object to send over to the workers, just tell the workers to run their version of the code]' \
+        {-n,--dry-run}'[Perform a dry run for each task. Only renders Template Fields for each task, nothing else]' \
+        {-e,--end-date}'[Override end_date YYYY-MM-DD]' \
+        {-i,--ignore-dependencies}'[Skip upstream tasks, run only the tasks matching the regexp. Only works in conjunction with task_regex]' \
+        {-I,--ignore-first-depends-on-past}'[Ignores depends_on_past dependencies for the first set of tasks only (subsequent executions in the backfill DO respect depends_on_past)]' \
+        {-l,--local}'[Run the task using the LocalExecutor]' \
+        {-m,--mark-success}'[Mark jobs as succeeded without running them]' \
+        '--pool[Resource pool to use]' \
+        '--rerun-failed-tasks[if set, the backfill will auto-rerun all the failed tasks for the backfill date range instead of throwing exceptions]' \
+        '--reset-dagruns[if set, the backfill will delete existing backfill-related DAG runs and start anew with fresh, running DAG runs]' \
+        {-B,--run-backwards}'[if set, the backfill will run tasks from the most recent day first. if there are tasks that depend_on_past this option will throw an exception]' \
+        {-s,--start-date}'[Override start_date YYYY-MM-DD]' \
+        {-S,--subdir}'[File location or directory from which to look for the dag. Defaults to '\''\[AIRFLOW_HOME\]/dags'\'' where \[AIRFLOW_HOME\] is the value you set for '\''AIRFLOW_HOME'\'' config you set in '\''airflow.cfg'\'']':file:_files \
+        {-t,--task-regex}'[The regex to filter specific task_ids to backfill (optional)]' \
+        '--treat-dag-as-regex[if set, dag_id will be treated as regex instead of an exact string]' \
+        {-v,--verbose}'[Make logging output more verbose]' \
+        {-y,--yes}'[Do not prompt to confirm. Use with care!]' \
+        "*: :_files"
+
+}
+
+function _airflow_dags_delete {
+    _arguments \
+        {-h,--help}'[show this help message and exit]' \
+        {-y,--yes}'[Do not prompt to confirm. Use with care!]' \
+        "*: :_files"
+
+}
+
+function _airflow_dags_list {
+    _arguments \
+        {-h,--help}'[show this help message and exit]' \
+        {-o,--output}'[Output format. Allowed values: json, yaml, plain, table (default: table)]' \
+        {-S,--subdir}'[File location or directory from which to look for the dag. Defaults to '\''\[AIRFLOW_HOME\]/dags'\'' where \[AIRFLOW_HOME\] is the value you set for '\''AIRFLOW_HOME'\'' config you set in '\''airflow.cfg'\'']':file:_files \
+        {-v,--verbose}'[Make logging output more verbose]' \
+        "*: :_files"
+
+}
+
+function _airflow_dags_list-jobs {
+    _arguments \
+        {-h,--help}'[show this help message and exit]' \
+        {-d,--dag-id}'[The id of the dag]' \
+        '--limit[Return a limited number of records]' \
+        '--state[Only list the dag runs corresponding to the state]' \
+        {-v,--verbose}'[Make logging output more verbose]' \
+        "*: :_files"
+
+}
+
+function _airflow_dags_list-runs {
+    _arguments \
+        {-h,--help}'[show this help message and exit]' \
+        {-d,--dag-id}'[The id of the dag]' \
+        {-e,--end-date}'[Override end_date YYYY-MM-DD]' \
+        '--no-backfill[filter all the backfill dagruns given the dag id]' \
+        {-s,--start-date}'[Override start_date YYYY-MM-DD]' \
+        '--state[Only list the dag runs corresponding to the state]' \
+        {-v,--verbose}'[Make logging output more verbose]' \
+        "*: :_files"
+
+}
+
+function _airflow_dags_next-execution {
+    _arguments \
+        {-h,--help}'[show this help message and exit]' \
+        {-n,--num-executions}'[The number of next execution datetimes to show]' \
+        {-S,--subdir}'[File location or directory from which to look for the dag. Defaults to '\''\[AIRFLOW_HOME\]/dags'\'' where \[AIRFLOW_HOME\] is the value you set for '\''AIRFLOW_HOME'\'' config you set in '\''airflow.cfg'\'']':file:_files \
+        "*: :_files"
+
+}
+
+function _airflow_dags_pause {
+    _arguments \
+        {-h,--help}'[show this help message and exit]' \
+        {-S,--subdir}'[File location or directory from which to look for the dag. Defaults to '\''\[AIRFLOW_HOME\]/dags'\'' where \[AIRFLOW_HOME\] is the value you set for '\''AIRFLOW_HOME'\'' config you set in '\''airflow.cfg'\'']':file:_files \
+        "*: :_files"
+
+}
+
+function _airflow_dags_report {
+    _arguments \
+        {-h,--help}'[show this help message and exit]' \
+        {-o,--output}'[Output format. Allowed values: json, yaml, plain, table (default: table)]' \
+        {-S,--subdir}'[File location or directory from which to look for the dag. Defaults to '\''\[AIRFLOW_HOME\]/dags'\'' where \[AIRFLOW_HOME\] is the value you set for '\''AIRFLOW_HOME'\'' config you set in '\''airflow.cfg'\'']':file:_files \
+        {-v,--verbose}'[Make logging output more verbose]' \
+        "*: :_files"
+
+}
+
+function _airflow_dags_reserialize {
+    _arguments \
+        {-h,--help}'[show this help message and exit]' \
+        '--clear-only[If passed, serialized DAGs will be cleared but not reserialized.]' \
+        {-S,--subdir}'[File location or directory from which to look for the dag. Defaults to '\''\[AIRFLOW_HOME\]/dags'\'' where \[AIRFLOW_HOME\] is the value you set for '\''AIRFLOW_HOME'\'' config you set in '\''airflow.cfg'\'']':file:_files \
+        "*: :_files"
+
+}
+
+function _airflow_dags_show {
+    _arguments \
+        {-h,--help}'[show this help message and exit]' \
+        '--imgcat[Displays graph using the imgcat tool.]' \
+        {-s,--save}'[Saves the result to the indicated file.]' \
+        {-S,--subdir}'[File location or directory from which to look for the dag. Defaults to '\''\[AIRFLOW_HOME\]/dags'\'' where \[AIRFLOW_HOME\] is the value you set for '\''AIRFLOW_HOME'\'' config you set in '\''airflow.cfg'\'']':file:_files \
+        "*: :_files"
+
+}
+
+function _airflow_dags_state {
+    _arguments \
+        {-h,--help}'[show this help message and exit]' \
+        {-S,--subdir}'[File location or directory from which to look for the dag. Defaults to '\''\[AIRFLOW_HOME\]/dags'\'' where \[AIRFLOW_HOME\] is the value you set for '\''AIRFLOW_HOME'\'' config you set in '\''airflow.cfg'\'']':file:_files \
+        "*: :_files"
+
+}
+
+function _airflow_dags_test {
+    _arguments \
+        {-h,--help}'[show this help message and exit]' \
+        {-c,--conf}'[JSON string that gets pickled into the DagRun'\''s conf attribute]' \
+        '--imgcat-dagrun[After completing the dag run, prints a diagram on the screen for the current DAG Run using the imgcat tool.]' \
+        '--save-dagrun[After completing the backfill, saves the diagram for current DAG Run to the indicated file.]' \
+        '--show-dagrun[After completing the backfill, shows the diagram for current DAG Run.]' \
+        {-S,--subdir}'[File location or directory from which to look for the dag. Defaults to '\''\[AIRFLOW_HOME\]/dags'\'' where \[AIRFLOW_HOME\] is the value you set for '\''AIRFLOW_HOME'\'' config you set in '\''airflow.cfg'\'']':file:_files \
+        "*: :_files"
+
+}
+
+function _airflow_dags_trigger {
+    _arguments \
+        {-h,--help}'[show this help message and exit]' \
+        {-c,--conf}'[JSON string that gets pickled into the DagRun'\''s conf attribute]' \
+        {-e,--exec-date}'[The execution date of the DAG]' \
+        {-r,--run-id}'[Helps to identify this run]' \
+        {-S,--subdir}'[File location or directory from which to look for the dag. Defaults to '\''\[AIRFLOW_HOME\]/dags'\'' where \[AIRFLOW_HOME\] is the value you set for '\''AIRFLOW_HOME'\'' config you set in '\''airflow.cfg'\'']':file:_files \
+        "*: :_files"
+
+}
+
+function _airflow_dags_unpause {
+    _arguments \
+        {-h,--help}'[show this help message and exit]' \
+        {-S,--subdir}'[File location or directory from which to look for the dag. Defaults to '\''\[AIRFLOW_HOME\]/dags'\'' where \[AIRFLOW_HOME\] is the value you set for '\''AIRFLOW_HOME'\'' config you set in '\''airflow.cfg'\'']':file:_files \
+        "*: :_files"
+
+}
+
+
+function _airflow_db {
+    local line state
+
+    function _commands {
+        local -a commands
+        commands=(
+            'check:Check if the database can be reached'
+            'clean:Purge old records in metastore tables'
+            'downgrade:Downgrade the schema of the metadata database.'
+            'init:Initialize the metadata database'
+            'reset:Burn down and rebuild the metadata database'
+            'shell:Runs a shell to access the database'
+            'upgrade:Upgrade the metadata database to latest version'
+        )
+        _describe 'command' commands
+    }
+ 
+
+    _arguments -C \
+        {-h,--help}'[show this help message and exit]' \
+        ': :->cmd' \
+        '*:: :->subcmd'
+
+    case $state in
+    (cmd)
+        _commands
+        ;;
+    (subcmd)
+        case $line[1] in
+        (check)
+            _airflow_db_check
+            ;;
+
+        (clean)
+            _airflow_db_clean
+            ;;
+
+        (downgrade)
+            _airflow_db_downgrade
+            ;;
+
+        (init)
+            _airflow_db_init
+            ;;
+
+        (reset)
+            _airflow_db_reset
+            ;;
+
+        (shell)
+            _airflow_db_shell
+            ;;
+
+        (upgrade)
+            _airflow_db_upgrade
+            ;;
+
+        esac
+        ;;
+     esac
+
+}
+
+function _airflow_db_check {
+    _arguments \
+        {-h,--help}'[show this help message and exit]' \
+        "*: :_files"
+
+}
+
+function _airflow_db_clean {
+    _arguments \
+        {-h,--help}'[show this help message and exit]' \
+        '--clean-before-timestamp[The date or timestamp before which data should be purged. If no timezone info is supplied then dates are assumed to be in airflow default timezone. Example: '\''2022-01-01 00:00:00+01:00'\'']' \
+        '--dry-run[Perform a dry run]' \
+        '--skip-archive[Don'\''t preserve purged records in an archive table.]' \
+        {-t,--tables}'[Table names to perform maintenance on (use comma-separated list). Options: \['\''callback_request'\'', '\''celery_taskmeta'\'', '\''celery_tasksetmeta'\'', '\''dag'\'', '\''dag_run'\'', '\''dataset_event'\'', '\''import_error'\'', '\''job'\'', '\''log'\'', '\''rendered_task_instance_fields'\'', '\''sla_miss'\'', '\''task_fail'\'', '\''task_instance'\'', '\''task_reschedule'\'', '\''xcom'\''\]]' \
+        {-v,--verbose}'[Make logging output more verbose]' \
+        {-y,--yes}'[Do not prompt to confirm. Use with care!]' \
+        "*: :_files"
+
+}
+
+function _airflow_db_downgrade {
+    _arguments \
+        {-h,--help}'[show this help message and exit]' \
+        '--from-revision[(Optional) If generating sql, may supply a *from* Alembic revision]' \
+        '--from-version[(Optional) If generating sql, may supply a *from* version]' \
+        {-s,--show-sql-only}'[Don'\''t actually run migrations; just print out sql scripts for offline migration. Required if using either `--from-revision` or `--from-version`.]' \
+        {-r,--to-revision}'[The Alembic revision to downgrade to. Note: must provide either `--to-revision` or `--to-version`.]' \
+        {-n,--to-version}'[(Optional) If provided, only run migrations up to this version.]' \
+        {-y,--yes}'[Do not prompt to confirm. Use with care!]' \
+        "*: :_files"
+
+}
+
+function _airflow_db_init {
+    _arguments \
+        {-h,--help}'[show this help message and exit]' \
+        "*: :_files"
+
+}
+
+function _airflow_db_reset {
+    _arguments \
+        {-h,--help}'[show this help message and exit]' \
+        {-s,--skip-init}'[Only remove tables; do not perform db init.]' \
+        {-y,--yes}'[Do not prompt to confirm. Use with care!]' \
+        "*: :_files"
+
+}
+
+function _airflow_db_shell {
+    _arguments \
+        {-h,--help}'[show this help message and exit]' \
+        "*: :_files"
+
+}
+
+function _airflow_db_upgrade {
+    _arguments \
+        {-h,--help}'[show this help message and exit]' \
+        '--from-revision[(Optional) If generating sql, may supply a *from* Alembic revision]' \
+        '--from-version[(Optional) If generating sql, may supply a *from* version]' \
+        {-s,--show-sql-only}'[Don'\''t actually run migrations; just print out sql scripts for offline migration. Required if using either `--from-revision` or `--from-version`.]' \
+        {-r,--to-revision}'[(Optional) If provided, only run migrations up to and including this Alembic revision.]' \
+        {-n,--to-version}'[(Optional) The airflow version to upgrade to. Note: must provide either `--to-revision` or `--to-version`.]' \
+        "*: :_files"
+
+}
+
+
+function _airflow_jobs {
+    local line state
+
+    function _commands {
+        local -a commands
+        commands=(
+            'check:Checks if job(s) are still alive'
+        )
+        _describe 'command' commands
+    }
+ 
+
+    _arguments -C \
+        {-h,--help}'[show this help message and exit]' \
+        ': :->cmd' \
+        '*:: :->subcmd'
+
+    case $state in
+    (cmd)
+        _commands
+        ;;
+    (subcmd)
+        case $line[1] in
+        (check)
+            _airflow_jobs_check
+            ;;
+
+        esac
+        ;;
+     esac
+
+}
+
+function _airflow_jobs_check {
+    _arguments \
+        {-h,--help}'[show this help message and exit]' \
+        '--allow-multiple[If passed, this command will be successful even if multiple matching alive jobs are found.]' \
+        '--hostname[The hostname of job(s) that will be checked.]' \
+        '--job-type[The type of job(s) that will be checked.]' \
+        '--limit[The number of recent jobs that will be checked. To disable limit, set 0.]' \
+        "*: :_files"
+
+}
+
+
+function _airflow_pools {
+    local line state
+
+    function _commands {
+        local -a commands
+        commands=(
+            'delete:Delete pool'
+            'export:Export all pools'
+            'get:Get pool size'
+            'import:Import pools'
+            'list:List pools'
+            'set:Configure pool'
+        )
+        _describe 'command' commands
+    }
+ 
+
+    _arguments -C \
+        {-h,--help}'[show this help message and exit]' \
+        ': :->cmd' \
+        '*:: :->subcmd'
+
+    case $state in
+    (cmd)
+        _commands
+        ;;
+    (subcmd)
+        case $line[1] in
+        (delete)
+            _airflow_pools_delete
+            ;;
+
+        (export)
+            _airflow_pools_export
+            ;;
+
+        (get)
+            _airflow_pools_get
+            ;;
+
+        (import)
+            _airflow_pools_import
+            ;;
+
+        (list)
+            _airflow_pools_list
+            ;;
+
+        (set)
+            _airflow_pools_set
+            ;;
+
+        esac
+        ;;
+     esac
+
+}
+
+function _airflow_pools_delete {
+    _arguments \
+        {-h,--help}'[show this help message and exit]' \
+        {-o,--output}'[Output format. Allowed values: json, yaml, plain, table (default: table)]' \
+        {-v,--verbose}'[Make logging output more verbose]' \
+        "*: :_files"
+
+}
+
+function _airflow_pools_export {
+    _arguments \
+        {-h,--help}'[show this help message and exit]' \
+        "*: :_files"
+
+}
+
+function _airflow_pools_get {
+    _arguments \
+        {-h,--help}'[show this help message and exit]' \
+        {-o,--output}'[Output format. Allowed values: json, yaml, plain, table (default: table)]' \
+        {-v,--verbose}'[Make logging output more verbose]' \
+        "*: :_files"
+
+}
+
+function _airflow_pools_import {
+    _arguments \
+        {-h,--help}'[show this help message and exit]' \
+        {-v,--verbose}'[Make logging output more verbose]' \
+        "*: :_files"
+
+}
+
+function _airflow_pools_list {
+    _arguments \
+        {-h,--help}'[show this help message and exit]' \
+        {-o,--output}'[Output format. Allowed values: json, yaml, plain, table (default: table)]' \
+        {-v,--verbose}'[Make logging output more verbose]' \
+        "*: :_files"
+
+}
+
+function _airflow_pools_set {
+    _arguments \
+        {-h,--help}'[show this help message and exit]' \
+        {-o,--output}'[Output format. Allowed values: json, yaml, plain, table (default: table)]' \
+        {-v,--verbose}'[Make logging output more verbose]' \
+        "*: :_files"
+
+}
+
+
+function _airflow_providers {
+    local line state
+
+    function _commands {
+        local -a commands
+        commands=(
+            'auth:Get information about API auth backends provided'
+            'get:Get detailed information about a provider'
+            'hooks:List registered provider hooks'
+            'links:List extra links registered by the providers'
+            'list:List installed providers'
+            'logging:Get information about task logging handlers provided'
+            'secrets:Get information about secrets backends provided'
+            'widgets:Get information about registered connection form widgets'
+        )
+        _describe 'command' commands
+    }
+ 
+
+    _arguments -C \
+        {-h,--help}'[show this help message and exit]' \
+        ': :->cmd' \
+        '*:: :->subcmd'
+
+    case $state in
+    (cmd)
+        _commands
+        ;;
+    (subcmd)
+        case $line[1] in
+        (auth)
+            _airflow_providers_auth
+            ;;
+
+        (get)
+            _airflow_providers_get
+            ;;
+
+        (hooks)
+            _airflow_providers_hooks
+            ;;
+
+        (links)
+            _airflow_providers_links
+            ;;
+
+        (list)
+            _airflow_providers_list
+            ;;
+
+        (logging)
+            _airflow_providers_logging
+            ;;
+
+        (secrets)
+            _airflow_providers_secrets
+            ;;
+
+        (widgets)
+            _airflow_providers_widgets
+            ;;
+
+        esac
+        ;;
+     esac
+
+}
+
+function _airflow_providers_auth {
+    _arguments \
+        {-h,--help}'[show this help message and exit]' \
+        {-o,--output}'[Output format. Allowed values: json, yaml, plain, table (default: table)]' \
+        {-v,--verbose}'[Make logging output more verbose]' \
+        "*: :_files"
+
+}
+
+
+function _airflow_providers_get {
+    local line state
+
+    function _commands {
+        local -a commands
+        commands=(
+            'provider_name:Provider name, required to get provider information'
+        )
+        _describe 'command' commands
+    }
+ 
+
+    _arguments -C \
+        {-h,--help}'[show this help message and exit]' \
+        '--color[Do emit colored output (default: auto)]' \
+        {-f,--full}'[Full information about the provider, including documentation information.]' \
+        {-v,--verbose}'[Make logging output more verbose]' \
+        ': :->cmd' \
+        '*:: :->subcmd'
+
+    case $state in
+    (cmd)
+        _commands
+        ;;
+    (subcmd)
+        case $line[1] in
+        (provider_name)
+            _airflow_providers_get_provider_name
+            ;;
+
+        esac
+        ;;
+     esac
+
+}
+
+function _airflow_providers_get_provider_name {
+    _arguments \
+        {-h,--help}'[show this help message and exit]' \
+        '--color[Do emit colored output (default: auto)]' \
+        {-f,--full}'[Full information about the provider, including documentation information.]' \
+        {-v,--verbose}'[Make logging output more verbose]' \
+        "*: :_files"
+
+}
+
+function _airflow_providers_hooks {
+    _arguments \
+        {-h,--help}'[show this help message and exit]' \
+        {-o,--output}'[Output format. Allowed values: json, yaml, plain, table (default: table)]' \
+        {-v,--verbose}'[Make logging output more verbose]' \
+        "*: :_files"
+
+}
+
+function _airflow_providers_links {
+    _arguments \
+        {-h,--help}'[show this help message and exit]' \
+        {-o,--output}'[Output format. Allowed values: json, yaml, plain, table (default: table)]' \
+        {-v,--verbose}'[Make logging output more verbose]' \
+        "*: :_files"
+
+}
+
+function _airflow_providers_list {
+    _arguments \
+        {-h,--help}'[show this help message and exit]' \
+        {-o,--output}'[Output format. Allowed values: json, yaml, plain, table (default: table)]' \
+        {-v,--verbose}'[Make logging output more verbose]' \
+        "*: :_files"
+
+}
+
+function _airflow_providers_logging {
+    _arguments \
+        {-h,--help}'[show this help message and exit]' \
+        {-o,--output}'[Output format. Allowed values: json, yaml, plain, table (default: table)]' \
+        {-v,--verbose}'[Make logging output more verbose]' \
+        "*: :_files"
+
+}
+
+function _airflow_providers_secrets {
+    _arguments \
+        {-h,--help}'[show this help message and exit]' \
+        {-o,--output}'[Output format. Allowed values: json, yaml, plain, table (default: table)]' \
+        {-v,--verbose}'[Make logging output more verbose]' \
+        "*: :_files"
+
+}
+
+function _airflow_providers_widgets {
+    _arguments \
+        {-h,--help}'[show this help message and exit]' \
+        {-o,--output}'[Output format. Allowed values: json, yaml, plain, table (default: table)]' \
+        {-v,--verbose}'[Make logging output more verbose]' \
+        "*: :_files"
+
+}
+
+
+function _airflow_roles {
+    local line state
+
+    function _commands {
+        local -a commands
+        commands=(
+            'create:Create role'
+            'delete:Delete role'
+            'export:Export roles (without permissions) from db to JSON file'
+            'import:Import roles (without permissions) from JSON file to db'
+            'list:List roles'
+        )
+        _describe 'command' commands
+    }
+ 
+
+    _arguments -C \
+        {-h,--help}'[show this help message and exit]' \
+        ': :->cmd' \
+        '*:: :->subcmd'
+
+    case $state in
+    (cmd)
+        _commands
+        ;;
+    (subcmd)
+        case $line[1] in
+        (create)
+            _airflow_roles_create
+            ;;
+
+        (delete)
+            _airflow_roles_delete
+            ;;
+
+        (export)
+            _airflow_roles_export
+            ;;
+
+        (import)
+            _airflow_roles_import
+            ;;
+
+        (list)
+            _airflow_roles_list
+            ;;
+
+        esac
+        ;;
+     esac
+
+}
+
+function _airflow_roles_create {
+    _arguments \
+        {-h,--help}'[show this help message and exit]' \
+        {-v,--verbose}'[Make logging output more verbose]' \
+        "*: :_files"
+
+}
+
+function _airflow_roles_delete {
+    _arguments \
+        {-h,--help}'[show this help message and exit]' \
+        {-v,--verbose}'[Make logging output more verbose]' \
+        "*: :_files"
+
+}
+
+function _airflow_roles_export {
+    _arguments \
+        {-h,--help}'[show this help message and exit]' \
+        {-p,--pretty}'[Format output JSON file by sorting role names and indenting by 4 spaces]' \
+        {-v,--verbose}'[Make logging output more verbose]' \
+        "*: :_files"
+
+}
+
+function _airflow_roles_import {
+    _arguments \
+        {-h,--help}'[show this help message and exit]' \
+        {-v,--verbose}'[Make logging output more verbose]' \
+        "*: :_files"
+
+}
+
+function _airflow_roles_list {
+    _arguments \
+        {-h,--help}'[show this help message and exit]' \
+        {-o,--output}'[Output format. Allowed values: json, yaml, plain, table (default: table)]' \
+        {-v,--verbose}'[Make logging output more verbose]' \
+        "*: :_files"
+
+}
+
+
+function _airflow_tasks {
+    local line state
+
+    function _commands {
+        local -a commands
+        commands=(
+            'clear:Clear a set of task instance, as if they never ran'
+            'failed-deps:Returns the unmet dependencies for a task instance'
+            'list:List the tasks within a DAG'
+            'render:Render a task instance'\''s template(s)'
+            'run:Run a single task instance'
+            'state:Get the status of a task instance'
+            'test:Test a task instance'
+        )
+        _describe 'command' commands
+    }
+ 
+
+    _arguments -C \
+        {-h,--help}'[show this help message and exit]' \
+        ': :->cmd' \
+        '*:: :->subcmd'
+
+    case $state in
+    (cmd)
+        _commands
+        ;;
+    (subcmd)
+        case $line[1] in
+        (clear)
+            _airflow_tasks_clear
+            ;;
+
+        (failed-deps)
+            _airflow_tasks_failed-deps
+            ;;
+
+        (list)
+            _airflow_tasks_list
+            ;;
+
+        (render)
+            _airflow_tasks_render
+            ;;
+
+        (run)
+            _airflow_tasks_run
+            ;;
+
+        (state)
+            _airflow_tasks_state
+            ;;
+
+        (test)
+            _airflow_tasks_test
+            ;;
+
+        esac
+        ;;
+     esac
+
+}
+
+function _airflow_tasks_clear {
+    _arguments \
+        {-h,--help}'[show this help message and exit]' \
+        {-R,--dag-regex}'[Search dag_id as regex instead of exact string]' \
+        {-d,--downstream}'[Include downstream tasks]' \
+        {-e,--end-date}'[Override end_date YYYY-MM-DD]' \
+        {-X,--exclude-parentdag}'[Exclude ParentDAGS if the task cleared is a part of a SubDAG]' \
+        {-x,--exclude-subdags}'[Exclude subdags]' \
+        {-f,--only-failed}'[Only failed jobs]' \
+        {-r,--only-running}'[Only running jobs]' \
+        {-s,--start-date}'[Override start_date YYYY-MM-DD]' \
+        {-S,--subdir}'[File location or directory from which to look for the dag. Defaults to '\''\[AIRFLOW_HOME\]/dags'\'' where \[AIRFLOW_HOME\] is the value you set for '\''AIRFLOW_HOME'\'' config you set in '\''airflow.cfg'\'']':file:_files \
+        {-t,--task-regex}'[The regex to filter specific task_ids to backfill (optional)]' \
+        {-u,--upstream}'[Include upstream tasks]' \
+        {-y,--yes}'[Do not prompt to confirm. Use with care!]' \
+        "*: :_files"
+
+}
+
+function _airflow_tasks_failed-deps {
+    _arguments \
+        {-h,--help}'[show this help message and exit]' \
+        '--map-index[Mapped task index]' \
+        {-S,--subdir}'[File location or directory from which to look for the dag. Defaults to '\''\[AIRFLOW_HOME\]/dags'\'' where \[AIRFLOW_HOME\] is the value you set for '\''AIRFLOW_HOME'\'' config you set in '\''airflow.cfg'\'']':file:_files \
+        "*: :_files"
+
+}
+
+function _airflow_tasks_list {
+    _arguments \
+        {-h,--help}'[show this help message and exit]' \
+        {-S,--subdir}'[File location or directory from which to look for the dag. Defaults to '\''\[AIRFLOW_HOME\]/dags'\'' where \[AIRFLOW_HOME\] is the value you set for '\''AIRFLOW_HOME'\'' config you set in '\''airflow.cfg'\'']':file:_files \
+        {-t,--tree}'[Tree view]' \
+        {-v,--verbose}'[Make logging output more verbose]' \
+        "*: :_files"
+
+}
+
+function _airflow_tasks_render {
+    _arguments \
+        {-h,--help}'[show this help message and exit]' \
+        '--map-index[Mapped task index]' \
+        {-S,--subdir}'[File location or directory from which to look for the dag. Defaults to '\''\[AIRFLOW_HOME\]/dags'\'' where \[AIRFLOW_HOME\] is the value you set for '\''AIRFLOW_HOME'\'' config you set in '\''airflow.cfg'\'']':file:_files \
+        {-v,--verbose}'[Make logging output more verbose]' \
+        "*: :_files"
+
+}
+
+function _airflow_tasks_run {
+    _arguments \
+        {-h,--help}'[show this help message and exit]' \
+        '--cfg-path[Path to config file to use instead of airflow.cfg]':file:_files \
+        {-f,--force}'[Ignore previous task instance state, rerun regardless if task already succeeded/failed]' \
+        {-A,--ignore-all-dependencies}'[Ignores all non-critical dependencies, including ignore_ti_state and ignore_task_deps]' \
+        {-i,--ignore-dependencies}'[Ignore task-specific dependencies, e.g. upstream, depends_on_past, and retry delay dependencies]' \
+        {-I,--ignore-depends-on-past}'[Ignore depends_on_past dependencies (but respect upstream dependencies)]' \
+        {-N,--interactive}'[Do not capture standard output and error streams (useful for interactive debugging)]' \
+        {-l,--local}'[Run the task using the LocalExecutor]' \
+        '--map-index[Mapped task index]' \
+        {-m,--mark-success}'[Mark jobs as succeeded without running them]' \
+        {-p,--pickle}'[Serialized pickle object of the entire dag (used internally)]' \
+        '--pool[Resource pool to use]' \
+        '--ship-dag[Pickles (serializes) the DAG and ships it to the worker]' \
+        {-S,--subdir}'[File location or directory from which to look for the dag. Defaults to '\''\[AIRFLOW_HOME\]/dags'\'' where \[AIRFLOW_HOME\] is the value you set for '\''AIRFLOW_HOME'\'' config you set in '\''airflow.cfg'\'']':file:_files \
+        "*: :_files"
+
+}
+
+function _airflow_tasks_state {
+    _arguments \
+        {-h,--help}'[show this help message and exit]' \
+        '--map-index[Mapped task index]' \
+        {-S,--subdir}'[File location or directory from which to look for the dag. Defaults to '\''\[AIRFLOW_HOME\]/dags'\'' where \[AIRFLOW_HOME\] is the value you set for '\''AIRFLOW_HOME'\'' config you set in '\''airflow.cfg'\'']':file:_files \
+        {-v,--verbose}'[Make logging output more verbose]' \
+        "*: :_files"
+
+}
+
+function _airflow_tasks_test {
+    _arguments \
+        {-h,--help}'[show this help message and exit]' \
+        {-n,--dry-run}'[Perform a dry run for each task. Only renders Template Fields for each task, nothing else]' \
+        '--env-vars[Set env var in both parsing time and runtime for each of entry supplied in a JSON dict]' \
+        '--map-index[Mapped task index]' \
+        {-m,--post-mortem}'[Open debugger on uncaught exception]' \
+        {-S,--subdir}'[File location or directory from which to look for the dag. Defaults to '\''\[AIRFLOW_HOME\]/dags'\'' where \[AIRFLOW_HOME\] is the value you set for '\''AIRFLOW_HOME'\'' config you set in '\''airflow.cfg'\'']':file:_files \
+        {-t,--task-params}'[Sends a JSON params dict to the task]' \
+        "*: :_files"
+
+}
+
+
+function _airflow_users {
+    local line state
+
+    function _commands {
+        local -a commands
+        commands=(
+            'add-role:Add role to a user'
+            'create:Create a user'
+            'delete:Delete a user'
+            'export:Export all users'
+            'import:Import users'
+            'list:List users'
+        )
+        _describe 'command' commands
+    }
+ 
+
+    _arguments -C \
+        {-h,--help}'[show this help message and exit]' \
+        ': :->cmd' \
+        '*:: :->subcmd'
+
+    case $state in
+    (cmd)
+        _commands
+        ;;
+    (subcmd)
+        case $line[1] in
+        (add-role)
+            _airflow_users_add-role
+            ;;
+
+        (create)
+            _airflow_users_create
+            ;;
+
+        (delete)
+            _airflow_users_delete
+            ;;
+
+        (export)
+            _airflow_users_export
+            ;;
+
+        (import)
+            _airflow_users_import
+            ;;
+
+        (list)
+            _airflow_users_list
+            ;;
+
+        esac
+        ;;
+     esac
+
+}
+
+function _airflow_users_add-role {
+    _arguments \
+        {-h,--help}'[show this help message and exit]' \
+        {-e,--email}'[Email of the user]' \
+        {-r,--role}'[Role of the user. Existing roles include Admin, User, Op, Viewer, and Public]' \
+        {-u,--username}'[Username of the user]' \
+        "*: :_files"
+
+}
+
+function _airflow_users_create {
+    _arguments \
+        {-h,--help}'[show this help message and exit]' \
+        {-e,--email}'[Email of the user]' \
+        {-f,--firstname}'[First name of the user]' \
+        {-l,--lastname}'[Last name of the user]' \
+        {-p,--password}'[Password of the user, required to create a user without --use-random-password]' \
+        {-r,--role}'[Role of the user. Existing roles include Admin, User, Op, Viewer, and Public]' \
+        '--use-random-password[Do not prompt for password. Use random string instead. Required to create a user without --password]' \
+        {-u,--username}'[Username of the user]' \
+        "*: :_files"
+
+}
+
+function _airflow_users_delete {
+    _arguments \
+        {-h,--help}'[show this help message and exit]' \
+        {-e,--email}'[Email of the user]' \
+        {-u,--username}'[Username of the user]' \
+        "*: :_files"
+
+}
+
+function _airflow_users_export {
+    _arguments \
+        {-h,--help}'[show this help message and exit]' \
+        "*: :_files"
+
+}
+
+function _airflow_users_import {
+    _arguments \
+        {-h,--help}'[show this help message and exit]' \
+        "*: :_files"
+
+}
+
+function _airflow_users_list {
+    _arguments \
+        {-h,--help}'[show this help message and exit]' \
+        {-o,--output}'[Output format. Allowed values: json, yaml, plain, table (default: table)]' \
+        {-v,--verbose}'[Make logging output more verbose]' \
+        "*: :_files"
+
+}
+
+
+function _airflow_variables {
+    local line state
+
+    function _commands {
+        local -a commands
+        commands=(
+            'delete:Delete variable'
+            'export:Export all variables'
+            'get:Get variable'
+            'import:Import variables'
+            'list:List variables'
+            'set:Set variable'
+        )
+        _describe 'command' commands
+    }
+ 
+
+    _arguments -C \
+        {-h,--help}'[show this help message and exit]' \
+        ': :->cmd' \
+        '*:: :->subcmd'
+
+    case $state in
+    (cmd)
+        _commands
+        ;;
+    (subcmd)
+        case $line[1] in
+        (delete)
+            _airflow_variables_delete
+            ;;
+
+        (export)
+            _airflow_variables_export
+            ;;
+
+        (get)
+            _airflow_variables_get
+            ;;
+
+        (import)
+            _airflow_variables_import
+            ;;
+
+        (list)
+            _airflow_variables_list
+            ;;
+
+        (set)
+            _airflow_variables_set
+            ;;
+
+        esac
+        ;;
+     esac
+
+}
+
+function _airflow_variables_delete {
+    _arguments \
+        {-h,--help}'[show this help message and exit]' \
+        "*: :_files"
+
+}
+
+function _airflow_variables_export {
+    _arguments \
+        {-h,--help}'[show this help message and exit]' \
+        "*: :_files"
+
+}
+
+function _airflow_variables_get {
+    _arguments \
+        {-h,--help}'[show this help message and exit]' \
+        {-d,--default}'[Default value returned if variable does not exist]' \
+        {-j,--json}'[Deserialize JSON variable]' \
+        {-v,--verbose}'[Make logging output more verbose]' \
+        "*: :_files"
+
+}
+
+function _airflow_variables_import {
+    _arguments \
+        {-h,--help}'[show this help message and exit]' \
+        "*: :_files"
+
+}
+
+function _airflow_variables_list {
+    _arguments \
+        {-h,--help}'[show this help message and exit]' \
+        {-o,--output}'[Output format. Allowed values: json, yaml, plain, table (default: table)]' \
+        {-v,--verbose}'[Make logging output more verbose]' \
+        "*: :_files"
+
+}
+
+function _airflow_variables_set {
+    _arguments \
+        {-h,--help}'[show this help message and exit]' \
+        {-j,--json}'[Serialize JSON variable]' \
+        "*: :_files"
+
+}
+
+function _airflow_cheat-sheet {
+    _arguments \
+        {-h,--help}'[show this help message and exit]' \
+        {-v,--verbose}'[Make logging output more verbose]' \
+        "*: :_files"
+
+}
+
+function _airflow_dag-processor {
+    _arguments \
+        {-h,--help}'[show this help message and exit]' \
+        {-D,--daemon}'[Daemonize instead of running in the foreground]' \
+        {-p,--do-pickle}'[Attempt to pickle the DAG object to send over to the workers, instead of letting workers run their version of the code]' \
+        {-l,--log-file}'[Location of the log file]':file:_files \
+        {-n,--num-runs}'[Set the number of runs to execute before exiting]' \
+        '--pid[PID file location]' \
+        '--stderr[Redirect stderr to this file]' \
+        '--stdout[Redirect stdout to this file]' \
+        {-S,--subdir}'[File location or directory from which to look for the dag. Defaults to '\''\[AIRFLOW_HOME\]/dags'\'' where \[AIRFLOW_HOME\] is the value you set for '\''AIRFLOW_HOME'\'' config you set in '\''airflow.cfg'\'']':file:_files \
+        "*: :_files"
+
+}
+
+function _airflow_info {
+    _arguments \
+        {-h,--help}'[show this help message and exit]' \
+        '--anonymize[Minimize any personal identifiable information. Use it when sharing output with others.]' \
+        '--file-io[Send output to file.io service and returns link.]' \
+        {-o,--output}'[Output format. Allowed values: json, yaml, plain, table (default: table)]' \
+        {-v,--verbose}'[Make logging output more verbose]' \
+        "*: :_files"
+
+}
+
+function _airflow_kerberos {
+    _arguments \
+        {-h,--help}'[show this help message and exit]' \
+        {-D,--daemon}'[Daemonize instead of running in the foreground]' \
+        {-k,--keytab}'[\[KEYTAB\] keytab]' \
+        {-l,--log-file}'[LOG_FILE Location of the log file]':file:_files \
+        '--pid[PID file location]' \
+        '--stderr[Redirect stderr to this file]' \
+        '--stdout[Redirect stdout to this file]' \
+        "*: :_files"
+
+}
+
+function _airflow_plugins {
+    _arguments \
+        {-h,--help}'[show this help message and exit]' \
+        {-o,--output}'[Output format. Allowed values: json, yaml, plain, table (default: table)]' \
+        {-v,--verbose}'[Make logging output more verbose]' \
+        "*: :_files"
+
+}
+
+function _airflow_rotate-fernet-key {
+    _arguments \
+        {-h,--help}'[show this help message and exit]' \
+        "*: :_files"
+
+}
+
+function _airflow_scheduler {
+    _arguments \
+        {-h,--help}'[show this help message and exit]' \
+        {-D,--daemon}'[Daemonize instead of running in the foreground]' \
+        {-p,--do-pickle}'[Attempt to pickle the DAG object to send over to the workers, instead of letting workers run their version of the code]' \
+        {-l,--log-file}'[Location of the log file]':file:_files \
+        {-n,--num-runs}'[Set the number of runs to execute before exiting]' \
+        '--pid[PID file location]' \
+        {-s,--skip-serve-logs}'[Don'\''t start the serve logs process along with the workers]' \
+        '--stderr[Redirect stderr to this file]' \
+        '--stdout[Redirect stdout to this file]' \
+        {-S,--subdir}'[File location or directory from which to look for the dag. Defaults to '\''\[AIRFLOW_HOME\]/dags'\'' where \[AIRFLOW_HOME\] is the value you set for '\''AIRFLOW_HOME'\'' config you set in '\''airflow.cfg'\'']':file:_files \
+        "*: :_files"
+
+}
+
+function _airflow_standalone {
+    _arguments \
+        {-h,--help}'[show this help message and exit]' \
+        "*: :_files"
+
+}
+
+function _airflow_sync-perm {
+    _arguments \
+        {-h,--help}'[show this help message and exit]' \
+        '--include-dags[If passed, DAG specific permissions will also be synced.]' \
+        "*: :_files"
+
+}
+
+function _airflow_triggerer {
+    _arguments \
+        {-h,--help}'[show this help message and exit]' \
+        '--capacity[The maximum number of triggers that a Triggerer will run at one time.]' \
+        {-D,--daemon}'[Daemonize instead of running in the foreground]' \
+        {-l,--log-file}'[Location of the log file]':file:_files \
+        '--pid[PID file location]' \
+        '--stderr[Redirect stderr to this file]' \
+        '--stdout[Redirect stdout to this file]' \
+        "*: :_files"
+
+}
+
+function _airflow_version {
+    _arguments \
+        {-h,--help}'[show this help message and exit]' \
+        "*: :_files"
+
+}
+
+function _airflow_webserver {
+    _arguments \
+        {-h,--help}'[show this help message and exit]' \
+        {-A,--access-logfile}'[The logfile to store the webserver access log. Use '\''-'\'' to print to stderr]':file:_files \
+        {-L,--access-logformat}'[The access log format for gunicorn logs]' \
+        {-D,--daemon}'[Daemonize instead of running in the foreground]' \
+        {-d,--debug}'[Use the server that ships with Flask in debug mode]' \
+        {-E,--error-logfile}'[The logfile to store the webserver error log. Use '\''-'\'' to print to stderr]':file:_files \
+        {-H,--hostname}'[Set the hostname on which to run the web server]' \
+        {-l,--log-file}'[Location of the log file]':file:_files \
+        '--pid[PID file location]' \
+        {-p,--port}'[The port on which to run the server]' \
+        '--ssl-cert[Path to the SSL certificate for the webserver]' \
+        '--ssl-key[Path to the key to use with the SSL certificate]' \
+        '--stderr[Redirect stderr to this file]' \
+        '--stdout[Redirect stdout to this file]' \
+        {-t,--worker-timeout}'[The timeout for waiting on webserver workers]' \
+        {-k,--workerclass}'[The worker class to use for Gunicorn]' \
+        {-w,--workers}'[Number of workers to run the webserver on]' \
+        "*: :_files"
+
+}
+
+_airflow "$@"
+
