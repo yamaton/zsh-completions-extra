@@ -1,0 +1,21 @@
+#compdef uuidgen
+
+# Auto-generated with h2o
+
+function _uuidgen {
+    _arguments \
+        {-r,--random}'[generate random-based uuid]' \
+        {-t,--time}'[generate time-based uuid]' \
+        {-n,--namespace}'[generate hash-based uuid in this namespace.]' \
+        {-N,--name}'[generate hash-based uuid from this name]' \
+        {-m,--md5}'[generate md5 hash]' \
+        {-s,--sha1}'[generate sha1 hash]' \
+        {-x,--hex}'[interpret name as hex string]' \
+        {-h,--help}'[display this help]' \
+        {-V,--version}'[display version]' \
+        "*: :_files"
+
+}
+
+_uuidgen "$@"
+

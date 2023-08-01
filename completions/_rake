@@ -1,0 +1,43 @@
+#compdef rake
+
+# Auto-generated with h2o
+
+function _rake {
+    _arguments \
+        {-m,--multitask}'[Treat all tasks as multitasks.]' \
+        {-B,--build-all}'[Build all prerequisites, including those which are up-to-date.]' \
+        {-j,--jobs}'[Specifies the maximum number of tasks to execute in parallel (default is number of CPU cores + 4).]' \
+        {-I,--libdir}'[Include libdir in the search path for required modules.]':file:_files \
+        {-r,--require}'[Require module before executing rakefile.]' \
+        {-f,--rakefile}'[Use filename as the rakefile to search for.]':file:_files \
+        {-N,--no-search,--nosearch}'[Do not search parent directories for the Rakefile.]' \
+        {-G,--no-system,--nosystem}'[Use standard project Rakefile search paths, ignore system wide rakefiles.]' \
+        {-R,--rakelib,--rakelibdir}'[Auto-import any .rake files in rakelibdir (default is ‘rakelib’)]':file:_files \
+        {-g,--system}'[Use system-wide (global) rakefiles (usually ~/.rake/*.rake).]' \
+        '--backtrace[Enable full backtrace. out can be stderr (default) or stdout.]' \
+        {-t,--trace}'[Turn on invoke/execute tracing, enable full backtrace. out can be stderr (default) or stdout.]' \
+        '--suppress-backtrace[Suppress backtrace lines matching regexp pattern. Ignored if --trace is on.]' \
+        '--rules[Trace the rules resolution.]' \
+        {-n,--dry-run}'[Do a dry run without executing actions.]' \
+        {-T,--tasks}'[Display the tasks (matching optional pattern) with descriptions, then exit.]' \
+        {-D,--describe}'[Describe the tasks (matching optional pattern), then exit.]' \
+        {-W,--where}'[Describe the tasks (matching optional pattern), then exit.]' \
+        {-P,--prereqs}'[Display the tasks and dependencies, then exit.]' \
+        {-e,--execute}'[Execute some Ruby code and exit.]' \
+        {-p,--execute-print}'[Execute some Ruby code, print the result, then exit.]' \
+        {-E,--execute-continue}'[Execute some Ruby code, then continue with normal task processing.]' \
+        {-v,--verbose}'[Log message to standard output.]' \
+        {-q,--quiet}'[Do not log messages to standard output.]' \
+        {-s,--silent}'[Like --quiet, but also suppresses the ‘in directory’ announcement.]' \
+        {-X,--no-deprecation-warnings}'[Disable the deprecation warnings.]' \
+        '--comments[Show commented tasks only]' \
+        {-A,--all}'[Show all tasks, even uncommented ones (in combination with -T or -D)]' \
+        '--job-stats[Display job statistics. If level is ‘history’, displays a complete job list.]' \
+        {-V,--version}'[Display the program version.]' \
+        {-h,-H,--help}'[Display a help message.]' \
+        "*: :_files"
+
+}
+
+_rake "$@"
+

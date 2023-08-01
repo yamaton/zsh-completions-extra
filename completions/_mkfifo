@@ -1,0 +1,17 @@
+#compdef mkfifo
+
+# Auto-generated with h2o
+
+function _mkfifo {
+    _arguments \
+        {-m,--mode}'[set file permission bits to MODE, not a=rw - umask]' \
+        '-Z[set the SELinux security context to default type]' \
+        '--context[like -Z, or if CTX is specified then set the SELinux or SMACK security context to CTX]' \
+        '--help[display this help and exit]' \
+        '--version[output version information and exit]' \
+        "*: :_files"
+
+}
+
+_mkfifo "$@"
+

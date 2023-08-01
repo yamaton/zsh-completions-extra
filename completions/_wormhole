@@ -1,0 +1,165 @@
+#compdef wormhole
+
+# Auto-generated with h2o
+
+
+function _wormhole {
+    local line state
+
+    function _commands {
+        local -a commands
+        commands=(
+            'help:Show help'
+            'receive:Receive a text message, file, or directory (from '\''wormhole send'\'')'
+            'send:Send a text message, file, or directory'
+            'ssh:Facilitate sending/receiving SSH public keys'
+        )
+        _describe 'command' commands
+    }
+ 
+
+    _arguments -C \
+        '--appid[appid to use]' \
+        '--relay-url[rendezvous relay to use]' \
+        '--transit-helper[transit relay to use]' \
+        '--dump-timing[(debug) write timing data to file]':file:_files \
+        '--version[Show the version and exit.]' \
+        '--help[Show this message and exit.]' \
+        ': :->cmd' \
+        '*:: :->subcmd'
+
+    case $state in
+    (cmd)
+        _commands
+        ;;
+    (subcmd)
+        case $line[1] in
+        (help)
+            _wormhole_help
+            ;;
+
+        (receive)
+            _wormhole_receive
+            ;;
+
+        (send)
+            _wormhole_send
+            ;;
+
+        (ssh)
+            _wormhole_ssh
+            ;;
+
+        esac
+        ;;
+     esac
+
+}
+
+function _wormhole_help {
+    _arguments \
+        "*: :_files"
+
+}
+
+function _wormhole_receive {
+    _arguments \
+        '-0[enable no-code anything-goes mode]' \
+        {-c,--code-length}'[length of code (in bytes/words)]' \
+        {-v,--verify}'[display verification string (and wait for approval)]' \
+        '--hide-progress[suppress progress-bar display]' \
+        {--listen,--no-listen}'[(debug) don'\''t open a listening socket for Transit]' \
+        '--tor[use Tor when connecting]' \
+        '--launch-tor[launch Tor, rather than use existing control/socks port]' \
+        '--tor-control-port[endpoint descriptor for Tor control port]' \
+        {-t,--only-text}'[refuse file transfers, only accept text transfers]' \
+        '--accept-file[accept file transfer without asking for confirmation]' \
+        {-o,--output-file}'[The file or directory to create, overriding the name suggested by the sender.]':file:_files \
+        '--help[Show this message and exit.]' \
+        "*: :_files"
+
+}
+
+function _wormhole_send {
+    _arguments \
+        '-0[enable no-code anything-goes mode]' \
+        {-c,--code-length}'[length of code (in bytes/words)]' \
+        {-v,--verify}'[display verification string (and wait for approval)]' \
+        '--hide-progress[suppress progress-bar display]' \
+        {--listen,--no-listen}'[(debug) don'\''t open a listening socket for Transit]' \
+        '--tor[use Tor when connecting]' \
+        '--launch-tor[launch Tor, rather than use existing control/socks port]' \
+        '--tor-control-port[endpoint descriptor for Tor control port]' \
+        '--code[human-generated code phrase]' \
+        '--text[text message to send, instead of a file. Use '\''-'\'' to read from stdin.]' \
+        '--ignore-unsendable-files[Don'\''t raise an error if a file can'\''t be read.]' \
+        '--help[Show this message and exit.]' \
+        "*: :_files"
+
+}
+
+
+function _wormhole_ssh {
+    local line state
+
+    function _commands {
+        local -a commands
+        commands=(
+            'accept:Send your SSH public-key'
+            'invite:Add a public-key to a ~/.ssh/authorized_keys file'
+        )
+        _describe 'command' commands
+    }
+ 
+
+    _arguments -C \
+        '--help[Show this message and exit.]' \
+        ': :->cmd' \
+        '*:: :->subcmd'
+
+    case $state in
+    (cmd)
+        _commands
+        ;;
+    (subcmd)
+        case $line[1] in
+        (accept)
+            _wormhole_ssh_accept
+            ;;
+
+        (invite)
+            _wormhole_ssh_invite
+            ;;
+
+        esac
+        ;;
+     esac
+
+}
+
+function _wormhole_ssh_accept {
+    _arguments \
+        {-F,--key-file}'[Key file]':file:_files \
+        {-y,--yes}'[Skip confirmation prompt to send key]':file:_files \
+        '--tor[use Tor when connecting]' \
+        '--launch-tor[launch Tor, rather than use existing control/socks port]' \
+        '--tor-control-port[endpoint descriptor for Tor control port]' \
+        '--help[Show this message and exit.]' \
+        "*: :_files"
+
+}
+
+function _wormhole_ssh_invite {
+    _arguments \
+        {-c,--code-length}'[length of code (in bytes/words)]' \
+        {-u,--user}'[Add to USER'\''s ~/.ssh/authorized_keys]' \
+        '--tor[use Tor when connecting]' \
+        '--launch-tor[launch Tor, rather than use existing control/socks port]' \
+        '--tor-control-port[endpoint descriptor for Tor control port]' \
+        '--help[Show this message and exit.]' \
+        "*: :_files"
+
+}
+
+_wormhole "$@"
+

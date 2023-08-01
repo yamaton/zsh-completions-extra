@@ -1,0 +1,45 @@
+#compdef rlwrap
+
+# Auto-generated with h2o
+
+function _rlwrap {
+    _arguments \
+        {-a,--always-readline}'[Always remain in "readline mode", regardless of command'\''s terminal settings. Use this option if you want to use rlwrap with commands that already do some line editing. NB: With this option, rlwrap will echo (and save) passwords, unless you give command'\''s password prompt as an argument. The argument is optional; if given, it has to directly follow the option without an intervening space.]' \
+        {-A,--ansi-colour-aware}'[Prompts that use colour will confuse rlwrap, especially at the end of long input lines. This option will make rlwrap better behaved in such cases. If the prompt contains anything fancier than ANSI colour codes, this option may actually make things worse.]' \
+        {-b,--break-chars}'[Consider the specified characters word-breaking (whitespace is always word-breaking). This determines what is considered a "word", both when completing and when building a completion word list from files specified by -f options following (not preceding!) it. Default list (){}\[\],'\''+-=&^%$#@"";|\ Unless -c is specified, / and . (period) are included in the default list.]' \
+        {-c,--complete-filenames}'[Complete filenames (filename completion is always case-sensitive, even with the -i option). On Linux, OS X, FreeBSD and Solaris rlwrap will keep track of command'\''s working directory, so that relative filenames will be completed as one would expect.]' \
+        {-C,--command-name}'[Use command_name instead of command to determine the names of history and completion files, and to initialise readline (as specified in ~/.inputrc). A numeric argument N > 0 means: use the Nth argument counting backwards from the end of the argument list]' \
+        {-D,--history-no-dupes}'[How aggressively to weed out duplicate entries from the input history. If n = 0, all inputs are kept in the history list, if n = 1 (this is the default) consecutive duplicates are dropped from the list, while n = 2 will make rlwrap drop all previous occurrences of the current input from the list.]' \
+        {-e,--extra-char-after-completion}'[By default, rlwrap appends a space after any inserted completion text. Use this option to change this to '\'''\'' (don'\''t insert anything) or some other character.]' \
+        {-f,--file}'[Split file into words (using the default word-breaking characters, or those specified by --break-chars), and add them to the completion word list. This option can be given more than once, and adds to the default completion list in $RLWRAP_HOME or /usr/share/rlwrap/completions.]':file:_files \
+        {-g,--forget-matching}'[Forget (i.e. never put into the history list) all input lines that match the POSIX 1003.2 regular expression regexp. The match is always case-insensitive. regexp may be an ordinary string. For more about regular expressions, see regex (7)]' \
+        {-h,--help}'[Print a short help message.]' \
+        {-H,--history-filename}'[Read command history from file (and write it back there if --histsize >= 0)]':file:_files \
+        {-i,--case-insensitive}'[Ignore case when completing (filename completion remains case-sensitive). This option has to come before any -f options.]' \
+        {-I,--pass-sigint-as-sigterm}'[Send a TERM signal to command when an INT is received (e.g. when you press CTRL-C).]' \
+        {-l,--logfile}'[When in readline mode, append command'\''s output (including echo'\''ed user input) to file (creating file when it doesn'\''t exist).]':file:_files \
+        {-n,--no-warnings}'[Don'\''t print warnings.]' \
+        {-N,--no-children}'[Don'\''t rlwrap command'\''s children: whenever rlwrap notices that command is waiting for one of its children, it switches to direct mode, handing down all keypresses immediately. With this option commands that need --always-readline can call editors and pagers and still be usable.]' \
+        {-m,--multi-line}'[Enable multi-line input using a "newline substitute" character sequence (" \ ", \[space-backslash-space\] by default). Newline substitutes are translated to newlines before sending the input to command. With this option, you can call an external editor $RLWRAP_EDITOR on the (expanded) current input with the rlwrap_call_editor key (CTRL-^ by default) The argument is optional; if given, it has to directly follow the option without an intervening space.]' \
+        {-M,--multi-line-ext}'[Call multi-line-editor on temporary files with filename extension .ext (useful for e.g. automatic syntax colouring)]' \
+        {-o,--one-shot}'[Send an EOF to command after accepting the first line of input]' \
+        {-O,--only-cook}'[Only ever "cook" prompts that match regexp]' \
+        {-p,--prompt-colour}'[Use one of the colour names black, red, green, yellow, blue, cyan, purple (=magenta) or white, or an ANSI-conformant <colour_spec> to colour any prompt displayed by command. An uppercase colour name (Yellow or YELLOW ) gives a bold prompt. Prompts that already contain (colour) escape sequences or one of the readline "ignore markers" (ASCII 0x01 and 0x02) are not coloured. This option implies --ansi-colour-aware. colour spec has the form <attr>;<fg>\[;<bg>\] Example: -p'\''1;31'\'' will give a bold red prompt on the current background (this is the default when no argument is given). Google for '\''ANSI color'\'' to learn more about colour codes. The argument is optional; if given, it has to directly follow the option without an intervening space.]' \
+        {-P,--pre-given}'[Start rlwrap with text in its edit buffer (this will automatically set the --always-readline option).]' \
+        {-q,--quote-characters}'[Assume that the given characters act as quotes, e.g. when matching parentheses. Take care to escape the list properly for your shell (example: -q "\"'\''", which happens to be the default, or -q "\"" which will be better for lisp-like input)]' \
+        {-r,--remember}'[Put all words seen on in- and output on the completion list.]' \
+        {-R,--renice}'[Make rlwrap nicer than command (cf nice (1)). This may prevent rlwrap from interrupting command to display a prompt when command is still "thinking" about what to output next.]' \
+        {-s,--histsize}'[Limit the history list to N entries, truncating the history file (default: 300). A negative size -N (even -0) means the same as N, but treats the history file as read-only.]' \
+        {-S,--substitute-prompt}'[Substitute the specified prompt for command'\''s own prompt. Mainly useful when command doesn'\''t have a prompt.]' \
+        {-t,--set-term-name}'[Set command'\''s TERM to name. Programs that confuse rlwrap with fancy screen control codes can sometimes be tamed by specifying -t dumb]' \
+        {-U,--mirror-arguments}'[(linux only) Keep track of command'\''s arguments as seen by the ps (1) command, and mirror them in rlwrap'\''s own arguments This is mainly useful for commands that overwrite command-line password arguments that would be exposed by rlwrap without this option.]' \
+        {-v,--version}'[Print rlwrap version.]' \
+        {-w,--wait-before-prompt}'[In order to determine if command'\''s last output is a prompt, rlwrap waits timeout milliseconds after receiving it. Only when no more output has arrived, it is cooked (coloured, filtered and/or replaced by a substitute prompt) and displayed as a prompt. Before this the prompt is displayed "uncooked". Most users won'\''t notice, but heavy cookers can prepend the timeout with a minus sign, making rlwrap hold back the prompt until it has been cooked ("patient mode"). This will prevent flashing of the prompt, but it will also interfere with long output lines and make switches from direct to readline mode less reliable. Default timeout: 40 ms]' \
+        {-W,--polling}'[EXPERIMENTAL: Wake up every timeout millisecs, where timeout is the same as for the -w (--wait-before-prompt) option, 40 ms by default. This is used to sense the slave'\''s interrupt character and ISIG flag and to adjust stdin'\''s terminal settings accordingly, even before you press a key. Try this option e.g. when CTRL-C acts differently on command with, and without, rlwrap.]' \
+        {-z,--filter}'[Use a filter to change rlwrap'\''s behaviour. A filter can be used to keep certain input out of the history, to change the prompt, to implement simple macros or programmable completion.. rlwrap comes with a perl and a Python 3 module to make filter writing easy. (cf. RlwrapFilter(3pm) for the perl module, the python one is very similar) A number of example filters are installed in the directory /usr/share/rlwrap/filters. "rlwrap -z filter" displays information about a filter, "rlwrap -z listing" lists all currently installed filters. If filter needs arguments, you should quote the whole filter command line:]' \
+        "*: :_files"
+
+}
+
+_rlwrap "$@"
+

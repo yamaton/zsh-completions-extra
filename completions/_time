@@ -1,0 +1,20 @@
+#compdef time
+
+# Auto-generated with h2o
+
+function _time {
+    _arguments \
+        {-o,--output}'[Write the resource use statistics to FILE instead of to the standard error stream. By default, this overwrites the file, destroying the file'\''s previous contents. This option is useful for collecting information on interactive programs and programs that produce output on the standard error stream.]':file:_files \
+        {-a,--append}'[Append the resource use information to the output file instead of overwriting it. This option is only useful with the `-o'\'' or `--output'\'' option.]' \
+        {-f,--format}'[Use FORMAT as the format string that controls the output of time. See the below more information.]' \
+        '--help[Print a summary of the command line options and exit.]' \
+        {-p,--portability}'[Use the following format string, for conformance with POSIX standard 1003.2:]' \
+        {-v,--verbose}'[Use the built-in verbose format, which displays each available piece of information on the program'\''s resource use on its own line, with an English description of its meaning.]' \
+        '--quiet[Do not report the status of the program even if it is different from zero.]' \
+        {-V,--version}'[Print the version number of time and exit.]' \
+        "*: :_files"
+
+}
+
+_time "$@"
+

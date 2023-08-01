@@ -1,0 +1,269 @@
+#compdef metaflow
+
+# Auto-generated with h2o
+
+
+function _metaflow {
+    local line state
+
+    function _commands {
+        local -a commands
+        commands=(
+            'configure:Configure Metaflow to access the cloud.'
+            'help:Show all available commands.'
+            'status:Show flows accessible from the current working tree.'
+            'tutorials:Browse and access the metaflow tutorial episodes.'
+        )
+        _describe 'command' commands
+    }
+ 
+
+    _arguments -C \
+        '--help[Show this message and exit.]' \
+        ': :->cmd' \
+        '*:: :->subcmd'
+
+    case $state in
+    (cmd)
+        _commands
+        ;;
+    (subcmd)
+        case $line[1] in
+        (configure)
+            _metaflow_configure
+            ;;
+
+        (help)
+            _metaflow_help
+            ;;
+
+        (status)
+            _metaflow_status
+            ;;
+
+        (tutorials)
+            _metaflow_tutorials
+            ;;
+
+        esac
+        ;;
+     esac
+
+}
+
+
+function _metaflow_configure {
+    local line state
+
+    function _commands {
+        local -a commands
+        commands=(
+            'aws:Configure metaflow to access self-managed AWS resources.'
+            'azure:Configure metaflow to access Azure Blob Storage.'
+            'export:Export configuration to a file.'
+            'import:Import configuration from a file.'
+            'kubernetes:Configure metaflow to use Kubernetes.'
+            'reset:Reset configuration to disable cloud access.'
+            'sandbox:Configure metaflow to access hosted sandbox.'
+            'show:Show existing configuration.'
+        )
+        _describe 'command' commands
+    }
+ 
+
+    _arguments -C \
+        '--help[Show this message and exit.]' \
+        ': :->cmd' \
+        '*:: :->subcmd'
+
+    case $state in
+    (cmd)
+        _commands
+        ;;
+    (subcmd)
+        case $line[1] in
+        (aws)
+            _metaflow_configure_aws
+            ;;
+
+        (azure)
+            _metaflow_configure_azure
+            ;;
+
+        (export)
+            _metaflow_configure_export
+            ;;
+
+        (import)
+            _metaflow_configure_import
+            ;;
+
+        (kubernetes)
+            _metaflow_configure_kubernetes
+            ;;
+
+        (reset)
+            _metaflow_configure_reset
+            ;;
+
+        (sandbox)
+            _metaflow_configure_sandbox
+            ;;
+
+        (show)
+            _metaflow_configure_show
+            ;;
+
+        esac
+        ;;
+     esac
+
+}
+
+function _metaflow_configure_aws {
+    _arguments \
+        {-p,--profile}'[Configure a named profile. Activate the profile by setting `METAFLOW_PROFILE` environment variable.]' \
+        '--help[Show this message and exit.]' \
+        "*: :_files"
+
+}
+
+function _metaflow_configure_azure {
+    _arguments \
+        {-p,--profile}'[Configure a named profile. Activate the profile by setting `METAFLOW_PROFILE` environment variable.]' \
+        '--help[Show this message and exit.]' \
+        "*: :_files"
+
+}
+
+function _metaflow_configure_export {
+    _arguments \
+        {-p,--profile}'[Optional named profile whose configuration must be exported.]' \
+        '--help[Show this message and exit.]' \
+        "*: :_files"
+
+}
+
+function _metaflow_configure_import {
+    _arguments \
+        {-p,--profile}'[Optional named profile to which the configuration must be imported into.]' \
+        '--help[Show this message and exit.]' \
+        "*: :_files"
+
+}
+
+function _metaflow_configure_kubernetes {
+    _arguments \
+        {-p,--profile}'[Configure a named profile. Activate the profile by setting `METAFLOW_PROFILE` environment variable.]' \
+        '--help[Show this message and exit.]' \
+        "*: :_files"
+
+}
+
+function _metaflow_configure_reset {
+    _arguments \
+        {-p,--profile}'[Optional named profile.]' \
+        '--help[Show this message and exit.]' \
+        "*: :_files"
+
+}
+
+function _metaflow_configure_sandbox {
+    _arguments \
+        {-p,--profile}'[Configure a named profile. Activate the profile by setting `METAFLOW_PROFILE` environment variable.]' \
+        {-o,--overwrite,--no-overwrite}'[Overwrite profile configuration without asking \[default: False\]]' \
+        '--help[Show this message and exit.]' \
+        "*: :_files"
+
+}
+
+function _metaflow_configure_show {
+    _arguments \
+        {-p,--profile}'[Optional named profile.]' \
+        '--help[Show this message and exit.]' \
+        "*: :_files"
+
+}
+
+function _metaflow_help {
+    _arguments \
+        '--help[Show this message and exit.]' \
+        "*: :_files"
+
+}
+
+function _metaflow_status {
+    _arguments \
+        '--help[Show this message and exit.]' \
+        "*: :_files"
+
+}
+
+
+function _metaflow_tutorials {
+    local line state
+
+    function _commands {
+        local -a commands
+        commands=(
+            'info:Find out more about an episode.'
+            'list:List the available episodes.'
+            'pull:Pull episodes into your current working directory.'
+        )
+        _describe 'command' commands
+    }
+ 
+
+    _arguments -C \
+        '--help[Show this message and exit.]' \
+        ': :->cmd' \
+        '*:: :->subcmd'
+
+    case $state in
+    (cmd)
+        _commands
+        ;;
+    (subcmd)
+        case $line[1] in
+        (info)
+            _metaflow_tutorials_info
+            ;;
+
+        (list)
+            _metaflow_tutorials_list
+            ;;
+
+        (pull)
+            _metaflow_tutorials_pull
+            ;;
+
+        esac
+        ;;
+     esac
+
+}
+
+function _metaflow_tutorials_info {
+    _arguments \
+        '--help[Show this message and exit.]' \
+        "*: :_files"
+
+}
+
+function _metaflow_tutorials_list {
+    _arguments \
+        '--help[Show this message and exit.]' \
+        "*: :_files"
+
+}
+
+function _metaflow_tutorials_pull {
+    _arguments \
+        '--episode[Optional episode name to pull only a single episode.]' \
+        '--help[Show this message and exit.]' \
+        "*: :_files"
+
+}
+
+_metaflow "$@"
+

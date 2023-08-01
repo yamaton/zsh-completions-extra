@@ -1,0 +1,19 @@
+#compdef trash
+
+# Auto-generated with h2o
+
+function _trash {
+    _arguments \
+        '--version[show program'\''s version number and exit]' \
+        {-h,--help}'[show this help message and exit]' \
+        {-d,--directory}'[ignored (for GNU rm compatibility)]' \
+        {-f,--force}'[ignored (for GNU rm compatibility)]' \
+        {-i,--interactive}'[ignored (for GNU rm compatibility)]' \
+        {-r,-R,--recursive}'[ignored (for GNU rm compatibility)]' \
+        {-v,--verbose}'[explain what is being done]' \
+        "*: :_files"
+
+}
+
+_trash "$@"
+

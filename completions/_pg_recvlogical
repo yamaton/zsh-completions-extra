@@ -1,0 +1,35 @@
+#compdef pg_recvlogical
+
+# Auto-generated with h2o
+
+function _pg_recvlogical {
+    _arguments \
+        '--create-slot[create a new replication slot (for the slot'\''s name see --slot)]' \
+        '--drop-slot[drop the replication slot (for the slot'\''s name see --slot)]' \
+        '--start[start streaming in a replication slot (for the slot'\''s name see --slot)]' \
+        {-E,--endpos}'[exit after receiving the specified LSN]' \
+        {-f,--file}'[receive log into this file, - for stdout]':file:_files \
+        {-F,--fsync-interval}'[time between fsyncs to the output file (default: 10)]' \
+        '--if-not-exists[do not error if slot already exists when creating a slot]' \
+        {-I,--startpos}'[where in an existing slot should the streaming start]' \
+        {-n,--no-loop}'[do not loop on connection lost]' \
+        {-o,--option}'[pass option NAME with optional value VALUE to the output plugin]' \
+        {-P,--plugin}'[use output plugin PLUGIN (default: test_decoding)]' \
+        {-s,--status-interval}'[time between status packets sent to server (default: 10)]' \
+        {-S,--slot}'[name of the logical replication slot]' \
+        {-t,--two-phase}'[enable decoding of prepared transactions when creating a slot]' \
+        {-v,--verbose}'[output verbose messages]' \
+        {-V,--version}'[output version information, then exit]' \
+        {-?,--help}'[show this help, then exit]' \
+        {-d,--dbname}'[database to connect to]' \
+        {-h,--host}'[database server host or socket directory]' \
+        {-p,--port}'[database server port number]' \
+        {-U,--username}'[connect as specified database user]' \
+        {-w,--no-password}'[never prompt for password]' \
+        {-W,--password}'[force password prompt (should happen automatically)]' \
+        "*: :_files"
+
+}
+
+_pg_recvlogical "$@"
+

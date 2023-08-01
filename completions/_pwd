@@ -1,0 +1,14 @@
+#compdef pwd
+
+# Auto-generated with h2o
+
+function _pwd {
+    _arguments \
+        '-L[print the value of $PWD if it names the current working directory]' \
+        '-P[print the physical directory, without any symbolic links]' \
+        "*: :_files"
+
+}
+
+_pwd "$@"
+

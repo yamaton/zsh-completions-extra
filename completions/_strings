@@ -1,0 +1,26 @@
+#compdef strings
+
+# Auto-generated with h2o
+
+function _strings {
+    _arguments \
+        {-a,-,--all}'[Scan the entire file, not just the data section \[default\]]' \
+        {-d,--data}'[Only scan the data sections in the file]' \
+        {-f,--print-file-name}'[Print the name of the file before each string]' \
+        {-n,--bytes}'[Locate & print any sequence of at least <number> displayable characters. (The default is 4).]' \
+        {-t,--radix}'[Print the location of the string in base 8, 10 or 16]' \
+        {-w,--include-all-whitespace}'[Include all whitespace as valid string characters]' \
+        '-o[An alias for --radix=o]' \
+        {-T,--target}'[Specify the binary file format]' \
+        {-e,--encoding}'[Select character size and endianness: s = 7-bit, S = 8-bit, {b,l} = 16-bit, {B,L} = 32-bit]' \
+        '--unicode[Specify how to treat UTF-8 encoded unicode characters]' \
+        '-U[Specify how to treat UTF-8 encoded unicode characters]' \
+        {-s,--output-separator}'[String used to separate strings in output.]' \
+        {-h,--help}'[Display this information]' \
+        {-v,-V,--version}'[Print the program'\''s version number]' \
+        "*: :_files"
+
+}
+
+_strings "$@"
+

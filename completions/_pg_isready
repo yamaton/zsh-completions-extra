@@ -1,0 +1,20 @@
+#compdef pg_isready
+
+# Auto-generated with h2o
+
+function _pg_isready {
+    _arguments \
+        {-d,--dbname}'[database name]' \
+        {-q,--quiet}'[run quietly]' \
+        {-V,--version}'[output version information, then exit]' \
+        {-?,--help}'[show this help, then exit]' \
+        {-h,--host}'[database server host or socket directory]' \
+        {-p,--port}'[database server port]' \
+        {-t,--timeout}'[seconds to wait when attempting connection, 0 disables (default: 3)]' \
+        {-U,--username}'[user name to connect as]' \
+        "*: :_files"
+
+}
+
+_pg_isready "$@"
+

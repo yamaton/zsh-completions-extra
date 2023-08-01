@@ -1,0 +1,1768 @@
+#compdef singularity
+
+# Auto-generated with h2o
+
+
+function _singularity {
+    local line state
+
+    function _commands {
+        local -a commands
+        commands=(
+            'build:Build a Singularity image'
+            'cache:Manage the local cache'
+            'capability:Manage Linux capabilities for users and groups'
+            'completion:generate the autocompletion script for the specified shell'
+            'config:Manage various singularity configuration (root user only)'
+            'delete:Deletes requested image from the library'
+            'exec:Run a command within a container'
+            'help:Help about any command'
+            'inspect:Show metadata for an image'
+            'instance:Manage containers running as services'
+            'key:Manage OpenPGP keys'
+            'oci:Manage OCI containers'
+            'overlay:Manage an EXT3 writable overlay image'
+            'plugin:Manage Singularity plugins'
+            'pull:Pull an image from a URI'
+            'push:Upload image to the provided URI'
+            'remote:Manage singularity remote endpoints, keyservers and OCI/Docker registry credentials'
+            'run:Run the user-defined default command within a container'
+            'run-help:Show the user-defined help for an image'
+            'search:Search a Container Library for images'
+            'shell:Run a shell within a container'
+            'sif:siftool is a program for Singularity Image Format (SIF) file manipulation'
+            'sign:Attach digital signature(s) to an image'
+            'test:Run the user-defined tests within a container'
+            'verify:Verify cryptographic signatures attached to an image'
+            'version:Show the version for Singularity'
+        )
+        _describe 'command' commands
+    }
+ 
+
+    _arguments -C \
+        {-c,--config}'[specify a configuration file (for root or unprivileged installation only)]' \
+        {-d,--debug}'[print debugging information (highest verbosity)]' \
+        {-h,--help}'[help for singularity]' \
+        '--nocolor[print without color output (default False)]' \
+        {-q,--quiet}'[suppress normal output]' \
+        {-s,--silent}'[only print errors]' \
+        {-v,--verbose}'[print additional information]' \
+        '--version[version for singularity]' \
+        ': :->cmd' \
+        '*:: :->subcmd'
+
+    case $state in
+    (cmd)
+        _commands
+        ;;
+    (subcmd)
+        case $line[1] in
+        (build)
+            _singularity_build
+            ;;
+
+        (cache)
+            _singularity_cache
+            ;;
+
+        (capability)
+            _singularity_capability
+            ;;
+
+        (completion)
+            _singularity_completion
+            ;;
+
+        (config)
+            _singularity_config
+            ;;
+
+        (delete)
+            _singularity_delete
+            ;;
+
+        (exec)
+            _singularity_exec
+            ;;
+
+        (help)
+            _singularity_help
+            ;;
+
+        (inspect)
+            _singularity_inspect
+            ;;
+
+        (instance)
+            _singularity_instance
+            ;;
+
+        (key)
+            _singularity_key
+            ;;
+
+        (oci)
+            _singularity_oci
+            ;;
+
+        (overlay)
+            _singularity_overlay
+            ;;
+
+        (plugin)
+            _singularity_plugin
+            ;;
+
+        (pull)
+            _singularity_pull
+            ;;
+
+        (push)
+            _singularity_push
+            ;;
+
+        (remote)
+            _singularity_remote
+            ;;
+
+        (run)
+            _singularity_run
+            ;;
+
+        (run-help)
+            _singularity_run-help
+            ;;
+
+        (search)
+            _singularity_search
+            ;;
+
+        (shell)
+            _singularity_shell
+            ;;
+
+        (sif)
+            _singularity_sif
+            ;;
+
+        (sign)
+            _singularity_sign
+            ;;
+
+        (test)
+            _singularity_test
+            ;;
+
+        (verify)
+            _singularity_verify
+            ;;
+
+        (version)
+            _singularity_version
+            ;;
+
+        esac
+        ;;
+     esac
+
+}
+
+function _singularity_build {
+    _arguments \
+        '--arch[architecture for remote build (default "amd64")]' \
+        {-B,--bind}'[a user-bind path specification. spec has the format src\[:dest\[:opts\]\],where src and dest are outside and inside paths. If dest is not given,it is set equal to src. Mount options ('\''opts'\'') may be specified as '\''ro'\''(read-only) or '\''rw'\'' (read/write, which is the default).Multiple bind paths can be given by a comma separated list. (not supported with remote build)]' \
+        '--builder[remote Build Service URL, setting this implies --remote]' \
+        {-d,--detached}'[submit build job and print build ID (no real-time logs and requires --remote)]' \
+        '--disable-cache[do not use cache or create cache]' \
+        '--docker-login[login to a Docker Repository interactively]' \
+        {-e,--encrypt}'[build an image with an encrypted file system]' \
+        {-f,--fakeroot}'[build using user namespace to fake root user (requires a privileged installation)]' \
+        '--fix-perms[ensure owner has rwX permissions on all container content for oci/docker sources]' \
+        {-F,--force}'[overwrite an image file if it exists]' \
+        {-h,--help}'[help for build]' \
+        '--json[interpret build definition as JSON]' \
+        '--library[container Library URL]' \
+        '--no-cleanup[do NOT clean up bundle after failed build, can be helpful for debugging]' \
+        '--nohttps[do NOT use HTTPS with the docker:// transport (useful for local docker registries without a certificate)]' \
+        {-T,--notest}'[build without running tests in %test section]' \
+        '--nv[inject host Nvidia libraries during build for post and test sections (not supported with remote build)]' \
+        '--passphrase[prompt for an encryption passphrase]' \
+        '--pem-path[enter an path to a PEM formated RSA key for an encrypted container]' \
+        {-r,--remote}'[build image remotely (does not require root)]' \
+        '--rocm[inject host Rocm libraries during build for post and test sections (not supported with remote build)]' \
+        {-s,--sandbox}'[build image as sandbox format (chroot directory structure)]' \
+        '--section[only run specific section(s) of deffile (setup, post, files, environment, test, labels, none) (default \[all\])]' \
+        {-u,--update}'[run definition over existing container (skips header)]' \
+        "*: :_files"
+
+}
+
+
+function _singularity_cache {
+    local line state
+
+    function _commands {
+        local -a commands
+        commands=(
+            'clean:Clean your local Singularity cache'
+            'list:List your local Singularity cache'
+        )
+        _describe 'command' commands
+    }
+ 
+
+    _arguments -C \
+        {-h,--help}'[help for cache]' \
+        ': :->cmd' \
+        '*:: :->subcmd'
+
+    case $state in
+    (cmd)
+        _commands
+        ;;
+    (subcmd)
+        case $line[1] in
+        (clean)
+            _singularity_cache_clean
+            ;;
+
+        (list)
+            _singularity_cache_list
+            ;;
+
+        esac
+        ;;
+     esac
+
+}
+
+function _singularity_cache_clean {
+    _arguments \
+        {-D,--days}'[remove all cache entries older than specified number of days]' \
+        {-n,--dry-run}'[operate in dry run mode and do not actually clean the cache]' \
+        {-f,--force}'[suppress any prompts and clean the cache]' \
+        {-h,--help}'[help for clean]' \
+        {-T,--type}'[a list of cache types to clean (possible values: library, oci, shub, blob, net, oras, all) (default \[all\])]' \
+        "*: :_files"
+
+}
+
+function _singularity_cache_list {
+    _arguments \
+        {-h,--help}'[help for list]' \
+        {-T,--type}'[a list of cache types to display, possible entries: library, oci, shub, blob(s), all (default \[all\])]' \
+        {-v,--verbose}'[include cache entries in the output]' \
+        "*: :_files"
+
+}
+
+
+function _singularity_capability {
+    local line state
+
+    function _commands {
+        local -a commands
+        commands=(
+            'add:Add capabilities to a user or group (requires root)'
+            'avail:Show description for available capabilities'
+            'drop:Remove capabilities from a user or group (requires root)'
+            'list:Show capabilities for a given user or group'
+        )
+        _describe 'command' commands
+    }
+ 
+
+    _arguments -C \
+        {-h,--help}'[help for capability]' \
+        ': :->cmd' \
+        '*:: :->subcmd'
+
+    case $state in
+    (cmd)
+        _commands
+        ;;
+    (subcmd)
+        case $line[1] in
+        (add)
+            _singularity_capability_add
+            ;;
+
+        (avail)
+            _singularity_capability_avail
+            ;;
+
+        (drop)
+            _singularity_capability_drop
+            ;;
+
+        (list)
+            _singularity_capability_list
+            ;;
+
+        esac
+        ;;
+     esac
+
+}
+
+function _singularity_capability_add {
+    _arguments \
+        {-g,--group}'[manage capabilities for a group]' \
+        {-h,--help}'[help for add]' \
+        {-u,--user}'[manage capabilities for a user]' \
+        "*: :_files"
+
+}
+
+function _singularity_capability_avail {
+    _arguments \
+        {-h,--help}'[help for avail]' \
+        "*: :_files"
+
+}
+
+function _singularity_capability_drop {
+    _arguments \
+        {-g,--group}'[manage capabilities for a group]' \
+        {-h,--help}'[help for drop]' \
+        {-u,--user}'[manage capabilities for a user]' \
+        "*: :_files"
+
+}
+
+function _singularity_capability_list {
+    _arguments \
+        {-h,--help}'[help for list]' \
+        "*: :_files"
+
+}
+
+
+function _singularity_completion {
+    local line state
+
+    function _commands {
+        local -a commands
+        commands=(
+            'bash:generate the autocompletion script for bash'
+            'fish:generate the autocompletion script for fish'
+            'powershell:generate the autocompletion script for powershell'
+            'zsh:generate the autocompletion script for zsh'
+        )
+        _describe 'command' commands
+    }
+ 
+
+    _arguments -C \
+        {-h,--help}'[help for completion]' \
+        ': :->cmd' \
+        '*:: :->subcmd'
+
+    case $state in
+    (cmd)
+        _commands
+        ;;
+    (subcmd)
+        case $line[1] in
+        (bash)
+            _singularity_completion_bash
+            ;;
+
+        (fish)
+            _singularity_completion_fish
+            ;;
+
+        (powershell)
+            _singularity_completion_powershell
+            ;;
+
+        (zsh)
+            _singularity_completion_zsh
+            ;;
+
+        esac
+        ;;
+     esac
+
+}
+
+function _singularity_completion_bash {
+    _arguments \
+        {-h,--help}'[help for bash]' \
+        '--no-descriptions[disable completion descriptions]' \
+        "*: :_files"
+
+}
+
+function _singularity_completion_fish {
+    _arguments \
+        {-h,--help}'[help for fish]' \
+        '--no-descriptions[disable completion descriptions]' \
+        "*: :_files"
+
+}
+
+function _singularity_completion_powershell {
+    _arguments \
+        {-h,--help}'[help for powershell]' \
+        '--no-descriptions[disable completion descriptions]' \
+        "*: :_files"
+
+}
+
+function _singularity_completion_zsh {
+    _arguments \
+        {-h,--help}'[help for zsh]' \
+        '--no-descriptions[disable completion descriptions]' \
+        "*: :_files"
+
+}
+
+
+function _singularity_config {
+    local line state
+
+    function _commands {
+        local -a commands
+        commands=(
+            'fakeroot:Manage fakeroot user mappings entries (root user only)'
+            'global:Edit singularity.conf from command line (root user only or unprivileged installation)'
+        )
+        _describe 'command' commands
+    }
+ 
+
+    _arguments -C \
+        {-h,--help}'[help for config]' \
+        ': :->cmd' \
+        '*:: :->subcmd'
+
+    case $state in
+    (cmd)
+        _commands
+        ;;
+    (subcmd)
+        case $line[1] in
+        (fakeroot)
+            _singularity_config_fakeroot
+            ;;
+
+        (global)
+            _singularity_config_global
+            ;;
+
+        esac
+        ;;
+     esac
+
+}
+
+function _singularity_config_fakeroot {
+    _arguments \
+        {-a,--add}'[add a fakeroot mapping entry for a user allowing him to use the fakeroot feature]' \
+        {-d,--disable}'[disable a user fakeroot mapping entry preventing him to use the fakeroot feature (the user mapping must be present)]' \
+        {-e,--enable}'[enable a user fakeroot mapping entry allowing him to use the fakeroot feature (the user mapping must be present)]' \
+        {-h,--help}'[help for fakeroot]' \
+        {-r,--remove}'[remove the user fakeroot mapping entry preventing him to use the fakeroot feature]' \
+        "*: :_files"
+
+}
+
+function _singularity_config_global {
+    _arguments \
+        {-d,--dry-run}'[dump resulting configuration on stdout but doesn'\''t write it to singularity.conf]' \
+        {-g,--get}'[get value of the configuration directive]' \
+        {-h,--help}'[help for global]' \
+        {-r,--reset}'[reset the configuration directive value to its default value]' \
+        {-s,--set}'[set value of the configuration directive (for multi-value directives, it will add it)]' \
+        {-u,--unset}'[unset value of the configuration directive (for multi-value directives, it will remove matching values)]' \
+        "*: :_files"
+
+}
+
+function _singularity_delete {
+    _arguments \
+        {-A,--arch}'[specify requested image arch (default "amd64")]' \
+        {-F,--force}'[delete image without confirmation]' \
+        {-h,--help}'[help for delete]' \
+        '--library[delete images from the provided library]' \
+        "*: :_files"
+
+}
+
+function _singularity_exec {
+    _arguments \
+        '--add-caps[a comma separated capability list to add]' \
+        '--allow-setuid[allow setuid binaries in container (root only)]' \
+        '--app[set an application to run inside a container]' \
+        '--apply-cgroups[apply cgroups from file for container processes (root only)]' \
+        {-B,--bind}'[a user-bind path specification. spec has the format src\[:dest\[:opts\]\], where src and dest are outside and inside paths. If dest is not given, it is set equal to src. Mount options ('\''opts'\'') may be specified as '\''ro'\'' (read-only) or '\''rw'\'' (read/write, which is the default). Multiple bind paths can be given by a comma separated list.]' \
+        {-e,--cleanenv}'[clean environment before running container]' \
+        {-c,--contain}'[use minimal /dev and empty other directories (e.g. /tmp and $HOME) instead of sharing filesystems from your host]' \
+        {-C,--containall}'[contain not only file systems, but also PID, IPC, and environment]' \
+        '--disable-cache[dont use cache, and dont create cache]' \
+        '--dns[list of DNS server separated by commas to add in resolv.conf]' \
+        '--docker-login[login to a Docker Repository interactively]' \
+        '--drop-caps[a comma separated capability list to drop]' \
+        '--env[pass environment variable to contained process]' \
+        '--env-file[pass environment variables from file to contained process]' \
+        {-f,--fakeroot}'[run container in new user namespace as uid 0]' \
+        '--fusemount[A FUSE filesystem mount specification of the form '\''<type>:<fuse command> <mountpoint>'\'' - where <type> is '\''container'\'' or '\''host'\'', specifying where the mount will be performed ('\''container-daemon'\'' or '\''host-daemon'\'' will run the FUSE process detached). <fuse command> is the path to the FUSE executable, plus options for the mount. <mountpoint> is the location in the container to which the FUSE mount will be attached. E.g. '\''container:sshfs 10.0.0.1:/ /sshfs'\''. Implies --pid.]' \
+        {-h,--help}'[help for exec]' \
+        {-H,--home}'[a home directory specification. spec can either be a src path or src:dest pair. src is the source path of the home directory outside the container and dest overrides the home directory within the container. (default "~")]' \
+        '--hostname[set container hostname]' \
+        {-i,--ipc}'[run container in a new IPC namespace]' \
+        '--keep-privs[let root user keep privileges in container (root only)]' \
+        {-n,--net}'[run container in a new network namespace (sets up a bridge network interface by default)]' \
+        '--network[specify desired network type separated by commas, each network will bring up a dedicated interface inside container (default "bridge")]' \
+        '--network-args[specify network arguments to pass to CNI plugins]' \
+        '--no-home[do NOT mount users home directory if /home is not the current working directory]' \
+        '--no-init[do NOT start shim process with --pid]' \
+        '--no-mount[disable one or more mount xxx options set in singularity.conf]' \
+        '--no-privs[drop all privileges from root user in container)]' \
+        '--no-umask[do not propagate umask to the container, set default 0022 umask]' \
+        '--nohttps[do NOT use HTTPS with the docker:// transport (useful for local docker registries without a certificate)]' \
+        '--nonet[disable VM network handling]' \
+        '--nv[enable experimental Nvidia support]' \
+        {-o,--overlay}'[use an overlayFS image for persistent data storage or as read-only layer of container]' \
+        '--passphrase[prompt for an encryption passphrase]' \
+        '--pem-path[enter an path to a PEM formated RSA key for an encrypted container]' \
+        {-p,--pid}'[run container in a new PID namespace]' \
+        '--pwd[initial working directory for payload process inside the container]' \
+        '--rocm[enable experimental Rocm support]' \
+        {-S,--scratch}'[include a scratch directory within the container that is linked to a temporary dir (use -W to force location)]' \
+        '--security[enable security features (SELinux, Apparmor, Seccomp)]' \
+        {-u,--userns}'[run container in a new user namespace, allowing Singularity to run completely unprivileged on recent kernels. This disables some features of Singularity, for example it only works with sandbox images.]' \
+        '--uts[run container in a new UTS namespace]' \
+        '--vm[enable VM support]' \
+        '--vm-cpu[number of CPU cores to allocate to Virtual Machine (implies --vm) (default "1")]' \
+        '--vm-err[enable attaching stderr from VM]' \
+        '--vm-ip[IP Address to assign for container usage. Defaults to DHCP within bridge network. (default "dhcp")]' \
+        '--vm-ram[amount of RAM in MiB to allocate to Virtual Machine (implies --vm) (default "1024")]' \
+        {-W,--workdir}'[working directory to be used for /tmp, /var/tmp and $HOME (if -c/--contain was also used)]' \
+        {-w,--writable}'[by default all Singularity containers are available as read only. This option makes the file system accessible as read/write.]' \
+        '--writable-tmpfs[makes the file system accessible as read-write with non persistent data (with overlay support only)]' \
+        "*: :_files"
+
+}
+
+function _singularity_help {
+    _arguments \
+        {-h,--help}'[help for help]' \
+        "*: :_files"
+
+}
+
+function _singularity_inspect {
+    _arguments \
+        '--all[show all available data (imply --json option)]' \
+        '--app[inspect a specific app]' \
+        {-d,--deffile}'[show the Singularity recipe file that was used to generate the image]' \
+        {-e,--environment}'[show the environment settings for the image]' \
+        {-h,--help}'[help for inspect]' \
+        {-H,--helpfile}'[inspect the runscript helpfile, if it exists]' \
+        {-j,--json}'[print structured json instead of sections]' \
+        {-l,--labels}'[show the labels for the image (default)]' \
+        '--list-apps[list all apps in a container]' \
+        {-r,--runscript}'[show the runscript for the image]' \
+        {-s,--startscript}'[show the startscript for the image]' \
+        {-t,--test}'[show the test script for the image]' \
+        "*: :_files"
+
+}
+
+
+function _singularity_instance {
+    local line state
+
+    function _commands {
+        local -a commands
+        commands=(
+            'list:List all running and named Singularity instances'
+            'start:Start a named instance of the given container image'
+            'stop:Stop a named instance of a given container image'
+        )
+        _describe 'command' commands
+    }
+ 
+
+    _arguments -C \
+        {-h,--help}'[help for instance]' \
+        ': :->cmd' \
+        '*:: :->subcmd'
+
+    case $state in
+    (cmd)
+        _commands
+        ;;
+    (subcmd)
+        case $line[1] in
+        (list)
+            _singularity_instance_list
+            ;;
+
+        (start)
+            _singularity_instance_start
+            ;;
+
+        (stop)
+            _singularity_instance_stop
+            ;;
+
+        esac
+        ;;
+     esac
+
+}
+
+function _singularity_instance_list {
+    _arguments \
+        {-h,--help}'[help for list]' \
+        {-j,--json}'[print structured json instead of list]' \
+        {-l,--logs}'[display location of stdout and sterr log files for instances]' \
+        {-u,--user}'[if running as root, list instances from "<username>"]' \
+        "*: :_files"
+
+}
+
+function _singularity_instance_start {
+    _arguments \
+        '--add-caps[a comma separated capability list to add]' \
+        '--allow-setuid[allow setuid binaries in container (root only)]' \
+        '--apply-cgroups[apply cgroups from file for container processes (root only)]' \
+        {-B,--bind}'[a user-bind path specification. spec has the format src\[:dest\[:opts\]\], where src and dest are outside and inside paths. If dest is not given, it is set equal to src. Mount options ('\''opts'\'') may be specified as '\''ro'\'' (read-only) or '\''rw'\'' (read/write, which is the default). Multiple bind paths can be given by a comma separated list.]' \
+        '--boot[execute /sbin/init to boot container (root only)]' \
+        {-e,--cleanenv}'[clean environment before running container]' \
+        {-c,--contain}'[use minimal /dev and empty other directories (e.g. /tmp and $HOME) instead of sharing filesystems from your host]' \
+        {-C,--containall}'[contain not only file systems, but also PID, IPC, and environment]' \
+        '--disable-cache[dont use cache, and dont create cache]' \
+        '--dns[list of DNS server separated by commas to add in resolv.conf]' \
+        '--docker-login[login to a Docker Repository interactively]' \
+        '--drop-caps[a comma separated capability list to drop]' \
+        '--env[pass environment variable to contained process]' \
+        '--env-file[pass environment variables from file to contained process]' \
+        {-f,--fakeroot}'[run container in new user namespace as uid 0]' \
+        '--fusemount[A FUSE filesystem mount specification of the form '\''<type>:<fuse command> <mountpoint>'\'' - where <type> is '\''container'\'' or '\''host'\'', specifying where the mount will be performed ('\''container-daemon'\'' or '\''host-daemon'\'' will run the FUSE process detached). <fuse command> is the path to the FUSE executable, plus options for the mount. <mountpoint> is the location in the container to which the FUSE mount will be attached. E.g. '\''container:sshfs 10.0.0.1:/ /sshfs'\''. Implies --pid.]' \
+        {-h,--help}'[help for start]' \
+        {-H,--home}'[a home directory specification. spec can either be a src path or src:dest pair. src is the source path of the home directory outside the container and dest overrides the home directory within the container. (default "~")]' \
+        '--hostname[set container hostname]' \
+        '--keep-privs[let root user keep privileges in container (root only)]' \
+        {-n,--net}'[run container in a new network namespace (sets up a bridge network interface by default)]' \
+        '--network[specify desired network type separated by commas, each network will bring up a dedicated interface inside container (default "bridge")]' \
+        '--network-args[specify network arguments to pass to CNI plugins]' \
+        '--no-home[do NOT mount users home directory if /home is not the current working directory]' \
+        '--no-init[do NOT start shim process with --pid]' \
+        '--no-mount[disable one or more mount xxx options set in singularity.conf]' \
+        '--no-privs[drop all privileges from root user in container)]' \
+        '--no-umask[do not propagate umask to the container, set default 0022 umask]' \
+        '--nohttps[do NOT use HTTPS with the docker:// transport (useful for local docker registries without a certificate)]' \
+        '--nv[enable experimental Nvidia support]' \
+        {-o,--overlay}'[use an overlayFS image for persistent data storage or as read-only layer of container]' \
+        '--passphrase[prompt for an encryption passphrase]' \
+        '--pem-path[enter an path to a PEM formated RSA key for an encrypted container]' \
+        '--pid-file[write instance PID to the file with the given name]' \
+        '--rocm[enable experimental Rocm support]' \
+        {-S,--scratch}'[include a scratch directory within the container that is linked to a temporary dir (use -W to force location)]' \
+        '--security[enable security features (SELinux, Apparmor, Seccomp)]' \
+        {-u,--userns}'[run container in a new user namespace, allowing Singularity to run completely unprivileged on recent kernels. This disables some features of Singularity, for example it only works with sandbox images.]' \
+        '--uts[run container in a new UTS namespace]' \
+        {-W,--workdir}'[working directory to be used for /tmp, /var/tmp and $HOME (if -c/--contain was also used)]' \
+        {-w,--writable}'[by default all Singularity containers are available as read only. This option makes the file system accessible as read/write.]' \
+        '--writable-tmpfs[makes the file system accessible as read-write with non persistent data (with overlay support only)]' \
+        "*: :_files"
+
+}
+
+function _singularity_instance_stop {
+    _arguments \
+        {-a,--all}'[stop all user'\''s instances]' \
+        {-F,--force}'[force kill instance]' \
+        {-h,--help}'[help for stop]' \
+        {-s,--signal}'[signal sent to the instance]' \
+        {-t,--timeout}'[force kill non stopped instances after X seconds (default 10)]' \
+        {-u,--user}'[if running as root, stop instances belonging to user]' \
+        "*: :_files"
+
+}
+
+
+function _singularity_key {
+    local line state
+
+    function _commands {
+        local -a commands
+        commands=(
+            'export:Export a public or private key into a specific file'
+            'import:Import a local key into the local or global keyring'
+            'list:List keys in your local or in the global keyring'
+            'newpair:Create a new key pair'
+            'pull:Download a public key from a key server'
+            'push:Upload a public key to a key server'
+            'remove:Remove a local public key from your local or the global keyring'
+            'search:Search for keys on a key server'
+        )
+        _describe 'command' commands
+    }
+ 
+
+    _arguments -C \
+        {-h,--help}'[help for key]' \
+        ': :->cmd' \
+        '*:: :->subcmd'
+
+    case $state in
+    (cmd)
+        _commands
+        ;;
+    (subcmd)
+        case $line[1] in
+        (export)
+            _singularity_key_export
+            ;;
+
+        (import)
+            _singularity_key_import
+            ;;
+
+        (list)
+            _singularity_key_list
+            ;;
+
+        (newpair)
+            _singularity_key_newpair
+            ;;
+
+        (pull)
+            _singularity_key_pull
+            ;;
+
+        (push)
+            _singularity_key_push
+            ;;
+
+        (remove)
+            _singularity_key_remove
+            ;;
+
+        (search)
+            _singularity_key_search
+            ;;
+
+        esac
+        ;;
+     esac
+
+}
+
+function _singularity_key_export {
+    _arguments \
+        {-a,--armor}'[ascii armored format]' \
+        {-g,--global}'[manage global public keys (import/pull/remove are restricted to root user or unprivileged installation only)]' \
+        {-h,--help}'[help for export]' \
+        {-s,--secret}'[export a secret key]' \
+        "*: :_files"
+
+}
+
+function _singularity_key_import {
+    _arguments \
+        {-g,--global}'[manage global public keys (import/pull/remove are restricted to root user or unprivileged installation only)]' \
+        {-h,--help}'[help for import]' \
+        '--new-password[set a new password to the private key]' \
+        "*: :_files"
+
+}
+
+function _singularity_key_list {
+    _arguments \
+        {-g,--global}'[manage global public keys (import/pull/remove are restricted to root user or unprivileged installation only)]' \
+        {-h,--help}'[help for list]' \
+        {-s,--secret}'[list private keys instead of the default which displays public ones]' \
+        "*: :_files"
+
+}
+
+function _singularity_key_newpair {
+    _arguments \
+        {-b,--bit-length}'[specify key bit length (default 4096)]' \
+        {-C,--comment}'[key comment]' \
+        {-E,--email}'[key owner email]' \
+        {-h,--help}'[help for newpair]' \
+        {-N,--name}'[key owner name]' \
+        {-P,--password}'[key password]' \
+        {-U,--push}'[specify to push the public key to the remote keystore (default true)]' \
+        "*: :_files"
+
+}
+
+function _singularity_key_pull {
+    _arguments \
+        {-g,--global}'[manage global public keys (import/pull/remove are restricted to root user or unprivileged installation only)]' \
+        {-h,--help}'[help for pull]' \
+        {-u,--url}'[specify the key server URL]' \
+        "*: :_files"
+
+}
+
+function _singularity_key_push {
+    _arguments \
+        {-g,--global}'[manage global public keys (import/pull/remove are restricted to root user or unprivileged installation only)]' \
+        {-h,--help}'[help for push]' \
+        {-u,--url}'[specify the key server URL]' \
+        "*: :_files"
+
+}
+
+function _singularity_key_remove {
+    _arguments \
+        {-g,--global}'[manage global public keys (import/pull/remove are restricted to root user or unprivileged installation only)]' \
+        {-h,--help}'[help for remove]' \
+        "*: :_files"
+
+}
+
+function _singularity_key_search {
+    _arguments \
+        {-h,--help}'[help for search]' \
+        {-l,--long-list}'[output long list when searching for keys]' \
+        {-u,--url}'[specify the key server URL]' \
+        "*: :_files"
+
+}
+
+
+function _singularity_oci {
+    local line state
+
+    function _commands {
+        local -a commands
+        commands=(
+            'attach:Attach console to a running container process (root user only)'
+            'create:Create a container from a bundle directory (root user only)'
+            'delete:Delete container (root user only)'
+            'exec:Execute a command within container (root user only)'
+            'kill:Kill a container (root user only)'
+            'mount:Mount create an OCI bundle from SIF image (root user only)'
+            'pause:Suspends all processes inside the container (root user only)'
+            'resume:Resumes all processes previously paused inside the container (root user only)'
+            'run:Create/start/attach/delete a container from a bundle directory (root user only)'
+            'start:Start container process (root user only)'
+            'state:Query state of a container (root user only)'
+            'umount:Umount delete bundle (root user only)'
+            'update:Update container cgroups resources (root user only)'
+        )
+        _describe 'command' commands
+    }
+ 
+
+    _arguments -C \
+        {-h,--help}'[help for oci]' \
+        ': :->cmd' \
+        '*:: :->subcmd'
+
+    case $state in
+    (cmd)
+        _commands
+        ;;
+    (subcmd)
+        case $line[1] in
+        (attach)
+            _singularity_oci_attach
+            ;;
+
+        (create)
+            _singularity_oci_create
+            ;;
+
+        (delete)
+            _singularity_oci_delete
+            ;;
+
+        (exec)
+            _singularity_oci_exec
+            ;;
+
+        (kill)
+            _singularity_oci_kill
+            ;;
+
+        (mount)
+            _singularity_oci_mount
+            ;;
+
+        (pause)
+            _singularity_oci_pause
+            ;;
+
+        (resume)
+            _singularity_oci_resume
+            ;;
+
+        (run)
+            _singularity_oci_run
+            ;;
+
+        (start)
+            _singularity_oci_start
+            ;;
+
+        (state)
+            _singularity_oci_state
+            ;;
+
+        (umount)
+            _singularity_oci_umount
+            ;;
+
+        (update)
+            _singularity_oci_update
+            ;;
+
+        esac
+        ;;
+     esac
+
+}
+
+function _singularity_oci_attach {
+    _arguments \
+        {-h,--help}'[help for attach]' \
+        "*: :_files"
+
+}
+
+function _singularity_oci_create {
+    _arguments \
+        {-b,--bundle}'[specify the OCI bundle path (required)]' \
+        '--empty-process[run container without executing container process (eg: for POD container)]' \
+        {-h,--help}'[help for create]' \
+        '--log-format[specify the log file format. Available formats are basic, kubernetes and json (default "kubernetes")]' \
+        {-l,--log-path}'[specify the log file path]' \
+        '--pid-file[specify the pid file]' \
+        {-s,--sync-socket}'[specify the path to unix socket for state synchronization]' \
+        "*: :_files"
+
+}
+
+function _singularity_oci_delete {
+    _arguments \
+        {-h,--help}'[help for delete]' \
+        "*: :_files"
+
+}
+
+function _singularity_oci_exec {
+    _arguments \
+        {-h,--help}'[help for exec]' \
+        "*: :_files"
+
+}
+
+function _singularity_oci_kill {
+    _arguments \
+        {-f,--force}'[kill container process with SIGKILL]' \
+        {-h,--help}'[help for kill]' \
+        {-s,--signal}'[signal sent to the container (default "SIGTERM")]' \
+        {-t,--timeout}'[timeout in second before killing container]' \
+        "*: :_files"
+
+}
+
+function _singularity_oci_mount {
+    _arguments \
+        {-h,--help}'[help for mount]' \
+        "*: :_files"
+
+}
+
+function _singularity_oci_pause {
+    _arguments \
+        {-h,--help}'[help for pause]' \
+        "*: :_files"
+
+}
+
+function _singularity_oci_resume {
+    _arguments \
+        {-h,--help}'[help for resume]' \
+        "*: :_files"
+
+}
+
+function _singularity_oci_run {
+    _arguments \
+        {-b,--bundle}'[specify the OCI bundle path (required)]' \
+        {-h,--help}'[help for run]' \
+        '--log-format[specify the log file format. Available formats are basic, kubernetes and json (default "kubernetes")]' \
+        {-l,--log-path}'[specify the log file path]' \
+        '--pid-file[specify the pid file]' \
+        {-s,--sync-socket}'[specify the path to unix socket for state synchronization]' \
+        "*: :_files"
+
+}
+
+function _singularity_oci_start {
+    _arguments \
+        {-h,--help}'[help for start]' \
+        "*: :_files"
+
+}
+
+function _singularity_oci_state {
+    _arguments \
+        {-h,--help}'[help for state]' \
+        {-s,--sync-socket}'[specify the path to unix socket for state synchronization]' \
+        "*: :_files"
+
+}
+
+function _singularity_oci_umount {
+    _arguments \
+        {-h,--help}'[help for umount]' \
+        "*: :_files"
+
+}
+
+function _singularity_oci_update {
+    _arguments \
+        {-f,--from-file}'[specify path to OCI JSON cgroups resource file ('\''-'\'' to read from STDIN)]' \
+        {-h,--help}'[help for update]' \
+        "*: :_files"
+
+}
+
+
+function _singularity_overlay {
+    local line state
+
+    function _commands {
+        local -a commands
+        commands=(
+            'create:Create EXT3 writable overlay image'
+        )
+        _describe 'command' commands
+    }
+ 
+
+    _arguments -C \
+        {-h,--help}'[help for overlay]' \
+        ': :->cmd' \
+        '*:: :->subcmd'
+
+    case $state in
+    (cmd)
+        _commands
+        ;;
+    (subcmd)
+        case $line[1] in
+        (create)
+            _singularity_overlay_create
+            ;;
+
+        esac
+        ;;
+     esac
+
+}
+
+function _singularity_overlay_create {
+    _arguments \
+        '--create-dir[directory to create as part of the overlay layout]' \
+        {-h,--help}'[help for create]' \
+        {-s,--size}'[size of the EXT3 writable overlay in MiB (default 64)]' \
+        "*: :_files"
+
+}
+
+
+function _singularity_plugin {
+    local line state
+
+    function _commands {
+        local -a commands
+        commands=(
+            'compile:Compile a Singularity plugin'
+            'create:Create a plugin skeleton directory'
+            'disable:disable an installed Singularity plugin'
+            'enable:Enable an installed Singularity plugin'
+            'inspect:Inspect a singularity plugin (either an installed one or an image)'
+            'install:Install a compiled Singularity plugin'
+            'list:List installed Singularity plugins'
+            'uninstall:Uninstall removes the named plugin from the system'
+        )
+        _describe 'command' commands
+    }
+ 
+
+    _arguments -C \
+        {-h,--help}'[help for plugin]' \
+        ': :->cmd' \
+        '*:: :->subcmd'
+
+    case $state in
+    (cmd)
+        _commands
+        ;;
+    (subcmd)
+        case $line[1] in
+        (compile)
+            _singularity_plugin_compile
+            ;;
+
+        (create)
+            _singularity_plugin_create
+            ;;
+
+        (disable)
+            _singularity_plugin_disable
+            ;;
+
+        (enable)
+            _singularity_plugin_enable
+            ;;
+
+        (inspect)
+            _singularity_plugin_inspect
+            ;;
+
+        (install)
+            _singularity_plugin_install
+            ;;
+
+        (list)
+            _singularity_plugin_list
+            ;;
+
+        (uninstall)
+            _singularity_plugin_uninstall
+            ;;
+
+        esac
+        ;;
+     esac
+
+}
+
+function _singularity_plugin_compile {
+    _arguments \
+        '--disable-minor-check[disable minor package version check]' \
+        {-h,--help}'[help for compile]' \
+        {-o,--out}'[path of the SIF output file]' \
+        "*: :_files"
+
+}
+
+function _singularity_plugin_create {
+    _arguments \
+        {-h,--help}'[help for create]' \
+        "*: :_files"
+
+}
+
+function _singularity_plugin_disable {
+    _arguments \
+        {-h,--help}'[help for disable]' \
+        "*: :_files"
+
+}
+
+function _singularity_plugin_enable {
+    _arguments \
+        {-h,--help}'[help for enable]' \
+        "*: :_files"
+
+}
+
+function _singularity_plugin_inspect {
+    _arguments \
+        {-h,--help}'[help for inspect]' \
+        "*: :_files"
+
+}
+
+function _singularity_plugin_install {
+    _arguments \
+        {-h,--help}'[help for install]' \
+        "*: :_files"
+
+}
+
+function _singularity_plugin_list {
+    _arguments \
+        {-h,--help}'[help for list]' \
+        "*: :_files"
+
+}
+
+function _singularity_plugin_uninstall {
+    _arguments \
+        {-h,--help}'[help for uninstall]' \
+        "*: :_files"
+
+}
+
+function _singularity_pull {
+    _arguments \
+        '--arch[architecture to pull from library (default "amd64")]' \
+        '--dir[download images to the specific directory]' \
+        '--disable-cache[dont use cached images/blobs and dont create them]' \
+        '--docker-login[login to a Docker Repository interactively]' \
+        {-F,--force}'[overwrite an image file if it exists]' \
+        {-h,--help}'[help for pull]' \
+        '--library[download images from the provided library]' \
+        '--no-cleanup[do NOT clean up bundle after failed build, can be helpful for debugging]' \
+        '--nohttps[do NOT use HTTPS with the docker:// transport (useful for local docker registries without a certificate)]' \
+        "*: :_files"
+
+}
+
+function _singularity_push {
+    _arguments \
+        {-U,--allow-unsigned}'[do not require a signed container image]' \
+        {-D,--description}'[description for container image (library:// only)]' \
+        {-h,--help}'[help for push]' \
+        '--library[the library to push to]' \
+        "*: :_files"
+
+}
+
+
+function _singularity_remote {
+    local line state
+
+    function _commands {
+        local -a commands
+        commands=(
+            'add:Add a new singularity remote endpoint'
+            'add-keyserver:Add a keyserver (root user only)'
+            'list:List all singularity remote endpoints, keyservers, and OCI credentials that are configured'
+            'login:Login to a singularity remote endpoint, an OCI/Docker registry or a keyserver using credentials'
+            'logout:Log out from a singularity remote endpoint, an OCI/Docker registry or a keyserver'
+            'remove:Remove an existing singularity remote endpoint'
+            'remove-keyserver:Remove a keyserver (root user only)'
+            'status:Check the status of the singularity services at an endpoint, and your authentication token'
+            'use:Set a singularity remote endpoint to be actively used'
+        )
+        _describe 'command' commands
+    }
+ 
+
+    _arguments -C \
+        {-c,--config}'[path to the file holding remote endpoint configurations (default "~/.singularity/remote.yaml")]' \
+        {-h,--help}'[help for remote]' \
+        ': :->cmd' \
+        '*:: :->subcmd'
+
+    case $state in
+    (cmd)
+        _commands
+        ;;
+    (subcmd)
+        case $line[1] in
+        (add)
+            _singularity_remote_add
+            ;;
+
+        (add-keyserver)
+            _singularity_remote_add-keyserver
+            ;;
+
+        (list)
+            _singularity_remote_list
+            ;;
+
+        (login)
+            _singularity_remote_login
+            ;;
+
+        (logout)
+            _singularity_remote_logout
+            ;;
+
+        (remove)
+            _singularity_remote_remove
+            ;;
+
+        (remove-keyserver)
+            _singularity_remote_remove-keyserver
+            ;;
+
+        (status)
+            _singularity_remote_status
+            ;;
+
+        (use)
+            _singularity_remote_use
+            ;;
+
+        esac
+        ;;
+     esac
+
+}
+
+
+function _singularity_remote_add {
+    local line state
+
+    function _commands {
+        local -a commands
+        commands=(
+            'singularity:remote add \[add options...\] <remote_name> <remote_URI>'
+        )
+        _describe 'command' commands
+    }
+ 
+
+    _arguments -C \
+        {-g,--global}'[edit the list of globally configured remote endpoints]' \
+        {-h,--help}'[help for add]' \
+        '--no-login[skip automatic login step]' \
+        '--tokenfile[path to the file holding auth token for login (remote endpoints only)]' \
+        ': :->cmd' \
+        '*:: :->subcmd'
+
+    case $state in
+    (cmd)
+        _commands
+        ;;
+    (subcmd)
+        case $line[1] in
+        (singularity)
+            _singularity_remote_add_singularity
+            ;;
+
+        esac
+        ;;
+     esac
+
+}
+
+function _singularity_remote_add_singularity {
+    _arguments \
+        "*: :_files"
+
+}
+
+function _singularity_remote_add-keyserver {
+    _arguments \
+        {-h,--help}'[help for add-keyserver]' \
+        {-i,--insecure}'[allow insecure connection to keyserver]' \
+        {-o,--order}'[define the keyserver order]' \
+        "*: :_files"
+
+}
+
+function _singularity_remote_list {
+    _arguments \
+        {-h,--help}'[help for list]' \
+        "*: :_files"
+
+}
+
+function _singularity_remote_login {
+    _arguments \
+        {-h,--help}'[help for login]' \
+        {-i,--insecure}'[allow insecure login]' \
+        {-p,--password}'[password / token to authenticate with]' \
+        '--password-stdin[take password from standard input]' \
+        '--tokenfile[path to the file holding auth token for login (remote endpoints only)]' \
+        {-u,--username}'[username to authenticate with (required for Docker/OCI registry login)]' \
+        "*: :_files"
+
+}
+
+function _singularity_remote_logout {
+    _arguments \
+        {-h,--help}'[help for logout]' \
+        "*: :_files"
+
+}
+
+function _singularity_remote_remove {
+    _arguments \
+        {-g,--global}'[edit the list of globally configured remote endpoints]' \
+        {-h,--help}'[help for remove]' \
+        "*: :_files"
+
+}
+
+function _singularity_remote_remove-keyserver {
+    _arguments \
+        {-h,--help}'[help for remove-keyserver]' \
+        "*: :_files"
+
+}
+
+function _singularity_remote_status {
+    _arguments \
+        {-h,--help}'[help for status]' \
+        "*: :_files"
+
+}
+
+function _singularity_remote_use {
+    _arguments \
+        {-e,--exclusive}'[set the endpoint as exclusive (root user only, imply]' \
+        {-h,--help}'[help for use]' \
+        "*: :_files"
+
+}
+
+function _singularity_run {
+    _arguments \
+        '--add-caps[a comma separated capability list to add]' \
+        '--allow-setuid[allow setuid binaries in container (root only)]' \
+        '--app[set an application to run inside a container]' \
+        '--apply-cgroups[apply cgroups from file for container processes (root only)]' \
+        {-B,--bind}'[a user-bind path specification. spec has the format src\[:dest\[:opts\]\], where src and dest are outside and inside paths. If dest is not given, it is set equal to src. Mount options ('\''opts'\'') may be specified as '\''ro'\'' (read-only) or '\''rw'\'' (read/write, which is the default). Multiple bind paths can be given by a comma separated list.]' \
+        {-e,--cleanenv}'[clean environment before running container]' \
+        {-c,--contain}'[use minimal /dev and empty other directories (e.g. /tmp and $HOME) instead of sharing filesystems from your host]' \
+        {-C,--containall}'[contain not only file systems, but also PID, IPC, and environment]' \
+        '--disable-cache[dont use cache, and dont create cache]' \
+        '--dns[list of DNS server separated by commas to add in resolv.conf]' \
+        '--docker-login[login to a Docker Repository interactively]' \
+        '--drop-caps[a comma separated capability list to drop]' \
+        '--env[pass environment variable to contained process]' \
+        '--env-file[pass environment variables from file to contained process]' \
+        {-f,--fakeroot}'[run container in new user namespace as uid 0]' \
+        '--fusemount[A FUSE filesystem mount specification of the form '\''<type>:<fuse command> <mountpoint>'\'' - where <type> is '\''container'\'' or '\''host'\'', specifying where the mount will be performed ('\''container-daemon'\'' or '\''host-daemon'\'' will run the FUSE process detached). <fuse command> is the path to the FUSE executable, plus options for the mount. <mountpoint> is the location in the container to which the FUSE mount will be attached. E.g. '\''container:sshfs 10.0.0.1:/ /sshfs'\''. Implies --pid.]' \
+        {-h,--help}'[help for run]' \
+        {-H,--home}'[a home directory specification. spec can either be a src path or src:dest pair. src is the source path of the home directory outside the container and dest overrides the home directory within the container. (default "~")]' \
+        '--hostname[set container hostname]' \
+        {-i,--ipc}'[run container in a new IPC namespace]' \
+        '--keep-privs[let root user keep privileges in container (root only)]' \
+        {-n,--net}'[run container in a new network namespace (sets up a bridge network interface by default)]' \
+        '--network[specify desired network type separated by commas, each network will bring up a dedicated interface inside container (default "bridge")]' \
+        '--network-args[specify network arguments to pass to CNI plugins]' \
+        '--no-home[do NOT mount users home directory if /home is not the current working directory]' \
+        '--no-init[do NOT start shim process with --pid]' \
+        '--no-mount[disable one or more mount xxx options set in singularity.conf]' \
+        '--no-privs[drop all privileges from root user in container)]' \
+        '--no-umask[do not propagate umask to the container, set default 0022 umask]' \
+        '--nohttps[do NOT use HTTPS with the docker:// transport (useful for local docker registries without a certificate)]' \
+        '--nonet[disable VM network handling]' \
+        '--nv[enable experimental Nvidia support]' \
+        {-o,--overlay}'[use an overlayFS image for persistent data storage or as read-only layer of container]' \
+        '--passphrase[prompt for an encryption passphrase]' \
+        '--pem-path[enter an path to a PEM formated RSA key for an encrypted container]' \
+        {-p,--pid}'[run container in a new PID namespace]' \
+        '--pwd[initial working directory for payload process inside the container]' \
+        '--rocm[enable experimental Rocm support]' \
+        {-S,--scratch}'[include a scratch directory within the container that is linked to a temporary dir (use -W to force location)]' \
+        '--security[enable security features (SELinux, Apparmor, Seccomp)]' \
+        {-u,--userns}'[run container in a new user namespace, allowing Singularity to run completely unprivileged on recent kernels. This disables some features of Singularity, for example it only works with sandbox images.]' \
+        '--uts[run container in a new UTS namespace]' \
+        '--vm[enable VM support]' \
+        '--vm-cpu[number of CPU cores to allocate to Virtual Machine (implies --vm) (default "1")]' \
+        '--vm-err[enable attaching stderr from VM]' \
+        '--vm-ip[IP Address to assign for container usage. Defaults to DHCP within bridge network. (default "dhcp")]' \
+        '--vm-ram[amount of RAM in MiB to allocate to Virtual Machine (implies --vm) (default "1024")]' \
+        {-W,--workdir}'[working directory to be used for /tmp, /var/tmp and $HOME (if -c/--contain was also used)]' \
+        {-w,--writable}'[by default all Singularity containers are available as read only. This option makes the file system accessible as read/write.]' \
+        '--writable-tmpfs[makes the file system accessible as read-write with non persistent data (with overlay support only)]' \
+        "*: :_files"
+
+}
+
+function _singularity_run-help {
+    _arguments \
+        '--app[show the help for an app]' \
+        {-h,--help}'[help for run-help]' \
+        "*: :_files"
+
+}
+
+function _singularity_search {
+    _arguments \
+        '--arch[architecture to search for (default "amd64")]' \
+        {-h,--help}'[help for search]' \
+        '--library[URI for library to search]' \
+        '--signed[architecture to search for]' \
+        "*: :_files"
+
+}
+
+function _singularity_shell {
+    _arguments \
+        '--add-caps[a comma separated capability list to add]' \
+        '--allow-setuid[allow setuid binaries in container (root only)]' \
+        '--app[set an application to run inside a container]' \
+        '--apply-cgroups[apply cgroups from file for container processes (root only)]' \
+        {-B,--bind}'[a user-bind path specification. spec has the format src\[:dest\[:opts\]\], where src and dest are outside and inside paths. If dest is not given, it is set equal to src. Mount options ('\''opts'\'') may be specified as '\''ro'\'' (read-only) or '\''rw'\'' (read/write, which is the default). Multiple bind paths can be given by a comma separated list.]' \
+        {-e,--cleanenv}'[clean environment before running container]' \
+        {-c,--contain}'[use minimal /dev and empty other directories (e.g. /tmp and $HOME) instead of sharing filesystems from your host]' \
+        {-C,--containall}'[contain not only file systems, but also PID, IPC, and environment]' \
+        '--disable-cache[dont use cache, and dont create cache]' \
+        '--dns[list of DNS server separated by commas to add in resolv.conf]' \
+        '--docker-login[login to a Docker Repository interactively]' \
+        '--drop-caps[a comma separated capability list to drop]' \
+        '--env[pass environment variable to contained process]' \
+        '--env-file[pass environment variables from file to contained process]' \
+        {-f,--fakeroot}'[run container in new user namespace as uid 0]' \
+        '--fusemount[A FUSE filesystem mount specification of the form '\''<type>:<fuse command> <mountpoint>'\'' - where <type> is '\''container'\'' or '\''host'\'', specifying where the mount will be performed ('\''container-daemon'\'' or '\''host-daemon'\'' will run the FUSE process detached). <fuse command> is the path to the FUSE executable, plus options for the mount. <mountpoint> is the location in the container to which the FUSE mount will be attached. E.g. '\''container:sshfs 10.0.0.1:/ /sshfs'\''. Implies --pid.]' \
+        {-h,--help}'[help for shell]' \
+        {-H,--home}'[a home directory specification. spec can either be a src path or src:dest pair. src is the source path of the home directory outside the container and dest overrides the home directory within the container. (default "~")]' \
+        '--hostname[set container hostname]' \
+        {-i,--ipc}'[run container in a new IPC namespace]' \
+        '--keep-privs[let root user keep privileges in container (root only)]' \
+        {-n,--net}'[run container in a new network namespace (sets up a bridge network interface by default)]' \
+        '--network[specify desired network type separated by commas, each network will bring up a dedicated interface inside container (default "bridge")]' \
+        '--network-args[specify network arguments to pass to CNI plugins]' \
+        '--no-home[do NOT mount users home directory if /home is not the current working directory]' \
+        '--no-init[do NOT start shim process with --pid]' \
+        '--no-mount[disable one or more mount xxx options set in singularity.conf]' \
+        '--no-privs[drop all privileges from root user in container)]' \
+        '--no-umask[do not propagate umask to the container, set default 0022 umask]' \
+        '--nohttps[do NOT use HTTPS with the docker:// transport (useful for local docker registries without a certificate)]' \
+        '--nonet[disable VM network handling]' \
+        '--nv[enable experimental Nvidia support]' \
+        {-o,--overlay}'[use an overlayFS image for persistent data storage or as read-only layer of container]' \
+        '--passphrase[prompt for an encryption passphrase]' \
+        '--pem-path[enter an path to a PEM formated RSA key for an encrypted container]' \
+        {-p,--pid}'[run container in a new PID namespace]' \
+        '--pwd[initial working directory for payload process inside the container]' \
+        '--rocm[enable experimental Rocm support]' \
+        {-S,--scratch}'[include a scratch directory within the container that is linked to a temporary dir (use -W to force location)]' \
+        '--security[enable security features (SELinux, Apparmor, Seccomp)]' \
+        {-s,--shell}'[path to program to use for interactive shell]' \
+        '--syos[execute SyOS shell]' \
+        {-u,--userns}'[run container in a new user namespace, allowing Singularity to run completely unprivileged on recent kernels. This disables some features of Singularity, for example it only works with sandbox images.]' \
+        '--uts[run container in a new UTS namespace]' \
+        '--vm[enable VM support]' \
+        '--vm-cpu[number of CPU cores to allocate to Virtual Machine (implies --vm) (default "1")]' \
+        '--vm-err[enable attaching stderr from VM]' \
+        '--vm-ip[IP Address to assign for container usage. Defaults to DHCP within bridge network. (default "dhcp")]' \
+        '--vm-ram[amount of RAM in MiB to allocate to Virtual Machine (implies --vm) (default "1024")]' \
+        {-W,--workdir}'[working directory to be used for /tmp, /var/tmp and $HOME (if -c/--contain was also used)]' \
+        {-w,--writable}'[by default all Singularity containers are available as read only. This option makes the file system accessible as read/write.]' \
+        '--writable-tmpfs[makes the file system accessible as read-write with non persistent data (with overlay support only)]' \
+        "*: :_files"
+
+}
+
+
+function _singularity_sif {
+    local line state
+
+    function _commands {
+        local -a commands
+        commands=(
+            'add:Add a data object to a SIF file'
+            'del:Delete a specified object descriptor and data from SIF file'
+            'dump:Extract and output data objects from SIF files'
+            'header:Display SIF global headers'
+            'info:Display detailed information of object descriptors'
+            'list:List object descriptors from SIF files'
+            'new:Create a new empty SIF image file'
+            'setprim:Set primary system partition'
+        )
+        _describe 'command' commands
+    }
+ 
+
+    _arguments -C \
+        {-h,--help}'[help for sif]' \
+        ': :->cmd' \
+        '*:: :->subcmd'
+
+    case $state in
+    (cmd)
+        _commands
+        ;;
+    (subcmd)
+        case $line[1] in
+        (add)
+            _singularity_sif_add
+            ;;
+
+        (del)
+            _singularity_sif_del
+            ;;
+
+        (dump)
+            _singularity_sif_dump
+            ;;
+
+        (header)
+            _singularity_sif_header
+            ;;
+
+        (info)
+            _singularity_sif_info
+            ;;
+
+        (list)
+            _singularity_sif_list
+            ;;
+
+        (new)
+            _singularity_sif_new
+            ;;
+
+        (setprim)
+            _singularity_sif_setprim
+            ;;
+
+        esac
+        ;;
+     esac
+
+}
+
+function _singularity_sif_add {
+    _arguments \
+        '--alignment[set alignment constraint \[default: aligned on page size\]]' \
+        '--datatype[the type of data to add \[NEEDED, no default\]:]' \
+        '--filename[set logical filename/handle \[default: input filename\]]' \
+        '--groupid[set groupid \[default: 0\]]' \
+        {-h,--help}'[help for add]' \
+        '--link[set link pointer \[default: 0\]]' \
+        '--partarch[the main architecture used (with -datatype 4-Partition) \[NEEDED, no default\]:]' \
+        '--partfs[the filesystem used (with -datatype 4-Partition) \[NEEDED, no default\]:]' \
+        '--parttype[the type of partition (with -datatype 4-Partition) \[NEEDED, no default\]:]' \
+        '--signentity[the entity that signs (with -datatype 5-Signature) \[NEEDED, no default\]:]' \
+        '--signhash[the signature hash used (with -datatype 5-Signature) \[NEEDED, no default\]:]' \
+        "*: :_files"
+
+}
+
+function _singularity_sif_del {
+    _arguments \
+        {-h,--help}'[help for del]' \
+        "*: :_files"
+
+}
+
+function _singularity_sif_dump {
+    _arguments \
+        {-h,--help}'[help for dump]' \
+        "*: :_files"
+
+}
+
+function _singularity_sif_header {
+    _arguments \
+        {-h,--help}'[help for header]' \
+        "*: :_files"
+
+}
+
+function _singularity_sif_info {
+    _arguments \
+        {-h,--help}'[help for info]' \
+        "*: :_files"
+
+}
+
+function _singularity_sif_list {
+    _arguments \
+        {-h,--help}'[help for list]' \
+        "*: :_files"
+
+}
+
+function _singularity_sif_new {
+    _arguments \
+        {-h,--help}'[help for new]' \
+        "*: :_files"
+
+}
+
+function _singularity_sif_setprim {
+    _arguments \
+        {-h,--help}'[help for setprim]' \
+        "*: :_files"
+
+}
+
+function _singularity_sign {
+    _arguments \
+        {-g,--group-id}'[sign objects with the specified group ID]' \
+        {-h,--help}'[help for sign]' \
+        {-k,--keyidx}'[private key to use (index from '\''key list'\'')]' \
+        {-i,--sif-id}'[sign object with the specified ID]' \
+        "*: :_files"
+
+}
+
+function _singularity_test {
+    _arguments \
+        '--add-caps[a comma separated capability list to add]' \
+        '--allow-setuid[allow setuid binaries in container (root only)]' \
+        '--app[set an application to run inside a container]' \
+        '--apply-cgroups[apply cgroups from file for container processes (root only)]' \
+        {-B,--bind}'[a user-bind path specification. spec has the format src\[:dest\[:opts\]\], where src and dest are outside and inside paths. If dest is not given, it is set equal to src. Mount options ('\''opts'\'') may be specified as '\''ro'\'' (read-only) or '\''rw'\'' (read/write, which is the default). Multiple bind paths can be given by a comma separated list.]' \
+        {-e,--cleanenv}'[clean environment before running container]' \
+        {-c,--contain}'[use minimal /dev and empty other directories (e.g. /tmp and $HOME) instead of sharing filesystems from your host]' \
+        {-C,--containall}'[contain not only file systems, but also PID, IPC, and environment]' \
+        '--disable-cache[dont use cache, and dont create cache]' \
+        '--dns[list of DNS server separated by commas to add in resolv.conf]' \
+        '--docker-login[login to a Docker Repository interactively]' \
+        '--drop-caps[a comma separated capability list to drop]' \
+        '--env[pass environment variable to contained process]' \
+        '--env-file[pass environment variables from file to contained process]' \
+        {-f,--fakeroot}'[run container in new user namespace as uid 0]' \
+        '--fusemount[A FUSE filesystem mount specification of the form '\''<type>:<fuse command> <mountpoint>'\'' - where <type> is '\''container'\'' or '\''host'\'', specifying where the mount will be performed ('\''container-daemon'\'' or '\''host-daemon'\'' will run the FUSE process detached). <fuse command> is the path to the FUSE executable, plus options for the mount. <mountpoint> is the location in the container to which the FUSE mount will be attached. E.g. '\''container:sshfs 10.0.0.1:/ /sshfs'\''. Implies --pid.]' \
+        {-h,--help}'[help for test]' \
+        {-H,--home}'[a home directory specification. spec can either be a src path or src:dest pair. src is the source path of the home directory outside the container and dest overrides the home directory within the container. (default "~")]' \
+        '--hostname[set container hostname]' \
+        {-i,--ipc}'[run container in a new IPC namespace]' \
+        '--keep-privs[let root user keep privileges in container (root only)]' \
+        {-n,--net}'[run container in a new network namespace (sets up a bridge network interface by default)]' \
+        '--network[specify desired network type separated by commas, each network will bring up a dedicated interface inside container (default "bridge")]' \
+        '--network-args[specify network arguments to pass to CNI plugins]' \
+        '--no-home[do NOT mount users home directory if /home is not the current working directory]' \
+        '--no-init[do NOT start shim process with --pid]' \
+        '--no-mount[disable one or more mount xxx options set in singularity.conf]' \
+        '--no-privs[drop all privileges from root user in container)]' \
+        '--no-umask[do not propagate umask to the container, set default 0022 umask]' \
+        '--nohttps[do NOT use HTTPS with the docker:// transport (useful for local docker registries without a certificate)]' \
+        '--nonet[disable VM network handling]' \
+        '--nv[enable experimental Nvidia support]' \
+        {-o,--overlay}'[use an overlayFS image for persistent data storage or as read-only layer of container]' \
+        '--passphrase[prompt for an encryption passphrase]' \
+        '--pem-path[enter an path to a PEM formated RSA key for an encrypted container]' \
+        {-p,--pid}'[run container in a new PID namespace]' \
+        '--pwd[initial working directory for payload process inside the container]' \
+        '--rocm[enable experimental Rocm support]' \
+        {-S,--scratch}'[include a scratch directory within the container that is linked to a temporary dir (use -W to force location)]' \
+        '--security[enable security features (SELinux, Apparmor, Seccomp)]' \
+        {-u,--userns}'[run container in a new user namespace, allowing Singularity to run completely unprivileged on recent kernels. This disables some features of Singularity, for example it only works with sandbox images.]' \
+        '--uts[run container in a new UTS namespace]' \
+        '--vm[enable VM support]' \
+        '--vm-cpu[number of CPU cores to allocate to Virtual Machine (implies --vm) (default "1")]' \
+        '--vm-err[enable attaching stderr from VM]' \
+        '--vm-ip[IP Address to assign for container usage. Defaults to DHCP within bridge network. (default "dhcp")]' \
+        '--vm-ram[amount of RAM in MiB to allocate to Virtual Machine (implies --vm) (default "1024")]' \
+        {-W,--workdir}'[working directory to be used for /tmp, /var/tmp and $HOME (if -c/--contain was also used)]' \
+        {-w,--writable}'[by default all Singularity containers are available as read only. This option makes the file system accessible as read/write.]' \
+        '--writable-tmpfs[makes the file system accessible as read-write with non persistent data (with overlay support only)]' \
+        "*: :_files"
+
+}
+
+function _singularity_verify {
+    _arguments \
+        {-a,--all}'[verify all objects]' \
+        {-g,--group-id}'[verify objects with the specified group ID]' \
+        {-h,--help}'[help for verify]' \
+        {-j,--json}'[output json]' \
+        '--legacy-insecure[enable verification of (insecure) legacy signatures]' \
+        {-l,--local}'[only verify with local key(s) in keyring]' \
+        {-i,--sif-id}'[verify object with the specified ID]' \
+        {-u,--url}'[specify a URL for a key server]' \
+        "*: :_files"
+
+}
+
+function _singularity_version {
+    _arguments \
+        {-h,--help}'[help for version]' \
+        "*: :_files"
+
+}
+
+_singularity "$@"
+

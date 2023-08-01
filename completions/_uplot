@@ -1,0 +1,378 @@
+#compdef uplot
+
+# Auto-generated with h2o
+
+
+function _uplot {
+    local line state
+
+    function _commands {
+        local -a commands
+        commands=(
+            'barplot:draw a horizontal barplot'
+            'histogram:draw a horizontal histogram'
+            'lineplot:draw a line chart'
+            'lineplots:draw a line chart with multiple series'
+            'scatter:draw a scatter plot'
+            'density:draw a density plot'
+            'boxplot:draw a horizontal boxplot'
+            'count:draw a baplot based on the number of occurrences (slow)'
+            'colors:show the list of available colors'
+        )
+        _describe 'command' commands
+    }
+ 
+
+    _arguments -C \
+        '--config[print config file info]' \
+        '--help[print command specific help menu]' \
+        '--version[print the version of YouPlot]' \
+        ': :->cmd' \
+        '*:: :->subcmd'
+
+    case $state in
+    (cmd)
+        _commands
+        ;;
+    (subcmd)
+        case $line[1] in
+        (barplot)
+            _uplot_barplot
+            ;;
+
+        (histogram)
+            _uplot_histogram
+            ;;
+
+        (lineplot)
+            _uplot_lineplot
+            ;;
+
+        (lineplots)
+            _uplot_lineplots
+            ;;
+
+        (scatter)
+            _uplot_scatter
+            ;;
+
+        (density)
+            _uplot_density
+            ;;
+
+        (boxplot)
+            _uplot_boxplot
+            ;;
+
+        (count)
+            _uplot_count
+            ;;
+
+        (colors)
+            _uplot_colors
+            ;;
+
+        esac
+        ;;
+     esac
+
+}
+
+function _uplot_barplot {
+    _arguments \
+        '--xscale[axis scaling (log, ln, log10, lg, log2, lb)]' \
+        '--fmt[xy : header is like x, y... yx : header is like y, x...]' \
+        '--symbol[character to be used to plot the bars]' \
+        {-O,--pass}'[file to output input data to \[stdout\] for inserting YouPlot in the middle of Unix pipes]':file:_files \
+        {-o,--output}'[file to output plots to \[stdout\] If no option is specified, plot will print to stderr]':file:_files \
+        {-d,--delimiter}'[use DELIM instead of \[TAB\] for field delimiter]' \
+        {-H,--headers}'[specify that the input has header row]' \
+        {-T,--transpose}'[transpose the axes of the input data]' \
+        {-t,--title}'[print string on the top of plot]' \
+        '--xlabel[print string on the bottom of the plot]' \
+        '--ylabel[print string on the far left of the plot]' \
+        {-w,--width}'[number of characters per row]' \
+        {-h,--height}'[number of rows]' \
+        {-b,--border}'[specify the style of the bounding box (solid, corners, barplot)]' \
+        {-m,--margin}'[number of spaces to the left of the plot]' \
+        '--padding[space of the left and right of the plot]' \
+        {-c,--color}'[color of the drawing]' \
+        '--labels[hide the labels]' \
+        '--no-labels[hide the labels]' \
+        {-p,--progress}'[progressive mode \[experimental\]]' \
+        {-C,--color-output}'[colorize even if writing to a pipe]' \
+        {-M,--monochrome}'[no colouring even if writing to a tty]' \
+        '--encoding[specify the input encoding]' \
+        '--help[print sub-command help menu]' \
+        '--config[specify a config file]':file:_files \
+        '--debug[print preprocessed data]' \
+        "*: :_files"
+
+}
+
+function _uplot_histogram {
+    _arguments \
+        {-n,--nbins}'[approximate number of bins]' \
+        '--closed[side of the intervals to be closed \[left\]]' \
+        '--symbol[character to be used to plot the bars]' \
+        {-O,--pass}'[file to output input data to \[stdout\] for inserting YouPlot in the middle of Unix pipes]':file:_files \
+        {-o,--output}'[file to output plots to \[stdout\] If no option is specified, plot will print to stderr]':file:_files \
+        {-d,--delimiter}'[use DELIM instead of \[TAB\] for field delimiter]' \
+        {-H,--headers}'[specify that the input has header row]' \
+        {-T,--transpose}'[transpose the axes of the input data]' \
+        {-t,--title}'[print string on the top of plot]' \
+        '--xlabel[print string on the bottom of the plot]' \
+        '--ylabel[print string on the far left of the plot]' \
+        {-w,--width}'[number of characters per row]' \
+        {-h,--height}'[number of rows]' \
+        {-b,--border}'[specify the style of the bounding box (solid, corners, barplot)]' \
+        {-m,--margin}'[number of spaces to the left of the plot]' \
+        '--padding[space of the left and right of the plot]' \
+        {-c,--color}'[color of the drawing]' \
+        '--labels[hide the labels]' \
+        '--no-labels[hide the labels]' \
+        {-p,--progress}'[progressive mode \[experimental\]]' \
+        {-C,--color-output}'[colorize even if writing to a pipe]' \
+        {-M,--monochrome}'[no colouring even if writing to a tty]' \
+        '--encoding[specify the input encoding]' \
+        '--help[print sub-command help menu]' \
+        '--config[specify a config file]':file:_files \
+        '--debug[print preprocessed data]' \
+        "*: :_files"
+
+}
+
+function _uplot_lineplot {
+    _arguments \
+        '--xlim[plotting range for the x coordinate]' \
+        '--ylim[plotting range for the y coordinate]' \
+        '--fmt[xy : header is like x, y... yx : header is like y, x...]' \
+        '--grid[draws grid-lines at the origin]' \
+        '--no-grid[draws grid-lines at the origin]' \
+        '--canvas[type of canvas (ascii, block, braille, density, dot)]' \
+        {-O,--pass}'[file to output input data to \[stdout\] for inserting YouPlot in the middle of Unix pipes]':file:_files \
+        {-o,--output}'[file to output plots to \[stdout\] If no option is specified, plot will print to stderr]':file:_files \
+        {-d,--delimiter}'[use DELIM instead of \[TAB\] for field delimiter]' \
+        {-H,--headers}'[specify that the input has header row]' \
+        {-T,--transpose}'[transpose the axes of the input data]' \
+        {-t,--title}'[print string on the top of plot]' \
+        '--xlabel[print string on the bottom of the plot]' \
+        '--ylabel[print string on the far left of the plot]' \
+        {-w,--width}'[number of characters per row]' \
+        {-h,--height}'[number of rows]' \
+        {-b,--border}'[specify the style of the bounding box (solid, corners, barplot)]' \
+        {-m,--margin}'[number of spaces to the left of the plot]' \
+        '--padding[space of the left and right of the plot]' \
+        {-c,--color}'[color of the drawing]' \
+        '--labels[hide the labels]' \
+        '--no-labels[hide the labels]' \
+        {-p,--progress}'[progressive mode \[experimental\]]' \
+        {-C,--color-output}'[colorize even if writing to a pipe]' \
+        {-M,--monochrome}'[no colouring even if writing to a tty]' \
+        '--encoding[specify the input encoding]' \
+        '--help[print sub-command help menu]' \
+        '--config[specify a config file]':file:_files \
+        '--debug[print preprocessed data]' \
+        "*: :_files"
+
+}
+
+function _uplot_lineplots {
+    _arguments \
+        '--xlim[plotting range for the x coordinate]' \
+        '--ylim[plotting range for the y coordinate]' \
+        '--fmt[xyxy : header is like x1, y1, x2, y2, x3, y3... xyy : header is like x, y1, y2, y2, y3...]' \
+        '--grid[draws grid-lines at the origin]' \
+        '--no-grid[draws grid-lines at the origin]' \
+        '--canvas[type of canvas (ascii, block, braille, density, dot)]' \
+        {-O,--pass}'[file to output input data to \[stdout\] for inserting YouPlot in the middle of Unix pipes]':file:_files \
+        {-o,--output}'[file to output plots to \[stdout\] If no option is specified, plot will print to stderr]':file:_files \
+        {-d,--delimiter}'[use DELIM instead of \[TAB\] for field delimiter]' \
+        {-H,--headers}'[specify that the input has header row]' \
+        {-T,--transpose}'[transpose the axes of the input data]' \
+        {-t,--title}'[print string on the top of plot]' \
+        '--xlabel[print string on the bottom of the plot]' \
+        '--ylabel[print string on the far left of the plot]' \
+        {-w,--width}'[number of characters per row]' \
+        {-h,--height}'[number of rows]' \
+        {-b,--border}'[specify the style of the bounding box (solid, corners, barplot)]' \
+        {-m,--margin}'[number of spaces to the left of the plot]' \
+        '--padding[space of the left and right of the plot]' \
+        {-c,--color}'[color of the drawing]' \
+        '--labels[hide the labels]' \
+        '--no-labels[hide the labels]' \
+        {-p,--progress}'[progressive mode \[experimental\]]' \
+        {-C,--color-output}'[colorize even if writing to a pipe]' \
+        {-M,--monochrome}'[no colouring even if writing to a tty]' \
+        '--encoding[specify the input encoding]' \
+        '--help[print sub-command help menu]' \
+        '--config[specify a config file]':file:_files \
+        '--debug[print preprocessed data]' \
+        "*: :_files"
+
+}
+
+function _uplot_scatter {
+    _arguments \
+        '--xlim[plotting range for the x coordinate]' \
+        '--ylim[plotting range for the y coordinate]' \
+        '--fmt[xyxy : header is like x1, y1, x2, y2, x3, y3... xyy : header is like x, y1, y2, y2, y3...]' \
+        '--grid[draws grid-lines at the origin]' \
+        '--no-grid[draws grid-lines at the origin]' \
+        '--canvas[type of canvas (ascii, block, braille, density, dot)]' \
+        {-O,--pass}'[file to output input data to \[stdout\] for inserting YouPlot in the middle of Unix pipes]':file:_files \
+        {-o,--output}'[file to output plots to \[stdout\] If no option is specified, plot will print to stderr]':file:_files \
+        {-d,--delimiter}'[use DELIM instead of \[TAB\] for field delimiter]' \
+        {-H,--headers}'[specify that the input has header row]' \
+        {-T,--transpose}'[transpose the axes of the input data]' \
+        {-t,--title}'[print string on the top of plot]' \
+        '--xlabel[print string on the bottom of the plot]' \
+        '--ylabel[print string on the far left of the plot]' \
+        {-w,--width}'[number of characters per row]' \
+        {-h,--height}'[number of rows]' \
+        {-b,--border}'[specify the style of the bounding box (solid, corners, barplot)]' \
+        {-m,--margin}'[number of spaces to the left of the plot]' \
+        '--padding[space of the left and right of the plot]' \
+        {-c,--color}'[color of the drawing]' \
+        '--labels[hide the labels]' \
+        '--no-labels[hide the labels]' \
+        {-p,--progress}'[progressive mode \[experimental\]]' \
+        {-C,--color-output}'[colorize even if writing to a pipe]' \
+        {-M,--monochrome}'[no colouring even if writing to a tty]' \
+        '--encoding[specify the input encoding]' \
+        '--help[print sub-command help menu]' \
+        '--config[specify a config file]':file:_files \
+        '--debug[print preprocessed data]' \
+        "*: :_files"
+
+}
+
+function _uplot_density {
+    _arguments \
+        '--xlim[plotting range for the x coordinate]' \
+        '--ylim[plotting range for the y coordinate]' \
+        '--fmt[xyxy : header is like x1, y1, x2, y2, x3, y3... xyy : header is like x, y1, y2, y2, y3...]' \
+        '--grid[draws grid-lines at the origin]' \
+        '--no-grid[draws grid-lines at the origin]' \
+        '--canvas[type of canvas (ascii, block, braille, density, dot)]' \
+        {-O,--pass}'[file to output input data to \[stdout\] for inserting YouPlot in the middle of Unix pipes]':file:_files \
+        {-o,--output}'[file to output plots to \[stdout\] If no option is specified, plot will print to stderr]':file:_files \
+        {-d,--delimiter}'[use DELIM instead of \[TAB\] for field delimiter]' \
+        {-H,--headers}'[specify that the input has header row]' \
+        {-T,--transpose}'[transpose the axes of the input data]' \
+        {-t,--title}'[print string on the top of plot]' \
+        '--xlabel[print string on the bottom of the plot]' \
+        '--ylabel[print string on the far left of the plot]' \
+        {-w,--width}'[number of characters per row]' \
+        {-h,--height}'[number of rows]' \
+        {-b,--border}'[specify the style of the bounding box (solid, corners, barplot)]' \
+        {-m,--margin}'[number of spaces to the left of the plot]' \
+        '--padding[space of the left and right of the plot]' \
+        {-c,--color}'[color of the drawing]' \
+        '--labels[hide the labels]' \
+        '--no-labels[hide the labels]' \
+        {-p,--progress}'[progressive mode \[experimental\]]' \
+        {-C,--color-output}'[colorize even if writing to a pipe]' \
+        {-M,--monochrome}'[no colouring even if writing to a tty]' \
+        '--encoding[specify the input encoding]' \
+        '--help[print sub-command help menu]' \
+        '--config[specify a config file]':file:_files \
+        '--debug[print preprocessed data]' \
+        "*: :_files"
+
+}
+
+function _uplot_boxplot {
+    _arguments \
+        '--xlim[plotting range for the x coordinate]' \
+        {-O,--pass}'[file to output input data to \[stdout\] for inserting YouPlot in the middle of Unix pipes]':file:_files \
+        {-o,--output}'[file to output plots to \[stdout\] If no option is specified, plot will print to stderr]':file:_files \
+        {-d,--delimiter}'[use DELIM instead of \[TAB\] for field delimiter]' \
+        {-H,--headers}'[specify that the input has header row]' \
+        {-T,--transpose}'[transpose the axes of the input data]' \
+        {-t,--title}'[print string on the top of plot]' \
+        '--xlabel[print string on the bottom of the plot]' \
+        '--ylabel[print string on the far left of the plot]' \
+        {-w,--width}'[number of characters per row]' \
+        {-h,--height}'[number of rows]' \
+        {-b,--border}'[specify the style of the bounding box (solid, corners, barplot)]' \
+        {-m,--margin}'[number of spaces to the left of the plot]' \
+        '--padding[space of the left and right of the plot]' \
+        {-c,--color}'[color of the drawing]' \
+        '--labels[hide the labels]' \
+        '--no-labels[hide the labels]' \
+        {-p,--progress}'[progressive mode \[experimental\]]' \
+        {-C,--color-output}'[colorize even if writing to a pipe]' \
+        {-M,--monochrome}'[no colouring even if writing to a tty]' \
+        '--encoding[specify the input encoding]' \
+        '--help[print sub-command help menu]' \
+        '--config[specify a config file]':file:_files \
+        '--debug[print preprocessed data]' \
+        "*: :_files"
+
+}
+
+function _uplot_count {
+    _arguments \
+        '--xscale[axis scaling (log, ln, log10, lg, log2, lb)]' \
+        '--symbol[character to be used to plot the bars]' \
+        {-r,--reverse}'[reverse the result of comparisons]' \
+        {-O,--pass}'[file to output input data to \[stdout\] for inserting YouPlot in the middle of Unix pipes]':file:_files \
+        {-o,--output}'[file to output plots to \[stdout\] If no option is specified, plot will print to stderr]':file:_files \
+        {-d,--delimiter}'[use DELIM instead of \[TAB\] for field delimiter]' \
+        {-H,--headers}'[specify that the input has header row]' \
+        {-T,--transpose}'[transpose the axes of the input data]' \
+        {-t,--title}'[print string on the top of plot]' \
+        '--xlabel[print string on the bottom of the plot]' \
+        '--ylabel[print string on the far left of the plot]' \
+        {-w,--width}'[number of characters per row]' \
+        {-h,--height}'[number of rows]' \
+        {-b,--border}'[specify the style of the bounding box (solid, corners, barplot)]' \
+        {-m,--margin}'[number of spaces to the left of the plot]' \
+        '--padding[space of the left and right of the plot]' \
+        {-c,--color}'[color of the drawing]' \
+        '--labels[hide the labels]' \
+        '--no-labels[hide the labels]' \
+        {-p,--progress}'[progressive mode \[experimental\]]' \
+        {-C,--color-output}'[colorize even if writing to a pipe]' \
+        {-M,--monochrome}'[no colouring even if writing to a tty]' \
+        '--encoding[specify the input encoding]' \
+        '--help[print sub-command help menu]' \
+        '--config[specify a config file]':file:_files \
+        '--debug[print preprocessed data]' \
+        "*: :_files"
+
+}
+
+function _uplot_colors {
+    _arguments \
+        {-n,--names}'[show color names only]' \
+        {-O,--pass}'[file to output input data to \[stdout\] for inserting YouPlot in the middle of Unix pipes]':file:_files \
+        {-o,--output}'[file to output plots to \[stdout\] If no option is specified, plot will print to stderr]':file:_files \
+        {-d,--delimiter}'[use DELIM instead of \[TAB\] for field delimiter]' \
+        {-H,--headers}'[specify that the input has header row]' \
+        {-T,--transpose}'[transpose the axes of the input data]' \
+        {-t,--title}'[print string on the top of plot]' \
+        '--xlabel[print string on the bottom of the plot]' \
+        '--ylabel[print string on the far left of the plot]' \
+        {-w,--width}'[number of characters per row]' \
+        {-h,--height}'[number of rows]' \
+        {-b,--border}'[specify the style of the bounding box (solid, corners, barplot)]' \
+        {-m,--margin}'[number of spaces to the left of the plot]' \
+        '--padding[space of the left and right of the plot]' \
+        {-c,--color}'[color of the drawing]' \
+        '--labels[hide the labels]' \
+        '--no-labels[hide the labels]' \
+        {-p,--progress}'[progressive mode \[experimental\]]' \
+        {-C,--color-output}'[colorize even if writing to a pipe]' \
+        {-M,--monochrome}'[no colouring even if writing to a tty]' \
+        '--encoding[specify the input encoding]' \
+        '--help[print sub-command help menu]' \
+        '--config[specify a config file]':file:_files \
+        '--debug[print preprocessed data]' \
+        "*: :_files"
+
+}
+
+_uplot "$@"
+

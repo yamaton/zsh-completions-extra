@@ -1,0 +1,18 @@
+#compdef uuidparse
+
+# Auto-generated with h2o
+
+function _uuidparse {
+    _arguments \
+        {-J,--json}'[use JSON output format]' \
+        {-n,--noheadings}'[don'\''t print headings]' \
+        {-o,--output}'[COLUMNS to display (see below)]' \
+        {-r,--raw}'[use the raw output format]' \
+        {-h,--help}'[display this help]' \
+        {-V,--version}'[display version]' \
+        "*: :_files"
+
+}
+
+_uuidparse "$@"
+

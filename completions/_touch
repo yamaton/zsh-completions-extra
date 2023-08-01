@@ -1,0 +1,23 @@
+#compdef touch
+
+# Auto-generated with h2o
+
+function _touch {
+    _arguments \
+        '-a[change only the access time]' \
+        {-c,--no-create}'[do not create any files]' \
+        {-d,--date}'[parse STRING and use it instead of current time]' \
+        '-f[(ignored)]' \
+        {-h,--no-dereference}'[affect each symbolic link instead of any referenced file (useful only on systems that can change the timestamps of a symlink)]' \
+        '-m[change only the modification time]' \
+        {-r,--reference}'[use this file'\''s times instead of current time]':file:_files \
+        '-t[use \[\[CC\]YY\]MMDDhhmm\[.ss\] instead of current time]' \
+        '--time[change the specified time:]' \
+        '--help[this help and exit]' \
+        '--version[output version information and exit]' \
+        "*: :_files"
+
+}
+
+_touch "$@"
+

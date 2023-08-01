@@ -1,0 +1,26 @@
+#compdef uuidd
+
+# Auto-generated with h2o
+
+function _uuidd {
+    _arguments \
+        {-p,--pid}'[path to pid file]':file:_files \
+        {-s,--socket}'[path to socket]':file:_files \
+        {-T,--timeout}'[specify inactivity timeout]' \
+        {-k,--kill}'[kill running daemon]' \
+        {-r,--random}'[test random-based generation]' \
+        {-t,--time}'[test time-based generation]' \
+        {-n,--uuids}'[request number of uuids]' \
+        {-P,--no-pid}'[do not create pid file]' \
+        {-F,--no-fork}'[do not daemonize using double-fork]' \
+        {-S,--socket-activation}'[do not create listening socket]' \
+        {-d,--debug}'[run in debugging mode]' \
+        {-q,--quiet}'[turn on quiet mode]' \
+        {-h,--help}'[display this help]' \
+        {-V,--version}'[display version]' \
+        "*: :_files"
+
+}
+
+_uuidd "$@"
+

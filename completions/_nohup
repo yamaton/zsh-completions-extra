@@ -1,0 +1,14 @@
+#compdef nohup
+
+# Auto-generated with h2o
+
+function _nohup {
+    _arguments \
+        '--help[display this help and exit]' \
+        '--version[output version information and exit]' \
+        "*: :_files"
+
+}
+
+_nohup "$@"
+

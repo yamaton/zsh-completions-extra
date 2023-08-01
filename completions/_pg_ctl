@@ -1,0 +1,133 @@
+#compdef pg_ctl
+
+# Auto-generated with h2o
+
+
+function _pg_ctl {
+    local line state
+
+    function _commands {
+        local -a commands
+        commands=(
+            'init:creates a new PostgreSQL database cluster'
+            'start:launches a new server'
+            'stop:shuts down the server that is running in the specified data directory'
+            'restart:effectively executes a stop followed by a start'
+            'reload:sends the postgres server process a SIGHUP signal'
+            'status:checks whether a server is running in the specified data directory'
+            'promote:commands the standby server to end standby mode and begin read-write operations'
+            'logrotate:rotates the server log file'
+            'kill:sends a signal to a specified proces'
+        )
+        _describe 'command' commands
+    }
+ 
+
+    _arguments -C \
+        ': :->cmd' \
+        '*:: :->subcmd'
+
+    case $state in
+    (cmd)
+        _commands
+        ;;
+    (subcmd)
+        case $line[1] in
+        (init)
+            _pg_ctl_init
+            ;;
+
+        (start)
+            _pg_ctl_start
+            ;;
+
+        (stop)
+            _pg_ctl_stop
+            ;;
+
+        (restart)
+            _pg_ctl_restart
+            ;;
+
+        (reload)
+            _pg_ctl_reload
+            ;;
+
+        (status)
+            _pg_ctl_status
+            ;;
+
+        (promote)
+            _pg_ctl_promote
+            ;;
+
+        (logrotate)
+            _pg_ctl_logrotate
+            ;;
+
+        (kill)
+            _pg_ctl_kill
+            ;;
+
+        esac
+        ;;
+     esac
+
+}
+
+function _pg_ctl_init {
+    _arguments \
+        "*: :_files"
+
+}
+
+function _pg_ctl_start {
+    _arguments \
+        "*: :_files"
+
+}
+
+function _pg_ctl_stop {
+    _arguments \
+        "*: :_files"
+
+}
+
+function _pg_ctl_restart {
+    _arguments \
+        "*: :_files"
+
+}
+
+function _pg_ctl_reload {
+    _arguments \
+        "*: :_files"
+
+}
+
+function _pg_ctl_status {
+    _arguments \
+        "*: :_files"
+
+}
+
+function _pg_ctl_promote {
+    _arguments \
+        "*: :_files"
+
+}
+
+function _pg_ctl_logrotate {
+    _arguments \
+        "*: :_files"
+
+}
+
+function _pg_ctl_kill {
+    _arguments \
+        "*: :_files"
+
+}
+
+_pg_ctl "$@"
+

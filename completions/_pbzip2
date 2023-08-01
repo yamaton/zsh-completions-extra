@@ -1,0 +1,37 @@
+#compdef pbzip2
+
+# Auto-generated with h2o
+
+function _pbzip2 {
+    _arguments \
+        '-1[set BWT block size to 100k (default 900k)]' \
+        '-2[set BWT block size to 200k (default 900k)]' \
+        '-3[set BWT block size to 300k (default 900k)]' \
+        '-4[set BWT block size to 400k (default 900k)]' \
+        '-5[set BWT block size to 500k (default 900k)]' \
+        '-6[set BWT block size to 600k (default 900k)]' \
+        '-7[set BWT block size to 700k (default 900k)]' \
+        '-8[set BWT block size to 800k (default 900k)]' \
+        '-9[set BWT block size to 900k (default 900k)]' \
+        '-b[Block size in 100k steps (default 9 = 900k)]' \
+        {-c,--stdout}'[Output to standard out (stdout)]' \
+        {-d,--decompress}'[Decompress file]' \
+        {-f,--force}'[Overwrite existing output file]' \
+        {-h,--help}'[Print this help message]' \
+        {-k,--keep}'[Keep input file, don'\''t delete]' \
+        {-l,--loadavg}'[Load average determines max number processors to use]' \
+        '-m[Maximum memory usage in 1MB steps (default 100 = 100MB)]' \
+        '-p[Number of processors to use (default: autodetect \[12\])]' \
+        {-q,--quiet}'[Quiet mode (default)]' \
+        {-r,--read}'[Read entire input file into RAM and split between processors]' \
+        '-S[Child thread stack size in 1KB steps (default stack size if unspecified)]' \
+        {-t,--test}'[Test compressed file integrity]' \
+        {-v,--verbose}'[Verbose mode]' \
+        {-V,--version}'[Display version info for pbzip2 then exit]' \
+        {-z,--compress}'[Compress file (default)]' \
+        "*: :_files"
+
+}
+
+_pbzip2 "$@"
+

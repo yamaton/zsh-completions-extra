@@ -1,0 +1,1023 @@
+#compdef restic
+
+# Auto-generated with h2o
+
+
+function _restic {
+    local line state
+
+    function _commands {
+        local -a commands
+        commands=(
+            'backup:Create a new backup of files and/or directories'
+            'cache:Operate on local cache directories'
+            'cat:Print internal objects to stdout'
+            'copy:Copy snapshots from one repository to another'
+            'diff:Show differences between two snapshots'
+            'dump:Print a backed-up file to stdout'
+            'find:Find a file, a directory or restic IDs'
+            'forget:Remove snapshots from the repository'
+            'generate:Generate manual pages and auto-completion files (bash, fish, zsh)'
+            'help:Help about any command'
+            'init:Initialize a new repository'
+            'key:Manage keys (passwords)'
+            'list:List objects in the repository'
+            'ls:List files in a snapshot'
+            'migrate:Apply migrations'
+            'mount:Mount the repository'
+            'prune:Remove unneeded data from the repository'
+            'rebuild-index:Build a new index'
+            'recover:Recover data from the repository not referenced by snapshots'
+            'restore:Extract the data from a snapshot'
+            'self-update:Update the restic binary'
+            'snapshots:List all snapshots'
+            'stats:Scan the repository and show basic statistics'
+            'tag:Modify tags on snapshots'
+            'unlock:Remove locks other processes created'
+            'version:Print version information'
+        )
+        _describe 'command' commands
+    }
+ 
+
+    _arguments -C \
+        '--cacert[file to load root certificates from (default: use system certificates)]':file:_files \
+        '--cache-dir[set the cache directory. (default: use system default cache directory)]':file:_files \
+        '--cleanup-cache[auto remove old cache directories]' \
+        '--compression[compression mode (only available for repository format version 2), one of (auto|off|max) (default auto)]' \
+        {-h,--help}'[help for restic]' \
+        '--insecure-tls[skip TLS certificate verification when connecting to the repository (insecure)]' \
+        '--json[set output mode to JSON for commands that support it]' \
+        '--key-hint[key ID of key to try decrypting first (default: $RESTIC_KEY_HINT)]' \
+        '--limit-download[limits downloads to a maximum rate in KiB/s. (default: unlimited)]' \
+        '--limit-upload[limits uploads to a maximum rate in KiB/s. (default: unlimited)]' \
+        '--no-cache[do not use a local cache]' \
+        '--no-lock[do not lock the repository, this allows some operations on read-only repositories]' \
+        {-o,--option}'[set extended option (key=value, can be specified multiple times)]' \
+        '--pack-size[set target pack size in MiB, created pack files may be larger (default: $RESTIC_PACK_SIZE)]' \
+        '--password-command[shell command to obtain the repository password from (default: $RESTIC_PASSWORD_COMMAND)]' \
+        {-p,--password-file}'[file to read the repository password from (default: $RESTIC_PASSWORD_FILE)]':file:_files \
+        {-q,--quiet}'[do not output comprehensive progress report]' \
+        {-r,--repo}'[repository to backup to or restore from (default: $RESTIC_REPOSITORY)]' \
+        '--repository-file[file to read the repository location from (default: $RESTIC_REPOSITORY_FILE)]':file:_files \
+        '--tls-client-cert[path to a file containing PEM encoded TLS client certificate and private key]':file:_files \
+        {-v,--verbose}'[be verbose (specify multiple times or a level using --verbose=n, max level/times is 3)]' \
+        ': :->cmd' \
+        '*:: :->subcmd'
+
+    case $state in
+    (cmd)
+        _commands
+        ;;
+    (subcmd)
+        case $line[1] in
+        (backup)
+            _restic_backup
+            ;;
+
+        (cache)
+            _restic_cache
+            ;;
+
+        (cat)
+            _restic_cat
+            ;;
+
+        (copy)
+            _restic_copy
+            ;;
+
+        (diff)
+            _restic_diff
+            ;;
+
+        (dump)
+            _restic_dump
+            ;;
+
+        (find)
+            _restic_find
+            ;;
+
+        (forget)
+            _restic_forget
+            ;;
+
+        (generate)
+            _restic_generate
+            ;;
+
+        (help)
+            _restic_help
+            ;;
+
+        (init)
+            _restic_init
+            ;;
+
+        (key)
+            _restic_key
+            ;;
+
+        (list)
+            _restic_list
+            ;;
+
+        (ls)
+            _restic_ls
+            ;;
+
+        (migrate)
+            _restic_migrate
+            ;;
+
+        (mount)
+            _restic_mount
+            ;;
+
+        (prune)
+            _restic_prune
+            ;;
+
+        (rebuild-index)
+            _restic_rebuild-index
+            ;;
+
+        (recover)
+            _restic_recover
+            ;;
+
+        (restore)
+            _restic_restore
+            ;;
+
+        (self-update)
+            _restic_self-update
+            ;;
+
+        (snapshots)
+            _restic_snapshots
+            ;;
+
+        (stats)
+            _restic_stats
+            ;;
+
+        (tag)
+            _restic_tag
+            ;;
+
+        (unlock)
+            _restic_unlock
+            ;;
+
+        (version)
+            _restic_version
+            ;;
+
+        esac
+        ;;
+     esac
+
+}
+
+function _restic_backup {
+    _arguments \
+        {-n,--dry-run}'[do not upload or write any data, just show what would be done]' \
+        {-e,--exclude}'[exclude a pattern (can be specified multiple times)]' \
+        '--exclude-caches[excludes cache directories that are marked with a CACHEDIR.TAG file. See https://bford.info/cachedir/ for the Cache Directory Tagging Standard]' \
+        '--exclude-file[read exclude patterns from a file (can be specified multiple times)]':file:_files \
+        '--exclude-if-present[takes filename\[:header\], exclude contents of directories containing filename (except filename itself) if header of that file is as provided (can be specified multiple times)]':file:_files \
+        '--exclude-larger-than[max size of the files to be backed up (allowed suffixes: k/K, m/M, g/G, t/T)]' \
+        '--files-from[read the files to backup from file (can be combined with file args; can be specified multiple times)]':file:_files \
+        '--files-from-raw[read the files to backup from file (can be combined with file args; can be specified multiple times)]':file:_files \
+        '--files-from-verbatim[read the files to backup from file (can be combined with file args; can be specified multiple times)]':file:_files \
+        {-f,--force}'[force re-reading the target files/directories (overrides the "parent" flag)]' \
+        {-h,--help}'[help for backup]' \
+        {-H,--host}'[set the hostname for the snapshot manually. To prevent an expensive rescan use the "parent" flag]' \
+        '--iexclude[same as --exclude pattern but ignores the casing of filenames]' \
+        '--iexclude-file[same as --exclude-file but ignores casing of filenames in patterns]':file:_files \
+        '--ignore-ctime[ignore ctime changes when checking for modified files]' \
+        '--ignore-inode[ignore inode number changes when checking for modified files]' \
+        {-x,--one-file-system}'[exclude other file systems, don'\''t cross filesystem boundaries and subvolumes]' \
+        '--parent[use this parent snapshot (default: last snapshot in the repository that has the same target files/directories, and is not newer than the snapshot time)]' \
+        '--stdin[read backup from stdin]' \
+        '--stdin-filename[filename to use when reading from stdin (default "stdin")]':file:_files \
+        '--tag[add tags for the new snapshot in the format `tag\[,tag,...\]` (can be specified multiple times) (default \[\])]' \
+        '--time[time of the backup (ex. '\''2012-11-01 22:08:41'\'') (default: now)]' \
+        '--with-atime[store the atime for all files and directories]' \
+        '--cacert[file to load root certificates from (default: use system certificates)]':file:_files \
+        '--cache-dir[set the cache directory. (default: use system default cache directory)]':file:_files \
+        '--cleanup-cache[auto remove old cache directories]' \
+        '--compression[compression mode (only available for repository format version 2), one of (auto|off|max) (default auto)]' \
+        '--insecure-tls[skip TLS certificate verification when connecting to the repository (insecure)]' \
+        '--json[set output mode to JSON for commands that support it]' \
+        '--key-hint[key ID of key to try decrypting first (default: $RESTIC_KEY_HINT)]' \
+        '--limit-download[limits downloads to a maximum rate in KiB/s. (default: unlimited)]' \
+        '--limit-upload[limits uploads to a maximum rate in KiB/s. (default: unlimited)]' \
+        '--no-cache[do not use a local cache]' \
+        '--no-lock[do not lock the repository, this allows some operations on read-only repositories]' \
+        {-o,--option}'[set extended option (key=value, can be specified multiple times)]' \
+        '--pack-size[set target pack size in MiB, created pack files may be larger (default: $RESTIC_PACK_SIZE)]' \
+        '--password-command[shell command to obtain the repository password from (default: $RESTIC_PASSWORD_COMMAND)]' \
+        {-p,--password-file}'[file to read the repository password from (default: $RESTIC_PASSWORD_FILE)]':file:_files \
+        {-q,--quiet}'[do not output comprehensive progress report]' \
+        {-r,--repo}'[repository to backup to or restore from (default: $RESTIC_REPOSITORY)]' \
+        '--repository-file[file to read the repository location from (default: $RESTIC_REPOSITORY_FILE)]':file:_files \
+        '--tls-client-cert[path to a file containing PEM encoded TLS client certificate and private key]':file:_files \
+        {-v,--verbose}'[be verbose (specify multiple times or a level using --verbose=n, max level/times is 3)]' \
+        "*: :_files"
+
+}
+
+function _restic_cache {
+    _arguments \
+        '--cleanup[remove old cache directories]' \
+        {-h,--help}'[help for cache]' \
+        '--max-age[max age in days for cache directories to be considered old (default 30)]' \
+        '--no-size[do not output the size of the cache directories]' \
+        '--cacert[file to load root certificates from (default: use system certificates)]':file:_files \
+        '--cache-dir[set the cache directory. (default: use system default cache directory)]':file:_files \
+        '--cleanup-cache[auto remove old cache directories]' \
+        '--compression[compression mode (only available for repository format version 2), one of (auto|off|max) (default auto)]' \
+        '--insecure-tls[skip TLS certificate verification when connecting to the repository (insecure)]' \
+        '--json[set output mode to JSON for commands that support it]' \
+        '--key-hint[key ID of key to try decrypting first (default: $RESTIC_KEY_HINT)]' \
+        '--limit-download[limits downloads to a maximum rate in KiB/s. (default: unlimited)]' \
+        '--limit-upload[limits uploads to a maximum rate in KiB/s. (default: unlimited)]' \
+        '--no-cache[do not use a local cache]' \
+        '--no-lock[do not lock the repository, this allows some operations on read-only repositories]' \
+        {-o,--option}'[set extended option (key=value, can be specified multiple times)]' \
+        '--pack-size[set target pack size in MiB, created pack files may be larger (default: $RESTIC_PACK_SIZE)]' \
+        '--password-command[shell command to obtain the repository password from (default: $RESTIC_PASSWORD_COMMAND)]' \
+        {-p,--password-file}'[file to read the repository password from (default: $RESTIC_PASSWORD_FILE)]':file:_files \
+        {-q,--quiet}'[do not output comprehensive progress report]' \
+        {-r,--repo}'[repository to backup to or restore from (default: $RESTIC_REPOSITORY)]' \
+        '--repository-file[file to read the repository location from (default: $RESTIC_REPOSITORY_FILE)]':file:_files \
+        '--tls-client-cert[path to a file containing PEM encoded TLS client certificate and private key]':file:_files \
+        {-v,--verbose}'[be verbose (specify multiple times or a level using --verbose=n, max level/times is 3)]' \
+        "*: :_files"
+
+}
+
+function _restic_cat {
+    _arguments \
+        {-h,--help}'[help for cat]' \
+        '--cacert[file to load root certificates from (default: use system certificates)]':file:_files \
+        '--cache-dir[set the cache directory. (default: use system default cache directory)]':file:_files \
+        '--cleanup-cache[auto remove old cache directories]' \
+        '--compression[compression mode (only available for repository format version 2), one of (auto|off|max) (default auto)]' \
+        '--insecure-tls[skip TLS certificate verification when connecting to the repository (insecure)]' \
+        '--json[set output mode to JSON for commands that support it]' \
+        '--key-hint[key ID of key to try decrypting first (default: $RESTIC_KEY_HINT)]' \
+        '--limit-download[limits downloads to a maximum rate in KiB/s. (default: unlimited)]' \
+        '--limit-upload[limits uploads to a maximum rate in KiB/s. (default: unlimited)]' \
+        '--no-cache[do not use a local cache]' \
+        '--no-lock[do not lock the repository, this allows some operations on read-only repositories]' \
+        {-o,--option}'[set extended option (key=value, can be specified multiple times)]' \
+        '--pack-size[set target pack size in MiB, created pack files may be larger (default: $RESTIC_PACK_SIZE)]' \
+        '--password-command[shell command to obtain the repository password from (default: $RESTIC_PASSWORD_COMMAND)]' \
+        {-p,--password-file}'[file to read the repository password from (default: $RESTIC_PASSWORD_FILE)]':file:_files \
+        {-q,--quiet}'[do not output comprehensive progress report]' \
+        {-r,--repo}'[repository to backup to or restore from (default: $RESTIC_REPOSITORY)]' \
+        '--repository-file[file to read the repository location from (default: $RESTIC_REPOSITORY_FILE)]':file:_files \
+        '--tls-client-cert[path to a file containing PEM encoded TLS client certificate and private key]':file:_files \
+        {-v,--verbose}'[be verbose (specify multiple times or a level using --verbose=n, max level/times is 3)]' \
+        "*: :_files"
+
+}
+
+function _restic_copy {
+    _arguments \
+        '--from-key-hint[key ID of key to try decrypting the source repository first (default: $RESTIC_FROM_KEY_HINT)]' \
+        '--from-password-command[shell command to obtain the source repository password from (default: $RESTIC_FROM_PASSWORD_COMMAND)]' \
+        '--from-password-file[file to read the source repository password from (default: $RESTIC_FROM_PASSWORD_FILE)]':file:_files \
+        '--from-repo[source repository to copy snapshots from (default: $RESTIC_FROM_REPOSITORY)]' \
+        '--from-repository-file[file from which to read the source repository location to copy snapshots from (default: $RESTIC_FROM_REPOSITORY_FILE)]':file:_files \
+        {-h,--help}'[help for copy]' \
+        {-H,--host}'[only consider snapshots for this host, when no snapshot ID is given (can be specified multiple times)]' \
+        '--path[only consider snapshots which include this (absolute) path, when no snapshot ID is given]':file:_files \
+        '--tag[only consider snapshots which include this taglist, when no snapshot ID is given (default \[\])]' \
+        '--cacert[file to load root certificates from (default: use system certificates)]':file:_files \
+        '--cache-dir[set the cache directory. (default: use system default cache directory)]':file:_files \
+        '--cleanup-cache[auto remove old cache directories]' \
+        '--compression[compression mode (only available for repository format version 2), one of (auto|off|max) (default auto)]' \
+        '--insecure-tls[skip TLS certificate verification when connecting to the repository (insecure)]' \
+        '--json[set output mode to JSON for commands that support it]' \
+        '--key-hint[key ID of key to try decrypting first (default: $RESTIC_KEY_HINT)]' \
+        '--limit-download[limits downloads to a maximum rate in KiB/s. (default: unlimited)]' \
+        '--limit-upload[limits uploads to a maximum rate in KiB/s. (default: unlimited)]' \
+        '--no-cache[do not use a local cache]' \
+        '--no-lock[do not lock the repository, this allows some operations on read-only repositories]' \
+        {-o,--option}'[set extended option (key=value, can be specified multiple times)]' \
+        '--pack-size[set target pack size in MiB, created pack files may be larger (default: $RESTIC_PACK_SIZE)]' \
+        '--password-command[shell command to obtain the repository password from (default: $RESTIC_PASSWORD_COMMAND)]' \
+        {-p,--password-file}'[file to read the repository password from (default: $RESTIC_PASSWORD_FILE)]':file:_files \
+        {-q,--quiet}'[do not output comprehensive progress report]' \
+        {-r,--repo}'[repository to backup to or restore from (default: $RESTIC_REPOSITORY)]' \
+        '--repository-file[file to read the repository location from (default: $RESTIC_REPOSITORY_FILE)]':file:_files \
+        '--tls-client-cert[path to a file containing PEM encoded TLS client certificate and private key]':file:_files \
+        {-v,--verbose}'[be verbose (specify multiple times or a level using --verbose=n, max level/times is 3)]' \
+        "*: :_files"
+
+}
+
+function _restic_diff {
+    _arguments \
+        {-h,--help}'[help for diff]' \
+        '--metadata[print changes in metadata]' \
+        '--cacert[file to load root certificates from (default: use system certificates)]':file:_files \
+        '--cache-dir[set the cache directory. (default: use system default cache directory)]':file:_files \
+        '--cleanup-cache[auto remove old cache directories]' \
+        '--compression[compression mode (only available for repository format version 2), one of (auto|off|max) (default auto)]' \
+        '--insecure-tls[skip TLS certificate verification when connecting to the repository (insecure)]' \
+        '--json[set output mode to JSON for commands that support it]' \
+        '--key-hint[key ID of key to try decrypting first (default: $RESTIC_KEY_HINT)]' \
+        '--limit-download[limits downloads to a maximum rate in KiB/s. (default: unlimited)]' \
+        '--limit-upload[limits uploads to a maximum rate in KiB/s. (default: unlimited)]' \
+        '--no-cache[do not use a local cache]' \
+        '--no-lock[do not lock the repository, this allows some operations on read-only repositories]' \
+        {-o,--option}'[set extended option (key=value, can be specified multiple times)]' \
+        '--pack-size[set target pack size in MiB, created pack files may be larger (default: $RESTIC_PACK_SIZE)]' \
+        '--password-command[shell command to obtain the repository password from (default: $RESTIC_PASSWORD_COMMAND)]' \
+        {-p,--password-file}'[file to read the repository password from (default: $RESTIC_PASSWORD_FILE)]':file:_files \
+        {-q,--quiet}'[do not output comprehensive progress report]' \
+        {-r,--repo}'[repository to backup to or restore from (default: $RESTIC_REPOSITORY)]' \
+        '--repository-file[file to read the repository location from (default: $RESTIC_REPOSITORY_FILE)]':file:_files \
+        '--tls-client-cert[path to a file containing PEM encoded TLS client certificate and private key]':file:_files \
+        {-v,--verbose}'[be verbose (specify multiple times or a level using --verbose=n, max level/times is 3)]' \
+        "*: :_files"
+
+}
+
+function _restic_dump {
+    _arguments \
+        {-a,--archive}'[set archive format as "tar" or "zip" (default "tar")]' \
+        {-h,--help}'[help for dump]' \
+        {-H,--host}'[only consider snapshots for this host when the snapshot ID is "latest" (can be specified multiple times)]' \
+        '--path[only consider snapshots which include this (absolute) path for snapshot ID "latest"]':file:_files \
+        '--tag[only consider snapshots which include this taglist for snapshot ID "latest" (default \[\])]' \
+        '--cacert[file to load root certificates from (default: use system certificates)]':file:_files \
+        '--cache-dir[set the cache directory. (default: use system default cache directory)]':file:_files \
+        '--cleanup-cache[auto remove old cache directories]' \
+        '--compression[compression mode (only available for repository format version 2), one of (auto|off|max) (default auto)]' \
+        '--insecure-tls[skip TLS certificate verification when connecting to the repository (insecure)]' \
+        '--json[set output mode to JSON for commands that support it]' \
+        '--key-hint[key ID of key to try decrypting first (default: $RESTIC_KEY_HINT)]' \
+        '--limit-download[limits downloads to a maximum rate in KiB/s. (default: unlimited)]' \
+        '--limit-upload[limits uploads to a maximum rate in KiB/s. (default: unlimited)]' \
+        '--no-cache[do not use a local cache]' \
+        '--no-lock[do not lock the repository, this allows some operations on read-only repositories]' \
+        {-o,--option}'[set extended option (key=value, can be specified multiple times)]' \
+        '--pack-size[set target pack size in MiB, created pack files may be larger (default: $RESTIC_PACK_SIZE)]' \
+        '--password-command[shell command to obtain the repository password from (default: $RESTIC_PASSWORD_COMMAND)]' \
+        {-p,--password-file}'[file to read the repository password from (default: $RESTIC_PASSWORD_FILE)]':file:_files \
+        {-q,--quiet}'[do not output comprehensive progress report]' \
+        {-r,--repo}'[repository to backup to or restore from (default: $RESTIC_REPOSITORY)]' \
+        '--repository-file[file to read the repository location from (default: $RESTIC_REPOSITORY_FILE)]':file:_files \
+        '--tls-client-cert[path to a file containing PEM encoded TLS client certificate and private key]':file:_files \
+        {-v,--verbose}'[be verbose (specify multiple times or a level using --verbose=n, max level/times is 3)]' \
+        "*: :_files"
+
+}
+
+function _restic_find {
+    _arguments \
+        '--blob[pattern is a blob-ID]' \
+        {-h,--help}'[help for find]' \
+        {-H,--host}'[only consider snapshots for this host, when no snapshot ID is given (can be specified multiple times)]' \
+        {-i,--ignore-case}'[ignore case for pattern]' \
+        {-l,--long}'[use a long listing format showing size and mode]' \
+        {-N,--newest}'[newest modification date/time]' \
+        {-O,--oldest}'[oldest modification date/time]' \
+        '--pack[pattern is a pack-ID]' \
+        '--path[only consider snapshots which include this (absolute) path, when no snapshot-ID is given]':file:_files \
+        '--show-pack-id[display the pack-ID the blobs belong to (with --blob or --tree)]' \
+        {-s,--snapshot}'[snapshot id to search in (can be given multiple times)]' \
+        '--tag[only consider snapshots which include this taglist, when no snapshot-ID is given (default \[\])]' \
+        '--tree[pattern is a tree-ID]' \
+        '--cacert[file to load root certificates from (default: use system certificates)]':file:_files \
+        '--cache-dir[set the cache directory. (default: use system default cache directory)]':file:_files \
+        '--cleanup-cache[auto remove old cache directories]' \
+        '--compression[compression mode (only available for repository format version 2), one of (auto|off|max) (default auto)]' \
+        '--insecure-tls[skip TLS certificate verification when connecting to the repository (insecure)]' \
+        '--json[set output mode to JSON for commands that support it]' \
+        '--key-hint[key ID of key to try decrypting first (default: $RESTIC_KEY_HINT)]' \
+        '--limit-download[limits downloads to a maximum rate in KiB/s. (default: unlimited)]' \
+        '--limit-upload[limits uploads to a maximum rate in KiB/s. (default: unlimited)]' \
+        '--no-cache[do not use a local cache]' \
+        '--no-lock[do not lock the repository, this allows some operations on read-only repositories]' \
+        {-o,--option}'[set extended option (key=value, can be specified multiple times)]' \
+        '--pack-size[set target pack size in MiB, created pack files may be larger (default: $RESTIC_PACK_SIZE)]' \
+        '--password-command[shell command to obtain the repository password from (default: $RESTIC_PASSWORD_COMMAND)]' \
+        {-p,--password-file}'[file to read the repository password from (default: $RESTIC_PASSWORD_FILE)]':file:_files \
+        {-q,--quiet}'[do not output comprehensive progress report]' \
+        {-r,--repo}'[repository to backup to or restore from (default: $RESTIC_REPOSITORY)]' \
+        '--repository-file[file to read the repository location from (default: $RESTIC_REPOSITORY_FILE)]':file:_files \
+        '--tls-client-cert[path to a file containing PEM encoded TLS client certificate and private key]':file:_files \
+        {-v,--verbose}'[be verbose (specify multiple times or a level using --verbose=n, max level/times is 3)]' \
+        "*: :_files"
+
+}
+
+function _restic_forget {
+    _arguments \
+        {-l,--keep-last}'[keep the last n snapshots]' \
+        {-H,--keep-hourly}'[keep the last n hourly snapshots]' \
+        {-d,--keep-daily}'[keep the last n daily snapshots]' \
+        {-w,--keep-weekly}'[keep the last n weekly snapshots]' \
+        {-m,--keep-monthly}'[keep the last n monthly snapshots]' \
+        {-y,--keep-yearly}'[keep the last n yearly snapshots]' \
+        '--keep-within[keep snapshots that are newer than duration (eg. 1y5m7d2h) relative to the latest snapshot]' \
+        '--keep-within-hourly[keep hourly snapshots that are newer than duration (eg. 1y5m7d2h) relative to the latest snapshot]' \
+        '--keep-within-daily[keep daily snapshots that are newer than duration (eg. 1y5m7d2h) relative to the latest snapshot]' \
+        '--keep-within-weekly[keep weekly snapshots that are newer than duration (eg. 1y5m7d2h) relative to the latest snapshot]' \
+        '--keep-within-monthly[keep monthly snapshots that are newer than duration (eg. 1y5m7d2h) relative to the latest snapshot]' \
+        '--keep-within-yearly[keep yearly snapshots that are newer than duration (eg. 1y5m7d2h) relative to the latest snapshot]' \
+        '--keep-tag[keep snapshots with this taglist (can be specified multiple times) (default \[\])]' \
+        '--host[only consider snapshots with the given host (can be specified multiple times)]' \
+        '--tag[only consider snapshots which include this taglist in the format `tag\[,tag,...\]` (can be specified multiple times) (default \[\])]' \
+        '--path[only consider snapshots which include this (absolute) path (can be specified multiple times)]':file:_files \
+        {-c,--compact}'[use compact output format]' \
+        {-g,--group-by}'[group snapshots by host, paths and/or tags, separated by comma (disable grouping with '\'''\'') (default "host,paths")]' \
+        {-n,--dry-run}'[do not delete anything, just print what would be done]' \
+        '--prune[automatically run the '\''prune'\'' command if snapshots have been removed]' \
+        '--max-unused[tolerate given limit of unused data (absolute value in bytes with suffixes k/K, m/M, g/G, t/T, a value in % or the word '\''unlimited'\'') (default "5%")]' \
+        '--max-repack-size[maximum size to repack (allowed suffixes: k/K, m/M, g/G, t/T)]' \
+        '--repack-cacheable-only[only repack packs which are cacheable]' \
+        '--repack-small[repack pack files below 80% of target pack size]' \
+        '--repack-uncompressed[repack all uncompressed data]' \
+        {-h,--help}'[help for forget]' \
+        '--cacert[file to load root certificates from (default: use system certificates)]':file:_files \
+        '--cache-dir[set the cache directory. (default: use system default cache directory)]':file:_files \
+        '--cleanup-cache[auto remove old cache directories]' \
+        '--compression[compression mode (only available for repository format version 2), one of (auto|off|max) (default auto)]' \
+        '--insecure-tls[skip TLS certificate verification when connecting to the repository (insecure)]' \
+        '--json[set output mode to JSON for commands that support it]' \
+        '--key-hint[key ID of key to try decrypting first (default: $RESTIC_KEY_HINT)]' \
+        '--limit-download[limits downloads to a maximum rate in KiB/s. (default: unlimited)]' \
+        '--limit-upload[limits uploads to a maximum rate in KiB/s. (default: unlimited)]' \
+        '--no-cache[do not use a local cache]' \
+        '--no-lock[do not lock the repository, this allows some operations on read-only repositories]' \
+        {-o,--option}'[set extended option (key=value, can be specified multiple times)]' \
+        '--pack-size[set target pack size in MiB, created pack files may be larger (default: $RESTIC_PACK_SIZE)]' \
+        '--password-command[shell command to obtain the repository password from (default: $RESTIC_PASSWORD_COMMAND)]' \
+        {-p,--password-file}'[file to read the repository password from (default: $RESTIC_PASSWORD_FILE)]':file:_files \
+        {-q,--quiet}'[do not output comprehensive progress report]' \
+        {-r,--repo}'[repository to backup to or restore from (default: $RESTIC_REPOSITORY)]' \
+        '--repository-file[file to read the repository location from (default: $RESTIC_REPOSITORY_FILE)]':file:_files \
+        '--tls-client-cert[path to a file containing PEM encoded TLS client certificate and private key]':file:_files \
+        {-v,--verbose}'[be verbose (specify multiple times or a level using --verbose=n, max level/times is 3)]' \
+        "*: :_files"
+
+}
+
+function _restic_generate {
+    _arguments \
+        '--bash-completion[write bash completion file]':file:_files \
+        '--fish-completion[write fish completion file]':file:_files \
+        {-h,--help}'[help for generate]' \
+        '--man[write man pages to directory]':file:_files \
+        '--zsh-completion[write zsh completion file]':file:_files \
+        '--cacert[file to load root certificates from (default: use system certificates)]':file:_files \
+        '--cache-dir[set the cache directory. (default: use system default cache directory)]':file:_files \
+        '--cleanup-cache[auto remove old cache directories]' \
+        '--compression[compression mode (only available for repository format version 2), one of (auto|off|max) (default auto)]' \
+        '--insecure-tls[skip TLS certificate verification when connecting to the repository (insecure)]' \
+        '--json[set output mode to JSON for commands that support it]' \
+        '--key-hint[key ID of key to try decrypting first (default: $RESTIC_KEY_HINT)]' \
+        '--limit-download[limits downloads to a maximum rate in KiB/s. (default: unlimited)]' \
+        '--limit-upload[limits uploads to a maximum rate in KiB/s. (default: unlimited)]' \
+        '--no-cache[do not use a local cache]' \
+        '--no-lock[do not lock the repository, this allows some operations on read-only repositories]' \
+        {-o,--option}'[set extended option (key=value, can be specified multiple times)]' \
+        '--pack-size[set target pack size in MiB, created pack files may be larger (default: $RESTIC_PACK_SIZE)]' \
+        '--password-command[shell command to obtain the repository password from (default: $RESTIC_PASSWORD_COMMAND)]' \
+        {-p,--password-file}'[file to read the repository password from (default: $RESTIC_PASSWORD_FILE)]':file:_files \
+        {-q,--quiet}'[do not output comprehensive progress report]' \
+        {-r,--repo}'[repository to backup to or restore from (default: $RESTIC_REPOSITORY)]' \
+        '--repository-file[file to read the repository location from (default: $RESTIC_REPOSITORY_FILE)]':file:_files \
+        '--tls-client-cert[path to a file containing PEM encoded TLS client certificate and private key]':file:_files \
+        {-v,--verbose}'[be verbose (specify multiple times or a level using --verbose=n, max level/times is 3)]' \
+        "*: :_files"
+
+}
+
+function _restic_help {
+    _arguments \
+        {-h,--help}'[help for help]' \
+        '--cacert[file to load root certificates from (default: use system certificates)]':file:_files \
+        '--cache-dir[set the cache directory. (default: use system default cache directory)]':file:_files \
+        '--cleanup-cache[auto remove old cache directories]' \
+        '--compression[compression mode (only available for repository format version 2), one of (auto|off|max) (default auto)]' \
+        '--insecure-tls[skip TLS certificate verification when connecting to the repository (insecure)]' \
+        '--json[set output mode to JSON for commands that support it]' \
+        '--key-hint[key ID of key to try decrypting first (default: $RESTIC_KEY_HINT)]' \
+        '--limit-download[limits downloads to a maximum rate in KiB/s. (default: unlimited)]' \
+        '--limit-upload[limits uploads to a maximum rate in KiB/s. (default: unlimited)]' \
+        '--no-cache[do not use a local cache]' \
+        '--no-lock[do not lock the repository, this allows some operations on read-only repositories]' \
+        {-o,--option}'[set extended option (key=value, can be specified multiple times)]' \
+        '--pack-size[set target pack size in MiB, created pack files may be larger (default: $RESTIC_PACK_SIZE)]' \
+        '--password-command[shell command to obtain the repository password from (default: $RESTIC_PASSWORD_COMMAND)]' \
+        {-p,--password-file}'[file to read the repository password from (default: $RESTIC_PASSWORD_FILE)]':file:_files \
+        {-q,--quiet}'[do not output comprehensive progress report]' \
+        {-r,--repo}'[repository to backup to or restore from (default: $RESTIC_REPOSITORY)]' \
+        '--repository-file[file to read the repository location from (default: $RESTIC_REPOSITORY_FILE)]':file:_files \
+        '--tls-client-cert[path to a file containing PEM encoded TLS client certificate and private key]':file:_files \
+        {-v,--verbose}'[be verbose (specify multiple times or a level using --verbose=n, max level/times is 3)]' \
+        "*: :_files"
+
+}
+
+function _restic_init {
+    _arguments \
+        '--copy-chunker-params[copy chunker parameters from the secondary repository (useful with the copy command)]' \
+        '--from-key-hint[key ID of key to try decrypting the source repository first (default: $RESTIC_FROM_KEY_HINT)]' \
+        '--from-password-command[shell command to obtain the source repository password from (default: $RESTIC_FROM_PASSWORD_COMMAND)]' \
+        '--from-password-file[file to read the source repository password from (default: $RESTIC_FROM_PASSWORD_FILE)]':file:_files \
+        '--from-repo[source repository to copy chunker parameters from (default: $RESTIC_FROM_REPOSITORY)]' \
+        '--from-repository-file[file from which to read the source repository location to copy chunker parameters from (default: $RESTIC_FROM_REPOSITORY_FILE)]':file:_files \
+        {-h,--help}'[help for init]' \
+        '--repository-version[repository format version to use, allowed values are a format version, '\''latest'\'' and '\''stable'\'' (default "stable")]' \
+        '--cacert[file to load root certificates from (default: use system certificates)]':file:_files \
+        '--cache-dir[set the cache directory. (default: use system default cache directory)]':file:_files \
+        '--cleanup-cache[auto remove old cache directories]' \
+        '--compression[compression mode (only available for repository format version 2), one of (auto|off|max) (default auto)]' \
+        '--insecure-tls[skip TLS certificate verification when connecting to the repository (insecure)]' \
+        '--json[set output mode to JSON for commands that support it]' \
+        '--key-hint[key ID of key to try decrypting first (default: $RESTIC_KEY_HINT)]' \
+        '--limit-download[limits downloads to a maximum rate in KiB/s. (default: unlimited)]' \
+        '--limit-upload[limits uploads to a maximum rate in KiB/s. (default: unlimited)]' \
+        '--no-cache[do not use a local cache]' \
+        '--no-lock[do not lock the repository, this allows some operations on read-only repositories]' \
+        {-o,--option}'[set extended option (key=value, can be specified multiple times)]' \
+        '--pack-size[set target pack size in MiB, created pack files may be larger (default: $RESTIC_PACK_SIZE)]' \
+        '--password-command[shell command to obtain the repository password from (default: $RESTIC_PASSWORD_COMMAND)]' \
+        {-p,--password-file}'[file to read the repository password from (default: $RESTIC_PASSWORD_FILE)]':file:_files \
+        {-q,--quiet}'[do not output comprehensive progress report]' \
+        {-r,--repo}'[repository to backup to or restore from (default: $RESTIC_REPOSITORY)]' \
+        '--repository-file[file to read the repository location from (default: $RESTIC_REPOSITORY_FILE)]':file:_files \
+        '--tls-client-cert[path to a file containing PEM encoded TLS client certificate and private key]':file:_files \
+        {-v,--verbose}'[be verbose (specify multiple times or a level using --verbose=n, max level/times is 3)]' \
+        "*: :_files"
+
+}
+
+function _restic_key {
+    _arguments \
+        {-h,--help}'[help for key]' \
+        '--host[the hostname for new keys]' \
+        '--new-password-file[file from which to read the new password]':file:_files \
+        '--user[the username for new keys]' \
+        '--cacert[file to load root certificates from (default: use system certificates)]':file:_files \
+        '--cache-dir[set the cache directory. (default: use system default cache directory)]':file:_files \
+        '--cleanup-cache[auto remove old cache directories]' \
+        '--compression[compression mode (only available for repository format version 2), one of (auto|off|max) (default auto)]' \
+        '--insecure-tls[skip TLS certificate verification when connecting to the repository (insecure)]' \
+        '--json[set output mode to JSON for commands that support it]' \
+        '--key-hint[key ID of key to try decrypting first (default: $RESTIC_KEY_HINT)]' \
+        '--limit-download[limits downloads to a maximum rate in KiB/s. (default: unlimited)]' \
+        '--limit-upload[limits uploads to a maximum rate in KiB/s. (default: unlimited)]' \
+        '--no-cache[do not use a local cache]' \
+        '--no-lock[do not lock the repository, this allows some operations on read-only repositories]' \
+        {-o,--option}'[set extended option (key=value, can be specified multiple times)]' \
+        '--pack-size[set target pack size in MiB, created pack files may be larger (default: $RESTIC_PACK_SIZE)]' \
+        '--password-command[shell command to obtain the repository password from (default: $RESTIC_PASSWORD_COMMAND)]' \
+        {-p,--password-file}'[file to read the repository password from (default: $RESTIC_PASSWORD_FILE)]':file:_files \
+        {-q,--quiet}'[do not output comprehensive progress report]' \
+        {-r,--repo}'[repository to backup to or restore from (default: $RESTIC_REPOSITORY)]' \
+        '--repository-file[file to read the repository location from (default: $RESTIC_REPOSITORY_FILE)]':file:_files \
+        '--tls-client-cert[path to a file containing PEM encoded TLS client certificate and private key]':file:_files \
+        {-v,--verbose}'[be verbose (specify multiple times or a level using --verbose=n, max level/times is 3)]' \
+        "*: :_files"
+
+}
+
+function _restic_list {
+    _arguments \
+        {-h,--help}'[help for list]' \
+        '--cacert[file to load root certificates from (default: use system certificates)]':file:_files \
+        '--cache-dir[set the cache directory. (default: use system default cache directory)]':file:_files \
+        '--cleanup-cache[auto remove old cache directories]' \
+        '--compression[compression mode (only available for repository format version 2), one of (auto|off|max) (default auto)]' \
+        '--insecure-tls[skip TLS certificate verification when connecting to the repository (insecure)]' \
+        '--json[set output mode to JSON for commands that support it]' \
+        '--key-hint[key ID of key to try decrypting first (default: $RESTIC_KEY_HINT)]' \
+        '--limit-download[limits downloads to a maximum rate in KiB/s. (default: unlimited)]' \
+        '--limit-upload[limits uploads to a maximum rate in KiB/s. (default: unlimited)]' \
+        '--no-cache[do not use a local cache]' \
+        '--no-lock[do not lock the repository, this allows some operations on read-only repositories]' \
+        {-o,--option}'[set extended option (key=value, can be specified multiple times)]' \
+        '--pack-size[set target pack size in MiB, created pack files may be larger (default: $RESTIC_PACK_SIZE)]' \
+        '--password-command[shell command to obtain the repository password from (default: $RESTIC_PASSWORD_COMMAND)]' \
+        {-p,--password-file}'[file to read the repository password from (default: $RESTIC_PASSWORD_FILE)]':file:_files \
+        {-q,--quiet}'[do not output comprehensive progress report]' \
+        {-r,--repo}'[repository to backup to or restore from (default: $RESTIC_REPOSITORY)]' \
+        '--repository-file[file to read the repository location from (default: $RESTIC_REPOSITORY_FILE)]':file:_files \
+        '--tls-client-cert[path to a file containing PEM encoded TLS client certificate and private key]':file:_files \
+        {-v,--verbose}'[be verbose (specify multiple times or a level using --verbose=n, max level/times is 3)]' \
+        "*: :_files"
+
+}
+
+function _restic_ls {
+    _arguments \
+        {-h,--help,-H,--host}'[snapshots for this host, when snapshot ID "latest" is given (can be specified multiple times)]' \
+        {-l,--long}'[use a long listing format showing size and mode]' \
+        '--path[only consider snapshots which include this (absolute) path, when snapshot ID "latest" is given (can be specified multiple times)]':file:_files \
+        '--recursive[include files in subfolders of the listed directories]' \
+        '--tag[only consider snapshots which include this taglist, when snapshot ID "latest" is given (can be specified multiple times) (default \[\])]' \
+        '--cacert[file to load root certificates from (default: use system certificates)]':file:_files \
+        '--cache-dir[set the cache directory. (default: use system default cache directory)]':file:_files \
+        '--cleanup-cache[auto remove old cache directories]' \
+        '--compression[compression mode (only available for repository format version 2), one of (auto|off|max) (default auto)]' \
+        '--insecure-tls[skip TLS certificate verification when connecting to the repository (insecure)]' \
+        '--json[set output mode to JSON for commands that support it]' \
+        '--key-hint[key ID of key to try decrypting first (default: $RESTIC_KEY_HINT)]' \
+        '--limit-download[limits downloads to a maximum rate in KiB/s. (default: unlimited)]' \
+        '--limit-upload[limits uploads to a maximum rate in KiB/s. (default: unlimited)]' \
+        '--no-cache[do not use a local cache]' \
+        '--no-lock[do not lock the repository, this allows some operations on read-only repositories]' \
+        {-o,--option}'[set extended option (key=value, can be specified multiple times)]' \
+        '--pack-size[set target pack size in MiB, created pack files may be larger (default: $RESTIC_PACK_SIZE)]' \
+        '--password-command[shell command to obtain the repository password from (default: $RESTIC_PASSWORD_COMMAND)]' \
+        {-p,--password-file}'[file to read the repository password from (default: $RESTIC_PASSWORD_FILE)]':file:_files \
+        {-q,--quiet}'[do not output comprehensive progress report]' \
+        {-r,--repo}'[repository to backup to or restore from (default: $RESTIC_REPOSITORY)]' \
+        '--repository-file[file to read the repository location from (default: $RESTIC_REPOSITORY_FILE)]':file:_files \
+        '--tls-client-cert[path to a file containing PEM encoded TLS client certificate and private key]':file:_files \
+        {-v,--verbose}'[be verbose (specify multiple times or a level using --verbose=n, max level/times is 3)]' \
+        "*: :_files"
+
+}
+
+function _restic_migrate {
+    _arguments \
+        {-f,--force}'[apply a migration a second time]' \
+        {-h,--help}'[help for migrate]' \
+        '--cacert[file to load root certificates from (default: use system certificates)]':file:_files \
+        '--cache-dir[set the cache directory. (default: use system default cache directory)]':file:_files \
+        '--cleanup-cache[auto remove old cache directories]' \
+        '--compression[compression mode (only available for repository format version 2), one of (auto|off|max) (default auto)]' \
+        '--insecure-tls[skip TLS certificate verification when connecting to the repository (insecure)]' \
+        '--json[set output mode to JSON for commands that support it]' \
+        '--key-hint[key ID of key to try decrypting first (default: $RESTIC_KEY_HINT)]' \
+        '--limit-download[limits downloads to a maximum rate in KiB/s. (default: unlimited)]' \
+        '--limit-upload[limits uploads to a maximum rate in KiB/s. (default: unlimited)]' \
+        '--no-cache[do not use a local cache]' \
+        '--no-lock[do not lock the repository, this allows some operations on read-only repositories]' \
+        {-o,--option}'[set extended option (key=value, can be specified multiple times)]' \
+        '--pack-size[set target pack size in MiB, created pack files may be larger (default: $RESTIC_PACK_SIZE)]' \
+        '--password-command[shell command to obtain the repository password from (default: $RESTIC_PASSWORD_COMMAND)]' \
+        {-p,--password-file}'[file to read the repository password from (default: $RESTIC_PASSWORD_FILE)]':file:_files \
+        {-q,--quiet}'[do not output comprehensive progress report]' \
+        {-r,--repo}'[repository to backup to or restore from (default: $RESTIC_REPOSITORY)]' \
+        '--repository-file[file to read the repository location from (default: $RESTIC_REPOSITORY_FILE)]':file:_files \
+        '--tls-client-cert[path to a file containing PEM encoded TLS client certificate and private key]':file:_files \
+        {-v,--verbose}'[be verbose (specify multiple times or a level using --verbose=n, max level/times is 3)]' \
+        "*: :_files"
+
+}
+
+function _restic_mount {
+    _arguments \
+        '--time-template[You need to specify a sample format for exactly the following timestamp:]' \
+        '--allow-other[allow other users to access the data in the mounted directory]' \
+        {-h,--help}'[help for mount]' \
+        {-H,--host}'[only consider snapshots for this host (can be specified multiple times)]' \
+        '--no-default-permissions[for '\''allow-other'\'', ignore Unix permissions and allow users to read all snapshot files]' \
+        '--owner-root[use '\''root'\'' as the owner of files and dirs]' \
+        '--path[only consider snapshots which include this (absolute) path]':file:_files \
+        '--path-template[set template for path names (can be specified multiple times)]' \
+        '--tag[only consider snapshots which include this taglist (default \[\])]' \
+        '--time-template[set template to use for times (default "2006-01-02T15:04:05Z07:00")]' \
+        '--cacert[file to load root certificates from (default: use system certificates)]':file:_files \
+        '--cache-dir[set the cache directory. (default: use system default cache directory)]':file:_files \
+        '--cleanup-cache[auto remove old cache directories]' \
+        '--compression[compression mode (only available for repository format version 2), one of (auto|off|max) (default auto)]' \
+        '--insecure-tls[skip TLS certificate verification when connecting to the repository (insecure)]' \
+        '--json[set output mode to JSON for commands that support it]' \
+        '--key-hint[key ID of key to try decrypting first (default: $RESTIC_KEY_HINT)]' \
+        '--limit-download[limits downloads to a maximum rate in KiB/s. (default: unlimited)]' \
+        '--limit-upload[limits uploads to a maximum rate in KiB/s. (default: unlimited)]' \
+        '--no-cache[do not use a local cache]' \
+        '--no-lock[do not lock the repository, this allows some operations on read-only repositories]' \
+        {-o,--option}'[set extended option (key=value, can be specified multiple times)]' \
+        '--pack-size[set target pack size in MiB, created pack files may be larger (default: $RESTIC_PACK_SIZE)]' \
+        '--password-command[shell command to obtain the repository password from (default: $RESTIC_PASSWORD_COMMAND)]' \
+        {-p,--password-file}'[file to read the repository password from (default: $RESTIC_PASSWORD_FILE)]':file:_files \
+        {-q,--quiet}'[do not output comprehensive progress report]' \
+        {-r,--repo}'[repository to backup to or restore from (default: $RESTIC_REPOSITORY)]' \
+        '--repository-file[file to read the repository location from (default: $RESTIC_REPOSITORY_FILE)]':file:_files \
+        '--tls-client-cert[path to a file containing PEM encoded TLS client certificate and private key]':file:_files \
+        {-v,--verbose}'[be verbose (specify multiple times or a level using --verbose=n, max level/times is 3)]' \
+        "*: :_files"
+
+}
+
+function _restic_prune {
+    _arguments \
+        {-n,--dry-run}'[do not modify the repository, just print what would be done]' \
+        {-h,--help}'[help for prune]' \
+        '--max-repack-size[maximum size to repack (allowed suffixes: k/K, m/M, g/G, t/T)]' \
+        '--max-unused[tolerate given limit of unused data (absolute value in bytes with suffixes k/K, m/M, g/G, t/T, a value in % or the word '\''unlimited'\'') (default "5%")]' \
+        '--repack-cacheable-only[only repack packs which are cacheable]' \
+        '--repack-small[repack pack files below 80% of target pack size]' \
+        '--repack-uncompressed[repack all uncompressed data]' \
+        '--unsafe-recover-no-free-space[UNSAFE, READ THE DOCUMENTATION BEFORE USING! Try to recover a repository stuck with no free space. Do not use without trying out '\''prune --max-repack-size 0'\'' first.]' \
+        '--cacert[file to load root certificates from (default: use system certificates)]':file:_files \
+        '--cache-dir[set the cache directory. (default: use system default cache directory)]':file:_files \
+        '--cleanup-cache[auto remove old cache directories]' \
+        '--compression[compression mode (only available for repository format version 2), one of (auto|off|max) (default auto)]' \
+        '--insecure-tls[skip TLS certificate verification when connecting to the repository (insecure)]' \
+        '--json[set output mode to JSON for commands that support it]' \
+        '--key-hint[key ID of key to try decrypting first (default: $RESTIC_KEY_HINT)]' \
+        '--limit-download[limits downloads to a maximum rate in KiB/s. (default: unlimited)]' \
+        '--limit-upload[limits uploads to a maximum rate in KiB/s. (default: unlimited)]' \
+        '--no-cache[do not use a local cache]' \
+        '--no-lock[do not lock the repository, this allows some operations on read-only repositories]' \
+        {-o,--option}'[set extended option (key=value, can be specified multiple times)]' \
+        '--pack-size[set target pack size in MiB, created pack files may be larger (default: $RESTIC_PACK_SIZE)]' \
+        '--password-command[shell command to obtain the repository password from (default: $RESTIC_PASSWORD_COMMAND)]' \
+        {-p,--password-file}'[file to read the repository password from (default: $RESTIC_PASSWORD_FILE)]':file:_files \
+        {-q,--quiet}'[do not output comprehensive progress report]' \
+        {-r,--repo}'[repository to backup to or restore from (default: $RESTIC_REPOSITORY)]' \
+        '--repository-file[file to read the repository location from (default: $RESTIC_REPOSITORY_FILE)]':file:_files \
+        '--tls-client-cert[path to a file containing PEM encoded TLS client certificate and private key]':file:_files \
+        {-v,--verbose}'[be verbose (specify multiple times or a level using --verbose=n, max level/times is 3)]' \
+        "*: :_files"
+
+}
+
+function _restic_rebuild-index {
+    _arguments \
+        {-h,--help}'[help for rebuild-index]' \
+        '--read-all-packs[read all pack files to generate new index from scratch]' \
+        '--cacert[file to load root certificates from (default: use system certificates)]':file:_files \
+        '--cache-dir[set the cache directory. (default: use system default cache directory)]':file:_files \
+        '--cleanup-cache[auto remove old cache directories]' \
+        '--compression[compression mode (only available for repository format version 2), one of (auto|off|max) (default auto)]' \
+        '--insecure-tls[skip TLS certificate verification when connecting to the repository (insecure)]' \
+        '--json[set output mode to JSON for commands that support it]' \
+        '--key-hint[key ID of key to try decrypting first (default: $RESTIC_KEY_HINT)]' \
+        '--limit-download[limits downloads to a maximum rate in KiB/s. (default: unlimited)]' \
+        '--limit-upload[limits uploads to a maximum rate in KiB/s. (default: unlimited)]' \
+        '--no-cache[do not use a local cache]' \
+        '--no-lock[do not lock the repository, this allows some operations on read-only repositories]' \
+        {-o,--option}'[set extended option (key=value, can be specified multiple times)]' \
+        '--pack-size[set target pack size in MiB, created pack files may be larger (default: $RESTIC_PACK_SIZE)]' \
+        '--password-command[shell command to obtain the repository password from (default: $RESTIC_PASSWORD_COMMAND)]' \
+        {-p,--password-file}'[file to read the repository password from (default: $RESTIC_PASSWORD_FILE)]':file:_files \
+        {-q,--quiet}'[do not output comprehensive progress report]' \
+        {-r,--repo}'[repository to backup to or restore from (default: $RESTIC_REPOSITORY)]' \
+        '--repository-file[file to read the repository location from (default: $RESTIC_REPOSITORY_FILE)]':file:_files \
+        '--tls-client-cert[path to a file containing PEM encoded TLS client certificate and private key]':file:_files \
+        {-v,--verbose}'[be verbose (specify multiple times or a level using --verbose=n, max level/times is 3)]' \
+        "*: :_files"
+
+}
+
+function _restic_recover {
+    _arguments \
+        {-h,--help}'[help for recover]' \
+        '--cacert[file to load root certificates from (default: use system certificates)]':file:_files \
+        '--cache-dir[set the cache directory. (default: use system default cache directory)]':file:_files \
+        '--cleanup-cache[auto remove old cache directories]' \
+        '--compression[compression mode (only available for repository format version 2), one of (auto|off|max) (default auto)]' \
+        '--insecure-tls[skip TLS certificate verification when connecting to the repository (insecure)]' \
+        '--json[set output mode to JSON for commands that support it]' \
+        '--key-hint[key ID of key to try decrypting first (default: $RESTIC_KEY_HINT)]' \
+        '--limit-download[limits downloads to a maximum rate in KiB/s. (default: unlimited)]' \
+        '--limit-upload[limits uploads to a maximum rate in KiB/s. (default: unlimited)]' \
+        '--no-cache[do not use a local cache]' \
+        '--no-lock[do not lock the repository, this allows some operations on read-only repositories]' \
+        {-o,--option}'[set extended option (key=value, can be specified multiple times)]' \
+        '--pack-size[set target pack size in MiB, created pack files may be larger (default: $RESTIC_PACK_SIZE)]' \
+        '--password-command[shell command to obtain the repository password from (default: $RESTIC_PASSWORD_COMMAND)]' \
+        {-p,--password-file}'[file to read the repository password from (default: $RESTIC_PASSWORD_FILE)]':file:_files \
+        {-q,--quiet}'[do not output comprehensive progress report]' \
+        {-r,--repo}'[repository to backup to or restore from (default: $RESTIC_REPOSITORY)]' \
+        '--repository-file[file to read the repository location from (default: $RESTIC_REPOSITORY_FILE)]':file:_files \
+        '--tls-client-cert[path to a file containing PEM encoded TLS client certificate and private key]':file:_files \
+        {-v,--verbose}'[be verbose (specify multiple times or a level using --verbose=n, max level/times is 3)]' \
+        "*: :_files"
+
+}
+
+function _restic_restore {
+    _arguments \
+        {-e,--exclude}'[exclude a pattern (can be specified multiple times)]' \
+        {-h,--help}'[help for restore]' \
+        {-H,--host}'[only consider snapshots for this host when the snapshot ID is "latest" (can be specified multiple times)]' \
+        {-i,--include}'[include a pattern, exclude everything else (can be specified multiple times)]' \
+        '--path[only consider snapshots which include this (absolute) path for snapshot ID "latest"]':file:_files \
+        '--tag[only consider snapshots which include this taglist for snapshot ID "latest" (default \[\])]' \
+        {-t,--target}'[directory to extract data to]' \
+        '--verify[verify restored files content]' \
+        '--cacert[file to load root certificates from (default: use system certificates)]':file:_files \
+        '--cache-dir[set the cache directory. (default: use system default cache directory)]':file:_files \
+        '--cleanup-cache[auto remove old cache directories]' \
+        '--compression[compression mode (only available for repository format version 2), one of (auto|off|max) (default auto)]' \
+        '--insecure-tls[skip TLS certificate verification when connecting to the repository (insecure)]' \
+        '--json[set output mode to JSON for commands that support it]' \
+        '--key-hint[key ID of key to try decrypting first (default: $RESTIC_KEY_HINT)]' \
+        '--limit-download[limits downloads to a maximum rate in KiB/s. (default: unlimited)]' \
+        '--limit-upload[limits uploads to a maximum rate in KiB/s. (default: unlimited)]' \
+        '--no-cache[do not use a local cache]' \
+        '--no-lock[do not lock the repository, this allows some operations on read-only repositories]' \
+        {-o,--option}'[set extended option (key=value, can be specified multiple times)]' \
+        '--pack-size[set target pack size in MiB, created pack files may be larger (default: $RESTIC_PACK_SIZE)]' \
+        '--password-command[shell command to obtain the repository password from (default: $RESTIC_PASSWORD_COMMAND)]' \
+        {-p,--password-file}'[file to read the repository password from (default: $RESTIC_PASSWORD_FILE)]':file:_files \
+        {-q,--quiet}'[do not output comprehensive progress report]' \
+        {-r,--repo}'[repository to backup to or restore from (default: $RESTIC_REPOSITORY)]' \
+        '--repository-file[file to read the repository location from (default: $RESTIC_REPOSITORY_FILE)]':file:_files \
+        '--tls-client-cert[path to a file containing PEM encoded TLS client certificate and private key]':file:_files \
+        {-v,--verbose}'[be verbose (specify multiple times or a level using --verbose=n, max level/times is 3)]' \
+        "*: :_files"
+
+}
+
+function _restic_self-update {
+    _arguments \
+        {-h,--help}'[help for self-update]' \
+        '--output[Save the downloaded file as filename (default: running binary itself)]':file:_files \
+        '--cacert[file to load root certificates from (default: use system certificates)]':file:_files \
+        '--cache-dir[set the cache directory. (default: use system default cache directory)]':file:_files \
+        '--cleanup-cache[auto remove old cache directories]' \
+        '--compression[compression mode (only available for repository format version 2), one of (auto|off|max) (default auto)]' \
+        '--insecure-tls[skip TLS certificate verification when connecting to the repository (insecure)]' \
+        '--json[set output mode to JSON for commands that support it]' \
+        '--key-hint[key ID of key to try decrypting first (default: $RESTIC_KEY_HINT)]' \
+        '--limit-download[limits downloads to a maximum rate in KiB/s. (default: unlimited)]' \
+        '--limit-upload[limits uploads to a maximum rate in KiB/s. (default: unlimited)]' \
+        '--no-cache[do not use a local cache]' \
+        '--no-lock[do not lock the repository, this allows some operations on read-only repositories]' \
+        {-o,--option}'[set extended option (key=value, can be specified multiple times)]' \
+        '--pack-size[set target pack size in MiB, created pack files may be larger (default: $RESTIC_PACK_SIZE)]' \
+        '--password-command[shell command to obtain the repository password from (default: $RESTIC_PASSWORD_COMMAND)]' \
+        {-p,--password-file}'[file to read the repository password from (default: $RESTIC_PASSWORD_FILE)]':file:_files \
+        {-q,--quiet}'[do not output comprehensive progress report]' \
+        {-r,--repo}'[repository to backup to or restore from (default: $RESTIC_REPOSITORY)]' \
+        '--repository-file[file to read the repository location from (default: $RESTIC_REPOSITORY_FILE)]':file:_files \
+        '--tls-client-cert[path to a file containing PEM encoded TLS client certificate and private key]':file:_files \
+        {-v,--verbose}'[be verbose (specify multiple times or a level using --verbose=n, max level/times is 3)]' \
+        "*: :_files"
+
+}
+
+function _restic_snapshots {
+    _arguments \
+        {-c,--compact}'[use compact output format]' \
+        {-g,--group-by}'[group snapshots by host, paths and/or tags, separated by comma]' \
+        {-h,--help}'[help for snapshots]' \
+        {-H,--host}'[only consider snapshots for this host (can be specified multiple times)]' \
+        '--latest[only show the last n snapshots for each host and path]' \
+        '--path[only consider snapshots for this path (can be specified multiple times)]':file:_files \
+        '--tag[only consider snapshots which include this taglist in the format `tag\[,tag,...\]` (can be specified multiple times) (default \[\])]' \
+        '--cacert[file to load root certificates from (default: use system certificates)]':file:_files \
+        '--cache-dir[set the cache directory. (default: use system default cache directory)]':file:_files \
+        '--cleanup-cache[auto remove old cache directories]' \
+        '--compression[compression mode (only available for repository format version 2), one of (auto|off|max) (default auto)]' \
+        '--insecure-tls[skip TLS certificate verification when connecting to the repository (insecure)]' \
+        '--json[set output mode to JSON for commands that support it]' \
+        '--key-hint[key ID of key to try decrypting first (default: $RESTIC_KEY_HINT)]' \
+        '--limit-download[limits downloads to a maximum rate in KiB/s. (default: unlimited)]' \
+        '--limit-upload[limits uploads to a maximum rate in KiB/s. (default: unlimited)]' \
+        '--no-cache[do not use a local cache]' \
+        '--no-lock[do not lock the repository, this allows some operations on read-only repositories]' \
+        {-o,--option}'[set extended option (key=value, can be specified multiple times)]' \
+        '--pack-size[set target pack size in MiB, created pack files may be larger (default: $RESTIC_PACK_SIZE)]' \
+        '--password-command[shell command to obtain the repository password from (default: $RESTIC_PASSWORD_COMMAND)]' \
+        {-p,--password-file}'[file to read the repository password from (default: $RESTIC_PASSWORD_FILE)]':file:_files \
+        {-q,--quiet}'[do not output comprehensive progress report]' \
+        {-r,--repo}'[repository to backup to or restore from (default: $RESTIC_REPOSITORY)]' \
+        '--repository-file[file to read the repository location from (default: $RESTIC_REPOSITORY_FILE)]':file:_files \
+        '--tls-client-cert[path to a file containing PEM encoded TLS client certificate and private key]':file:_files \
+        {-v,--verbose}'[be verbose (specify multiple times or a level using --verbose=n, max level/times is 3)]' \
+        "*: :_files"
+
+}
+
+function _restic_stats {
+    _arguments \
+        {-h,--help}'[help for stats]' \
+        {-H,--host}'[only consider snapshots with the given host (can be specified multiple times)]' \
+        '--mode[counting mode: restore-size (default), files-by-contents, blobs-per-file or raw-data (default "restore-size")]' \
+        '--path[only consider snapshots which include this (absolute) path (can be specified multiple times)]':file:_files \
+        '--tag[only consider snapshots which include this taglist in the format `tag\[,tag,...\]` (can be specified multiple times) (default \[\])]' \
+        '--cacert[file to load root certificates from (default: use system certificates)]':file:_files \
+        '--cache-dir[set the cache directory. (default: use system default cache directory)]':file:_files \
+        '--cleanup-cache[auto remove old cache directories]' \
+        '--compression[compression mode (only available for repository format version 2), one of (auto|off|max) (default auto)]' \
+        '--insecure-tls[skip TLS certificate verification when connecting to the repository (insecure)]' \
+        '--json[set output mode to JSON for commands that support it]' \
+        '--key-hint[key ID of key to try decrypting first (default: $RESTIC_KEY_HINT)]' \
+        '--limit-download[limits downloads to a maximum rate in KiB/s. (default: unlimited)]' \
+        '--limit-upload[limits uploads to a maximum rate in KiB/s. (default: unlimited)]' \
+        '--no-cache[do not use a local cache]' \
+        '--no-lock[do not lock the repository, this allows some operations on read-only repositories]' \
+        {-o,--option}'[set extended option (key=value, can be specified multiple times)]' \
+        '--pack-size[set target pack size in MiB, created pack files may be larger (default: $RESTIC_PACK_SIZE)]' \
+        '--password-command[shell command to obtain the repository password from (default: $RESTIC_PASSWORD_COMMAND)]' \
+        {-p,--password-file}'[file to read the repository password from (default: $RESTIC_PASSWORD_FILE)]':file:_files \
+        {-q,--quiet}'[do not output comprehensive progress report]' \
+        {-r,--repo}'[repository to backup to or restore from (default: $RESTIC_REPOSITORY)]' \
+        '--repository-file[file to read the repository location from (default: $RESTIC_REPOSITORY_FILE)]':file:_files \
+        '--tls-client-cert[path to a file containing PEM encoded TLS client certificate and private key]':file:_files \
+        {-v,--verbose}'[be verbose (specify multiple times or a level using --verbose=n, max level/times is 3)]' \
+        "*: :_files"
+
+}
+
+function _restic_tag {
+    _arguments \
+        '--add[tags which will be added to the existing tags in the format `tag\[,tag,...\]` (can be given multiple times) (default \[\])]' \
+        {-h,--help}'[help for tag]' \
+        {-H,--host}'[only consider snapshots for this host, when no snapshot ID is given (can be specified multiple times)]' \
+        '--path[only consider snapshots which include this (absolute) path, when no snapshot-ID is given]':file:_files \
+        '--remove[tags which will be removed from the existing tags in the format `tag\[,tag,...\]` (can be given multiple times) (default \[\])]' \
+        '--set[tags which will replace the existing tags in the format `tag\[,tag,...\]` (can be given multiple times) (default \[\])]' \
+        '--tag[only consider snapshots which include this taglist, when no snapshot-ID is given (default \[\])]' \
+        '--cacert[file to load root certificates from (default: use system certificates)]':file:_files \
+        '--cache-dir[set the cache directory. (default: use system default cache directory)]':file:_files \
+        '--cleanup-cache[auto remove old cache directories]' \
+        '--compression[compression mode (only available for repository format version 2), one of (auto|off|max) (default auto)]' \
+        '--insecure-tls[skip TLS certificate verification when connecting to the repository (insecure)]' \
+        '--json[set output mode to JSON for commands that support it]' \
+        '--key-hint[key ID of key to try decrypting first (default: $RESTIC_KEY_HINT)]' \
+        '--limit-download[limits downloads to a maximum rate in KiB/s. (default: unlimited)]' \
+        '--limit-upload[limits uploads to a maximum rate in KiB/s. (default: unlimited)]' \
+        '--no-cache[do not use a local cache]' \
+        '--no-lock[do not lock the repository, this allows some operations on read-only repositories]' \
+        {-o,--option}'[set extended option (key=value, can be specified multiple times)]' \
+        '--pack-size[set target pack size in MiB, created pack files may be larger (default: $RESTIC_PACK_SIZE)]' \
+        '--password-command[shell command to obtain the repository password from (default: $RESTIC_PASSWORD_COMMAND)]' \
+        {-p,--password-file}'[file to read the repository password from (default: $RESTIC_PASSWORD_FILE)]':file:_files \
+        {-q,--quiet}'[do not output comprehensive progress report]' \
+        {-r,--repo}'[repository to backup to or restore from (default: $RESTIC_REPOSITORY)]' \
+        '--repository-file[file to read the repository location from (default: $RESTIC_REPOSITORY_FILE)]':file:_files \
+        '--tls-client-cert[path to a file containing PEM encoded TLS client certificate and private key]':file:_files \
+        {-v,--verbose}'[be verbose (specify multiple times or a level using --verbose=n, max level/times is 3)]' \
+        "*: :_files"
+
+}
+
+function _restic_unlock {
+    _arguments \
+        {-h,--help}'[help for unlock]' \
+        '--remove-all[remove all locks, even non-stale ones]' \
+        '--cacert[file to load root certificates from (default: use system certificates)]':file:_files \
+        '--cache-dir[set the cache directory. (default: use system default cache directory)]':file:_files \
+        '--cleanup-cache[auto remove old cache directories]' \
+        '--compression[compression mode (only available for repository format version 2), one of (auto|off|max) (default auto)]' \
+        '--insecure-tls[skip TLS certificate verification when connecting to the repository (insecure)]' \
+        '--json[set output mode to JSON for commands that support it]' \
+        '--key-hint[key ID of key to try decrypting first (default: $RESTIC_KEY_HINT)]' \
+        '--limit-download[limits downloads to a maximum rate in KiB/s. (default: unlimited)]' \
+        '--limit-upload[limits uploads to a maximum rate in KiB/s. (default: unlimited)]' \
+        '--no-cache[do not use a local cache]' \
+        '--no-lock[do not lock the repository, this allows some operations on read-only repositories]' \
+        {-o,--option}'[set extended option (key=value, can be specified multiple times)]' \
+        '--pack-size[set target pack size in MiB, created pack files may be larger (default: $RESTIC_PACK_SIZE)]' \
+        '--password-command[shell command to obtain the repository password from (default: $RESTIC_PASSWORD_COMMAND)]' \
+        {-p,--password-file}'[file to read the repository password from (default: $RESTIC_PASSWORD_FILE)]':file:_files \
+        {-q,--quiet}'[do not output comprehensive progress report]' \
+        {-r,--repo}'[repository to backup to or restore from (default: $RESTIC_REPOSITORY)]' \
+        '--repository-file[file to read the repository location from (default: $RESTIC_REPOSITORY_FILE)]':file:_files \
+        '--tls-client-cert[path to a file containing PEM encoded TLS client certificate and private key]':file:_files \
+        {-v,--verbose}'[be verbose (specify multiple times or a level using --verbose=n, max level/times is 3)]' \
+        "*: :_files"
+
+}
+
+function _restic_version {
+    _arguments \
+        {-h,--help}'[help for version]' \
+        '--cacert[file to load root certificates from (default: use system certificates)]':file:_files \
+        '--cache-dir[set the cache directory. (default: use system default cache directory)]':file:_files \
+        '--cleanup-cache[auto remove old cache directories]' \
+        '--compression[compression mode (only available for repository format version 2), one of (auto|off|max) (default auto)]' \
+        '--insecure-tls[skip TLS certificate verification when connecting to the repository (insecure)]' \
+        '--json[set output mode to JSON for commands that support it]' \
+        '--key-hint[key ID of key to try decrypting first (default: $RESTIC_KEY_HINT)]' \
+        '--limit-download[limits downloads to a maximum rate in KiB/s. (default: unlimited)]' \
+        '--limit-upload[limits uploads to a maximum rate in KiB/s. (default: unlimited)]' \
+        '--no-cache[do not use a local cache]' \
+        '--no-lock[do not lock the repository, this allows some operations on read-only repositories]' \
+        {-o,--option}'[set extended option (key=value, can be specified multiple times)]' \
+        '--pack-size[set target pack size in MiB, created pack files may be larger (default: $RESTIC_PACK_SIZE)]' \
+        '--password-command[shell command to obtain the repository password from (default: $RESTIC_PASSWORD_COMMAND)]' \
+        {-p,--password-file}'[file to read the repository password from (default: $RESTIC_PASSWORD_FILE)]':file:_files \
+        {-q,--quiet}'[do not output comprehensive progress report]' \
+        {-r,--repo}'[repository to backup to or restore from (default: $RESTIC_REPOSITORY)]' \
+        '--repository-file[file to read the repository location from (default: $RESTIC_REPOSITORY_FILE)]':file:_files \
+        '--tls-client-cert[path to a file containing PEM encoded TLS client certificate and private key]':file:_files \
+        {-v,--verbose}'[be verbose (specify multiple times or a level using --verbose=n, max level/times is 3)]' \
+        "*: :_files"
+
+}
+
+_restic "$@"
+

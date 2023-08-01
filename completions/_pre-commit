@@ -1,0 +1,272 @@
+#compdef pre-commit
+
+# Auto-generated with h2o
+
+
+function _pre-commit {
+    local line state
+
+    function _commands {
+        local -a commands
+        commands=(
+            'autoupdate:Auto-update pre-commit config to the latest repos'\'' versions.'
+            'clean:Clean out pre-commit files.'
+            'gc:Clean unused cached repos.'
+            'init-templatedir:Install hook script in a directory intended for use with `git config init.templateDir`.'
+            'install:Install the pre-commit script.'
+            'install-hooks:Install hook environments for all environments in the config file. You may find `pre-commit install --install-hooks` more useful.'
+            'migrate-config:Migrate list configuration to new map configuration.'
+            'run:Run hooks.'
+            'sample-config:Produce a sample .pre-commit-config.yaml file'
+            'try-repo:Try the hooks in a repository, useful for developing new hooks.'
+            'uninstall:Uninstall the pre-commit script.'
+            'validate-config:Validate .pre-commit-config.yaml files'
+            'validate-manifest:Validate .pre-commit-hooks.yaml files'
+            'help:Show help for a specific command.'
+        )
+        _describe 'command' commands
+    }
+ 
+
+    _arguments -C \
+        {-h,--help}'[show this help message and exit]' \
+        {-V,--version}'[show program'\''s version number and exit]' \
+        ': :->cmd' \
+        '*:: :->subcmd'
+
+    case $state in
+    (cmd)
+        _commands
+        ;;
+    (subcmd)
+        case $line[1] in
+        (autoupdate)
+            _pre-commit_autoupdate
+            ;;
+
+        (clean)
+            _pre-commit_clean
+            ;;
+
+        (gc)
+            _pre-commit_gc
+            ;;
+
+        (init-templatedir)
+            _pre-commit_init-templatedir
+            ;;
+
+        (install)
+            _pre-commit_install
+            ;;
+
+        (install-hooks)
+            _pre-commit_install-hooks
+            ;;
+
+        (migrate-config)
+            _pre-commit_migrate-config
+            ;;
+
+        (run)
+            _pre-commit_run
+            ;;
+
+        (sample-config)
+            _pre-commit_sample-config
+            ;;
+
+        (try-repo)
+            _pre-commit_try-repo
+            ;;
+
+        (uninstall)
+            _pre-commit_uninstall
+            ;;
+
+        (validate-config)
+            _pre-commit_validate-config
+            ;;
+
+        (validate-manifest)
+            _pre-commit_validate-manifest
+            ;;
+
+        (help)
+            _pre-commit_help
+            ;;
+
+        esac
+        ;;
+     esac
+
+}
+
+function _pre-commit_autoupdate {
+    _arguments \
+        {-h,--help}'[show this help message and exit]' \
+        '--color[Whether to use color in output. Defaults to `auto`.]' \
+        {-c,--config}'[Path to alternate config file]' \
+        '--bleeding-edge[Update to the bleeding edge of `HEAD` instead of the latest tagged version (the default behavior).]' \
+        '--freeze[Store "frozen" hashes in `rev` instead of tag names]' \
+        '--repo[Only update this repository -- may be specified multiple times.]' \
+        {-j,--jobs}'[Number of threads to use. (default 1).]' \
+        "*: :_files"
+
+}
+
+function _pre-commit_clean {
+    _arguments \
+        {-h,--help}'[show this help message and exit]' \
+        '--color[Whether to use color in output. Defaults to `auto`.]' \
+        "*: :_files"
+
+}
+
+function _pre-commit_gc {
+    _arguments \
+        {-h,--help}'[show this help message and exit]' \
+        '--color[Whether to use color in output. Defaults to `auto`.]' \
+        "*: :_files"
+
+}
+
+function _pre-commit_init-templatedir {
+    _arguments \
+        {-h,--help}'[show this help message and exit]' \
+        '--color[Whether to use color in output. Defaults to `auto`.]' \
+        {-c,--config}'[Path to alternate config file]' \
+        '--no-allow-missing-config[Assume cloned repos should have a `pre-commit` config.]' \
+        '-t[, --hook-type {commit-msg,post-checkout,post-commit,post-merge,post-rewrite,pre-commit,pre-merge-commit,pre-push,pre-rebase,prepare-commit-msg}]' \
+        "*: :_files"
+
+}
+
+function _pre-commit_install {
+    _arguments \
+        {-h,--help}'[show this help message and exit]' \
+        '--color[Whether to use color in output. Defaults to `auto`.]' \
+        {-c,--config}'[Path to alternate config file]' \
+        {-f,--overwrite}'[Overwrite existing hooks / remove migration mode.]' \
+        '--install-hooks[Whether to install hook environments for all environments in the config file.]' \
+        {-t,--hook-type,--allow-missing-config}'[Whether to allow a missing `pre-commit` configuration file or exit with a failure code.]' \
+        "*: :_files"
+
+}
+
+function _pre-commit_install-hooks {
+    _arguments \
+        {-h,--help}'[show this help message and exit]' \
+        '--color[Whether to use color in output. Defaults to `auto`.]' \
+        {-c,--config}'[Path to alternate config file]' \
+        "*: :_files"
+
+}
+
+function _pre-commit_migrate-config {
+    _arguments \
+        {-h,--help}'[show this help message and exit]' \
+        '--color[Whether to use color in output. Defaults to `auto`.]' \
+        {-c,--config}'[Path to alternate config file]' \
+        "*: :_files"
+
+}
+
+function _pre-commit_run {
+    _arguments \
+        {-h,--help}'[show this help message and exit]' \
+        '--color[Whether to use color in output. Defaults to `auto`.]' \
+        {-c,--config}'[Path to alternate config file]' \
+        {--verbose,-v,--all-files,-a}'[Run on all the files in the repo.]' \
+        '--files[Specific filenames to run hooks on.]':file:_files \
+        '--show-diff-on-failure[When hooks fail, run `git diff` directly afterward.]' \
+        '--hook-stage[The stage during which the hook is fired. One of commit-msg, post-checkout, post-commit, post-merge, post-rewrite, pre-commit, pre-merge-commit, pre-push, pre-rebase, prepare-commit-msg, manual]' \
+        '--remote-branch[Remote branch ref used by `git push`.]' \
+        '--local-branch[Local branch ref used by `git push`.]' \
+        {--from-ref,--source,-s}'[(for usage with `--to-ref`) -- this option represents the original ref in a `from_ref...to_ref` diff expression. For `pre-push` hooks, this represents the branch you are pushing to. For `post-checkout` hooks, this represents the branch that was previously checked out.]' \
+        {--to-ref,--origin,-o}'[(for usage with `--from-ref`) -- this option represents the destination ref in a `from_ref...to_ref` diff expression. For `pre-push` hooks, this represents the branch being pushed. For `post-checkout` hooks, this represents the branch that is now checked out.]' \
+        '--pre-rebase-upstream[The upstream from which the series was forked.]' \
+        '--pre-rebase-branch[The branch being rebased, and is not set when rebasing the current branch.]' \
+        '--commit-msg-filename[Filename to check when running during `commit-msg`]':file:_files \
+        '--prepare-commit-message-source[Source of the commit message (typically the second argument to .git/hooks/prepare-commit-msg)]' \
+        '--commit-object-name[Commit object name (typically the third argument to .git/hooks/prepare-commit-msg)]' \
+        '--remote-name[Remote name used by `git push`.]' \
+        '--remote-url[Remote url used by `git push`.]' \
+        '--checkout-type[Indicates whether the checkout was a branch checkout (changing branches, flag=1) or a file checkout (retrieving a file from the index, flag=0).]' \
+        '--is-squash-merge[During a post-merge hook, indicates whether the merge was a squash merge]' \
+        '--rewrite-command[During a post-rewrite hook, specifies the command that invoked the rewrite]' \
+        "*: :_files"
+
+}
+
+function _pre-commit_sample-config {
+    _arguments \
+        {-h,--help}'[show this help message and exit]' \
+        '--color[Whether to use color in output. Defaults to `auto`.]' \
+        "*: :_files"
+
+}
+
+function _pre-commit_try-repo {
+    _arguments \
+        {-h,--help}'[show this help message and exit]' \
+        '--color[Whether to use color in output. Defaults to `auto`.]' \
+        {-c,--config}'[Path to alternate config file]' \
+        {--ref,--rev}'[Manually select a rev to run against, otherwise the `HEAD` revision will be used.]' \
+        {--verbose,-v,--all-files,-a}'[Run on all the files in the repo.]' \
+        '--files[Specific filenames to run hooks on.]':file:_files \
+        '--show-diff-on-failure[When hooks fail, run `git diff` directly afterward.]' \
+        '--hook-stage[The stage during which the hook is fired. One of commit-msg, post-checkout, post-commit, post-merge, post-rewrite, pre-commit, pre-merge-commit, pre-push, pre-rebase, prepare-commit-msg, manual]' \
+        '--remote-branch[Remote branch ref used by `git push`.]' \
+        '--local-branch[Local branch ref used by `git push`.]' \
+        {--from-ref,--source,-s}'[(for usage with `--to-ref`) -- this option represents the original ref in a `from_ref...to_ref` diff expression. For `pre-push` hooks, this represents the branch you are pushing to. For `post-checkout` hooks, this represents the branch that was previously checked out.]' \
+        {--to-ref,--origin,-o}'[(for usage with `--from-ref`) -- this option represents the destination ref in a `from_ref...to_ref` diff expression. For `pre-push` hooks, this represents the branch being pushed. For `post-checkout` hooks, this represents the branch that is now checked out.]' \
+        '--pre-rebase-upstream[The upstream from which the series was forked.]' \
+        '--pre-rebase-branch[The branch being rebased, and is not set when rebasing the current branch.]' \
+        '--commit-msg-filename[Filename to check when running during `commit-msg`]':file:_files \
+        '--prepare-commit-message-source[Source of the commit message (typically the second argument to .git/hooks/prepare-commit-msg)]' \
+        '--commit-object-name[Commit object name (typically the third argument to .git/hooks/prepare-commit-msg)]' \
+        '--remote-name[Remote name used by `git push`.]' \
+        '--remote-url[Remote url used by `git push`.]' \
+        '--checkout-type[Indicates whether the checkout was a branch checkout (changing branches, flag=1) or a file checkout (retrieving a file from the index, flag=0).]' \
+        '--is-squash-merge[During a post-merge hook, indicates whether the merge was a squash merge]' \
+        '--rewrite-command[During a post-rewrite hook, specifies the command that invoked the rewrite]' \
+        "*: :_files"
+
+}
+
+function _pre-commit_uninstall {
+    _arguments \
+        {-h,--help}'[show this help message and exit]' \
+        '--color[Whether to use color in output. Defaults to `auto`.]' \
+        {-c,--config}'[Path to alternate config file]' \
+        '-t[, --hook-type {commit-msg,post-checkout,post-commit,post-merge,post-rewrite,pre-commit,pre-merge-commit,pre-push,pre-rebase,prepare-commit-msg}]' \
+        "*: :_files"
+
+}
+
+function _pre-commit_validate-config {
+    _arguments \
+        {-h,--help}'[show this help message and exit]' \
+        '--color[Whether to use color in output. Defaults to `auto`.]' \
+        "*: :_files"
+
+}
+
+function _pre-commit_validate-manifest {
+    _arguments \
+        {-h,--help}'[show this help message and exit]' \
+        '--color[Whether to use color in output. Defaults to `auto`.]' \
+        "*: :_files"
+
+}
+
+function _pre-commit_help {
+    _arguments \
+        {-h,--help}'[show this help message and exit]' \
+        "*: :_files"
+
+}
+
+_pre-commit "$@"
+

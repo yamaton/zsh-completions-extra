@@ -1,0 +1,50 @@
+#compdef ss
+
+# Auto-generated with h2o
+
+function _ss {
+    _arguments \
+        {-h,--help}'[Show summary of options.]' \
+        {-V,--version}'[Output version information.]' \
+        {-H,--no-header}'[Suppress header line.]' \
+        {-O,--oneline}'[Print each socket'\''s data on a single line.]' \
+        {-n,--numeric}'[Do not try to resolve service names. Show exact bandwidth values, instead of human-readable.]' \
+        {-r,--resolve}'[Try to resolve numeric address/ports.]' \
+        {-a,--all}'[Display both listening and non-listening (for TCP this means established connections) sockets.]' \
+        {-l,--listening}'[Display only listening sockets (these are omitted by default).]' \
+        {-o,--options}'[Show timer information. For TCP protocol, the output format is:]' \
+        {-e,--extended}'[Show detailed socket information. The output format is:]' \
+        {-m,--memory}'[Show socket memory usage. The output format is:]' \
+        {-p,--processes}'[Show process using socket.]' \
+        {-i,--info}'[Show internal TCP information.]' \
+        '--tos[Show ToS and priority information.]' \
+        '--cgroup[Show cgroup information.]' \
+        {-K,--kill}'[Attempts to forcibly close sockets. This option displays sockets that are successfully closed and silently skips sockets that the kernel does not support closing. It supports IPv4 and IPv6 sockets only.]' \
+        {-s,--summary}'[Print summary statistics. This option does not parse socket lists obtaining summary from various sources. It is useful when amount of sockets is so huge that parsing /proc/net/tcp is painful.]' \
+        {-E,--events}'[Continually display sockets as they are destroyed]' \
+        {-Z,--context}'[As the -p option but also shows process security context.]' \
+        {-z,--contexts}'[As the -Z option but also shows the socket context. The socket context is taken from the associated inode and is not the actual socket context held by the kernel. Sockets are typically labeled with the context of the creating process, however the context shown will reflect any policy role, type and/or range transition rules applied, and is therefore a useful reference.]' \
+        {-N,--net}'[Switch to the specified network namespace name.]' \
+        {-b,--bpf}'[Show socket classic BPF filters (only administrators are allowed to get these information).]' \
+        {-4,--ipv4}'[Display only IP version 4 sockets (alias for -f inet).]' \
+        {-6,--ipv6}'[Display only IP version 6 sockets (alias for -f inet6).]' \
+        {-0,--packet}'[Display PACKET sockets (alias for -f link).]' \
+        {-t,--tcp}'[Display TCP sockets.]' \
+        {-u,--udp}'[Display UDP sockets.]' \
+        {-d,--dccp}'[Display DCCP sockets.]' \
+        {-w,--raw}'[Display RAW sockets.]' \
+        {-x,--unix}'[Display Unix domain sockets (alias for -f unix).]' \
+        {-S,--sctp}'[Display SCTP sockets.]' \
+        '--vsock[Display vsock sockets (alias for -f vsock).]' \
+        '--xdp[Display XDP sockets (alias for -f xdp).]' \
+        '--inet-sockopt[Display inet socket options.]' \
+        {-f,--family}'[Display sockets of type FAMILY. Currently the following families are supported: unix, inet, inet6, link, netlink, vsock, xdp.]' \
+        {-A,--query,--socket}'[List of socket tables to dump, separated by commas. The following identifiers are understood: all, inet, tcp, udp, raw, unix, packet, netlink, unix_dgram, unix_stream, unix_seqpacket, packet_raw, packet_dgram, dccp, sctp, vsock_stream, vsock_dgram, xdp Any item in the list may optionally be prefixed by an exclamation mark (!) to exclude that socket table from being dumped.]' \
+        {-D,--diag}'[Do not display anything, just dump raw information about TCP sockets to FILE after applying filters. If FILE is - stdout is used.]':file:_files \
+        {-F,--filter}'[Read filter information from FILE. Each line of FILE is interpreted like single command line option. If FILE is - stdin is used.]':file:_files \
+        "*: :_files"
+
+}
+
+_ss "$@"
+

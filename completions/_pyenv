@@ -1,0 +1,255 @@
+#compdef pyenv
+
+# Auto-generated with h2o
+
+
+function _pyenv {
+    local line state
+
+    function _commands {
+        local -a commands
+        commands=(
+            'commands:List all available pyenv commands'
+            'exec:Run an executable with the selected Python version'
+            'global:Set or show the global Python version(s)'
+            'help:Display help for a command'
+            'hooks:List hook scripts for a given pyenv command'
+            'init:Configure the shell environment for pyenv'
+            'install:Install a Python version using python-build'
+            'latest:Print the latest installed or known version with the given prefix'
+            'local:Set or show the local application-specific Python version(s)'
+            'prefix:Display prefixes for Python versions'
+            'rehash:Rehash pyenv shims (run this after installing executables)'
+            'root:Display the root directory where versions and shims are kept'
+            'shell:Set or show the shell-specific Python version'
+            'shims:List existing pyenv shims'
+            'uninstall:Uninstall Python versions'
+            'version:Show the current Python version(s) and its origin'
+            'versions:List all Python versions available to pyenv'
+            'whence:List all Python versions that contain the given executable'
+            'which:Display the full path to an executable'
+        )
+        _describe 'command' commands
+    }
+ 
+
+    _arguments -C \
+        '--version[Display the version of pyenv]' \
+        ': :->cmd' \
+        '*:: :->subcmd'
+
+    case $state in
+    (cmd)
+        _commands
+        ;;
+    (subcmd)
+        case $line[1] in
+        (commands)
+            _pyenv_commands
+            ;;
+
+        (exec)
+            _pyenv_exec
+            ;;
+
+        (global)
+            _pyenv_global
+            ;;
+
+        (help)
+            _pyenv_help
+            ;;
+
+        (hooks)
+            _pyenv_hooks
+            ;;
+
+        (init)
+            _pyenv_init
+            ;;
+
+        (install)
+            _pyenv_install
+            ;;
+
+        (latest)
+            _pyenv_latest
+            ;;
+
+        (local)
+            _pyenv_local
+            ;;
+
+        (prefix)
+            _pyenv_prefix
+            ;;
+
+        (rehash)
+            _pyenv_rehash
+            ;;
+
+        (root)
+            _pyenv_root
+            ;;
+
+        (shell)
+            _pyenv_shell
+            ;;
+
+        (shims)
+            _pyenv_shims
+            ;;
+
+        (uninstall)
+            _pyenv_uninstall
+            ;;
+
+        (version)
+            _pyenv_version
+            ;;
+
+        (versions)
+            _pyenv_versions
+            ;;
+
+        (whence)
+            _pyenv_whence
+            ;;
+
+        (which)
+            _pyenv_which
+            ;;
+
+        esac
+        ;;
+     esac
+
+}
+
+function _pyenv_commands {
+    _arguments \
+        "*: :_files"
+
+}
+
+function _pyenv_exec {
+    _arguments \
+        "*: :_files"
+
+}
+
+function _pyenv_global {
+    _arguments \
+        "*: :_files"
+
+}
+
+function _pyenv_help {
+    _arguments \
+        "*: :_files"
+
+}
+
+function _pyenv_hooks {
+    _arguments \
+        "*: :_files"
+
+}
+
+function _pyenv_init {
+    _arguments \
+        "*: :_files"
+
+}
+
+function _pyenv_install {
+    _arguments \
+        {-l,--list}'[List all available versions]' \
+        {-f,--force}'[Install even if the version appears to be installed already]' \
+        {-s,--skip-existing}'[Skip if the version appears to be installed already]' \
+        {-k,--keep}'[Keep source tree in $PYENV_BUILD_ROOT after installation (defaults to $PYENV_ROOT/sources)]' \
+        {-p,--patch}'[Apply a patch from stdin before building]' \
+        {-v,--verbose}'[Verbose mode: print compilation status to stdout]' \
+        '--version[Show version of python-build]' \
+        {-g,--debug}'[Build a debug version]' \
+        "*: :_files"
+
+}
+
+function _pyenv_latest {
+    _arguments \
+        {-k,--known}'[Select from all known versions instead of installed]' \
+        {-q,--quiet}'[Do not print an error message on resolution failure]' \
+        "*: :_files"
+
+}
+
+function _pyenv_local {
+    _arguments \
+        "*: :_files"
+
+}
+
+function _pyenv_prefix {
+    _arguments \
+        "*: :_files"
+
+}
+
+function _pyenv_rehash {
+    _arguments \
+        "*: :_files"
+
+}
+
+function _pyenv_root {
+    _arguments \
+        "*: :_files"
+
+}
+
+function _pyenv_shell {
+    _arguments \
+        "*: :_files"
+
+}
+
+function _pyenv_shims {
+    _arguments \
+        "*: :_files"
+
+}
+
+function _pyenv_uninstall {
+    _arguments \
+        '-f[Attempt to remove the specified version without prompting for confirmation. If the version does not exist, do not display an error message.]' \
+        "*: :_files"
+
+}
+
+function _pyenv_version {
+    _arguments \
+        "*: :_files"
+
+}
+
+function _pyenv_versions {
+    _arguments \
+        "*: :_files"
+
+}
+
+function _pyenv_whence {
+    _arguments \
+        "*: :_files"
+
+}
+
+function _pyenv_which {
+    _arguments \
+        "*: :_files"
+
+}
+
+_pyenv "$@"
+

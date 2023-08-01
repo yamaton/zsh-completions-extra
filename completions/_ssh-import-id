@@ -1,0 +1,15 @@
+#compdef ssh-import-id
+
+# Auto-generated with h2o
+
+function _ssh-import-id {
+    _arguments \
+        {-h,--help}'[usage]' \
+        {-o,--output}'[write output to file '\''F'\'' (default ~/.ssh/authorized_keys, use "-" for standard out)]' \
+        {-r,--remove}'[remove keys from authorized keys file '\''F'\'']' \
+        "*: :_files"
+
+}
+
+_ssh-import-id "$@"
+

@@ -1,0 +1,32 @@
+#compdef mosh
+
+# Auto-generated with h2o
+
+function _mosh {
+    _arguments \
+        '--client[path to client helper on local machine (default: "mosh-client")]':file:_files \
+        '--server[command to run server helper on remote machine (default: "mosh-server")]' \
+        '--ssh[OpenSSH command to remotely execute mosh-server on remote machine (default: "ssh")]' \
+        '--ssh-pty[--no-ssh-pty Enable or disable ssh'\''s use of a pty when connecting to a remote host. The default is enabled.]' \
+        '--predict[Controls use of speculative local echo. WHEN defaults to `adaptive'\'' (show predictions on slower links and to smooth out network glitches) and can also be `always` or `never'\''.]' \
+        '-a[Synonym for --predict=always]' \
+        '-n[Synonym for --predict=never]' \
+        '--family[Only use IPv4 for the SSH connection and Mosh session.]' \
+        '--family[Only use IPv6 for the SSH connection and Mosh session. This and the following modes require Perl'\''s IO::Socket::IP or IO::Socket::INET6 modules.]' \
+        '--family[Autodetect IPv4 or IPv6 for hosts that only have addresses in a single family. Hosts with both IPv4 and IPv6 addresses will raise an error, and require re-invocation of mosh with another --family option.]' \
+        '--family[Choose an address from all available IPv4 or IPv6 address, even for dual-stack hosts. This is the most convenient option, but requires dual-stack connectivity, and Mosh 1.2.5 or later on the server, when roaming with dual-stack servers.]' \
+        '--family[Similar to --family=all, but attempt connects to the IPv4 addresses first. This is the default.]' \
+        '--family[Similar to --family=all, but attempt connects to the IPv6 addresses first.]' \
+        '-4[Synonym for --family=inet]' \
+        '-6[Synonym for --family=inet6]' \
+        {-p,--port}'[Use a particular server-side UDP port or port range, for example, if this is the only port that is forwarded through a firewall to the server. With -p 0, the server will let the operating system pick an available UDP port. Otherwise, mosh will choose a port between 60000 and 61000. Please note that this option does not affect the server-side port used by SSH.]' \
+        '--bind-server[Control the IP address that the mosh-server binds to.]' \
+        '--no-init[Do not send the smcup initialization string and rmcup deinitialization string to the client'\''s terminal. On many terminals this disables alternate screen mode.]' \
+        '--local[Invoke mosh-server locally, without using ssh. This option requires the host argument to be a local, numeric IPv4/IPv6 address. This option is useful for testing.]' \
+        '--experimental-remote-ip[Select the method used to discover the IP address that the mosh-client connects to.]' \
+        "*: :_files"
+
+}
+
+_mosh "$@"
+

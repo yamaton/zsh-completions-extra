@@ -1,0 +1,31 @@
+#compdef pg_upgrade
+
+# Auto-generated with h2o
+
+function _pg_upgrade {
+    _arguments \
+        {-b,--old-bindir}'[old cluster executable directory]':file:_files \
+        {-B,--new-bindir}'[new cluster executable directory (default same directory as pg_upgrade)]':file:_files \
+        {-c,--check}'[check clusters only, don'\''t change any data]' \
+        {-d,--old-datadir}'[old cluster data directory]':file:_files \
+        {-D,--new-datadir}'[new cluster data directory]':file:_files \
+        {-j,--jobs}'[number of simultaneous processes or threads to use]' \
+        {-k,--link}'[link instead of copying files to new cluster]' \
+        {-N,--no-sync}'[do not wait for changes to be written safely to disk]' \
+        {-o,--old-options}'[old cluster options to pass to the server]' \
+        {-O,--new-options}'[new cluster options to pass to the server]' \
+        {-p,--old-port}'[old cluster port number (default 50432)]' \
+        {-P,--new-port}'[new cluster port number (default 50432)]' \
+        {-r,--retain}'[retain SQL and log files after success]' \
+        {-s,--socketdir}'[socket directory to use (default current dir.)]':file:_files \
+        {-U,--username}'[cluster superuser (default "vierbein")]' \
+        {-v,--verbose}'[enable verbose internal logging]' \
+        {-V,--version}'[display version information, then exit]' \
+        '--clone[clone instead of copying files to new cluster]' \
+        {-?,--help}'[show this help, then exit]' \
+        "*: :_files"
+
+}
+
+_pg_upgrade "$@"
+

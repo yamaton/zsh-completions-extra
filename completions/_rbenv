@@ -1,0 +1,163 @@
+#compdef rbenv
+
+# Auto-generated with h2o
+
+
+function _rbenv {
+    local line state
+
+    function _commands {
+        local -a commands
+        commands=(
+            'commands:List all available rbenv commands'
+            'local:Set or show the local application-specific Ruby version'
+            'global:Set or show the global Ruby version'
+            'shell:Set or show the shell-specific Ruby version'
+            'install:Install a Ruby version using ruby-build'
+            'uninstall:Uninstall a specific Ruby version'
+            'rehash:Rehash rbenv shims (run this after installing executables)'
+            'version:Show the current Ruby version and its origin'
+            'versions:List installed Ruby versions'
+            'which:Display the full path to an executable'
+            'whence:List all Ruby versions that contain the given executable'
+        )
+        _describe 'command' commands
+    }
+ 
+
+    _arguments -C \
+        ': :->cmd' \
+        '*:: :->subcmd'
+
+    case $state in
+    (cmd)
+        _commands
+        ;;
+    (subcmd)
+        case $line[1] in
+        (commands)
+            _rbenv_commands
+            ;;
+
+        (local)
+            _rbenv_local
+            ;;
+
+        (global)
+            _rbenv_global
+            ;;
+
+        (shell)
+            _rbenv_shell
+            ;;
+
+        (install)
+            _rbenv_install
+            ;;
+
+        (uninstall)
+            _rbenv_uninstall
+            ;;
+
+        (rehash)
+            _rbenv_rehash
+            ;;
+
+        (version)
+            _rbenv_version
+            ;;
+
+        (versions)
+            _rbenv_versions
+            ;;
+
+        (which)
+            _rbenv_which
+            ;;
+
+        (whence)
+            _rbenv_whence
+            ;;
+
+        esac
+        ;;
+     esac
+
+}
+
+function _rbenv_commands {
+    _arguments \
+        "*: :_files"
+
+}
+
+function _rbenv_local {
+    _arguments \
+        "*: :_files"
+
+}
+
+function _rbenv_global {
+    _arguments \
+        "*: :_files"
+
+}
+
+function _rbenv_shell {
+    _arguments \
+        "*: :_files"
+
+}
+
+function _rbenv_install {
+    _arguments \
+        {-l,--list}'[List all available versions]' \
+        {-f,--force}'[Install even if the version appears to be installed already]' \
+        {-s,--skip-existing}'[Skip if the version appears to be installed already]' \
+        {-k,--keep}'[Keep source tree in $RBENV_BUILD_ROOT after installation (defaults to $RBENV_ROOT/sources)]' \
+        {-p,--patch}'[Apply a patch from stdin before building]' \
+        {-v,--verbose}'[Verbose mode: print compilation status to stdout]' \
+        '--version[Show version of ruby-build]' \
+        "*: :_files"
+
+}
+
+function _rbenv_uninstall {
+    _arguments \
+        '-f[Attempt to remove the specified version without prompting for confirmation. If the version does not exist, do not display an error message.]' \
+        "*: :_files"
+
+}
+
+function _rbenv_rehash {
+    _arguments \
+        "*: :_files"
+
+}
+
+function _rbenv_version {
+    _arguments \
+        "*: :_files"
+
+}
+
+function _rbenv_versions {
+    _arguments \
+        "*: :_files"
+
+}
+
+function _rbenv_which {
+    _arguments \
+        "*: :_files"
+
+}
+
+function _rbenv_whence {
+    _arguments \
+        "*: :_files"
+
+}
+
+_rbenv "$@"
+

@@ -1,0 +1,97 @@
+#compdef mypy
+
+# Auto-generated with h2o
+
+function _mypy {
+    _arguments \
+        '--enable-incomplete-feature[Enable support of incomplete/experimental features for early preview]' \
+        {-h,--help}'[Show this help message and exit]' \
+        {-v,--verbose}'[More verbose messages]' \
+        {-V,--version}'[Show program'\''s version number and exit]' \
+        '--config-file[Configuration file, must have a \[mypy\] section (defaults to mypy.ini, .mypy.ini, pyproject.toml, setup.cfg, ~/.config/mypy/config, ~/.config/mypy/config, ~/.mypy.ini)]':file:_files \
+        '--warn-unused-configs[Warn about unused '\''\[mypy-<pattern>\]'\'' or '\''\[\[tool.mypy.overrides\]\]'\'' config sections (inverse: --no-warn-unused-configs)]' \
+        '--no-namespace-packages[Support namespace packages (PEP 420, __init__.pyless) (inverse: --namespace-packages)]' \
+        '--ignore-missing-imports[Silently ignore imports of missing modules]' \
+        '--follow-imports[How to treat imports (default normal)]' \
+        '--python-executable[Python executable used for finding PEP 561 compliant installed packages and stubs]' \
+        '--no-site-packages[Do not search for installed PEP 561 compliant packages]' \
+        '--no-silence-site-packages[Do not silence errors in PEP 561 compliant installed packages]' \
+        '--python-version[Type check code assuming it will be running on Python x.y]' \
+        {-2,--py2}'[Use Python 2 mode (same as --python-version 2.7)]' \
+        '--platform[Type check special-cased code for the given OS platform (defaults to sys.platform)]' \
+        '--always-true[Additional variable to be considered True (may be repeated)]' \
+        '--always-false[Additional variable to be considered False (may be repeated)]' \
+        '--disallow-any-unimported[Disallow Any types resulting from unfollowed imports]' \
+        '--disallow-any-expr[Disallow all expressions that have type Any]' \
+        '--disallow-any-decorated[Disallow functions that have Any in their signature after decorator transformation]' \
+        '--disallow-any-explicit[Disallow explicit Any in type positions]' \
+        '--disallow-any-generics[Disallow usage of generic types that do not specify explicit type parameters (inverse: --allow-any-generics)]' \
+        '--disallow-subclassing-any[Disallow subclassing values of type '\''Any'\'' when defining classes (inverse: --allow-subclassingany)]' \
+        '--disallow-untyped-calls[Disallow calling functions without type annotations from functions with type annotations (inverse: --allow-untyped-calls)]' \
+        '--disallow-untyped-defs[Disallow defining functions without type annotations or with incomplete type annotations (inverse: --allow-untyped-defs)]' \
+        '--disallow-incomplete-defs[Disallow defining functions with incomplete type annotations (inverse: --allow-incomplete-defs)]' \
+        '--check-untyped-defs[Type check the interior of functions without type annotations (inverse: --no-check-untyped-defs)]' \
+        '--disallow-untyped-decorators[Disallow decorating typed functions with untyped decorators (inverse: --allow-untyped-decorators)]' \
+        '--implicit-optional[Assume arguments with default values of None are Optional (inverse: --no-implicit-optional)]' \
+        '--no-strict-optional[Disable strict Optional checks (inverse: --strictoptional)]' \
+        '--warn-redundant-casts[Warn about casting an expression to its inferred type (inverse: --no-warn-redundant-casts)]' \
+        '--warn-unused-ignores[Warn about unneeded '\''# type: ignore'\'' comments (inverse: --no-warn-unused-ignores)]' \
+        '--no-warn-no-return[Do not warn about functions that end without returning (inverse: --warn-no-return)]' \
+        '--warn-return-any[Warn about returning values of type Any from nonAny typed functions (inverse: --no-warn-returnany)]' \
+        '--warn-unreachable[Warn about statements or expressions inferred to be unreachable (inverse: --no-warn-unreachable)]' \
+        '--allow-untyped-globals[Suppress toplevel errors caused by missing annotations (inverse: --disallow-untyped-globals)]' \
+        '--allow-redefinition[Allow unconditional variable redefinition with a new type (inverse: --disallow-redefinition)]' \
+        '--no-implicit-reexport[Treat imports as private unless aliased (inverse: --implicit-reexport)]' \
+        '--strict-equality[Prohibit equality, identity, and container checks for non-overlapping types (inverse: --no-strictequality)]' \
+        '--strict-concatenate[Make arguments prepended via Concatenate be truly positional-only (inverse: --no-strict-concatenate)]' \
+        '--strict[Strict mode; enables the following flags: --warnunused-configs, --disallow-any-generics, --disallow-subclassing-any, --disallow-untypedcalls, --disallow-untyped-defs, --disallowincomplete-defs, --check-untyped-defs, --disallowuntyped-decorators, --warn-redundant-casts, --warn-unused-ignores, --warn-return-any, --noimplicit-reexport, --strict-equality, --strictconcatenate]' \
+        '--disable-error-code[Disable a specific error code]' \
+        '--enable-error-code[Enable a specific error code]' \
+        '--show-error-context[Precede errors with "note:" messages explaining context (inverse: --hide-error-context)]' \
+        '--show-column-numbers[Show column numbers in error messages (inverse: --hide-column-numbers)]' \
+        '--show-error-end[Show end line/end column numbers in error messages. This implies --show-column-numbers (inverse: --hide-error-end)]' \
+        '--hide-error-codes[Hide error codes in error messages (inverse: --show-error-codes)]' \
+        '--pretty[Use visually nicer output in error messages: Use soft word wrap, show source code snippets, and show error location markers (inverse: --no-pretty)]' \
+        '--no-color-output[Do not colorize error messages (inverse: --coloroutput)]' \
+        '--no-error-summary[Do not show error stats summary (inverse: --errorsummary)]' \
+        '--show-absolute-path[Show absolute paths to files (inverse: --hideabsolute-path)]' \
+        '--no-incremental[Disable module cache (inverse: --incremental)]' \
+        '--cache-dir[Store module cache info in the given folder in incremental mode (defaults to '\''.mypy_cache'\'')]':file:_files \
+        '--sqlite-cache[Use a sqlite database to store the cache (inverse: --no-sqlite-cache)]' \
+        '--cache-fine-grained[Include fine-grained dependency information in the cache for the mypy daemon]' \
+        '--skip-version-check[Allow using cache written by older mypy version]' \
+        '--skip-cache-mtime-checks[Skip cache internal consistency checks based on mtime]' \
+        '--pdb[Invoke pdb on fatal error]' \
+        {--show-traceback,--tb}'[Show traceback on fatal error]' \
+        '--raise-exceptions[Raise exception on fatal error]' \
+        '--custom-typing-module[Use a custom typing module]' \
+        '--disable-recursive-aliases[Disable experimental support for recursive type aliases]' \
+        '--custom-typeshed-dir[Use the custom typeshed in DIR]':file:_files \
+        '--warn-incomplete-stub[Warn if missing type annotation in typeshed, only relevant with --disallow-untyped-defs or --disallow-incomplete-defs enabled (inverse: --nowarn-incomplete-stub)]' \
+        '--shadow-file[When encountering SOURCE_FILE, read and type check the contents of SHADOW_FILE instead.]':file:_files \
+        '--any-exprs-report[Generate a report.]':file:_files \
+        '--cobertura-xml-report[Generate a report.]':file:_files \
+        '--html-report[Generate a report.]':file:_files \
+        '--linecount-report[Generate a report.]':file:_files \
+        '--linecoverage-report[Generate a report.]':file:_files \
+        '--lineprecision-report[Generate a report.]':file:_files \
+        '--txt-report[Generate a report.]':file:_files \
+        '--xml-report[Generate a report.]':file:_files \
+        '--xslt-html-report[Generate a report.]':file:_files \
+        '--xslt-txt-report[Generate a report.]':file:_files \
+        '--junit-xml[Write junit.xml to the given file]' \
+        '--find-occurrences[Print out all usages of a class member (experimental)]' \
+        '--scripts-are-modules[Script x becomes module x instead of __main__]' \
+        '--install-types[Install detected missing library stub packages using pip (inverse: --no-install-types)]' \
+        '--non-interactive[Install stubs without asking for confirmation and hide errors, with --install-types (inverse: --interactive)]' \
+        '--explicit-package-bases[Use current directory and MYPYPATH to determine module names of files passed (inverse: --noexplicit-package-bases)]' \
+        '--exclude[Regular expression to match file names, directory names or paths which mypy should ignore while recursively discovering files to check, e.g. --exclude '\''/setup\.py$'\''. May be specified more than once, eg. --exclude a --exclude b]' \
+        {-m,--module}'[Type-check module; can repeat for more modules]' \
+        {-p,--package}'[Type-check package recursively; can be repeated]' \
+        {-c,--command}'[Type-check program passed in as string]' \
+        "*: :_files"
+
+}
+
+_mypy "$@"
+

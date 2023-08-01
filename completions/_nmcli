@@ -1,0 +1,862 @@
+#compdef nmcli
+
+# Auto-generated with h2o
+
+
+function _nmcli {
+    local line state
+
+    function _commands {
+        local -a commands
+        commands=(
+            'general:NetworkManager'\''s general status and operations'
+            'networking:overall networking control'
+            'radio:NetworkManager radio switches'
+            'connection:NetworkManager'\''s connections'
+            'device:devices managed by NetworkManager'
+            'agent:NetworkManager secret agent or polkit agent'
+            'monitor:Monitor NetworkManager changes.'
+        )
+        _describe 'command' commands
+    }
+ 
+
+    _arguments -C \
+        {-a,--ask}'[ask for missing parameters]' \
+        {-c,--colors}'[whether to use colors in output]' \
+        {-e,--escape}'[escape columns separators in values]' \
+        {-f,--fields}'[specify fields to output]' \
+        {-g,--get-values}'[shortcut for -m tabular -t -f]' \
+        {-h,--help}'[print this help]' \
+        {-m,--mode}'[output mode]' \
+        {-o,--overview}'[overview mode]' \
+        {-p,--pretty}'[pretty output]' \
+        {-s,--show-secrets}'[allow displaying passwords]' \
+        {-t,--terse}'[terse output]' \
+        {-v,--version}'[show program version]' \
+        {-w,--wait}'[set timeout waiting for finishing operations]' \
+        '--complete-args[list possible completions for the last argument]' \
+        ': :->cmd' \
+        '*:: :->subcmd'
+
+    case $state in
+    (cmd)
+        _commands
+        ;;
+    (subcmd)
+        case $line[1] in
+        (general)
+            _nmcli_general
+            ;;
+
+        (networking)
+            _nmcli_networking
+            ;;
+
+        (radio)
+            _nmcli_radio
+            ;;
+
+        (connection)
+            _nmcli_connection
+            ;;
+
+        (device)
+            _nmcli_device
+            ;;
+
+        (agent)
+            _nmcli_agent
+            ;;
+
+        (monitor)
+            _nmcli_monitor
+            ;;
+
+        esac
+        ;;
+     esac
+
+}
+
+
+function _nmcli_general {
+    local line state
+
+    function _commands {
+        local -a commands
+        commands=(
+            'status:'
+            'hostname:\[<hostname>\]'
+            'permissions:'
+            'logging:'
+        )
+        _describe 'command' commands
+    }
+ 
+
+    _arguments -C \
+        ': :->cmd' \
+        '*:: :->subcmd'
+
+    case $state in
+    (cmd)
+        _commands
+        ;;
+    (subcmd)
+        case $line[1] in
+        (status)
+            _nmcli_general_status
+            ;;
+
+        (hostname)
+            _nmcli_general_hostname
+            ;;
+
+        (permissions)
+            _nmcli_general_permissions
+            ;;
+
+        (logging)
+            _nmcli_general_logging
+            ;;
+
+        esac
+        ;;
+     esac
+
+}
+
+function _nmcli_general_status {
+    _arguments \
+        "*: :_files"
+
+}
+
+function _nmcli_general_hostname {
+    _arguments \
+        "*: :_files"
+
+}
+
+function _nmcli_general_permissions {
+    _arguments \
+        "*: :_files"
+
+}
+
+function _nmcli_general_logging {
+    _arguments \
+        "*: :_files"
+
+}
+
+
+function _nmcli_networking {
+    local line state
+
+    function _commands {
+        local -a commands
+        commands=(
+            'on:Switch networking on.'
+            'off:Switch networking off.'
+            'connectivity:Get network connectivity state.'
+        )
+        _describe 'command' commands
+    }
+ 
+
+    _arguments -C \
+        ': :->cmd' \
+        '*:: :->subcmd'
+
+    case $state in
+    (cmd)
+        _commands
+        ;;
+    (subcmd)
+        case $line[1] in
+        (on)
+            _nmcli_networking_on
+            ;;
+
+        (off)
+            _nmcli_networking_off
+            ;;
+
+        (connectivity)
+            _nmcli_networking_connectivity
+            ;;
+
+        esac
+        ;;
+     esac
+
+}
+
+function _nmcli_networking_on {
+    _arguments \
+        "*: :_files"
+
+}
+
+function _nmcli_networking_off {
+    _arguments \
+        "*: :_files"
+
+}
+
+function _nmcli_networking_connectivity {
+    _arguments \
+        "*: :_files"
+
+}
+
+
+function _nmcli_radio {
+    local line state
+
+    function _commands {
+        local -a commands
+        commands=(
+            'all:Get status of all radio switches, or turn them on/off.'
+            'wifi:Get status of Wi-Fi radio switch, or turn it on/off.'
+            'wwan:Get status of mobile broadband radio switch, or turn it on/off.'
+        )
+        _describe 'command' commands
+    }
+ 
+
+    _arguments -C \
+        ': :->cmd' \
+        '*:: :->subcmd'
+
+    case $state in
+    (cmd)
+        _commands
+        ;;
+    (subcmd)
+        case $line[1] in
+        (all)
+            _nmcli_radio_all
+            ;;
+
+        (wifi)
+            _nmcli_radio_wifi
+            ;;
+
+        (wwan)
+            _nmcli_radio_wwan
+            ;;
+
+        esac
+        ;;
+     esac
+
+}
+
+
+function _nmcli_radio_all {
+    local line state
+
+    function _commands {
+        local -a commands
+        commands=(
+            'on:Switch radio on.'
+            'off:Switch radio off.'
+        )
+        _describe 'command' commands
+    }
+ 
+
+    _arguments -C \
+        ': :->cmd' \
+        '*:: :->subcmd'
+
+    case $state in
+    (cmd)
+        _commands
+        ;;
+    (subcmd)
+        case $line[1] in
+        (on)
+            _nmcli_radio_all_on
+            ;;
+
+        (off)
+            _nmcli_radio_all_off
+            ;;
+
+        esac
+        ;;
+     esac
+
+}
+
+function _nmcli_radio_all_on {
+    _arguments \
+        "*: :_files"
+
+}
+
+function _nmcli_radio_all_off {
+    _arguments \
+        "*: :_files"
+
+}
+
+
+function _nmcli_radio_wifi {
+    local line state
+
+    function _commands {
+        local -a commands
+        commands=(
+            'on:Switch radio on.'
+            'off:Switch radio off.'
+        )
+        _describe 'command' commands
+    }
+ 
+
+    _arguments -C \
+        ': :->cmd' \
+        '*:: :->subcmd'
+
+    case $state in
+    (cmd)
+        _commands
+        ;;
+    (subcmd)
+        case $line[1] in
+        (on)
+            _nmcli_radio_wifi_on
+            ;;
+
+        (off)
+            _nmcli_radio_wifi_off
+            ;;
+
+        esac
+        ;;
+     esac
+
+}
+
+function _nmcli_radio_wifi_on {
+    _arguments \
+        "*: :_files"
+
+}
+
+function _nmcli_radio_wifi_off {
+    _arguments \
+        "*: :_files"
+
+}
+
+
+function _nmcli_radio_wwan {
+    local line state
+
+    function _commands {
+        local -a commands
+        commands=(
+            'on:Switch radio wwan on.'
+            'off:Switch radio wwan off.'
+        )
+        _describe 'command' commands
+    }
+ 
+
+    _arguments -C \
+        ': :->cmd' \
+        '*:: :->subcmd'
+
+    case $state in
+    (cmd)
+        _commands
+        ;;
+    (subcmd)
+        case $line[1] in
+        (on)
+            _nmcli_radio_wwan_on
+            ;;
+
+        (off)
+            _nmcli_radio_wwan_off
+            ;;
+
+        esac
+        ;;
+     esac
+
+}
+
+function _nmcli_radio_wwan_on {
+    _arguments \
+        "*: :_files"
+
+}
+
+function _nmcli_radio_wwan_off {
+    _arguments \
+        "*: :_files"
+
+}
+
+
+function _nmcli_connection {
+    local line state
+
+    function _commands {
+        local -a commands
+        commands=(
+            'show:Show connections'
+            'up:Activate a connection'
+            'down:Deactivate a connection'
+            'add:Add a connection'
+            'modify:Modify a connection'
+            'clone:Clone an existing connection profile'
+            'edit:Edit a connection profile'
+            'delete:Delete a connection profile'
+            'monitor:Monitor connection profile activity'
+            'reload:Reload all connection files from disk'
+            'load:Load/reload one or more connection files from disk'
+            'import:Import a connection'
+            'export:Export a connection'
+        )
+        _describe 'command' commands
+    }
+ 
+
+    _arguments -C \
+        ': :->cmd' \
+        '*:: :->subcmd'
+
+    case $state in
+    (cmd)
+        _commands
+        ;;
+    (subcmd)
+        case $line[1] in
+        (show)
+            _nmcli_connection_show
+            ;;
+
+        (up)
+            _nmcli_connection_up
+            ;;
+
+        (down)
+            _nmcli_connection_down
+            ;;
+
+        (add)
+            _nmcli_connection_add
+            ;;
+
+        (modify)
+            _nmcli_connection_modify
+            ;;
+
+        (clone)
+            _nmcli_connection_clone
+            ;;
+
+        (edit)
+            _nmcli_connection_edit
+            ;;
+
+        (delete)
+            _nmcli_connection_delete
+            ;;
+
+        (monitor)
+            _nmcli_connection_monitor
+            ;;
+
+        (reload)
+            _nmcli_connection_reload
+            ;;
+
+        (load)
+            _nmcli_connection_load
+            ;;
+
+        (import)
+            _nmcli_connection_import
+            ;;
+
+        (export)
+            _nmcli_connection_export
+            ;;
+
+        esac
+        ;;
+     esac
+
+}
+
+function _nmcli_connection_show {
+    _arguments \
+        "*: :_files"
+
+}
+
+function _nmcli_connection_up {
+    _arguments \
+        "*: :_files"
+
+}
+
+function _nmcli_connection_down {
+    _arguments \
+        "*: :_files"
+
+}
+
+function _nmcli_connection_add {
+    _arguments \
+        "*: :_files"
+
+}
+
+function _nmcli_connection_modify {
+    _arguments \
+        "*: :_files"
+
+}
+
+function _nmcli_connection_clone {
+    _arguments \
+        "*: :_files"
+
+}
+
+function _nmcli_connection_edit {
+    _arguments \
+        "*: :_files"
+
+}
+
+function _nmcli_connection_delete {
+    _arguments \
+        "*: :_files"
+
+}
+
+function _nmcli_connection_monitor {
+    _arguments \
+        "*: :_files"
+
+}
+
+function _nmcli_connection_reload {
+    _arguments \
+        "*: :_files"
+
+}
+
+function _nmcli_connection_load {
+    _arguments \
+        "*: :_files"
+
+}
+
+function _nmcli_connection_import {
+    _arguments \
+        "*: :_files"
+
+}
+
+function _nmcli_connection_export {
+    _arguments \
+        "*: :_files"
+
+}
+
+
+function _nmcli_device {
+    local line state
+
+    function _commands {
+        local -a commands
+        commands=(
+            'status:Show status for all devices.'
+            'show:Show details of device(s).'
+            'set:Modify device properties.'
+            'connect:Connect the device.'
+            'reapply:Attempts to update device with changes to the currently active connection made since it was last applied.'
+            'modify:Modify one or more properties that are currently active on the device without modifying the connection profile.'
+            'disconnect:Disconnect devices.'
+            'delete:Delete the software devices.'
+            'monitor:Monitor device activity.'
+            'wifi:Perform operation on Wi-Fi devices.'
+            'lldp:List neighboring devices discovered through LLDP.'
+        )
+        _describe 'command' commands
+    }
+ 
+
+    _arguments -C \
+        ': :->cmd' \
+        '*:: :->subcmd'
+
+    case $state in
+    (cmd)
+        _commands
+        ;;
+    (subcmd)
+        case $line[1] in
+        (status)
+            _nmcli_device_status
+            ;;
+
+        (show)
+            _nmcli_device_show
+            ;;
+
+        (set)
+            _nmcli_device_set
+            ;;
+
+        (connect)
+            _nmcli_device_connect
+            ;;
+
+        (reapply)
+            _nmcli_device_reapply
+            ;;
+
+        (modify)
+            _nmcli_device_modify
+            ;;
+
+        (disconnect)
+            _nmcli_device_disconnect
+            ;;
+
+        (delete)
+            _nmcli_device_delete
+            ;;
+
+        (monitor)
+            _nmcli_device_monitor
+            ;;
+
+        (wifi)
+            _nmcli_device_wifi
+            ;;
+
+        (lldp)
+            _nmcli_device_lldp
+            ;;
+
+        esac
+        ;;
+     esac
+
+}
+
+function _nmcli_device_status {
+    _arguments \
+        "*: :_files"
+
+}
+
+function _nmcli_device_show {
+    _arguments \
+        "*: :_files"
+
+}
+
+function _nmcli_device_set {
+    _arguments \
+        "*: :_files"
+
+}
+
+function _nmcli_device_connect {
+    _arguments \
+        "*: :_files"
+
+}
+
+function _nmcli_device_reapply {
+    _arguments \
+        "*: :_files"
+
+}
+
+function _nmcli_device_modify {
+    _arguments \
+        "*: :_files"
+
+}
+
+function _nmcli_device_disconnect {
+    _arguments \
+        "*: :_files"
+
+}
+
+function _nmcli_device_delete {
+    _arguments \
+        "*: :_files"
+
+}
+
+function _nmcli_device_monitor {
+    _arguments \
+        "*: :_files"
+
+}
+
+
+function _nmcli_device_wifi {
+    local line state
+
+    function _commands {
+        local -a commands
+        commands=(
+            'list:List available Wi-Fi access points.'
+            'connect:Connect to a Wi-Fi network specified by SSID or BSSID.'
+            'hotspot:Create a Wi-Fi hotspot.'
+            'rescan:Request that NetworkManager immediately re-scan for available access points.'
+        )
+        _describe 'command' commands
+    }
+ 
+
+    _arguments -C \
+        ': :->cmd' \
+        '*:: :->subcmd'
+
+    case $state in
+    (cmd)
+        _commands
+        ;;
+    (subcmd)
+        case $line[1] in
+        (list)
+            _nmcli_device_wifi_list
+            ;;
+
+        (connect)
+            _nmcli_device_wifi_connect
+            ;;
+
+        (hotspot)
+            _nmcli_device_wifi_hotspot
+            ;;
+
+        (rescan)
+            _nmcli_device_wifi_rescan
+            ;;
+
+        esac
+        ;;
+     esac
+
+}
+
+function _nmcli_device_wifi_list {
+    _arguments \
+        "*: :_files"
+
+}
+
+function _nmcli_device_wifi_connect {
+    _arguments \
+        "*: :_files"
+
+}
+
+function _nmcli_device_wifi_hotspot {
+    _arguments \
+        "*: :_files"
+
+}
+
+function _nmcli_device_wifi_rescan {
+    _arguments \
+        "*: :_files"
+
+}
+
+function _nmcli_device_lldp {
+    _arguments \
+        "*: :_files"
+
+}
+
+
+function _nmcli_agent {
+    local line state
+
+    function _commands {
+        local -a commands
+        commands=(
+            'secret:Runs nmcli as NetworkManager secret agent.'
+            'polkit:Registers nmcli as a polkit action for the user session.'
+            'all:Runs nmcli as both NetworkManager secret and a polkit agent.'
+        )
+        _describe 'command' commands
+    }
+ 
+
+    _arguments -C \
+        ': :->cmd' \
+        '*:: :->subcmd'
+
+    case $state in
+    (cmd)
+        _commands
+        ;;
+    (subcmd)
+        case $line[1] in
+        (secret)
+            _nmcli_agent_secret
+            ;;
+
+        (polkit)
+            _nmcli_agent_polkit
+            ;;
+
+        (all)
+            _nmcli_agent_all
+            ;;
+
+        esac
+        ;;
+     esac
+
+}
+
+function _nmcli_agent_secret {
+    _arguments \
+        "*: :_files"
+
+}
+
+function _nmcli_agent_polkit {
+    _arguments \
+        "*: :_files"
+
+}
+
+function _nmcli_agent_all {
+    _arguments \
+        "*: :_files"
+
+}
+
+function _nmcli_monitor {
+    _arguments \
+        "*: :_files"
+
+}
+
+_nmcli "$@"
+

@@ -1,0 +1,24 @@
+#compdef ninja
+
+# Auto-generated with h2o
+
+function _ninja {
+    _arguments \
+        '--version[print ninja version ("1.11.0")]' \
+        {-v,--verbose}'[show all command lines while building]' \
+        '--quiet[don'\''t show progress status, just command output]' \
+        '-C[change to DIR before doing anything else]':file:_files \
+        '-f[specify input build file \[default=build.ninja\]]':file:_files \
+        '-j[run N jobs in parallel (0 means infinity) \[default=6 on this system\]]' \
+        '-k[keep going until N jobs fail (0 means infinity) \[default=1\]]' \
+        '-l[do not start new jobs if the load average is greater than N]' \
+        '-n[dry run (don'\''t run commands but act like they succeeded)]' \
+        '-d[enable debugging (use '\''-d list'\'' to list modes)]' \
+        '-t[run a subtool (use '\''-t list'\'' to list subtools)]' \
+        '-w[adjust warnings (use '\''-w list'\'' to list warnings)]' \
+        "*: :_files"
+
+}
+
+_ninja "$@"
+

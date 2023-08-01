@@ -1,0 +1,12 @@
+#compdef pg_test_timing
+
+# Auto-generated with h2o
+
+function _pg_test_timing {
+    _arguments \
+        "*: :_files"
+
+}
+
+_pg_test_timing "$@"
+

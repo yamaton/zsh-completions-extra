@@ -1,0 +1,29 @@
+#compdef shfmt
+
+# Auto-generated with h2o
+
+function _shfmt {
+    _arguments \
+        '--version[show version and exit]' \
+        {-l,--list}'[list files whose formatting differs from shfmt'\''s]' \
+        {-w,--write}'[write result to file instead of stdout]' \
+        {-d,--diff}'[error with a diff when the formatting differs]' \
+        {-s,--simplify}'[simplify the code]' \
+        {-mn,--minify}'[minify the code to reduce its size (implies -s)]' \
+        {-ln,--language-dialect}'[bash/posix/mksh/bats, default "auto"]' \
+        {-p,--posix}'[shorthand for -ln=posix]' \
+        '--filename[provide a name for the standard input file]' \
+        {-i,--indent}'[0 for tabs (default), >0 for number of spaces]' \
+        {-bn,--binary-next-line}'[binary ops like && and | may start a line]' \
+        {-ci,--case-indent}'[switch cases will be indented]' \
+        {-sr,--space-redirects}'[redirect operators will be followed by a space]' \
+        {-kp,--keep-padding}'[keep column alignment paddings]' \
+        {-fn,--func-next-line}'[function opening braces are placed on a separate line]' \
+        {-f,--find}'[recursively find all shell files and print the paths]' \
+        '--tojson[print syntax tree to stdout as a typed JSON]' \
+        "*: :_files"
+
+}
+
+_shfmt "$@"
+

@@ -1,0 +1,22 @@
+#compdef ssh-keyscan
+
+# Auto-generated with h2o
+
+function _ssh-keyscan {
+    _arguments \
+        '-4[Force ssh-keyscan to use IPv4 addresses only.]' \
+        '-6[Force ssh-keyscan to use IPv6 addresses only.]' \
+        '-c[Request certificates from target hosts instead of plain keys.]' \
+        '-D[Print keys found as SSHFP DNS records. The default is to print keys in a format usable as a ssh(1) known_hosts file.]' \
+        '-f[Read hosts or “addrlist namelist” pairs from file, one per line. If ‘-’ is supplied instead of a filename, ssh-keyscan will read from the standard input. Input is expected in the format:]':file:_files \
+        '-H[Hash all hostnames and addresses in the output. Hashed names may be used normally by ssh(1) and sshd(8), but they do not reveal identifying information should the file'\''s contents be disclosed.]' \
+        '-p[Connect to port on the remote host.]' \
+        '-T[Set the timeout for connection attempts. If timeout seconds have elapsed since a connection was initiated to a host or since the last time anything was read from that host, the connection is closed and the host in question considered unavailable. The default is 5 seconds.]' \
+        '-t[Specify the type of the key to fetch from the scanned hosts. The possible values are “dsa”, “ecdsa”, “ed25519”, or “rsa”. Multiple values may be specified by separating them with commas. The default is to fetch “rsa”, “ecdsa”, and “ed25519” keys.]' \
+        '-v[Verbose mode: print debugging messages about progress.]' \
+        "*: :_files"
+
+}
+
+_ssh-keyscan "$@"
+

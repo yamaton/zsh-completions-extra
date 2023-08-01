@@ -1,0 +1,394 @@
+#compdef ploomber
+
+# Auto-generated with h2o
+
+
+function _ploomber {
+    local line state
+
+    function _commands {
+        local -a commands
+        commands=(
+            'build:Build pipeline'
+            'cloud:Manage Ploomber Cloud'
+            'examples:Download examples'
+            'install:Install dependencies'
+            'interact:Interact with your pipeline (REPL)'
+            'nb:Manage scripts and notebooks'
+            'plot:Plot pipeline'
+            'report:Generate pipeline report'
+            'scaffold:Create a new project and task source files'
+            'status:Show pipeline status'
+            'task:Interact with specific tasks'
+        )
+        _describe 'command' commands
+    }
+ 
+
+    _arguments -C \
+        '--version[Show the version and exit.]' \
+        '--help[Show this message and exit.]' \
+        ': :->cmd' \
+        '*:: :->subcmd'
+
+    case $state in
+    (cmd)
+        _commands
+        ;;
+    (subcmd)
+        case $line[1] in
+        (build)
+            _ploomber_build
+            ;;
+
+        (cloud)
+            _ploomber_cloud
+            ;;
+
+        (examples)
+            _ploomber_examples
+            ;;
+
+        (install)
+            _ploomber_install
+            ;;
+
+        (interact)
+            _ploomber_interact
+            ;;
+
+        (nb)
+            _ploomber_nb
+            ;;
+
+        (plot)
+            _ploomber_plot
+            ;;
+
+        (report)
+            _ploomber_report
+            ;;
+
+        (scaffold)
+            _ploomber_scaffold
+            ;;
+
+        (status)
+            _ploomber_status
+            ;;
+
+        (task)
+            _ploomber_task
+            ;;
+
+        esac
+        ;;
+     esac
+
+}
+
+function _ploomber_build {
+    _arguments \
+        "*: :_files"
+
+}
+
+
+function _ploomber_cloud {
+    local line state
+
+    function _commands {
+        local -a commands
+        commands=(
+            'abort:Abort a cloud execution:'
+            'build:Build pipeline in the cloud:'
+            'data:Manage input data workspace'
+            'delete-pipeline:Delete a pipeline'
+            'download:Download products from cloud workspace:'
+            'get-key:Return API key'
+            'get-pipelines:Get pipeline status'
+            'list:List executions:'
+            'logs:Get logs for all tasks in a cloud run'
+            'nb:Run a notebook'
+            'products:Manage products (outputs) in cloud workspace'
+            'set-key:Set API key'
+            'status:Get task'\''s execution status:'
+            'task:Build a single pipeline task:'
+            'write-pipeline:Write a pipeline'
+        )
+        _describe 'command' commands
+    }
+ 
+
+    _arguments -C \
+        '--help[Show this message and exit.]' \
+        ': :->cmd' \
+        '*:: :->subcmd'
+
+    case $state in
+    (cmd)
+        _commands
+        ;;
+    (subcmd)
+        case $line[1] in
+        (abort)
+            _ploomber_cloud_abort
+            ;;
+
+        (build)
+            _ploomber_cloud_build
+            ;;
+
+        (data)
+            _ploomber_cloud_data
+            ;;
+
+        (delete-pipeline)
+            _ploomber_cloud_delete-pipeline
+            ;;
+
+        (download)
+            _ploomber_cloud_download
+            ;;
+
+        (get-key)
+            _ploomber_cloud_get-key
+            ;;
+
+        (get-pipelines)
+            _ploomber_cloud_get-pipelines
+            ;;
+
+        (list)
+            _ploomber_cloud_list
+            ;;
+
+        (logs)
+            _ploomber_cloud_logs
+            ;;
+
+        (nb)
+            _ploomber_cloud_nb
+            ;;
+
+        (products)
+            _ploomber_cloud_products
+            ;;
+
+        (set-key)
+            _ploomber_cloud_set-key
+            ;;
+
+        (status)
+            _ploomber_cloud_status
+            ;;
+
+        (task)
+            _ploomber_cloud_task
+            ;;
+
+        (write-pipeline)
+            _ploomber_cloud_write-pipeline
+            ;;
+
+        esac
+        ;;
+     esac
+
+}
+
+function _ploomber_cloud_abort {
+    _arguments \
+        '--help[Show this message and exit.]' \
+        "*: :_files"
+
+}
+
+function _ploomber_cloud_build {
+    _arguments \
+        {-f,--force}'[Force execution by ignoring status]' \
+        '--json[--help Show this message and exit.]' \
+        "*: :_files"
+
+}
+
+function _ploomber_cloud_data {
+    _arguments \
+        {-u,--upload}'[-p, --prefix TEXT]' \
+        {-n,--name}'[-d, --delete TEXT]' \
+        '--help[Show this message and exit.]' \
+        "*: :_files"
+
+}
+
+function _ploomber_cloud_delete-pipeline {
+    _arguments \
+        '--help[Show this message and exit.]' \
+        "*: :_files"
+
+}
+
+function _ploomber_cloud_download {
+    _arguments \
+        {-s,--summary}'[--help Show this message and exit.]' \
+        "*: :_files"
+
+}
+
+function _ploomber_cloud_get-key {
+    _arguments \
+        '--help[Show this message and exit.]' \
+        "*: :_files"
+
+}
+
+function _ploomber_cloud_get-pipelines {
+    _arguments \
+        {-v,--verbose}'[--help Show this message and exit.]' \
+        "*: :_files"
+
+}
+
+function _ploomber_cloud_list {
+    _arguments \
+        '--json[--help Show this message and exit.]' \
+        "*: :_files"
+
+}
+
+function _ploomber_cloud_logs {
+    _arguments \
+        {-i,--image}'[-w, --watch]' \
+        {-t,--task}'[--help Show this message and exit.]' \
+        "*: :_files"
+
+}
+
+function _ploomber_cloud_nb {
+    _arguments \
+        '--json[--help Show this message and exit.]' \
+        "*: :_files"
+
+}
+
+function _ploomber_cloud_products {
+    _arguments \
+        {-d,--delete}'[--json]' \
+        '--help[Show this message and exit.]' \
+        "*: :_files"
+
+}
+
+function _ploomber_cloud_set-key {
+    _arguments \
+        '--help[Show this message and exit.]' \
+        "*: :_files"
+
+}
+
+function _ploomber_cloud_status {
+    _arguments \
+        {-w,--watch}'[--json]' \
+        {-s,--summary}'[--help Show this message and exit.]' \
+        "*: :_files"
+
+}
+
+function _ploomber_cloud_task {
+    _arguments \
+        {-f,--force}'[Force execution by ignoring status]' \
+        '--json[--help Show this message and exit.]' \
+        "*: :_files"
+
+}
+
+function _ploomber_cloud_write-pipeline {
+    _arguments \
+        '--help[Show this message and exit.]' \
+        "*: :_files"
+
+}
+
+function _ploomber_examples {
+    _arguments \
+        {-n,--name}'[Example to download]' \
+        {-f,--force}'[Force examples download]' \
+        {-o,--output}'[Target directory]' \
+        {-b,--branch}'[Git branch to use.]' \
+        '--help[Show this message and exit.]' \
+        "*: :_files"
+
+}
+
+function _ploomber_install {
+    _arguments \
+        {-l,--use-lock,-L,--no-use-lock}'[Use lock/regular files. If not present, uses any of them, prioritizing lock files]' \
+        {-e,--create-env}'[Create a new environment, otherwise install in the current environment]' \
+        {-v,--use-venv}'[Use Python'\''s venv module (ignoring conda if installed)]' \
+        '--help[Show this message and exit.]' \
+        "*: :_files"
+
+}
+
+function _ploomber_interact {
+    _arguments \
+        "*: :_files"
+
+}
+
+function _ploomber_nb {
+    _arguments \
+        {-h,--help}'[show this help message and exit]' \
+        {--log,-l}'[Enables logging to stdout at the specified level]' \
+        {--log-file,-F}'[Enables logging to the given file]':file:_files \
+        {--entry-point,-e}'[Entry point]' \
+        {--single-click,-S}'[Override JupyterLab defaults to open scripts as notebook with a single click]' \
+        {--single-click-disable,-d}'[Disables opening scripts as notebook with a single click in JupyterLab]' \
+        {--install-hook,-I}'[Install git pre-commit hook]' \
+        {--uninstall-hook,-u}'[Uninstall git pre-commit hook]' \
+        {--inject,-i}'[Inject cell to all script/notebook tasks]' \
+        {--remove,-r}'[Remove injected cell in all script/notebook tasks]' \
+        {--format,-f}'[Re-format script/notebook tasks (values: "py:percent" and "ipynb")]' \
+        {--pair,-p}'[Pair scripts with ipynb files]' \
+        {--sync,-s}'[Sync scripts with ipynb files]' \
+        "*: :_files"
+
+}
+
+function _ploomber_plot {
+    _arguments \
+        "*: :_files"
+
+}
+
+function _ploomber_report {
+    _arguments \
+        "*: :_files"
+
+}
+
+function _ploomber_scaffold {
+    _arguments \
+        {-c,--conda,-p,--pip}'[Use environment.yaml/requirements.txt for dependencies]' \
+        {-P,--package}'[Use package template (creates setup.py)]' \
+        {-E,--empty}'[Create a pipeline.yaml with no tasks]' \
+        {-e,--entry-point}'[Entry point to add tasks. Invalid if other flags present]' \
+        '--help[Show this message and exit.]' \
+        "*: :_files"
+
+}
+
+function _ploomber_status {
+    _arguments \
+        "*: :_files"
+
+}
+
+function _ploomber_task {
+    _arguments \
+        "*: :_files"
+
+}
+
+_ploomber "$@"
+

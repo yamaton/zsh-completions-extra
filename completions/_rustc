@@ -1,0 +1,40 @@
+#compdef rustc
+
+# Auto-generated with h2o
+
+function _rustc {
+    _arguments \
+        {-h,--help}'[Display this message]' \
+        '--cfg[Configure the compilation environment]' \
+        '-L[Add a directory to the library search path. The optional KIND can be one of dependency, crate, native, framework, or all (the default).]':file:_files \
+        '-l[Link the generated crate(s) to the specified native library NAME. The optional KIND can be one of static, framework, or dylib (the default). Optional comma separated MODIFIERS (bundle|verbatim|whole-archive|as-needed) may be specified each with a prefix of either '\''+'\'' to enable or '\''-'\'' to disable.]' \
+        '--crate-type[Comma separated list of types of crates for the compiler to emit]' \
+        '--crate-name[Specify the name of the crate being built]' \
+        '--edition[Specify which edition of the compiler to use when compiling code.]' \
+        '--emit[Comma separated list of types of output for the compiler to emit]' \
+        '--print[Compiler information to print on stdout]':file:_files \
+        '-g[Equivalent to -C debuginfo=2]' \
+        '-O[Equivalent to -C opt-level=2]' \
+        '-o[Write output to <filename>]':file:_files \
+        '--out-dir[Write output to compiler-chosen filename in <dir>]':file:_files \
+        '--explain[Provide a detailed explanation of an error message]' \
+        '--test[Build a test harness]' \
+        '--target[Target triple for which the code is compiled]' \
+        {-A,--allow}'[Set lint allowed]' \
+        {-W,--warn}'[Set lint warnings]' \
+        '--force-warn[Set lint force-warn]' \
+        {-D,--deny}'[Set lint denied]' \
+        {-F,--forbid}'[Set lint forbidden]' \
+        '--cap-lints[Set the most restrictive lint level. More restrictive lints are capped at this level]' \
+        {-C,--codegen}'[Set a codegen option]' \
+        {-V,--version}'[Print version info and exit]' \
+        {-v,--verbose}'[Use verbose output]' \
+        '-C[Print codegen options]' \
+        '-W[Print '\''lint'\'' options and default settings]' \
+        {--help,-v}'[Print the full set of options rustc accepts]' \
+        "*: :_files"
+
+}
+
+_rustc "$@"
+

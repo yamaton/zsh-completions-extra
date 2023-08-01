@@ -1,0 +1,592 @@
+#compdef s3cmd
+
+# Auto-generated with h2o
+
+
+function _s3cmd {
+    local line state
+
+    function _commands {
+        local -a commands
+        commands=(
+            'mb:Make bucket'
+            'rb:Remove bucket'
+            'ls:List objects or buckets'
+            'la:List all object in all buckets'
+            'put:Put file into bucket'
+            'get:Get file from bucket'
+            'del:Delete file from bucket'
+            'rm:Delete file from bucket (alias for del)'
+            'restore:Restore file from Glacier storage'
+            'sync:Synchronize a directory tree to S3 (checks files freshness using size and md5 checksum, unless overridden by options, see below)'
+            'du:Disk usage by buckets'
+            'info:Get various information about Buckets or Files'
+            'cp:Copy object'
+            'modify:Modify object metadata'
+            'mv:Move object'
+            'setacl:Modify Access control list for Bucket or Files'
+            'setpolicy:Modify Bucket Policy'
+            'delpolicy:Delete Bucket Policy'
+            'setcors:Modify Bucket CORS'
+            'delcors:Delete Bucket CORS'
+            'payer:Modify Bucket Requester Pays policy'
+            'multipart:Show multipart uploads'
+            'abortmp:Abort a multipart upload'
+            'listmp:List parts of a multipart upload'
+            'accesslog:Enable/disable bucket access logging'
+            'sign:Sign arbitrary string using the secret key'
+            'signurl:Sign an S3 URL to provide limited public access with expiry'
+            'fixbucket:Fix invalid file names in a bucket'
+            'ws-create:Create Website from bucket'
+            'ws-delete:Delete Website'
+            'ws-info:Info about Website'
+            'expire:Set or delete expiration rule for the bucket'
+            'setlifecycle:Upload a lifecycle policy for the bucket'
+            'getlifecycle:Get a lifecycle policy for the bucket'
+            'dellifecycle:Remove a lifecycle policy for the bucket'
+            'cflist:List CloudFront distribution points'
+            'cfinfo:Display CloudFront distribution point parameters'
+            'cfcreate:Create CloudFront distribution point'
+            'cfdelete:Delete CloudFront distribution point'
+            'cfmodify:Change CloudFront distribution point parameters'
+            'cfinvalinfo:Display CloudFront invalidation request(s) status'
+        )
+        _describe 'command' commands
+    }
+ 
+
+    _arguments -C \
+        {-h,--help}'[show this help message and exit]' \
+        '--configure[Invoke interactive (re)configuration tool. Optionally use as '\''--configure s3://some-bucket'\'' to test access to a specific bucket instead of attempting to list them all.]' \
+        {-c,--config}'[Config file name. Defaults to $HOME/.s3cfg]':file:_files \
+        '--dump-config[Dump current configuration after parsing config files and command line options and exit.]' \
+        '--access_key[AWS Access Key]' \
+        '--secret_key[AWS Secret Key]' \
+        '--access_token[AWS Access Token]' \
+        {-n,--dry-run}'[Only show what should be uploaded or downloaded but don'\''t actually do it. May still perform S3 requests to get bucket listings and other information though (only for file transfer commands)]' \
+        {-s,--ssl}'[Use HTTPS connection when communicating with S3. (default)]' \
+        '--no-ssl[Don'\''t use HTTPS.]' \
+        {-e,--encrypt}'[Encrypt files before uploading to S3.]' \
+        '--no-encrypt[Don'\''t encrypt files.]' \
+        {-f,--force}'[Force overwrite and other dangerous operations.]' \
+        '--continue[Continue getting a partially downloaded file (only for \[get\] command).]' \
+        '--continue-put[Continue uploading partially uploaded files or multipart upload parts. Restarts parts/files that don'\''t have matching size and md5. Skips files/parts that do. Note: md5sum checks are not always sufficient to check (part) file equality. Enable this at your own risk.]' \
+        '--upload-id[UploadId for Multipart Upload, in case you want continue an existing upload (equivalent to --continue-put) and there are multiple partial uploads. Use s3cmd multipart \[URI\] to see what UploadIds are associated with the given URI.]' \
+        '--skip-existing[Skip over files that exist at the destination (only for \[get\] and \[sync\] commands).]' \
+        {-r,--recursive}'[Recursive upload, download or removal.]' \
+        '--check-md5[Check MD5 sums when comparing files for \[sync\]. (default)]' \
+        '--no-check-md5[Do not check MD5 sums when comparing files for \[sync\]. Only size will be compared. May significantly speed up transfer but may also miss some changed files.]' \
+        {-P,--acl-public}'[Store objects with ACL allowing read for anyone.]' \
+        '--acl-private[Store objects with default ACL allowing access for you only.]' \
+        '--acl-revoke[Revoke stated permission for a given amazon user. Permission is one of: read, write, read_acp, write_acp, full_control, all]' \
+        {-D,--restore-days}'[Number of days to keep restored file available (only for '\''restore'\'' command). Default is 1 day.]' \
+        '--restore-priority[Priority for restoring files from S3 Glacier (only for '\''restore'\'' command). Choices available: bulk, standard, expedited]' \
+        '--delete-removed[Delete destination objects with no corresponding source file \[sync\]]' \
+        '--no-delete-removed[Don'\''t delete destination objects \[sync\]]' \
+        '--delete-after[Perform deletes AFTER new uploads when delete-removed is enabled \[sync\]]' \
+        '--delay-updates[*OBSOLETE* Put all updated files into place at end \[sync\]]' \
+        '--max-delete[Do not delete more than NUM files. \[del\] and \[sync\]]' \
+        '--limit[Limit number of objects returned in the response body (only for \[ls\] and \[la\] commands)]' \
+        '--add-destination[Additional destination for parallel uploads, in addition to last arg. May be repeated.]' \
+        '--delete-after-fetch[Delete remote objects after fetching to local file (only for \[get\] and \[sync\] commands).]' \
+        {-p,--preserve}'[Preserve filesystem attributes (mode, ownership, timestamps). Default for \[sync\] command.]' \
+        '--no-preserve[Don'\''t store FS attributes]' \
+        '--exclude[Filenames and paths matching GLOB will be excluded from sync]' \
+        '--exclude-from[Read --exclude GLOBs from FILE]':file:_files \
+        '--rexclude[Filenames and paths matching REGEXP (regular expression) will be excluded from sync]' \
+        '--rexclude-from[Read --rexclude REGEXPs from FILE]':file:_files \
+        '--include[Filenames and paths matching GLOB will be included even if previously excluded by one of --(r)exclude(-from) patterns]' \
+        '--include-from[Read --include GLOBs from FILE]':file:_files \
+        '--rinclude[Same as --include but uses REGEXP (regular expression) instead of GLOB]' \
+        '--rinclude-from[Read --rinclude REGEXPs from FILE]':file:_files \
+        '--files-from[Read list of source-file names from FILE. Use - to read from stdin.]':file:_files \
+        {--region,--bucket-location}'[Region to create bucket in. As of now the regions are: us-east-1, us-west-1, us-west-2, eu-west-1, eu-central-1, ap-northeast-1, ap-southeast-1, ap-southeast-2, sa-east-1]' \
+        '--host[HOSTNAME:PORT for S3 endpoint (default: s3.amazonaws.com, alternatives such as s3-eu-west-1.amazonaws.com). You should also set --host-bucket.]' \
+        '--host-bucket[DNS-style bucket+hostname:port template for accessing a bucket (default: %(bucket)s.s3.amazonaws.com)]' \
+        {--reduced-redundancy,--rr}'[Store object with '\''Reduced redundancy'\''. Lower per-GB price. \[put, cp, mv\]]' \
+        {--no-reduced-redundancy,--no-rr}'[Store object without '\''Reduced redundancy'\''. Higher per-GB price. \[put, cp, mv\]]' \
+        '--storage-class[Store object with specified CLASS (STANDARD, STANDARD_IA, ONEZONE_IA, INTELLIGENT_TIERING, GLACIER or DEEP_ARCHIVE). \[put, cp, mv\]]' \
+        '--access-logging-target-prefix[Target prefix for access logs (S3 URI) (for \[cfmodify\] and \[accesslog\] commands)]' \
+        '--no-access-logging[Disable access logging (for \[cfmodify\] and \[accesslog\] commands)]' \
+        '--default-mime-type[Default MIME-type for stored objects. Application default is binary/octet-stream.]' \
+        {-M,--guess-mime-type}'[Guess MIME-type of files by their extension or mime magic. Fall back to default MIME-Type as specified by --default-mime-type option]' \
+        '--no-guess-mime-type[Don'\''t guess MIME-type and use the default type instead.]' \
+        '--no-mime-magic[Don'\''t use mime magic when guessing MIME-type.]' \
+        {-m,--mime-type}'[Force MIME-type. Override both --default-mime-type and --guess-mime-type.]' \
+        '--add-header[Add a given HTTP header to the upload request. Can be used multiple times. For instance set '\''Expires'\'' or '\''Cache-Control'\'' headers (or both) using this option.]' \
+        '--remove-header[Remove a given HTTP header. Can be used multiple times. For instance, remove '\''Expires'\'' or '\''Cache-Control'\'' headers (or both) using this option. \[modify\]]' \
+        '--server-side-encryption[Specifies that server-side encryption will be used when putting objects. \[put, sync, cp, modify\]]' \
+        '--server-side-encryption-kms-id[Specifies the key id used for server-side encryption with AWS KMS-Managed Keys (SSE-KMS) when putting objects. \[put, sync, cp, modify\]]' \
+        '--encoding[Override autodetected terminal and filesystem encoding (character set). Autodetected: UTF-8]' \
+        '--add-encoding-exts[Add encoding to these comma delimited extensions i.e. (css,js,html) when uploading to S3 )]' \
+        '--verbatim[Use the S3 name as given on the command line. No pre-processing, encoding, etc. Use with caution!]' \
+        '--disable-multipart[Disable multipart upload on files bigger than --multipart-chunk-size-mb]' \
+        '--multipart-chunk-size-mb[Size of each chunk of a multipart upload. Files bigger than SIZE are automatically uploaded as multithreaded-multipart, smaller files are uploaded using the traditional method. SIZE is in Mega-Bytes, default chunk size is 15MB, minimum allowed chunk size is 5MB, maximum is 5GB.]' \
+        '--list-md5[Include MD5 sums in bucket listings (only for '\''ls'\'' command).]' \
+        '--list-allow-unordered[Not an AWS standard. Allow the listing results to be returned in unsorted order. This may be faster when listing very large buckets.]' \
+        {-H,--human-readable-sizes}'[Print sizes in human readable form (eg 1kB instead of 1234).]' \
+        '--ws-index[Name of index-document (only for \[ws-create\] command)]' \
+        '--ws-error[Name of error-document (only for \[ws-create\] command)]' \
+        '--expiry-date[Indicates when the expiration rule takes effect. (only for \[expire\] command)]' \
+        '--expiry-days[Indicates the number of days after object creation the expiration rule takes effect. (only for \[expire\] command)]' \
+        '--expiry-prefix[Identifying one or more objects with the prefix to which the expiration rule applies. (only for \[expire\] command)]' \
+        '--progress[Display progress meter (default on TTY).]' \
+        '--no-progress[Don'\''t display progress meter (default on non-TTY).]' \
+        '--stats[Give some file-transfer stats.]' \
+        '--enable[Enable given CloudFront distribution (only for \[cfmodify\] command)]' \
+        '--disable[Disable given CloudFront distribution (only for \[cfmodify\] command)]' \
+        '--cf-invalidate[Invalidate the uploaded filed in CloudFront. Also see \[cfinval\] command.]' \
+        '--cf-invalidate-default-index[When using Custom Origin and S3 static website, invalidate the default index file.]' \
+        '--cf-no-invalidate-default-index-root[When using Custom Origin and S3 static website, don'\''t invalidate the path to the default index file.]' \
+        '--cf-add-cname[Add given CNAME to a CloudFront distribution (only for \[cfcreate\] and \[cfmodify\] commands)]' \
+        '--cf-remove-cname[Remove given CNAME from a CloudFront distribution (only for \[cfmodify\] command)]' \
+        '--cf-comment[Set COMMENT for a given CloudFront distribution (only for \[cfcreate\] and \[cfmodify\] commands)]' \
+        '--cf-default-root-object[Set the default root object to return when no object is specified in the URL. Use a relative path, i.e. default/index.html instead of /default/index.html or s3://bucket/default/index.html (only for \[cfcreate\] and \[cfmodify\] commands)]' \
+        {-v,--verbose}'[Enable verbose output.]' \
+        {-d,--debug}'[Enable debug output.]' \
+        '--version[Show s3cmd version (2.3.0) and exit.]' \
+        {-F,--follow-symlinks}'[Follow symbolic links as if they are regular files]' \
+        '--cache-file[Cache FILE containing local source MD5 values]':file:_files \
+        {-q,--quiet}'[Silence output on stdout]' \
+        '--ca-certs[Path to SSL CA certificate FILE (instead of system default)]':file:_files \
+        '--ssl-cert[Path to client own SSL certificate CRT_FILE]':file:_files \
+        '--ssl-key[Path to client own SSL certificate private key KEY_FILE]':file:_files \
+        '--check-certificate[Check SSL certificate validity]' \
+        '--no-check-certificate[Do not check SSL certificate validity]' \
+        '--check-hostname[Check SSL certificate hostname validity]' \
+        '--no-check-hostname[Do not check SSL certificate hostname validity]' \
+        '--signature-v2[Use AWS Signature version 2 instead of newer signature methods. Helpful for S3-like systems that don'\''t have AWS Signature v4 yet.]' \
+        '--limit-rate[Limit the upload or download speed to amount bytes per second. Amount may be expressed in bytes, kilobytes with the k suffix, or megabytes with the m suffix]' \
+        '--no-connection-pooling[Disable connection re-use]' \
+        '--requester-pays[Set the REQUESTER PAYS flag for operations]' \
+        {-l,--long-listing}'[Produce long listing \[ls\]]' \
+        '--stop-on-error[stop if error in transfer]' \
+        '--content-disposition[Provide a Content-Disposition for signed URLs, e.g., "inline; filename=myvideo.mp4"]' \
+        '--content-type[Provide a Content-Type for signed URLs, e.g., "video/mp4"]' \
+        ': :->cmd' \
+        '*:: :->subcmd'
+
+    case $state in
+    (cmd)
+        _commands
+        ;;
+    (subcmd)
+        case $line[1] in
+        (mb)
+            _s3cmd_mb
+            ;;
+
+        (rb)
+            _s3cmd_rb
+            ;;
+
+        (ls)
+            _s3cmd_ls
+            ;;
+
+        (la)
+            _s3cmd_la
+            ;;
+
+        (put)
+            _s3cmd_put
+            ;;
+
+        (get)
+            _s3cmd_get
+            ;;
+
+        (del)
+            _s3cmd_del
+            ;;
+
+        (rm)
+            _s3cmd_rm
+            ;;
+
+        (restore)
+            _s3cmd_restore
+            ;;
+
+        (sync)
+            _s3cmd_sync
+            ;;
+
+        (du)
+            _s3cmd_du
+            ;;
+
+        (info)
+            _s3cmd_info
+            ;;
+
+        (cp)
+            _s3cmd_cp
+            ;;
+
+        (modify)
+            _s3cmd_modify
+            ;;
+
+        (mv)
+            _s3cmd_mv
+            ;;
+
+        (setacl)
+            _s3cmd_setacl
+            ;;
+
+        (setpolicy)
+            _s3cmd_setpolicy
+            ;;
+
+        (delpolicy)
+            _s3cmd_delpolicy
+            ;;
+
+        (setcors)
+            _s3cmd_setcors
+            ;;
+
+        (delcors)
+            _s3cmd_delcors
+            ;;
+
+        (payer)
+            _s3cmd_payer
+            ;;
+
+        (multipart)
+            _s3cmd_multipart
+            ;;
+
+        (abortmp)
+            _s3cmd_abortmp
+            ;;
+
+        (listmp)
+            _s3cmd_listmp
+            ;;
+
+        (accesslog)
+            _s3cmd_accesslog
+            ;;
+
+        (sign)
+            _s3cmd_sign
+            ;;
+
+        (signurl)
+            _s3cmd_signurl
+            ;;
+
+        (fixbucket)
+            _s3cmd_fixbucket
+            ;;
+
+        (ws-create)
+            _s3cmd_ws-create
+            ;;
+
+        (ws-delete)
+            _s3cmd_ws-delete
+            ;;
+
+        (ws-info)
+            _s3cmd_ws-info
+            ;;
+
+        (expire)
+            _s3cmd_expire
+            ;;
+
+        (setlifecycle)
+            _s3cmd_setlifecycle
+            ;;
+
+        (getlifecycle)
+            _s3cmd_getlifecycle
+            ;;
+
+        (dellifecycle)
+            _s3cmd_dellifecycle
+            ;;
+
+        (cflist)
+            _s3cmd_cflist
+            ;;
+
+        (cfinfo)
+            _s3cmd_cfinfo
+            ;;
+
+        (cfcreate)
+            _s3cmd_cfcreate
+            ;;
+
+        (cfdelete)
+            _s3cmd_cfdelete
+            ;;
+
+        (cfmodify)
+            _s3cmd_cfmodify
+            ;;
+
+        (cfinvalinfo)
+            _s3cmd_cfinvalinfo
+            ;;
+
+        esac
+        ;;
+     esac
+
+}
+
+function _s3cmd_mb {
+    _arguments \
+        "*: :_files"
+
+}
+
+function _s3cmd_rb {
+    _arguments \
+        "*: :_files"
+
+}
+
+function _s3cmd_ls {
+    _arguments \
+        "*: :_files"
+
+}
+
+function _s3cmd_la {
+    _arguments \
+        "*: :_files"
+
+}
+
+function _s3cmd_put {
+    _arguments \
+        "*: :_files"
+
+}
+
+function _s3cmd_get {
+    _arguments \
+        "*: :_files"
+
+}
+
+function _s3cmd_del {
+    _arguments \
+        "*: :_files"
+
+}
+
+function _s3cmd_rm {
+    _arguments \
+        "*: :_files"
+
+}
+
+function _s3cmd_restore {
+    _arguments \
+        "*: :_files"
+
+}
+
+function _s3cmd_sync {
+    _arguments \
+        "*: :_files"
+
+}
+
+function _s3cmd_du {
+    _arguments \
+        "*: :_files"
+
+}
+
+function _s3cmd_info {
+    _arguments \
+        "*: :_files"
+
+}
+
+function _s3cmd_cp {
+    _arguments \
+        "*: :_files"
+
+}
+
+function _s3cmd_modify {
+    _arguments \
+        "*: :_files"
+
+}
+
+function _s3cmd_mv {
+    _arguments \
+        "*: :_files"
+
+}
+
+function _s3cmd_setacl {
+    _arguments \
+        "*: :_files"
+
+}
+
+function _s3cmd_setpolicy {
+    _arguments \
+        "*: :_files"
+
+}
+
+function _s3cmd_delpolicy {
+    _arguments \
+        "*: :_files"
+
+}
+
+function _s3cmd_setcors {
+    _arguments \
+        "*: :_files"
+
+}
+
+function _s3cmd_delcors {
+    _arguments \
+        "*: :_files"
+
+}
+
+function _s3cmd_payer {
+    _arguments \
+        "*: :_files"
+
+}
+
+function _s3cmd_multipart {
+    _arguments \
+        "*: :_files"
+
+}
+
+function _s3cmd_abortmp {
+    _arguments \
+        "*: :_files"
+
+}
+
+function _s3cmd_listmp {
+    _arguments \
+        "*: :_files"
+
+}
+
+function _s3cmd_accesslog {
+    _arguments \
+        "*: :_files"
+
+}
+
+function _s3cmd_sign {
+    _arguments \
+        "*: :_files"
+
+}
+
+function _s3cmd_signurl {
+    _arguments \
+        "*: :_files"
+
+}
+
+function _s3cmd_fixbucket {
+    _arguments \
+        "*: :_files"
+
+}
+
+function _s3cmd_ws-create {
+    _arguments \
+        "*: :_files"
+
+}
+
+function _s3cmd_ws-delete {
+    _arguments \
+        "*: :_files"
+
+}
+
+function _s3cmd_ws-info {
+    _arguments \
+        "*: :_files"
+
+}
+
+function _s3cmd_expire {
+    _arguments \
+        "*: :_files"
+
+}
+
+function _s3cmd_setlifecycle {
+    _arguments \
+        "*: :_files"
+
+}
+
+function _s3cmd_getlifecycle {
+    _arguments \
+        "*: :_files"
+
+}
+
+function _s3cmd_dellifecycle {
+    _arguments \
+        "*: :_files"
+
+}
+
+function _s3cmd_cflist {
+    _arguments \
+        "*: :_files"
+
+}
+
+function _s3cmd_cfinfo {
+    _arguments \
+        "*: :_files"
+
+}
+
+function _s3cmd_cfcreate {
+    _arguments \
+        "*: :_files"
+
+}
+
+function _s3cmd_cfdelete {
+    _arguments \
+        "*: :_files"
+
+}
+
+function _s3cmd_cfmodify {
+    _arguments \
+        "*: :_files"
+
+}
+
+function _s3cmd_cfinvalinfo {
+    _arguments \
+        "*: :_files"
+
+}
+
+_s3cmd "$@"
+

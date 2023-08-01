@@ -1,0 +1,163 @@
+#compdef miniwdl
+
+# Auto-generated with h2o
+
+
+function _miniwdl {
+    local line state
+
+    function _commands {
+        local -a commands
+        commands=(
+            'check:Validate a WDL document; show an outline with lint warnings'
+            'configure:Generate runner config file / display effective config'
+            'run:Run workflow/task locally with built-in runtime'
+            'zip:Zip WDL source'
+            'localize:Download URI input Files to local cache for use in subsequent runs'
+            'eval:Evaluate a WDL expression'
+        )
+        _describe 'command' commands
+    }
+ 
+
+    _arguments -C \
+        {-h,--help}'[show this help message and exit]' \
+        '--version[show miniwdl package version information]' \
+        ': :->cmd' \
+        '*:: :->subcmd'
+
+    case $state in
+    (cmd)
+        _commands
+        ;;
+    (subcmd)
+        case $line[1] in
+        (check)
+            _miniwdl_check
+            ;;
+
+        (configure)
+            _miniwdl_configure
+            ;;
+
+        (run)
+            _miniwdl_run
+            ;;
+
+        (zip)
+            _miniwdl_zip
+            ;;
+
+        (localize)
+            _miniwdl_localize
+            ;;
+
+        (eval)
+            _miniwdl_eval
+            ;;
+
+        esac
+        ;;
+     esac
+
+}
+
+function _miniwdl_check {
+    _arguments \
+        {-h,--help}'[show this help message and exit]' \
+        '--strict[exit with nonzero status code if any lint warnings are shown (in addition to syntax and type errors)]' \
+        '--suppress[comma-separated set of warnings to disable globally e.g. StringCoercion,NonemptyCoercion]' \
+        '--no-suppress[show warnings even if they have inline suppression comments]' \
+        {-p,--path}'[local directory to search for imports (can supply multiple times)]':file:_files \
+        '--no-outside-imports[deny local imports from outside directory of main WDL file (or --path)]' \
+        '--no-quant-check[relax static typechecking of optional types, and permit coercion of T to Array\[T\] (discouraged; for backwards compatibility with older WDL)]' \
+        '--debug[maximally verbose logging & exception tracebacks]' \
+        "*: :_files"
+
+}
+
+function _miniwdl_configure {
+    _arguments \
+        {-h,--help}'[show this help message and exit]' \
+        '--show[just show effective configuration]' \
+        '--force[overwrite existing .cfg file]' \
+        "*: :_files"
+
+}
+
+function _miniwdl_run {
+    _arguments \
+        {-h,--help}'[show this help message and exit]' \
+        {-i,--input}'[INPUT.json Cromwell-style input JSON object, filename, or -; command-line inputs will be merged in]' \
+        '--empty[explicitly set a string input to the empty string OR an array input to the empty array]' \
+        '--none[explicitly set an optional input to None (to override a default)]' \
+        '--task[name of task to run (for WDL documents with multiple tasks & no workflow)]' \
+        {-j,--json}'[just print Cromwell-style input JSON to standard output, then exit]' \
+        {-d,--dir}'[directory under which to create a timestamp-named subdirectory for this run (defaults to current working directory); supply '\''.'\'' or '\''some/dir/.'\'' to instead run in this directory exactly]':file:_files \
+        '--error-json[upon failure, print error information JSON to standard output (in addition to standard error logging)]' \
+        '-o[write JSON output/error to specified file instead of standard output (implies --error-json)]' \
+        {-v,--verbose}'[increase logging detail & stream tasks'\'' stderr]' \
+        '--no-color[disable colored logging and status bar on terminal (also set by NO_COLOR environment variable)]' \
+        '--log-json[write all logs in JSON]' \
+        '--cfg[configuration file to load (in preference to file named by MINIWDL_CFG environment, or XDG_CONFIG_{HOME,DIRS}/miniwdl.cfg)]':file:_files \
+        '--runtime-defaults[default runtime settings for all tasks (JSON filename or literal object e.g. '\''{"maxRetries":2}'\'')]' \
+        '--no-cache[override any configuration enabling cache lookup for call outputs & downloaded files]' \
+        '--env[Environment variable to pass through to \[or set outright in\] all task environments (can supply multiple times; warning, non-portable side channel)]' \
+        '--copy-input-files[copy input files for each task and mount them read/write (unblocks task commands that mv/rm/write them)]' \
+        '--copy-input-files-for[copy input files only for specifically named task (can supply multiple times)]' \
+        '--as-me[run all containers as the invoking user uid:gid (more secure, but potentially blocks task commands e.g. apt-get)]' \
+        {-p,--path}'[local directory to search for imports (can supply multiple times)]':file:_files \
+        '--no-outside-imports[deny local imports from outside directory of main WDL file (or --path)]' \
+        '--no-quant-check[relax static typechecking of optional types, and permit coercion of T to Array\[T\] (discouraged; for backwards compatibility with older WDL)]' \
+        '--debug[maximally verbose logging & exception tracebacks]' \
+        "*: :_files"
+
+}
+
+function _miniwdl_zip {
+    _arguments \
+        {-h,--help}'[show this help message and exit]' \
+        {-o,--output}'[destination filename \[WDL_FILE.zip\]]':file:_files \
+        {-f,--force}'[overwrite existing file]' \
+        {-p,--path}'[local directory to search for imports (can supply multiple times)]':file:_files \
+        '--no-outside-imports[deny local imports from outside directory of main WDL file (or --path)]' \
+        '--no-quant-check[relax static typechecking of optional types, and permit coercion of T to Array\[T\] (discouraged; for backwards compatibility with older WDL)]' \
+        '--debug[maximally verbose logging & exception tracebacks]' \
+        "*: :_files"
+
+}
+
+function _miniwdl_localize {
+    _arguments \
+        {-h,--help}'[show this help message and exit]' \
+        '--task[name of task (for WDL documents with multiple tasks & no workflow)]' \
+        '--file[additional File URI to process; if present then WDL & JSON may be omitted]' \
+        '--directory[additional Directory URI to process; if present then WDL & JSON may be omitted]' \
+        '--no-cache[if a URI is already cached, re-download and replace it]' \
+        '--cfg[configuration file to load (in preference to file named by MINIWDL_CFG environment, or XDG_CONFIG_{HOME,DIRS}/miniwdl.cfg)]':file:_files \
+        {-v,--verbose}'[increase logging detail & stream tasks'\'' stderr]' \
+        '--no-color[disable colored logging and status bar on terminal (also set by NO_COLOR environment variable)]' \
+        '--log-json[write all logs in JSON]' \
+        {-p,--path}'[local directory to search for imports (can supply multiple times)]':file:_files \
+        '--no-outside-imports[deny local imports from outside directory of main WDL file (or --path)]' \
+        '--no-quant-check[relax static typechecking of optional types, and permit coercion of T to Array\[T\] (discouraged; for backwards compatibility with older WDL)]' \
+        '--debug[maximally verbose logging & exception tracebacks]' \
+        "*: :_files"
+
+}
+
+function _miniwdl_eval {
+    _arguments \
+        {-h,--help}'[show this help message and exit]' \
+        {--wdl-version,-v}'[WDL version (default: development)]' \
+        {--type,-t}'[report type as well as JSON value]' \
+        {-p,--path}'[local directory to search for imports (can supply multiple times)]':file:_files \
+        '--no-outside-imports[deny local imports from outside directory of main WDL file (or --path)]' \
+        '--no-quant-check[relax static typechecking of optional types, and permit coercion of T to Array\[T\] (discouraged; for backwards compatibility with older WDL)]' \
+        '--debug[maximally verbose logging & exception tracebacks]' \
+        "*: :_files"
+
+}
+
+_miniwdl "$@"
+

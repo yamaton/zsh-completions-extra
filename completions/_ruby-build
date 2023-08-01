@@ -1,0 +1,19 @@
+#compdef ruby-build
+
+# Auto-generated with h2o
+
+function _ruby-build {
+    _arguments \
+        {-k,--keep}'[Do not remove source tree after installation]' \
+        {-p,--patch}'[Apply a patch from stdin before building]' \
+        {-v,--verbose}'[Verbose mode: print compilation status to stdout]' \
+        {-4,--ipv4}'[Resolve names to IPv4 addresses only]' \
+        {-6,--ipv6}'[Resolve names to IPv6 addresses only]' \
+        '--definitions[List all built-in definitions]' \
+        '--version[Show version of ruby-build]' \
+        "*: :_files"
+
+}
+
+_ruby-build "$@"
+

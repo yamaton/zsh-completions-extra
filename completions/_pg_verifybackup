@@ -1,0 +1,21 @@
+#compdef pg_verifybackup
+
+# Auto-generated with h2o
+
+function _pg_verifybackup {
+    _arguments \
+        {-e,--exit-on-error}'[exit immediately on error]' \
+        {-i,--ignore}'[ignore indicated path]':file:_files \
+        {-m,--manifest-path}'[use specified path for manifest]':file:_files \
+        {-n,--no-parse-wal}'[do not try to parse WAL files]' \
+        {-q,--quiet}'[do not print any output, except for errors]' \
+        {-s,--skip-checksums}'[skip checksum verification]' \
+        {-w,--wal-directory}'[use specified path for WAL files]':file:_files \
+        {-V,--version}'[output version information, then exit]' \
+        {-?,--help}'[show this help, then exit]' \
+        "*: :_files"
+
+}
+
+_pg_verifybackup "$@"
+

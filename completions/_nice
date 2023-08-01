@@ -1,0 +1,15 @@
+#compdef nice
+
+# Auto-generated with h2o
+
+function _nice {
+    _arguments \
+        {-n,--adjustment}'[add integer N to the niceness (default 10)]' \
+        '--help[display this help and exit]' \
+        '--version[output version information and exit]' \
+        "*: :_files"
+
+}
+
+_nice "$@"
+

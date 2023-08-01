@@ -1,0 +1,15 @@
+#compdef nix-build
+
+# Auto-generated with h2o
+
+function _nix-build {
+    _arguments \
+        '--no-out-link[Do not create a symlink to the output path. Note that as a result the output does not become a root of the garbage collector, and so might be deleted by nix-store --gc.]' \
+        '--dry-run[Show what store paths would be built or downloaded.]' \
+        {--out-link,-o}'[Change the name of the symlink to the output path created from result to outlink.]' \
+        "*: :_files"
+
+}
+
+_nix-build "$@"
+

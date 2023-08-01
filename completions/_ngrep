@@ -1,0 +1,41 @@
+#compdef ngrep
+
+# Auto-generated with h2o
+
+function _ngrep {
+    _arguments \
+        '-h[Display help/usage information.]' \
+        '-N[Show sub-protocol number along with single-character identifier (useful when observing raw or unknown protocols).]' \
+        '-X[Treat the match expression as a hexadecimal string. See the explanation of match expression below.]' \
+        '-V[Display version information.]' \
+        '-i[Ignore case for the regex expression.]' \
+        '-w[Match the regex expression as a word.]' \
+        '-q[Be quiet; don'\''t output any information other than packet headers and their payloads (if relevant).]' \
+        '-p[Don'\''t put the interface into promiscuous mode.]' \
+        '-e[Show empty packets. Normally empty packets are discarded because they have no payload to search. If specified, empty packets will be shown, regardless of the specified regex expression.]' \
+        '-v[Invert the match; only display packets that don'\''t match.]' \
+        '-x[Dump packet contents as hexadecimal as well as ASCII.]' \
+        '-l[Make stdout line buffered.]' \
+        '-C[Colorize matches in ASCII output.]' \
+        '-D[When reading pcap_dump files, replay them at their recorded time intervals (mimic realtime).]' \
+        '-t[Print a timestamp in the form of YYYY/MM/DD HH:MM:SS.UUUUUU everytime a packet is matched.]' \
+        '-T[Print a timestamp in the form of +S.UUUUUU, indicating the delta between packet matches. Specify a second time to indicate the delta since the first packet match.]' \
+        '-R[Do not try to drop privileges to the DROPPRIVS_USER.]' \
+        '-c[Explicitly set the console width to ``cols'\'''\''. Note that this is the console width, and not the full width of what ngrep prints out as payloads; depending on the output mode ngrep may print less than ``cols'\'''\'' bytes per line (indentation).]' \
+        '-F[Read in the bpf filter from the specified filename. This is a compatibility option for users familiar with tcpdump. Please note that specifying ``-F'\'''\'' will override any bpf filter specified on the command-line.]':file:_files \
+        '-P[Specify an alternate character to signify non-printable characters when displayed. The default is ``.'\'''\''.]' \
+        '-K[Kill matching TCP connections (like tcpkill). The numeric argument controls how many RST segments are sent.]' \
+        '-W[Specify an alternate manner for displaying packets, when not in hexadecimal mode. The ``byline'\'''\'' mode honors embedded linefeeds, wrapping text only when a linefeed is encountered (useful for observing HTTP transactions, for instance). The ``none'\'''\'' mode doesn'\''t wrap under any circumstance (entire payload is displayed on one line). The ``single'\'''\'' mode is conceptually the same as ``none'\'''\'', except that everything including IP and source/destination header information is all on one line. ``normal'\'''\'' is the default mode and is only included for completeness. This option is incompatible with ``-x'\'''\''.]' \
+        '-s[Set the bpf caplen to snaplen (default 65536).]' \
+        '-S[Set the upper limit on the size of packets that ngrep will look at. Useful for looking at only the first N bytes of packets without changing the BPF snaplen.]' \
+        '-I[Input file pcap_dump into ngrep. Works with any pcap-compatible dump file format. This option is useful for searching for a wide range of different patterns over the same packet stream.]' \
+        '-O[Output matched packets to a pcap-compatible dump file. This feature does not interfere with normal output to stdout.]' \
+        '-n[Match only num packets total, then exit.]' \
+        '-d[By default ngrep will select a default interface to listen on. Use this option to force ngrep to listen on interface dev.]' \
+        '-A[Dump num packets of trailing context after matching a packet.]' \
+        "*: :_files"
+
+}
+
+_ngrep "$@"
+

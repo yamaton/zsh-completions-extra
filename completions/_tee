@@ -1,0 +1,18 @@
+#compdef tee
+
+# Auto-generated with h2o
+
+function _tee {
+    _arguments \
+        {-a,--append}'[append to the given FILEs, do not overwrite]' \
+        {-i,--ignore-interrupts}'[ignore interrupt signals]' \
+        '-p[diagnose errors writing to non pipes]' \
+        '--output-error[set behavior on write error. See MODE below]' \
+        '--help[display this help and exit]' \
+        '--version[output version information and exit]' \
+        "*: :_files"
+
+}
+
+_tee "$@"
+

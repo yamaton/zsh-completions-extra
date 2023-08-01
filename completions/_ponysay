@@ -1,0 +1,25 @@
+#compdef ponysay
+
+# Auto-generated with h2o
+
+function _ponysay {
+    _arguments \
+        {-h,--help}'[Print this help message.]' \
+        {-v,--version}'[Print the version of the program.]' \
+        {-l,--list}'[List pony names.]' \
+        {-L,--altlist}'[List pony names with alternatives.]' \
+        {-A,--all}'[List all pony names.]' \
+        {-B,--balloonlist}'[List balloon styles.]' \
+        {-c,--compact}'[Compress messages.]' \
+        {-o,--ponyonly}'[Print only the pony.]' \
+        {-W,--wrap}'[Specify column where the message should be wrapped.]' \
+        {-b,--balloon}'[Select a balloon style.]' \
+        {-f,--pony}'[Select a pony. Either a file name or a pony name.]' \
+        {-F,--anypony}'[Select a pony, that can be a non-MLP:FiM pony.]' \
+        {-q,--quote}'[Select a pony which will quote herself.]' \
+        "*: :_files"
+
+}
+
+_ponysay "$@"
+

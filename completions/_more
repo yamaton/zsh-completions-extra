@@ -1,0 +1,22 @@
+#compdef more
+
+# Auto-generated with h2o
+
+function _more {
+    _arguments \
+        {-d,--silent}'[display help instead of ringing bell]' \
+        {-f,--logical}'[count logical rather than screen lines]' \
+        {-l,--no-pause}'[suppress pause after form feed]' \
+        {-c,--print-over}'[do not scroll, display text and clean line ends]' \
+        {-p,--clean-print}'[do not scroll, clean screen and display text]' \
+        {-s,--squeeze}'[squeeze multiple blank lines into one]' \
+        {-u,--plain}'[suppress underlining and bold]' \
+        {-n,--lines}'[the number of lines per screenful]' \
+        {-h,--help}'[display this help]' \
+        {-V,--version}'[display version]' \
+        "*: :_files"
+
+}
+
+_more "$@"
+

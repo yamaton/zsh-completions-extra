@@ -1,0 +1,919 @@
+#compdef poetry
+
+# Auto-generated with h2o
+
+
+function _poetry {
+    local line state
+
+    function _commands {
+        local -a commands
+        commands=(
+            'about:Shows information about Poetry.'
+            'add:Adds a new dependency to pyproject.toml.'
+            'build:Builds a package, as a tarball and a wheel by default.'
+            'check:Checks the validity of the pyproject.toml file.'
+            'config:Manages configuration settings.'
+            'export:Exports the lock file to alternative formats.'
+            'help:Displays help for a command.'
+            'init:Creates a basic pyproject.toml file in the current directory.'
+            'install:Installs the project dependencies.'
+            'list:Lists commands.'
+            'lock:Locks the project dependencies.'
+            'new:Creates a new Python project at <path>.'
+            'publish:Publishes a package to a remote repository.'
+            'remove:Removes a package from the project dependencies.'
+            'run:Runs a command in the appropriate environment.'
+            'search:Searches for packages on remote repositories.'
+            'shell:Spawns a shell within the virtual environment.'
+            'show:Shows information about packages.'
+            'update:Update the dependencies as according to the pyproject.toml file.'
+            'version:Shows the version of the project or bumps it when a valid bump rule is provided.'
+            'cache:Clear or List Poetry'\''s caches.'
+            'debug:Show debug information or Debugs dependency resolution'
+            'env:Poetry'\''s env'
+            'self:Manage Poetry itself'
+            'source:Source configuration for project'
+            'list:List all subcommands'
+        )
+        _describe 'command' commands
+    }
+ 
+
+    _arguments -C \
+        {-h,--help}'[Display help for the given command. When no command is given display help for the list command.]' \
+        {-q,--quiet}'[Do not output any message.]' \
+        {-V,--version}'[Display this application version.]' \
+        '--ansi[Force ANSI output.]' \
+        '--no-ansi[Disable ANSI output.]' \
+        {-n,--no-interaction}'[Do not ask any interactive question.]' \
+        '--no-plugins[Disables plugins.]' \
+        '--no-cache[Disables Poetry source caches.]' \
+        {-C,--directory}'[The working directory for the Poetry command (defaults to the current working directory).]':file:_files \
+        ': :->cmd' \
+        '*:: :->subcmd'
+
+    case $state in
+    (cmd)
+        _commands
+        ;;
+    (subcmd)
+        case $line[1] in
+        (about)
+            _poetry_about
+            ;;
+
+        (add)
+            _poetry_add
+            ;;
+
+        (build)
+            _poetry_build
+            ;;
+
+        (check)
+            _poetry_check
+            ;;
+
+        (config)
+            _poetry_config
+            ;;
+
+        (export)
+            _poetry_export
+            ;;
+
+        (help)
+            _poetry_help
+            ;;
+
+        (init)
+            _poetry_init
+            ;;
+
+        (install)
+            _poetry_install
+            ;;
+
+        (list)
+            _poetry_list
+            ;;
+
+        (lock)
+            _poetry_lock
+            ;;
+
+        (new)
+            _poetry_new
+            ;;
+
+        (publish)
+            _poetry_publish
+            ;;
+
+        (remove)
+            _poetry_remove
+            ;;
+
+        (run)
+            _poetry_run
+            ;;
+
+        (search)
+            _poetry_search
+            ;;
+
+        (shell)
+            _poetry_shell
+            ;;
+
+        (show)
+            _poetry_show
+            ;;
+
+        (update)
+            _poetry_update
+            ;;
+
+        (version)
+            _poetry_version
+            ;;
+
+        (cache)
+            _poetry_cache
+            ;;
+
+        (debug)
+            _poetry_debug
+            ;;
+
+        (env)
+            _poetry_env
+            ;;
+
+        (self)
+            _poetry_self
+            ;;
+
+        (source)
+            _poetry_source
+            ;;
+
+        (list)
+            _poetry_list
+            ;;
+
+        esac
+        ;;
+     esac
+
+}
+
+function _poetry_about {
+    _arguments \
+        {-h,--help}'[Display help for the given command. When no command is given display help for the list command.]' \
+        {-q,--quiet}'[Do not output any message.]' \
+        {-V,--version}'[Display this application version.]' \
+        '--ansi[Force ANSI output.]' \
+        '--no-ansi[Disable ANSI output.]' \
+        {-n,--no-interaction}'[Do not ask any interactive question.]' \
+        '--no-plugins[Disables plugins.]' \
+        '--no-cache[Disables Poetry source caches.]' \
+        {-C,--directory}'[The working directory for the Poetry command (defaults to the current working directory).]':file:_files \
+        "*: :_files"
+
+}
+
+function _poetry_add {
+    _arguments \
+        {-G,--group}'[The group to add the dependency to. \[default: "main"\]]' \
+        {-D,--dev}'[Add as a development dependency. (Deprecated) Use --group=dev instead.]' \
+        {-e,--editable}'[Add vcs/path dependencies as editable.]' \
+        {-E,--extras}'[Extras to activate for the dependency. (multiple values allowed)]' \
+        '--optional[Add as an optional dependency.]' \
+        '--python[Python version for which the dependency must be installed.]' \
+        '--platform[Platforms for which the dependency must be installed.]' \
+        '--source[Name of the source to use to install the package.]' \
+        '--allow-prereleases[Accept prereleases.]' \
+        '--dry-run[Output the operations but do not execute anything (implicitly enables --verbose).]' \
+        '--lock[Do not perform operations (only update the lockfile).]' \
+        {-h,--help}'[Display help for the given command. When no command is given display help for the list command.]' \
+        {-q,--quiet}'[Do not output any message.]' \
+        {-V,--version}'[Display this application version.]' \
+        '--ansi[Force ANSI output.]' \
+        '--no-ansi[Disable ANSI output.]' \
+        {-n,--no-interaction}'[Do not ask any interactive question.]' \
+        '--no-plugins[Disables plugins.]' \
+        '--no-cache[Disables Poetry source caches.]' \
+        {-C,--directory}'[The working directory for the Poetry command (defaults to the current working directory).]':file:_files \
+        "*: :_files"
+
+}
+
+function _poetry_build {
+    _arguments \
+        {-f,--format}'[Limit the format to either sdist or wheel.]' \
+        {-h,--help}'[Display help for the given command. When no command is given display help for the list command.]' \
+        {-q,--quiet}'[Do not output any message.]' \
+        {-V,--version}'[Display this application version.]' \
+        '--ansi[Force ANSI output.]' \
+        '--no-ansi[Disable ANSI output.]' \
+        {-n,--no-interaction}'[Do not ask any interactive question.]' \
+        '--no-plugins[Disables plugins.]' \
+        '--no-cache[Disables Poetry source caches.]' \
+        {-C,--directory}'[The working directory for the Poetry command (defaults to the current working directory).]':file:_files \
+        "*: :_files"
+
+}
+
+function _poetry_check {
+    _arguments \
+        {-h,--help}'[Display help for the given command. When no command is given display help for the list command.]' \
+        {-q,--quiet}'[Do not output any message.]' \
+        {-V,--version}'[Display this application version.]' \
+        '--ansi[Force ANSI output.]' \
+        '--no-ansi[Disable ANSI output.]' \
+        {-n,--no-interaction}'[Do not ask any interactive question.]' \
+        '--no-plugins[Disables plugins.]' \
+        '--no-cache[Disables Poetry source caches.]' \
+        {-C,--directory}'[The working directory for the Poetry command (defaults to the current working directory).]':file:_files \
+        "*: :_files"
+
+}
+
+function _poetry_config {
+    _arguments \
+        '--list[List configuration settings.]' \
+        '--unset[Unset configuration setting.]' \
+        '--local[Set/Get from the project'\''s local configuration.]' \
+        {-h,--help}'[Display help for the given command. When no command is given display help for the list command.]' \
+        {-q,--quiet}'[Do not output any message.]' \
+        {-V,--version}'[Display this application version.]' \
+        '--ansi[Force ANSI output.]' \
+        '--no-ansi[Disable ANSI output.]' \
+        {-n,--no-interaction}'[Do not ask any interactive question.]' \
+        '--no-plugins[Disables plugins.]' \
+        '--no-cache[Disables Poetry source caches.]' \
+        {-C,--directory}'[The working directory for the Poetry command (defaults to the current working directory).]':file:_files \
+        "*: :_files"
+
+}
+
+function _poetry_export {
+    _arguments \
+        {-f,--format}'[Format to export to. Currently, only constraints.txt and requirements.txt are supported. \[default: "requirements.txt"\]]' \
+        {-o,--output}'[The name of the output file.]' \
+        '--without-hashes[Exclude hashes from the exported file.]' \
+        '--without-urls[Exclude source repository urls from the exported file.]' \
+        '--dev[Include development dependencies. (Deprecated)]' \
+        '--without[The dependency groups to ignore. (multiple values allowed)]' \
+        '--with[The optional dependency groups to include. (multiple values allowed)]' \
+        '--only[The only dependency groups to include. (multiple values allowed)]' \
+        {-E,--extras}'[Extra sets of dependencies to include. (multiple values allowed)]' \
+        '--with-credentials[Include credentials for extra indices.]' \
+        {-h,--help}'[Display help for the given command. When no command is given display help for the list command.]' \
+        {-q,--quiet}'[Do not output any message.]' \
+        {-V,--version}'[Display this application version.]' \
+        '--ansi[Force ANSI output.]' \
+        '--no-ansi[Disable ANSI output.]' \
+        {-n,--no-interaction}'[Do not ask any interactive question.]' \
+        '--no-plugins[Disables plugins.]' \
+        '--no-cache[Disables Poetry source caches.]' \
+        {-C,--directory}'[The working directory for the Poetry command (defaults to the current working directory).]':file:_files \
+        "*: :_files"
+
+}
+
+function _poetry_help {
+    _arguments \
+        {-h,--help}'[Display help for the given command. When no command is given display help for the list command.]' \
+        {-q,--quiet}'[Do not output any message.]' \
+        {-V,--version}'[Display this application version.]' \
+        '--ansi[Force ANSI output.]' \
+        '--no-ansi[Disable ANSI output.]' \
+        {-n,--no-interaction}'[Do not ask any interactive question.]' \
+        '--no-plugins[Disables plugins.]' \
+        '--no-cache[Disables Poetry source caches.]' \
+        {-C,--directory}'[The working directory for the Poetry command (defaults to the current working directory).]':file:_files \
+        "*: :_files"
+
+}
+
+function _poetry_init {
+    _arguments \
+        '--name[Name of the package.]' \
+        '--description[Description of the package.]' \
+        '--author[Author name of the package.]' \
+        '--python[Compatible Python versions.]' \
+        '--dependency[Package to require, with an optional version constraint, e.g. requests:^2.10.0 or requests=2.11.1. (multiple values allowed)]' \
+        '--dev-dependency[Package to require for development, with an optional version constraint, e.g. requests:^2.10.0 or requests=2.11.1. (multiple values allowed)]' \
+        {-l,--license}'[License of the package.]' \
+        {-h,--help}'[Display help for the given command. When no command is given display help for the list command.]' \
+        {-q,--quiet}'[Do not output any message.]' \
+        {-V,--version}'[Display this application version.]' \
+        '--ansi[Force ANSI output.]' \
+        '--no-ansi[Disable ANSI output.]' \
+        {-n,--no-interaction}'[Do not ask any interactive question.]' \
+        '--no-plugins[Disables plugins.]' \
+        '--no-cache[Disables Poetry source caches.]' \
+        {-C,--directory}'[The working directory for the Poetry command (defaults to the current working directory).]':file:_files \
+        "*: :_files"
+
+}
+
+function _poetry_install {
+    _arguments \
+        '--without[The dependency groups to ignore. (multiple values allowed)]' \
+        '--with[The optional dependency groups to include. (multiple values allowed)]' \
+        '--only[The only dependency groups to include. (multiple values allowed)]' \
+        '--no-dev[Do not install the development dependencies. (Deprecated)]' \
+        '--sync[Synchronize the environment with the locked packages and the specified groups.]' \
+        '--no-root[Do not install the root package (the current project).]' \
+        '--no-directory[Do not install any directory path dependencies; useful to install dependencies without source code, e.g. for caching of Docker layers)]' \
+        '--dry-run[Output the operations but do not execute anything (implicitly enables --verbose).]' \
+        '--remove-untracked[Removes packages not present in the lock file. (Deprecated)]' \
+        {-E,--extras}'[Extra sets of dependencies to install. (multiple values allowed)]' \
+        '--all-extras[Install all extra dependencies.]' \
+        '--only-root[Exclude all dependencies.]' \
+        '--compile[Compile Python source files to bytecode. (This option has no effect if modern-installation is disabled because the old installer always compiles.)]' \
+        {-h,--help}'[Display help for the given command. When no command is given display help for the list command.]' \
+        {-q,--quiet}'[Do not output any message.]' \
+        {-V,--version}'[Display this application version.]' \
+        '--ansi[Force ANSI output.]' \
+        '--no-ansi[Disable ANSI output.]' \
+        {-n,--no-interaction}'[Do not ask any interactive question.]' \
+        '--no-plugins[Disables plugins.]' \
+        '--no-cache[Disables Poetry source caches.]' \
+        {-C,--directory}'[The working directory for the Poetry command (defaults to the current working directory).]':file:_files \
+        "*: :_files"
+
+}
+
+function _poetry_list {
+    _arguments \
+        {-h,--help}'[Display help for the given command. When no command is given display help for the list command.]' \
+        {-q,--quiet}'[Do not output any message.]' \
+        {-V,--version}'[Display this application version.]' \
+        '--ansi[Force ANSI output.]' \
+        '--no-ansi[Disable ANSI output.]' \
+        {-n,--no-interaction}'[Do not ask any interactive question.]' \
+        '--no-plugins[Disables plugins.]' \
+        '--no-cache[Disables Poetry source caches.]' \
+        {-C,--directory}'[The working directory for the Poetry command (defaults to the current working directory).]':file:_files \
+        "*: :_files"
+
+}
+
+function _poetry_lock {
+    _arguments \
+        '--no-update[Do not update locked versions, only refresh lock file.]' \
+        '--check[Check that the poetry.lock file corresponds to the current version of pyproject.toml.]' \
+        {-h,--help}'[Display help for the given command. When no command is given display help for the list command.]' \
+        {-q,--quiet}'[Do not output any message.]' \
+        {-V,--version}'[Display this application version.]' \
+        '--ansi[Force ANSI output.]' \
+        '--no-ansi[Disable ANSI output.]' \
+        {-n,--no-interaction}'[Do not ask any interactive question.]' \
+        '--no-plugins[Disables plugins.]' \
+        '--no-cache[Disables Poetry source caches.]' \
+        {-C,--directory}'[The working directory for the Poetry command (defaults to the current working directory).]':file:_files \
+        "*: :_files"
+
+}
+
+function _poetry_new {
+    _arguments \
+        '--name[Set the resulting package name.]' \
+        '--src[Use the src layout for the project.]' \
+        '--readme[Specify the readme file format. One of md (default) or rst]' \
+        {-h,--help}'[Display help for the given command. When no command is given display help for the list command.]' \
+        {-q,--quiet}'[Do not output any message.]' \
+        {-V,--version}'[Display this application version.]' \
+        '--ansi[Force ANSI output.]' \
+        '--no-ansi[Disable ANSI output.]' \
+        {-n,--no-interaction}'[Do not ask any interactive question.]' \
+        '--no-plugins[Disables plugins.]' \
+        '--no-cache[Disables Poetry source caches.]' \
+        {-C,--directory}'[The working directory for the Poetry command (defaults to the current working directory).]':file:_files \
+        "*: :_files"
+
+}
+
+function _poetry_publish {
+    _arguments \
+        {-r,--repository}'[The repository to publish the package to.]' \
+        {-u,--username}'[The username to access the repository.]' \
+        {-p,--password}'[The password to access the repository.]' \
+        '--cert[Certificate authority to access the repository.]' \
+        '--client-cert[Client certificate to access the repository.]' \
+        '--build[Build the package before publishing.]' \
+        '--dry-run[Perform all actions except upload the package.]' \
+        '--skip-existing[Ignore errors from files already existing in the repository.]' \
+        {-h,--help}'[Display help for the given command. When no command is given display help for the list command.]' \
+        {-q,--quiet}'[Do not output any message.]' \
+        {-V,--version}'[Display this application version.]' \
+        '--ansi[Force ANSI output.]' \
+        '--no-ansi[Disable ANSI output.]' \
+        {-n,--no-interaction}'[Do not ask any interactive question.]' \
+        '--no-plugins[Disables plugins.]' \
+        '--no-cache[Disables Poetry source caches.]' \
+        {-C,--directory}'[The working directory for the Poetry command (defaults to the current working directory).]':file:_files \
+        "*: :_files"
+
+}
+
+function _poetry_remove {
+    _arguments \
+        {-G,--group}'[The group to remove the dependency from.]' \
+        {-D,--dev}'[Remove a package from the development dependencies. (Deprecated) Use --group=dev instead.]' \
+        '--dry-run[Output the operations but do not execute anything (implicitly enables --verbose).]' \
+        '--lock[Do not perform operations (only update the lockfile).]' \
+        {-h,--help}'[Display help for the given command. When no command is given display help for the list command.]' \
+        {-q,--quiet}'[Do not output any message.]' \
+        {-V,--version}'[Display this application version.]' \
+        '--ansi[Force ANSI output.]' \
+        '--no-ansi[Disable ANSI output.]' \
+        {-n,--no-interaction}'[Do not ask any interactive question.]' \
+        '--no-plugins[Disables plugins.]' \
+        '--no-cache[Disables Poetry source caches.]' \
+        {-C,--directory}'[The working directory for the Poetry command (defaults to the current working directory).]':file:_files \
+        "*: :_files"
+
+}
+
+function _poetry_run {
+    _arguments \
+        {-h,--help}'[Display help for the given command. When no command is given display help for the list command.]' \
+        {-q,--quiet}'[Do not output any message.]' \
+        {-V,--version}'[Display this application version.]' \
+        '--ansi[Force ANSI output.]' \
+        '--no-ansi[Disable ANSI output.]' \
+        {-n,--no-interaction}'[Do not ask any interactive question.]' \
+        '--no-plugins[Disables plugins.]' \
+        '--no-cache[Disables Poetry source caches.]' \
+        {-C,--directory}'[The working directory for the Poetry command (defaults to the current working directory).]':file:_files \
+        "*: :_files"
+
+}
+
+function _poetry_search {
+    _arguments \
+        {-h,--help}'[Display help for the given command. When no command is given display help for the list command.]' \
+        {-q,--quiet}'[Do not output any message.]' \
+        {-V,--version}'[Display this application version.]' \
+        '--ansi[Force ANSI output.]' \
+        '--no-ansi[Disable ANSI output.]' \
+        {-n,--no-interaction}'[Do not ask any interactive question.]' \
+        '--no-plugins[Disables plugins.]' \
+        '--no-cache[Disables Poetry source caches.]' \
+        {-C,--directory}'[The working directory for the Poetry command (defaults to the current working directory).]':file:_files \
+        "*: :_files"
+
+}
+
+function _poetry_shell {
+    _arguments \
+        {-h,--help}'[Display help for the given command. When no command is given display help for the list command.]' \
+        {-q,--quiet}'[Do not output any message.]' \
+        {-V,--version}'[Display this application version.]' \
+        '--ansi[Force ANSI output.]' \
+        '--no-ansi[Disable ANSI output.]' \
+        {-n,--no-interaction}'[Do not ask any interactive question.]' \
+        '--no-plugins[Disables plugins.]' \
+        '--no-cache[Disables Poetry source caches.]' \
+        {-C,--directory}'[The working directory for the Poetry command (defaults to the current working directory).]':file:_files \
+        "*: :_files"
+
+}
+
+function _poetry_show {
+    _arguments \
+        '--without[The dependency groups to ignore. (multiple values allowed)]' \
+        '--with[The optional dependency groups to include. (multiple values allowed)]' \
+        '--only[The only dependency groups to include. (multiple values allowed)]' \
+        '--no-dev[Do not list the development dependencies. (Deprecated)]' \
+        {-t,--tree}'[List the dependencies as a tree.]' \
+        '--why[When showing the full list, or a --tree for a single package, also display why it'\''s included.]' \
+        {-l,--latest}'[Show the latest version.]' \
+        {-o,--outdated}'[Show the latest version but only for packages that are outdated.]' \
+        {-a,--all}'[Show all packages (even those not compatible with current system).]' \
+        {-T,--top-level}'[Show only top-level dependencies.]' \
+        {-h,--help}'[Display help for the given command. When no command is given display help for the list command.]' \
+        {-q,--quiet}'[Do not output any message.]' \
+        {-V,--version}'[Display this application version.]' \
+        '--ansi[Force ANSI output.]' \
+        '--no-ansi[Disable ANSI output.]' \
+        {-n,--no-interaction}'[Do not ask any interactive question.]' \
+        '--no-plugins[Disables plugins.]' \
+        '--no-cache[Disables Poetry source caches.]' \
+        {-C,--directory}'[The working directory for the Poetry command (defaults to the current working directory).]':file:_files \
+        "*: :_files"
+
+}
+
+function _poetry_update {
+    _arguments \
+        '--without[The dependency groups to ignore. (multiple values allowed)]' \
+        '--with[The optional dependency groups to include. (multiple values allowed)]' \
+        '--only[The only dependency groups to include. (multiple values allowed)]' \
+        '--no-dev[Do not update the development dependencies. (Deprecated)]' \
+        '--dry-run[Output the operations but do not execute anything (implicitly enables --verbose).]' \
+        '--lock[Do not perform operations (only update the lockfile).]' \
+        {-h,--help}'[Display help for the given command. When no command is given display help for the list command.]' \
+        {-q,--quiet}'[Do not output any message.]' \
+        {-V,--version}'[Display this application version.]' \
+        '--ansi[Force ANSI output.]' \
+        '--no-ansi[Disable ANSI output.]' \
+        {-n,--no-interaction}'[Do not ask any interactive question.]' \
+        '--no-plugins[Disables plugins.]' \
+        '--no-cache[Disables Poetry source caches.]' \
+        {-C,--directory}'[The working directory for the Poetry command (defaults to the current working directory).]':file:_files \
+        "*: :_files"
+
+}
+
+function _poetry_version {
+    _arguments \
+        {-s,--short}'[Output the version number only]' \
+        '--dry-run[Do not update pyproject.toml file]' \
+        {-h,--help}'[Display help for the given command. When no command is given display help for the list command.]' \
+        {-q,--quiet}'[Do not output any message.]' \
+        {-V,--version}'[Display this application version.]' \
+        '--ansi[Force ANSI output.]' \
+        '--no-ansi[Disable ANSI output.]' \
+        {-n,--no-interaction}'[Do not ask any interactive question.]' \
+        '--no-plugins[Disables plugins.]' \
+        '--no-cache[Disables Poetry source caches.]' \
+        {-C,--directory}'[The working directory for the Poetry command (defaults to the current working directory).]':file:_files \
+        "*: :_files"
+
+}
+
+
+function _poetry_cache {
+    local line state
+
+    function _commands {
+        local -a commands
+        commands=(
+            'clear:Clears a Poetry cache by name.'
+            'list:List Poetry'\''s caches.'
+        )
+        _describe 'command' commands
+    }
+ 
+
+    _arguments -C \
+        ': :->cmd' \
+        '*:: :->subcmd'
+
+    case $state in
+    (cmd)
+        _commands
+        ;;
+    (subcmd)
+        case $line[1] in
+        (clear)
+            _poetry_cache_clear
+            ;;
+
+        (list)
+            _poetry_cache_list
+            ;;
+
+        esac
+        ;;
+     esac
+
+}
+
+function _poetry_cache_clear {
+    _arguments \
+        "*: :_files"
+
+}
+
+function _poetry_cache_list {
+    _arguments \
+        "*: :_files"
+
+}
+
+
+function _poetry_debug {
+    local line state
+
+    function _commands {
+        local -a commands
+        commands=(
+            'info:Shows debug information.'
+            'resolve:Debugs dependency resolution.'
+        )
+        _describe 'command' commands
+    }
+ 
+
+    _arguments -C \
+        ': :->cmd' \
+        '*:: :->subcmd'
+
+    case $state in
+    (cmd)
+        _commands
+        ;;
+    (subcmd)
+        case $line[1] in
+        (info)
+            _poetry_debug_info
+            ;;
+
+        (resolve)
+            _poetry_debug_resolve
+            ;;
+
+        esac
+        ;;
+     esac
+
+}
+
+function _poetry_debug_info {
+    _arguments \
+        "*: :_files"
+
+}
+
+function _poetry_debug_resolve {
+    _arguments \
+        "*: :_files"
+
+}
+
+
+function _poetry_env {
+    local line state
+
+    function _commands {
+        local -a commands
+        commands=(
+            'info:Displays information about the current environment.'
+            'list:Lists all virtualenvs associated with the current project.'
+            'remove:Remove virtual environments associated with the project.'
+            'use:Activates or creates a new virtualenv for the current project.'
+        )
+        _describe 'command' commands
+    }
+ 
+
+    _arguments -C \
+        ': :->cmd' \
+        '*:: :->subcmd'
+
+    case $state in
+    (cmd)
+        _commands
+        ;;
+    (subcmd)
+        case $line[1] in
+        (info)
+            _poetry_env_info
+            ;;
+
+        (list)
+            _poetry_env_list
+            ;;
+
+        (remove)
+            _poetry_env_remove
+            ;;
+
+        (use)
+            _poetry_env_use
+            ;;
+
+        esac
+        ;;
+     esac
+
+}
+
+function _poetry_env_info {
+    _arguments \
+        "*: :_files"
+
+}
+
+function _poetry_env_list {
+    _arguments \
+        "*: :_files"
+
+}
+
+function _poetry_env_remove {
+    _arguments \
+        "*: :_files"
+
+}
+
+function _poetry_env_use {
+    _arguments \
+        "*: :_files"
+
+}
+
+
+function _poetry_self {
+    local line state
+
+    function _commands {
+        local -a commands
+        commands=(
+            'add:Add additional packages to Poetry'\''s runtime environment.'
+            'install:Install locked packages (incl. addons) required by this Poetry installation.'
+            'lock:Lock the Poetry installation'\''s system requirements.'
+            'remove:Remove additional packages from Poetry'\''s runtime environment.'
+            'show:Show packages from Poetry'\''s runtime environment.'
+            'update:Updates Poetry to the latest version.'
+        )
+        _describe 'command' commands
+    }
+ 
+
+    _arguments -C \
+        ': :->cmd' \
+        '*:: :->subcmd'
+
+    case $state in
+    (cmd)
+        _commands
+        ;;
+    (subcmd)
+        case $line[1] in
+        (add)
+            _poetry_self_add
+            ;;
+
+        (install)
+            _poetry_self_install
+            ;;
+
+        (lock)
+            _poetry_self_lock
+            ;;
+
+        (remove)
+            _poetry_self_remove
+            ;;
+
+        (show)
+            _poetry_self_show
+            ;;
+
+        (update)
+            _poetry_self_update
+            ;;
+
+        esac
+        ;;
+     esac
+
+}
+
+function _poetry_self_add {
+    _arguments \
+        "*: :_files"
+
+}
+
+function _poetry_self_install {
+    _arguments \
+        "*: :_files"
+
+}
+
+function _poetry_self_lock {
+    _arguments \
+        "*: :_files"
+
+}
+
+function _poetry_self_remove {
+    _arguments \
+        "*: :_files"
+
+}
+
+
+function _poetry_self_show {
+    local line state
+
+    function _commands {
+        local -a commands
+        commands=(
+            'plugins:Shows information about the currently installed plugins.'
+        )
+        _describe 'command' commands
+    }
+ 
+
+    _arguments -C \
+        ': :->cmd' \
+        '*:: :->subcmd'
+
+    case $state in
+    (cmd)
+        _commands
+        ;;
+    (subcmd)
+        case $line[1] in
+        (plugins)
+            _poetry_self_show_plugins
+            ;;
+
+        esac
+        ;;
+     esac
+
+}
+
+function _poetry_self_show_plugins {
+    _arguments \
+        "*: :_files"
+
+}
+
+function _poetry_self_update {
+    _arguments \
+        "*: :_files"
+
+}
+
+
+function _poetry_source {
+    local line state
+
+    function _commands {
+        local -a commands
+        commands=(
+            'add:Add source configuration for project.'
+            'remove:Remove source configured for the project.'
+            'show:Show information about sources configured for the project.'
+        )
+        _describe 'command' commands
+    }
+ 
+
+    _arguments -C \
+        ': :->cmd' \
+        '*:: :->subcmd'
+
+    case $state in
+    (cmd)
+        _commands
+        ;;
+    (subcmd)
+        case $line[1] in
+        (add)
+            _poetry_source_add
+            ;;
+
+        (remove)
+            _poetry_source_remove
+            ;;
+
+        (show)
+            _poetry_source_show
+            ;;
+
+        esac
+        ;;
+     esac
+
+}
+
+function _poetry_source_add {
+    _arguments \
+        "*: :_files"
+
+}
+
+function _poetry_source_remove {
+    _arguments \
+        "*: :_files"
+
+}
+
+function _poetry_source_show {
+    _arguments \
+        "*: :_files"
+
+}
+
+function _poetry_list {
+    _arguments \
+        "*: :_files"
+
+}
+
+_poetry "$@"
+

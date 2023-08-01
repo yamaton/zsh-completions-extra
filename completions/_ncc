@@ -1,0 +1,89 @@
+#compdef ncc
+
+# Auto-generated with h2o
+
+
+function _ncc {
+    local line state
+
+    function _commands {
+        local -a commands
+        commands=(
+            'build:Build'
+            'run:Run'
+            'cache:Manipulate cache'
+            'help:Show help'
+            'version:Show version'
+        )
+        _describe 'command' commands
+    }
+ 
+
+    _arguments -C \
+        ': :->cmd' \
+        '*:: :->subcmd'
+
+    case $state in
+    (cmd)
+        _commands
+        ;;
+    (subcmd)
+        case $line[1] in
+        (build)
+            _ncc_build
+            ;;
+
+        (run)
+            _ncc_run
+            ;;
+
+        (cache)
+            _ncc_cache
+            ;;
+
+        (help)
+            _ncc_help
+            ;;
+
+        (version)
+            _ncc_version
+            ;;
+
+        esac
+        ;;
+     esac
+
+}
+
+function _ncc_build {
+    _arguments \
+        "*: :_files"
+
+}
+
+function _ncc_run {
+    _arguments \
+        "*: :_files"
+
+}
+
+function _ncc_cache {
+    _arguments \
+        "*: :_files"
+
+}
+
+function _ncc_help {
+    _arguments \
+        "*: :_files"
+
+}
+
+function _ncc_version {
+    _arguments \
+        "*: :_files"
+
+}
+
+_ncc "$@"
+

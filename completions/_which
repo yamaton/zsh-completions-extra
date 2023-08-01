@@ -1,0 +1,13 @@
+#compdef which
+
+# Auto-generated with h2o
+
+function _which {
+    _arguments \
+        '-a[print all matching pathnames of each argument]' \
+        "*: :_files"
+
+}
+
+_which "$@"
+

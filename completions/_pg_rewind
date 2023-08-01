@@ -1,0 +1,25 @@
+#compdef pg_rewind
+
+# Auto-generated with h2o
+
+function _pg_rewind {
+    _arguments \
+        {-c,--restore-target-wal}'[use restore_command in target configuration to retrieve WAL files from archives]' \
+        {-D,--target-pgdata}'[existing data directory to modify]':file:_files \
+        '--source-pgdata[source data directory to synchronize with]':file:_files \
+        '--source-server[source server to synchronize with]' \
+        {-n,--dry-run}'[stop before modifying anything]' \
+        {-N,--no-sync}'[do not wait for changes to be written safely to disk]' \
+        {-P,--progress}'[write progress messages]' \
+        {-R,--write-recovery-conf}'[write configuration for replication (requires --source-server)]' \
+        '--config-file[use specified main server configuration file when running target cluster]':file:_files \
+        '--debug[write a lot of debug messages]' \
+        '--no-ensure-shutdown[do not automatically fix unclean shutdown]' \
+        {-V,--version}'[output version information, then exit]' \
+        {-?,--help}'[show this help, then exit]' \
+        "*: :_files"
+
+}
+
+_pg_rewind "$@"
+

@@ -1,0 +1,14 @@
+#compdef pg_controldata
+
+# Auto-generated with h2o
+
+function _pg_controldata {
+    _arguments \
+        {-V,--version}'[output version information, then exit]' \
+        {-?,--help}'[show this help, then exit]' \
+        "*: :_files"
+
+}
+
+_pg_controldata "$@"
+

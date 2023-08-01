@@ -1,0 +1,52 @@
+#compdef sass
+
+# Auto-generated with h2o
+
+function _sass {
+    _arguments \
+        '--stdin[Read the stylesheet from stdin.]' \
+        '--no-stdin[Don'\''t read the stylesheet from stdin.]' \
+        '--indented[Use the indented syntax for input from stdin.]' \
+        '--no-indented[Don'\''t use the indented syntax for input from stdin.]' \
+        {-I,--load-path}'[A path to use when resolving imports. May be passed multiple times.]':file:_files \
+        {-s,--style}'[Output style. \[expanded (default), compressed\]]' \
+        '--charset[Emit a @charset or BOM for CSS with non-ASCII characters. (defaults to on)]' \
+        '--no-charset[Don'\''t emit a @charset or BOM for CSS with non-ASCII characters. (defaults to on)]' \
+        '--error-css[When an error occurs, emit a stylesheet describing it. Defaults to true when compiling to a file.]' \
+        '--no-error-css[When an error occurs, don'\''t emit a stylesheet describing it. Defaults to true when compiling to a file.]' \
+        '--update[Only compile out-of-date stylesheets.]' \
+        '--source-map[Whether to generate source maps. (defaults to on)]' \
+        '--no-source-map[Whether to generate source maps. (defaults to on)]' \
+        '--source-map-urls[How to link from source maps to source files. \[relative (default), absolute\]]' \
+        '--embed-sources[Embed source file contents in source maps.]' \
+        '--no-embed-sources[Embed source file contents in source maps.]' \
+        '--embed-source-map[Embed source map contents in CSS.]' \
+        '--no-embed-source-map[Embed source map contents in CSS.]' \
+        {-q,--quiet}'[Don'\''t print warnings.]' \
+        {-q,--no-quiet}'[Don'\''t print warnings.]' \
+        '--quiet-deps[Don'\''t print compiler warnings from dependencies. Stylesheets imported through load paths count as dependencies.]' \
+        '--no-quiet-deps[Don'\''t print compiler warnings from dependencies. Stylesheets imported through load paths count as dependencies.]' \
+        '--verbose[Print all deprecation warnings even when they'\''re repetitive.]' \
+        '--no-verbose[Print all deprecation warnings even when they'\''re repetitive.]' \
+        '--fatal-deprecation[Deprecations to treat as errors. You may also pass a Sass version to include any behavior deprecated in or before it. See https://sass-lang.com/documentation/breaking-changes for a complete list.]' \
+        '--future-deprecation[Opt in to a deprecation early.]' \
+        {-w,--watch}'[Watch stylesheets and recompile when they change.]' \
+        '--poll[Manually check for changes rather than using a native watcher. Only valid with --watch.]' \
+        '--no-poll[Manually check for changes rather than using a native watcher. Only valid with --watch.]' \
+        '--stop-on-error[Don'\''t compile more files once an error is encountered.]' \
+        '--no-stop-on-error[Don'\''t compile more files once an error is encountered.]' \
+        {-i,--interactive}'[Run an interactive SassScript shell.]' \
+        {-c,--color}'[Whether to use terminal colors for messages.]' \
+        {-c,--no-color}'[Whether to use terminal colors for messages.]' \
+        '--unicode[Whether to use Unicode characters for messages.]' \
+        '--no-unicode[Whether to use Unicode characters for messages.]' \
+        '--trace[Print full Dart stack traces for exceptions.]' \
+        '--no-trace[Print full Dart stack traces for exceptions.]' \
+        {-h,--help}'[Print this usage information.]' \
+        '--version[Print the version of Dart Sass.]' \
+        "*: :_files"
+
+}
+
+_sass "$@"
+

@@ -1,0 +1,25 @@
+#compdef pg_resetwal
+
+# Auto-generated with h2o
+
+function _pg_resetwal {
+    _arguments \
+        {-c,--commit-timestamp-ids}'[set oldest and newest transactions bearing commit timestamp (zero means no change)]' \
+        {-e,--epoch}'[set next transaction ID epoch]' \
+        {-f,--force}'[force update to be done]' \
+        {-l,--next-wal-file}'[set minimum starting location for new WAL]':file:_files \
+        {-m,--multixact-ids}'[set next and oldest multitransaction ID]' \
+        {-n,--dry-run}'[no update, just show what would be done]' \
+        {-o,--next-oid}'[set next OID]' \
+        {-O,--multixact-offset}'[set next multitransaction offset]' \
+        {-u,--oldest-transaction-id}'[set oldest transaction ID]' \
+        {-V,--version}'[output version information, then exit]' \
+        {-x,--next-transaction-id}'[set next transaction ID]' \
+        '--wal-segsize[size of WAL segments, in megabytes]' \
+        {-?,--help}'[show this help, then exit]' \
+        "*: :_files"
+
+}
+
+_pg_resetwal "$@"
+

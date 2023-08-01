@@ -1,0 +1,122 @@
+#compdef tfenv
+
+# Auto-generated with h2o
+
+
+function _tfenv {
+    local line state
+
+    function _commands {
+        local -a commands
+        commands=(
+            'install:Install a specific version of Terraform'
+            'use:Switch a version to use'
+            'uninstall:Uninstall a specific version of Terraform'
+            'list:List all installed versions'
+            'list-remote:List all installable versions'
+            'version-name:Print current version'
+            'init:Update environment to use tfenv correctly'
+            'pin:Write the current active version to ./.terraform-version'
+        )
+        _describe 'command' commands
+    }
+ 
+
+    _arguments -C \
+        ': :->cmd' \
+        '*:: :->subcmd'
+
+    case $state in
+    (cmd)
+        _commands
+        ;;
+    (subcmd)
+        case $line[1] in
+        (install)
+            _tfenv_install
+            ;;
+
+        (use)
+            _tfenv_use
+            ;;
+
+        (uninstall)
+            _tfenv_uninstall
+            ;;
+
+        (list)
+            _tfenv_list
+            ;;
+
+        (list-remote)
+            _tfenv_list-remote
+            ;;
+
+        (version-name)
+            _tfenv_version-name
+            ;;
+
+        (init)
+            _tfenv_init
+            ;;
+
+        (pin)
+            _tfenv_pin
+            ;;
+
+        esac
+        ;;
+     esac
+
+}
+
+function _tfenv_install {
+    _arguments \
+        "*: :_files"
+
+}
+
+function _tfenv_use {
+    _arguments \
+        "*: :_files"
+
+}
+
+function _tfenv_uninstall {
+    _arguments \
+        "*: :_files"
+
+}
+
+function _tfenv_list {
+    _arguments \
+        "*: :_files"
+
+}
+
+function _tfenv_list-remote {
+    _arguments \
+        "*: :_files"
+
+}
+
+function _tfenv_version-name {
+    _arguments \
+        "*: :_files"
+
+}
+
+function _tfenv_init {
+    _arguments \
+        "*: :_files"
+
+}
+
+function _tfenv_pin {
+    _arguments \
+        "*: :_files"
+
+}
+
+_tfenv "$@"
+

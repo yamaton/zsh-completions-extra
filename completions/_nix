@@ -1,0 +1,871 @@
+#compdef nix
+
+# Auto-generated with h2o
+
+
+function _nix {
+    local line state
+
+    function _commands {
+        local -a commands
+        commands=(
+            'build:build a derivation or fetch a store path'
+            'develop:run a bash shell that provides the build environment of a derivation'
+            'flake:manage Nix flakes'
+            'help:show help about nix or a particular subcommand'
+            'profile:manage Nix profiles'
+            'repl:start an interactive environment for evaluating Nix expressions'
+            'run:run a Nix application'
+            'search:search for packages'
+            'shell:run a shell in which the specified packages are available'
+            'bundle:bundle an application so that it works outside of the Nix store'
+            'copy:copy paths between Nix stores'
+            'edit:open the Nix expression of a Nix package in $EDITOR'
+            'eval:evaluate a Nix expression'
+            'fmt:reformat your code in the standard style'
+            'log:show the build log of the specified packages or paths, if available'
+            'path-info:query information about store paths'
+            'registry:manage the flake registry'
+            'why-depends:show why a package has another package in its closure'
+            'daemon:daemon to perform store operations on behalf of non-root clients'
+            'describe-stores:show registered store types and their available options'
+            'hash:compute and convert cryptographic hashes'
+            'key:generate and convert Nix signing keys'
+            'nar:create or inspect NAR files'
+            'print-dev-env:print shell code that can be sourced by bash to reproduce the build environment of a derivation'
+            'realisation:manipulate a Nix realisation'
+            'show-config:show the Nix configuration'
+            'show-derivation:show the contents of a store derivation'
+            'store:manipulate a Nix store'
+            'doctor:check your system for potential problems and print a PASS or FAIL for each check'
+            'upgrade-nix:upgrade Nix to the stable version declared in Nixpkgs'
+        )
+        _describe 'command' commands
+    }
+ 
+
+    _arguments -C \
+        '--help[Show usage information.]' \
+        '--offline[Disable substituters and consider all previously downloaded files up-to-date.]' \
+        '--option[Set the Nix configuration setting name to value (overriding nix.conf).]' \
+        '--refresh[Consider all previously downloaded files out-of-date.]' \
+        '--version[Show version information.]' \
+        '--debug[Set the logging verbosity level to '\''debug'\''.]' \
+        '--log-format[Set the format of log output; one of raw, internal-json, bar or bar-with-logs.]' \
+        {--print-build-logs,-L}'[Print full build logs on standard error.]' \
+        '--quiet[Decrease the logging verbosity level.]' \
+        {--verbose,-v}'[Increase the logging verbosity level.]' \
+        '--accept-flake-config[Enable the accept-flake-config setting.]' \
+        '--access-tokens[Set the access-tokens setting.]' \
+        '--allow-dirty[Enable the allow-dirty setting.]' \
+        '--allow-import-from-derivation[Enable the allow-import-from-derivation setting.]' \
+        '--allow-new-privileges[Enable the allow-new-privileges setting.]' \
+        '--allow-symlinked-store[Enable the allow-symlinked-store setting.]' \
+        '--allow-unsafe-native-code-during-evaluation[Enable the allow-unsafe-native-code-during-evaluation setting.]' \
+        '--allowed-impure-host-deps[Set the allowed-impure-host-deps setting.]' \
+        '--allowed-uris[Set the allowed-uris setting.]' \
+        '--allowed-users[Set the allowed-users setting.]' \
+        '--auto-optimise-store[Enable the auto-optimise-store setting.]' \
+        '--bash-prompt[Set the bash-prompt setting.]' \
+        '--bash-prompt-prefix[Set the bash-prompt-prefix setting.]' \
+        '--bash-prompt-suffix[Set the bash-prompt-suffix setting.]' \
+        '--build-hook[Set the build-hook setting.]' \
+        '--build-poll-interval[Set the build-poll-interval setting.]' \
+        '--build-users-group[Set the build-users-group setting.]' \
+        '--builders[Set the builders setting.]' \
+        '--builders-use-substitutes[Enable the builders-use-substitutes setting.]' \
+        '--commit-lockfile-summary[Set the commit-lockfile-summary setting.]' \
+        '--compress-build-log[Enable the compress-build-log setting.]' \
+        '--connect-timeout[Set the connect-timeout setting.]' \
+        '--cores[Set the cores setting.]' \
+        '--diff-hook[Set the diff-hook setting.]' \
+        '--download-attempts[Set the download-attempts setting.]' \
+        '--enforce-determinism[Enable the enforce-determinism setting.]' \
+        '--eval-cache[Enable the eval-cache setting.]' \
+        '--experimental-features[Set the experimental-features setting.]' \
+        '--extra-access-tokens[Append to the access-tokens setting.]' \
+        '--extra-allowed-impure-host-deps[Append to the allowed-impure-host-deps setting.]' \
+        '--extra-allowed-uris[Append to the allowed-uris setting.]' \
+        '--extra-allowed-users[Append to the allowed-users setting.]' \
+        '--extra-experimental-features[Append to the experimental-features setting.]' \
+        '--extra-extra-platforms[Append to the extra-platforms setting.]' \
+        '--extra-hashed-mirrors[Append to the hashed-mirrors setting.]' \
+        '--extra-ignored-acls[Append to the ignored-acls setting.]' \
+        '--extra-nix-path[Append to the nix-path setting.]' \
+        '--extra-platforms[Set the extra-platforms setting.]' \
+        '--extra-plugin-files[Append to the plugin-files setting.]' \
+        '--extra-sandbox-paths[Append to the sandbox-paths setting.]' \
+        '--extra-secret-key-files[Append to the secret-key-files setting.]' \
+        '--extra-substituters[Append to the substituters setting.]' \
+        '--extra-system-features[Append to the system-features setting.]' \
+        '--extra-trusted-public-keys[Append to the trusted-public-keys setting.]' \
+        '--extra-trusted-substituters[Append to the trusted-substituters setting.]' \
+        '--extra-trusted-users[Append to the trusted-users setting.]' \
+        '--fallback[Enable the fallback setting.]' \
+        '--filter-syscalls[Enable the filter-syscalls setting.]' \
+        '--flake-registry[Set the flake-registry setting.]' \
+        '--fsync-metadata[Enable the fsync-metadata setting.]' \
+        '--gc-reserved-space[Set the gc-reserved-space setting.]' \
+        '--hashed-mirrors[Set the hashed-mirrors setting.]' \
+        '--http-connections[Set the http-connections setting.]' \
+        '--http2[Enable the http2 setting.]' \
+        '--ignore-try[Enable the ignore-try setting.]' \
+        '--ignored-acls[Set the ignored-acls setting.]' \
+        '--impersonate-linux-26[Enable the impersonate-linux-26 setting.]' \
+        '--keep-build-log[Enable the keep-build-log setting.]' \
+        '--keep-derivations[Enable the keep-derivations setting.]' \
+        '--keep-env-derivations[Enable the keep-env-derivations setting.]' \
+        '--keep-failed[Enable the keep-failed setting.]' \
+        '--keep-going[Enable the keep-going setting.]' \
+        '--keep-outputs[Enable the keep-outputs setting.]' \
+        '--log-lines[Set the log-lines setting.]' \
+        '--max-build-log-size[Set the max-build-log-size setting.]' \
+        '--max-free[Set the max-free setting.]' \
+        '--max-jobs[Set the max-jobs setting.]' \
+        '--max-silent-time[Set the max-silent-time setting.]' \
+        '--min-free[Set the min-free setting.]' \
+        '--min-free-check-interval[Set the min-free-check-interval setting.]' \
+        '--nar-buffer-size[Set the nar-buffer-size setting.]' \
+        '--narinfo-cache-negative-ttl[Set the narinfo-cache-negative-ttl setting.]' \
+        '--narinfo-cache-positive-ttl[Set the narinfo-cache-positive-ttl setting.]' \
+        '--netrc-file[Set the netrc-file setting.]' \
+        '--nix-path[Set the nix-path setting.]' \
+        '--no-accept-flake-config[Disable the accept-flake-config setting.]' \
+        '--no-allow-dirty[Disable the allow-dirty setting.]' \
+        '--no-allow-import-from-derivation[Disable the allow-import-from-derivation setting.]' \
+        '--no-allow-new-privileges[Disable the allow-new-privileges setting.]' \
+        '--no-allow-symlinked-store[Disable the allow-symlinked-store setting.]' \
+        '--no-allow-unsafe-native-code-during-evaluation[Disable the allow-unsafe-native-code-during-evaluation setting.]' \
+        '--no-auto-optimise-store[Disable the auto-optimise-store setting.]' \
+        '--no-builders-use-substitutes[Disable the builders-use-substitutes setting.]' \
+        '--no-compress-build-log[Disable the compress-build-log setting.]' \
+        '--no-enforce-determinism[Disable the enforce-determinism setting.]' \
+        '--no-eval-cache[Disable the eval-cache setting.]' \
+        '--no-fallback[Disable the fallback setting.]' \
+        '--no-filter-syscalls[Disable the filter-syscalls setting.]' \
+        '--no-fsync-metadata[Disable the fsync-metadata setting.]' \
+        '--no-http2[Disable the http2 setting.]' \
+        '--no-ignore-try[Disable the ignore-try setting.]' \
+        '--no-impersonate-linux-26[Disable the impersonate-linux-26 setting.]' \
+        '--no-keep-build-log[Disable the keep-build-log setting.]' \
+        '--no-keep-derivations[Disable the keep-derivations setting.]' \
+        '--no-keep-env-derivations[Disable the keep-env-derivations setting.]' \
+        '--no-keep-failed[Disable the keep-failed setting.]' \
+        '--no-keep-going[Disable the keep-going setting.]' \
+        '--no-keep-outputs[Disable the keep-outputs setting.]' \
+        '--no-preallocate-contents[Disable the preallocate-contents setting.]' \
+        '--no-print-missing[Disable the print-missing setting.]' \
+        '--no-pure-eval[Disable the pure-eval setting.]' \
+        '--no-require-sigs[Disable the require-sigs setting.]' \
+        '--no-restrict-eval[Disable the restrict-eval setting.]' \
+        '--no-run-diff-hook[Disable the run-diff-hook setting.]' \
+        '--no-sandbox[Disable sandboxing.]' \
+        '--no-sandbox-fallback[Disable the sandbox-fallback setting.]' \
+        '--no-show-trace[Disable the show-trace setting.]' \
+        '--no-substitute[Disable the substitute setting.]' \
+        '--no-sync-before-registering[Disable the sync-before-registering setting.]' \
+        '--no-trace-function-calls[Disable the trace-function-calls setting.]' \
+        '--no-trace-verbose[Disable the trace-verbose setting.]' \
+        '--no-use-case-hack[Disable the use-case-hack setting.]' \
+        '--no-use-registries[Disable the use-registries setting.]' \
+        '--no-use-sqlite-wal[Disable the use-sqlite-wal setting.]' \
+        '--no-warn-dirty[Disable the warn-dirty setting.]' \
+        '--plugin-files[Set the plugin-files setting.]' \
+        '--post-build-hook[Set the post-build-hook setting.]' \
+        '--pre-build-hook[Set the pre-build-hook setting.]' \
+        '--preallocate-contents[Enable the preallocate-contents setting.]' \
+        '--print-missing[Enable the print-missing setting.]' \
+        '--pure-eval[Enable the pure-eval setting.]' \
+        '--relaxed-sandbox[Enable sandboxing, but allow builds to disable it.]' \
+        '--repeat[Set the repeat setting.]' \
+        '--require-sigs[Enable the require-sigs setting.]' \
+        '--restrict-eval[Enable the restrict-eval setting.]' \
+        '--run-diff-hook[Enable the run-diff-hook setting.]' \
+        '--sandbox[Enable sandboxing.]' \
+        '--sandbox-build-dir[Set the sandbox-build-dir setting.]' \
+        '--sandbox-dev-shm-size[Set the sandbox-dev-shm-size setting.]' \
+        '--sandbox-fallback[Enable the sandbox-fallback setting.]' \
+        '--sandbox-paths[Set the sandbox-paths setting.]' \
+        '--secret-key-files[Set the secret-key-files setting.]' \
+        '--show-trace[Enable the show-trace setting.]' \
+        '--stalled-download-timeout[Set the stalled-download-timeout setting.]' \
+        '--store[Set the store setting.]' \
+        '--substitute[Enable the substitute setting.]' \
+        '--substituters[Set the substituters setting.]' \
+        '--sync-before-registering[Enable the sync-before-registering setting.]' \
+        '--system[Set the system setting.]' \
+        '--system-features[Set the system-features setting.]' \
+        '--tarball-ttl[Set the tarball-ttl setting.]' \
+        '--timeout[Set the timeout setting.]' \
+        '--trace-function-calls[Enable the trace-function-calls setting.]' \
+        '--trace-verbose[Enable the trace-verbose setting.]' \
+        '--trusted-public-keys[Set the trusted-public-keys setting.]' \
+        '--trusted-substituters[Set the trusted-substituters setting.]' \
+        '--trusted-users[Set the trusted-users setting.]' \
+        '--use-case-hack[Enable the use-case-hack setting.]' \
+        '--use-registries[Enable the use-registries setting.]' \
+        '--use-sqlite-wal[Enable the use-sqlite-wal setting.]' \
+        '--user-agent-suffix[Set the user-agent-suffix setting.]' \
+        '--warn-dirty[Enable the warn-dirty setting.]' \
+        ': :->cmd' \
+        '*:: :->subcmd'
+
+    case $state in
+    (cmd)
+        _commands
+        ;;
+    (subcmd)
+        case $line[1] in
+        (build)
+            _nix_build
+            ;;
+
+        (develop)
+            _nix_develop
+            ;;
+
+        (flake)
+            _nix_flake
+            ;;
+
+        (help)
+            _nix_help
+            ;;
+
+        (profile)
+            _nix_profile
+            ;;
+
+        (repl)
+            _nix_repl
+            ;;
+
+        (run)
+            _nix_run
+            ;;
+
+        (search)
+            _nix_search
+            ;;
+
+        (shell)
+            _nix_shell
+            ;;
+
+        (bundle)
+            _nix_bundle
+            ;;
+
+        (copy)
+            _nix_copy
+            ;;
+
+        (edit)
+            _nix_edit
+            ;;
+
+        (eval)
+            _nix_eval
+            ;;
+
+        (fmt)
+            _nix_fmt
+            ;;
+
+        (log)
+            _nix_log
+            ;;
+
+        (path-info)
+            _nix_path-info
+            ;;
+
+        (registry)
+            _nix_registry
+            ;;
+
+        (why-depends)
+            _nix_why-depends
+            ;;
+
+        (daemon)
+            _nix_daemon
+            ;;
+
+        (describe-stores)
+            _nix_describe-stores
+            ;;
+
+        (hash)
+            _nix_hash
+            ;;
+
+        (key)
+            _nix_key
+            ;;
+
+        (nar)
+            _nix_nar
+            ;;
+
+        (print-dev-env)
+            _nix_print-dev-env
+            ;;
+
+        (realisation)
+            _nix_realisation
+            ;;
+
+        (show-config)
+            _nix_show-config
+            ;;
+
+        (show-derivation)
+            _nix_show-derivation
+            ;;
+
+        (store)
+            _nix_store
+            ;;
+
+        (doctor)
+            _nix_doctor
+            ;;
+
+        (upgrade-nix)
+            _nix_upgrade-nix
+            ;;
+
+        esac
+        ;;
+     esac
+
+}
+
+function _nix_build {
+    _arguments \
+        '--debugger[start an interactive environment if evaluation fails]' \
+        '--dry-run[Show what this command would do without doing it.]' \
+        '--json[Produce output in JSON format, suitable for consumption by another program.]' \
+        '--no-link[Do not create symlinks to the build results.]' \
+        {--out-link,-o}'[Use path as prefix for the symlinks to the build results. It defaults to result.]':file:_files \
+        '--print-out-paths[Print the resulting output paths]' \
+        '--profile[The profile to update.]':file:_files \
+        '--rebuild[Rebuild an already built package and compare the result to the existing store paths.]' \
+        '--arg[Pass the value expr as the argument name to Nix functions.]' \
+        '--argstr[Pass the string string as the argument name to Nix functions.]' \
+        '--eval-store[The Nix store to use for evaluations.]' \
+        '--impure[Allow access to mutable paths and repositories.]' \
+        {--include,-I}'[Add path to the list of locations used to look up <...> file names.]':file:_files \
+        '--override-flake[Override the flake registries, redirecting original-ref to resolved-ref.]' \
+        '--commit-lock-file[Commit changes to the flake'\''s lock file.]' \
+        '--inputs-from[Use the inputs of the specified flake as registry entries.]' \
+        '--no-registries[Don'\''t allow lookups in the flake registries. This option is deprecated; use --no-use-registries.]' \
+        '--no-update-lock-file[Do not allow any updates to the flake'\''s lock file.]' \
+        '--no-write-lock-file[Do not write the flake'\''s newly generated lock file.]' \
+        '--override-input[Override a specific flake input (e.g. dwarffs/nixpkgs). This implies --no-write-lock-file.]':file:_files \
+        '--recreate-lock-file[Recreate the flake'\''s lock file from scratch.]' \
+        '--update-input[Update a specific flake input (ignoring its previous entry in the lock file).]':file:_files \
+        '--derivation[Operate on the store derivation rather than its outputs.]' \
+        '--expr[Interpret installables as attribute paths relative to the Nix expression expr.]' \
+        {--file,-f}'[Interpret installables as attribute paths relative to the Nix expression stored in file. If file is the character -, then a Nix expression will be read from standard input. Implies --impure.]':file:_files \
+        "*: :_files"
+
+}
+
+function _nix_develop {
+    _arguments \
+        '--build[Run the build phase.]' \
+        '--check[Run the check phase.]' \
+        {--command,-c}'[Instead of starting an interactive shell, start the specified command and arguments.]' \
+        '--configure[Run the configure phase.]' \
+        '--debugger[start an interactive environment if evaluation fails]' \
+        {--ignore-environment,-i}'[Clear the entire environment (except those specified with --keep).]' \
+        '--install[Run the install phase.]' \
+        '--installcheck[Run the installcheck phase.]' \
+        {--keep,-k}'[Keep the environment variable name.]' \
+        '--phase[The stdenv phase to run (e.g. build or configure).]' \
+        '--profile[The profile to update.]':file:_files \
+        '--redirect[Redirect a store path to a mutable location.]':file:_files \
+        '--unpack[Run the unpack phase.]' \
+        {--unset,-u}'[Unset the environment variable name.]' \
+        '--arg[Pass the value expr as the argument name to Nix functions.]' \
+        '--argstr[Pass the string string as the argument name to Nix functions.]' \
+        '--eval-store[The Nix store to use for evaluations.]' \
+        '--impure[Allow access to mutable paths and repositories.]' \
+        {--include,-I}'[Add path to the list of locations used to look up <...> file names.]':file:_files \
+        '--override-flake[Override the flake registries, redirecting original-ref to resolved-ref.]' \
+        '--commit-lock-file[Commit changes to the flake'\''s lock file.]' \
+        '--inputs-from[Use the inputs of the specified flake as registry entries.]' \
+        '--no-registries[Don'\''t allow lookups in the flake registries. This option is deprecated; use --no-use-registries.]' \
+        '--no-update-lock-file[Do not allow any updates to the flake'\''s lock file.]' \
+        '--no-write-lock-file[Do not write the flake'\''s newly generated lock file.]' \
+        '--override-input[Override a specific flake input (e.g. dwarffs/nixpkgs). This implies --no-write-lock-file.]':file:_files \
+        '--recreate-lock-file[Recreate the flake'\''s lock file from scratch.]' \
+        '--update-input[Update a specific flake input (ignoring its previous entry in the lock file).]':file:_files \
+        '--derivation[Operate on the store derivation rather than its outputs.]' \
+        '--expr[Interpret installables as attribute paths relative to the Nix expression expr.]' \
+        {--file,-f}'[Interpret installables as attribute paths relative to the Nix expression stored in file. If file is the character -, then a Nix expression will be read from standard input. Implies --impure.]':file:_files \
+        "*: :_files"
+
+}
+
+function _nix_flake {
+    _arguments \
+        "*: :_files"
+
+}
+
+function _nix_help {
+    _arguments \
+        "*: :_files"
+
+}
+
+function _nix_profile {
+    _arguments \
+        "*: :_files"
+
+}
+
+function _nix_repl {
+    _arguments \
+        '--debugger[start an interactive environment if evaluation fails]' \
+        '--arg[Pass the value expr as the argument name to Nix functions.]' \
+        '--argstr[Pass the string string as the argument name to Nix functions.]' \
+        '--eval-store[The Nix store to use for evaluations.]' \
+        '--impure[Allow access to mutable paths and repositories.]' \
+        {--include,-I}'[Add path to the list of locations used to look up <...> file names.]':file:_files \
+        '--override-flake[Override the flake registries, redirecting original-ref to resolved-ref.]' \
+        '--commit-lock-file[Commit changes to the flake'\''s lock file.]' \
+        '--inputs-from[Use the inputs of the specified flake as registry entries.]' \
+        '--no-registries[Don'\''t allow lookups in the flake registries. This option is deprecated; use --no-use-registries.]' \
+        '--no-update-lock-file[Do not allow any updates to the flake'\''s lock file.]' \
+        '--no-write-lock-file[Do not write the flake'\''s newly generated lock file.]' \
+        '--override-input[Override a specific flake input (e.g. dwarffs/nixpkgs). This implies --no-write-lock-file.]':file:_files \
+        '--recreate-lock-file[Recreate the flake'\''s lock file from scratch.]' \
+        '--update-input[Update a specific flake input (ignoring its previous entry in the lock file).]':file:_files \
+        '--derivation[Operate on the store derivation rather than its outputs.]' \
+        '--expr[Interpret installables as attribute paths relative to the Nix expression expr.]' \
+        {--file,-f}'[Interpret installables as attribute paths relative to the Nix expression stored in file. If file is the character -, then a Nix expression will be read from standard input. Implies --impure.]':file:_files \
+        "*: :_files"
+
+}
+
+function _nix_run {
+    _arguments \
+        '--debugger[start an interactive environment if evaluation fails]' \
+        '--arg[Pass the value expr as the argument name to Nix functions.]' \
+        '--argstr[Pass the string string as the argument name to Nix functions.]' \
+        '--eval-store[The Nix store to use for evaluations.]' \
+        '--impure[Allow access to mutable paths and repositories.]' \
+        {--include,-I}'[Add path to the list of locations used to look up <...> file names.]':file:_files \
+        '--override-flake[Override the flake registries, redirecting original-ref to resolved-ref.]' \
+        '--commit-lock-file[Commit changes to the flake'\''s lock file.]' \
+        '--inputs-from[Use the inputs of the specified flake as registry entries.]' \
+        '--no-registries[Don'\''t allow lookups in the flake registries. This option is deprecated; use --no-use-registries.]' \
+        '--no-update-lock-file[Do not allow any updates to the flake'\''s lock file.]' \
+        '--no-write-lock-file[Do not write the flake'\''s newly generated lock file.]' \
+        '--override-input[Override a specific flake input (e.g. dwarffs/nixpkgs). This implies --no-write-lock-file.]':file:_files \
+        '--recreate-lock-file[Recreate the flake'\''s lock file from scratch.]' \
+        '--update-input[Update a specific flake input (ignoring its previous entry in the lock file).]':file:_files \
+        '--derivation[Operate on the store derivation rather than its outputs.]' \
+        '--expr[Interpret installables as attribute paths relative to the Nix expression expr.]' \
+        {--file,-f}'[Interpret installables as attribute paths relative to the Nix expression stored in file. If file is the character -, then a Nix expression will be read from standard input. Implies --impure.]':file:_files \
+        "*: :_files"
+
+}
+
+function _nix_search {
+    _arguments \
+        '--debugger[start an interactive environment if evaluation fails]' \
+        {--exclude,-e}'[Hide packages whose attribute path, name or description contain regex.]' \
+        '--json[Produce output in JSON format, suitable for consumption by another program.]' \
+        '--arg[Pass the value expr as the argument name to Nix functions.]' \
+        '--argstr[Pass the string string as the argument name to Nix functions.]' \
+        '--eval-store[The Nix store to use for evaluations.]' \
+        '--impure[Allow access to mutable paths and repositories.]' \
+        {--include,-I}'[Add path to the list of locations used to look up <...> file names.]':file:_files \
+        '--override-flake[Override the flake registries, redirecting original-ref to resolved-ref.]' \
+        '--commit-lock-file[Commit changes to the flake'\''s lock file.]' \
+        '--inputs-from[Use the inputs of the specified flake as registry entries.]' \
+        '--no-registries[Don'\''t allow lookups in the flake registries. This option is deprecated; use --no-use-registries.]' \
+        '--no-update-lock-file[Do not allow any updates to the flake'\''s lock file.]' \
+        '--no-write-lock-file[Do not write the flake'\''s newly generated lock file.]' \
+        '--override-input[Override a specific flake input (e.g. dwarffs/nixpkgs). This implies --no-write-lock-file.]':file:_files \
+        '--recreate-lock-file[Recreate the flake'\''s lock file from scratch.]' \
+        '--update-input[Update a specific flake input (ignoring its previous entry in the lock file).]':file:_files \
+        '--derivation[Operate on the store derivation rather than its outputs.]' \
+        '--expr[Interpret installables as attribute paths relative to the Nix expression expr.]' \
+        {--file,-f}'[Interpret installables as attribute paths relative to the Nix expression stored in file. If file is the character -, then a Nix expression will be read from standard input. Implies --impure.]':file:_files \
+        "*: :_files"
+
+}
+
+function _nix_shell {
+    _arguments \
+        {--command,-c}'[Command and arguments to be executed, defaulting to $SHELL]' \
+        '--debugger[start an interactive environment if evaluation fails]' \
+        {--ignore-environment,-i}'[Clear the entire environment (except those specified with --keep).]' \
+        {--keep,-k}'[Keep the environment variable name.]' \
+        {--unset,-u}'[Unset the environment variable name.]' \
+        '--arg[Pass the value expr as the argument name to Nix functions.]' \
+        '--argstr[Pass the string string as the argument name to Nix functions.]' \
+        '--eval-store[The Nix store to use for evaluations.]' \
+        '--impure[Allow access to mutable paths and repositories.]' \
+        {--include,-I}'[Add path to the list of locations used to look up <...> file names.]':file:_files \
+        '--override-flake[Override the flake registries, redirecting original-ref to resolved-ref.]' \
+        '--commit-lock-file[Commit changes to the flake'\''s lock file.]' \
+        '--inputs-from[Use the inputs of the specified flake as registry entries.]' \
+        '--no-registries[Don'\''t allow lookups in the flake registries. This option is deprecated; use --no-use-registries.]' \
+        '--no-update-lock-file[Do not allow any updates to the flake'\''s lock file.]' \
+        '--no-write-lock-file[Do not write the flake'\''s newly generated lock file.]' \
+        '--override-input[Override a specific flake input (e.g. dwarffs/nixpkgs). This implies --no-write-lock-file.]':file:_files \
+        '--recreate-lock-file[Recreate the flake'\''s lock file from scratch.]' \
+        '--update-input[Update a specific flake input (ignoring its previous entry in the lock file).]':file:_files \
+        '--derivation[Operate on the store derivation rather than its outputs.]' \
+        '--expr[Interpret installables as attribute paths relative to the Nix expression expr.]' \
+        {--file,-f}'[Interpret installables as attribute paths relative to the Nix expression stored in file. If file is the character -, then a Nix expression will be read from standard input. Implies --impure.]':file:_files \
+        "*: :_files"
+
+}
+
+function _nix_bundle {
+    _arguments \
+        '--bundler[Use a custom bundler instead of the default (github:NixOS/bundlers).]' \
+        '--debugger[start an interactive environment if evaluation fails]' \
+        {--out-link,-o}'[Override the name of the symlink to the build result. It defaults to the base name of the app.]':file:_files \
+        '--arg[Pass the value expr as the argument name to Nix functions.]' \
+        '--argstr[Pass the string string as the argument name to Nix functions.]' \
+        '--eval-store[The Nix store to use for evaluations.]' \
+        '--impure[Allow access to mutable paths and repositories.]' \
+        {--include,-I}'[Add path to the list of locations used to look up <...> file names.]':file:_files \
+        '--override-flake[Override the flake registries, redirecting original-ref to resolved-ref.]' \
+        '--commit-lock-file[Commit changes to the flake'\''s lock file.]' \
+        '--inputs-from[Use the inputs of the specified flake as registry entries.]' \
+        '--no-registries[Don'\''t allow lookups in the flake registries. This option is deprecated; use --no-use-registries.]' \
+        '--no-update-lock-file[Do not allow any updates to the flake'\''s lock file.]' \
+        '--no-write-lock-file[Do not write the flake'\''s newly generated lock file.]' \
+        '--override-input[Override a specific flake input (e.g. dwarffs/nixpkgs). This implies --no-write-lock-file.]':file:_files \
+        '--recreate-lock-file[Recreate the flake'\''s lock file from scratch.]' \
+        '--update-input[Update a specific flake input (ignoring its previous entry in the lock file).]':file:_files \
+        '--derivation[Operate on the store derivation rather than its outputs.]' \
+        '--expr[Interpret installables as attribute paths relative to the Nix expression expr.]' \
+        {--file,-f}'[Interpret installables as attribute paths relative to the Nix expression stored in file. If file is the character -, then a Nix expression will be read from standard input. Implies --impure.]':file:_files \
+        "*: :_files"
+
+}
+
+function _nix_copy {
+    _arguments \
+        '--debugger[start an interactive environment if evaluation fails]' \
+        '--from[URL of the source Nix store.]' \
+        '--no-check-sigs[Do not require that paths are signed by trusted keys.]' \
+        {--substitute-on-destination,-s}'[Whether to try substitutes on the destination store (only supported by SSH stores).]' \
+        '--to[URL of the destination Nix store.]' \
+        '--arg[Pass the value expr as the argument name to Nix functions.]' \
+        '--argstr[Pass the string string as the argument name to Nix functions.]' \
+        '--eval-store[The Nix store to use for evaluations.]' \
+        '--impure[Allow access to mutable paths and repositories.]' \
+        {--include,-I}'[Add path to the list of locations used to look up <...> file names.]':file:_files \
+        '--override-flake[Override the flake registries, redirecting original-ref to resolved-ref.]' \
+        '--commit-lock-file[Commit changes to the flake'\''s lock file.]' \
+        '--inputs-from[Use the inputs of the specified flake as registry entries.]' \
+        '--no-registries[Don'\''t allow lookups in the flake registries. This option is deprecated; use --no-use-registries.]' \
+        '--no-update-lock-file[Do not allow any updates to the flake'\''s lock file.]' \
+        '--no-write-lock-file[Do not write the flake'\''s newly generated lock file.]' \
+        '--override-input[Override a specific flake input (e.g. dwarffs/nixpkgs). This implies --no-write-lock-file.]':file:_files \
+        '--recreate-lock-file[Recreate the flake'\''s lock file from scratch.]' \
+        '--update-input[Update a specific flake input (ignoring its previous entry in the lock file).]':file:_files \
+        '--all[Apply the operation to every store path.]' \
+        '--derivation[Operate on the store derivation rather than its outputs.]' \
+        '--expr[Interpret installables as attribute paths relative to the Nix expression expr.]' \
+        {--file,-f}'[Interpret installables as attribute paths relative to the Nix expression stored in file. If file is the character -, then a Nix expression will be read from standard input. Implies --impure.]':file:_files \
+        '--no-recursive[Apply operation to specified paths only.]' \
+        "*: :_files"
+
+}
+
+function _nix_edit {
+    _arguments \
+        '--debugger[start an interactive environment if evaluation fails]' \
+        '--arg[Pass the value expr as the argument name to Nix functions.]' \
+        '--argstr[Pass the string string as the argument name to Nix functions.]' \
+        '--eval-store[The Nix store to use for evaluations.]' \
+        '--impure[Allow access to mutable paths and repositories.]' \
+        {--include,-I}'[Add path to the list of locations used to look up <...> file names.]':file:_files \
+        '--override-flake[Override the flake registries, redirecting original-ref to resolved-ref.]' \
+        '--commit-lock-file[Commit changes to the flake'\''s lock file.]' \
+        '--inputs-from[Use the inputs of the specified flake as registry entries.]' \
+        '--no-registries[Don'\''t allow lookups in the flake registries. This option is deprecated; use --no-use-registries.]' \
+        '--no-update-lock-file[Do not allow any updates to the flake'\''s lock file.]' \
+        '--no-write-lock-file[Do not write the flake'\''s newly generated lock file.]' \
+        '--override-input[Override a specific flake input (e.g. dwarffs/nixpkgs). This implies --no-write-lock-file.]':file:_files \
+        '--recreate-lock-file[Recreate the flake'\''s lock file from scratch.]' \
+        '--update-input[Update a specific flake input (ignoring its previous entry in the lock file).]':file:_files \
+        '--derivation[Operate on the store derivation rather than its outputs.]' \
+        '--expr[Interpret installables as attribute paths relative to the Nix expression expr.]' \
+        {--file,-f}'[Interpret installables as attribute paths relative to the Nix expression stored in file. If file is the character -, then a Nix expression will be read from standard input. Implies --impure.]':file:_files \
+        "*: :_files"
+
+}
+
+function _nix_eval {
+    _arguments \
+        '--apply[Apply the function expr to each argument.]' \
+        '--debugger[start an interactive environment if evaluation fails]' \
+        '--json[Produce output in JSON format, suitable for consumption by another program.]' \
+        '--raw[Print strings without quotes or escaping.]' \
+        '--read-only[Do not instantiate each evaluated derivation. This improves performance, but can cause errors when accessing store paths of derivations during evaluation.]' \
+        '--write-to[Write a string or attrset of strings to path.]':file:_files \
+        '--arg[Pass the value expr as the argument name to Nix functions.]' \
+        '--argstr[Pass the string string as the argument name to Nix functions.]' \
+        '--eval-store[The Nix store to use for evaluations.]' \
+        '--impure[Allow access to mutable paths and repositories.]' \
+        {--include,-I}'[Add path to the list of locations used to look up <...> file names.]':file:_files \
+        '--override-flake[Override the flake registries, redirecting original-ref to resolved-ref.]' \
+        '--commit-lock-file[Commit changes to the flake'\''s lock file.]' \
+        '--inputs-from[Use the inputs of the specified flake as registry entries.]' \
+        '--no-registries[Don'\''t allow lookups in the flake registries. This option is deprecated; use --no-use-registries.]' \
+        '--no-update-lock-file[Do not allow any updates to the flake'\''s lock file.]' \
+        '--no-write-lock-file[Do not write the flake'\''s newly generated lock file.]' \
+        '--override-input[Override a specific flake input (e.g. dwarffs/nixpkgs). This implies --no-write-lock-file.]':file:_files \
+        '--recreate-lock-file[Recreate the flake'\''s lock file from scratch.]' \
+        '--update-input[Update a specific flake input (ignoring its previous entry in the lock file).]':file:_files \
+        '--derivation[Operate on the store derivation rather than its outputs.]' \
+        '--expr[Interpret installables as attribute paths relative to the Nix expression expr.]' \
+        {--file,-f}'[Interpret installables as attribute paths relative to the Nix expression stored in file. If file is the character -, then a Nix expression will be read from standard input. Implies --impure.]':file:_files \
+        "*: :_files"
+
+}
+
+function _nix_fmt {
+    _arguments \
+        '--debugger[start an interactive environment if evaluation fails]' \
+        '--arg[Pass the value expr as the argument name to Nix functions.]' \
+        '--argstr[Pass the string string as the argument name to Nix functions.]' \
+        '--eval-store[The Nix store to use for evaluations.]' \
+        '--impure[Allow access to mutable paths and repositories.]' \
+        {--include,-I}'[Add path to the list of locations used to look up <...> file names.]':file:_files \
+        '--override-flake[Override the flake registries, redirecting original-ref to resolved-ref.]' \
+        '--commit-lock-file[Commit changes to the flake'\''s lock file.]' \
+        '--inputs-from[Use the inputs of the specified flake as registry entries.]' \
+        '--no-registries[Don'\''t allow lookups in the flake registries. This option is deprecated; use --no-use-registries.]' \
+        '--no-update-lock-file[Do not allow any updates to the flake'\''s lock file.]' \
+        '--no-write-lock-file[Do not write the flake'\''s newly generated lock file.]' \
+        '--override-input[Override a specific flake input (e.g. dwarffs/nixpkgs). This implies --no-write-lock-file.]':file:_files \
+        '--recreate-lock-file[Recreate the flake'\''s lock file from scratch.]' \
+        '--update-input[Update a specific flake input (ignoring its previous entry in the lock file).]':file:_files \
+        '--derivation[Operate on the store derivation rather than its outputs.]' \
+        '--expr[Interpret installables as attribute paths relative to the Nix expression expr.]' \
+        {--file,-f}'[Interpret installables as attribute paths relative to the Nix expression stored in file. If file is the character -, then a Nix expression will be read from standard input. Implies --impure.]':file:_files \
+        "*: :_files"
+
+}
+
+function _nix_log {
+    _arguments \
+        '--debugger[start an interactive environment if evaluation fails]' \
+        '--arg[Pass the value expr as the argument name to Nix functions.]' \
+        '--argstr[Pass the string string as the argument name to Nix functions.]' \
+        '--eval-store[The Nix store to use for evaluations.]' \
+        '--impure[Allow access to mutable paths and repositories.]' \
+        {--include,-I}'[Add path to the list of locations used to look up <...> file names.]':file:_files \
+        '--override-flake[Override the flake registries, redirecting original-ref to resolved-ref.]' \
+        '--commit-lock-file[Commit changes to the flake'\''s lock file.]' \
+        '--inputs-from[Use the inputs of the specified flake as registry entries.]' \
+        '--no-registries[Don'\''t allow lookups in the flake registries. This option is deprecated; use --no-use-registries.]' \
+        '--no-update-lock-file[Do not allow any updates to the flake'\''s lock file.]' \
+        '--no-write-lock-file[Do not write the flake'\''s newly generated lock file.]' \
+        '--override-input[Override a specific flake input (e.g. dwarffs/nixpkgs). This implies --no-write-lock-file.]':file:_files \
+        '--recreate-lock-file[Recreate the flake'\''s lock file from scratch.]' \
+        '--update-input[Update a specific flake input (ignoring its previous entry in the lock file).]':file:_files \
+        '--derivation[Operate on the store derivation rather than its outputs.]' \
+        '--expr[Interpret installables as attribute paths relative to the Nix expression expr.]' \
+        {--file,-f}'[Interpret installables as attribute paths relative to the Nix expression stored in file. If file is the character -, then a Nix expression will be read from standard input. Implies --impure.]':file:_files \
+        "*: :_files"
+
+}
+
+function _nix_path-info {
+    _arguments \
+        {--closure-size,-S}'[Print the sum of the sizes of the NAR serialisations of the closure of each path.]' \
+        '--debugger[start an interactive environment if evaluation fails]' \
+        {--human-readable,-h}'[With -s and -S, print sizes in a human-friendly format such as 5.67G.]' \
+        '--json[Produce output in JSON format, suitable for consumption by another program.]' \
+        '--sigs[Show signatures.]' \
+        {--size,-s}'[Print the size of the NAR serialisation of each path.]' \
+        '--arg[Pass the value expr as the argument name to Nix functions.]' \
+        '--argstr[Pass the string string as the argument name to Nix functions.]' \
+        '--eval-store[The Nix store to use for evaluations.]' \
+        '--impure[Allow access to mutable paths and repositories.]' \
+        {--include,-I}'[Add path to the list of locations used to look up <...> file names.]':file:_files \
+        '--override-flake[Override the flake registries, redirecting original-ref to resolved-ref.]' \
+        '--commit-lock-file[Commit changes to the flake'\''s lock file.]' \
+        '--inputs-from[Use the inputs of the specified flake as registry entries.]' \
+        '--no-registries[Don'\''t allow lookups in the flake registries. This option is deprecated; use --no-use-registries.]' \
+        '--no-update-lock-file[Do not allow any updates to the flake'\''s lock file.]' \
+        '--no-write-lock-file[Do not write the flake'\''s newly generated lock file.]' \
+        '--override-input[Override a specific flake input (e.g. dwarffs/nixpkgs). This implies --no-write-lock-file.]':file:_files \
+        '--recreate-lock-file[Recreate the flake'\''s lock file from scratch.]' \
+        '--update-input[Update a specific flake input (ignoring its previous entry in the lock file).]':file:_files \
+        '--all[Apply the operation to every store path.]' \
+        '--derivation[Operate on the store derivation rather than its outputs.]' \
+        '--expr[Interpret installables as attribute paths relative to the Nix expression expr.]' \
+        {--file,-f}'[Interpret installables as attribute paths relative to the Nix expression stored in file. If file is the character -, then a Nix expression will be read from standard input. Implies --impure.]':file:_files \
+        {--recursive,-r}'[Apply operation to closure of the specified paths.]' \
+        "*: :_files"
+
+}
+
+function _nix_registry {
+    _arguments \
+        "*: :_files"
+
+}
+
+function _nix_why-depends {
+    _arguments \
+        {--all,-a}'[Show all edges in the dependency graph leading from package to dependency, rather than just a shortest path.]' \
+        '--debugger[start an interactive environment if evaluation fails]' \
+        '--precise[For each edge in the dependency graph, show the files in the parent that cause the dependency.]' \
+        '--arg[Pass the value expr as the argument name to Nix functions.]' \
+        '--argstr[Pass the string string as the argument name to Nix functions.]' \
+        '--eval-store[The Nix store to use for evaluations.]' \
+        '--impure[Allow access to mutable paths and repositories.]' \
+        {--include,-I}'[Add path to the list of locations used to look up <...> file names.]':file:_files \
+        '--override-flake[Override the flake registries, redirecting original-ref to resolved-ref.]' \
+        '--commit-lock-file[Commit changes to the flake'\''s lock file.]' \
+        '--inputs-from[Use the inputs of the specified flake as registry entries.]' \
+        '--no-registries[Don'\''t allow lookups in the flake registries. This option is deprecated; use --no-use-registries.]' \
+        '--no-update-lock-file[Do not allow any updates to the flake'\''s lock file.]' \
+        '--no-write-lock-file[Do not write the flake'\''s newly generated lock file.]' \
+        '--override-input[Override a specific flake input (e.g. dwarffs/nixpkgs). This implies --no-write-lock-file.]':file:_files \
+        '--recreate-lock-file[Recreate the flake'\''s lock file from scratch.]' \
+        '--update-input[Update a specific flake input (ignoring its previous entry in the lock file).]':file:_files \
+        '--derivation[Operate on the store derivation rather than its outputs.]' \
+        '--expr[Interpret installables as attribute paths relative to the Nix expression expr.]' \
+        {--file,-f}'[Interpret installables as attribute paths relative to the Nix expression stored in file. If file is the character -, then a Nix expression will be read from standard input. Implies --impure.]':file:_files \
+        "*: :_files"
+
+}
+
+function _nix_daemon {
+    _arguments \
+        "*: :_files"
+
+}
+
+function _nix_describe-stores {
+    _arguments \
+        '--json[Produce output in JSON format, suitable for consumption by another program.]' \
+        "*: :_files"
+
+}
+
+function _nix_hash {
+    _arguments \
+        "*: :_files"
+
+}
+
+function _nix_key {
+    _arguments \
+        "*: :_files"
+
+}
+
+function _nix_nar {
+    _arguments \
+        "*: :_files"
+
+}
+
+function _nix_print-dev-env {
+    _arguments \
+        '--debugger[start an interactive environment if evaluation fails]' \
+        '--json[Produce output in JSON format, suitable for consumption by another program.]' \
+        '--profile[The profile to update.]':file:_files \
+        '--redirect[Redirect a store path to a mutable location.]':file:_files \
+        '--arg[Pass the value expr as the argument name to Nix functions.]' \
+        '--argstr[Pass the string string as the argument name to Nix functions.]' \
+        '--eval-store[The Nix store to use for evaluations.]' \
+        '--impure[Allow access to mutable paths and repositories.]' \
+        {--include,-I}'[Add path to the list of locations used to look up <...> file names.]':file:_files \
+        '--override-flake[Override the flake registries, redirecting original-ref to resolved-ref.]' \
+        '--commit-lock-file[Commit changes to the flake'\''s lock file.]' \
+        '--inputs-from[Use the inputs of the specified flake as registry entries.]' \
+        '--no-registries[Don'\''t allow lookups in the flake registries. This option is deprecated; use --no-use-registries.]' \
+        '--no-update-lock-file[Do not allow any updates to the flake'\''s lock file.]' \
+        '--no-write-lock-file[Do not write the flake'\''s newly generated lock file.]' \
+        '--override-input[Override a specific flake input (e.g. dwarffs/nixpkgs). This implies --no-write-lock-file.]':file:_files \
+        '--recreate-lock-file[Recreate the flake'\''s lock file from scratch.]' \
+        '--update-input[Update a specific flake input (ignoring its previous entry in the lock file).]':file:_files \
+        '--derivation[Operate on the store derivation rather than its outputs.]' \
+        '--expr[Interpret installables as attribute paths relative to the Nix expression expr.]' \
+        {--file,-f}'[Interpret installables as attribute paths relative to the Nix expression stored in file. If file is the character -, then a Nix expression will be read from standard input. Implies --impure.]':file:_files \
+        "*: :_files"
+
+}
+
+function _nix_realisation {
+    _arguments \
+        "*: :_files"
+
+}
+
+function _nix_show-config {
+    _arguments \
+        '--json[Produce output in JSON format, suitable for consumption by another program.]' \
+        "*: :_files"
+
+}
+
+function _nix_show-derivation {
+    _arguments \
+        '--debugger[start an interactive environment if evaluation fails]' \
+        {--recursive,-r}'[Include the dependencies of the specified derivations.]' \
+        '--arg[Pass the value expr as the argument name to Nix functions.]' \
+        '--argstr[Pass the string string as the argument name to Nix functions.]' \
+        '--eval-store[The Nix store to use for evaluations.]' \
+        '--impure[Allow access to mutable paths and repositories.]' \
+        {--include,-I}'[Add path to the list of locations used to look up <...> file names.]':file:_files \
+        '--override-flake[Override the flake registries, redirecting original-ref to resolved-ref.]' \
+        '--commit-lock-file[Commit changes to the flake'\''s lock file.]' \
+        '--inputs-from[Use the inputs of the specified flake as registry entries.]' \
+        '--no-registries[Don'\''t allow lookups in the flake registries. This option is deprecated; use --no-use-registries.]' \
+        '--no-update-lock-file[Do not allow any updates to the flake'\''s lock file.]' \
+        '--no-write-lock-file[Do not write the flake'\''s newly generated lock file.]' \
+        '--override-input[Override a specific flake input (e.g. dwarffs/nixpkgs). This implies --no-write-lock-file.]':file:_files \
+        '--recreate-lock-file[Recreate the flake'\''s lock file from scratch.]' \
+        '--update-input[Update a specific flake input (ignoring its previous entry in the lock file).]':file:_files \
+        '--derivation[Operate on the store derivation rather than its outputs.]' \
+        '--expr[Interpret installables as attribute paths relative to the Nix expression expr.]' \
+        {--file,-f}'[Interpret installables as attribute paths relative to the Nix expression stored in file. If file is the character -, then a Nix expression will be read from standard input. Implies --impure.]':file:_files \
+        "*: :_files"
+
+}
+
+function _nix_store {
+    _arguments \
+        "*: :_files"
+
+}
+
+function _nix_doctor {
+    _arguments \
+        "*: :_files"
+
+}
+
+function _nix_upgrade-nix {
+    _arguments \
+        '--dry-run[Show what this command would do without doing it.]' \
+        '--nix-store-paths-url[The URL of the file that contains the store paths of the latest Nix release.]' \
+        {--profile,-p}'[The path to the Nix profile to upgrade.]':file:_files \
+        "*: :_files"
+
+}
+
+_nix "$@"
+

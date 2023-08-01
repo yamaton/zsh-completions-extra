@@ -1,0 +1,14 @@
+#compdef printf
+
+# Auto-generated with h2o
+
+function _printf {
+    _arguments \
+        '--help[display this help and exit]' \
+        '--version[output version information and exit]' \
+        "*: :_files"
+
+}
+
+_printf "$@"
+

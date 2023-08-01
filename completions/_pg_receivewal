@@ -1,0 +1,32 @@
+#compdef pg_receivewal
+
+# Auto-generated with h2o
+
+function _pg_receivewal {
+    _arguments \
+        {-D,--directory}'[receive write-ahead log files into this directory]':file:_files \
+        {-E,--endpos}'[exit after receiving the specified LSN]' \
+        '--if-not-exists[do not error if slot already exists when creating a slot]' \
+        {-n,--no-loop}'[do not loop on connection lost]' \
+        '--no-sync[do not wait for changes to be written safely to disk]' \
+        {-s,--status-interval}'[time between status packets sent to server (default: 10)]' \
+        {-S,--slot}'[replication slot to use]' \
+        '--synchronous[flush write-ahead log immediately after writing]' \
+        {-v,--verbose}'[output verbose messages]' \
+        {-V,--version}'[output version information, then exit]' \
+        {-Z,--compress}'[compress as specified]' \
+        {-?,--help}'[show this help, then exit]' \
+        {-d,--dbname}'[connection string]' \
+        {-h,--host}'[database server host or socket directory]' \
+        {-p,--port}'[database server port number]' \
+        {-U,--username}'[connect as specified database user]' \
+        {-w,--no-password}'[never prompt for password]' \
+        {-W,--password}'[force password prompt (should happen automatically)]' \
+        '--create-slot[create a new replication slot (for the slot'\''s name see --slot)]' \
+        '--drop-slot[drop the replication slot (for the slot'\''s name see --slot)]' \
+        "*: :_files"
+
+}
+
+_pg_receivewal "$@"
+

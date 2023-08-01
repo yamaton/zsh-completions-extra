@@ -1,0 +1,29 @@
+#compdef top
+
+# Auto-generated with h2o
+
+function _top {
+    _arguments \
+        '-h[Help]' \
+        '-v[Version]' \
+        '-b[Batch-mode operation]' \
+        '-c[Command-line/Program-name toggle]' \
+        '-d[Delay-time interval]' \
+        '-e[Enforce-Task-Memory-Scaling]' \
+        '-E[Enforce-Summary-Memory-Scaling]' \
+        '-H[Threads-mode operation]' \
+        '-i[Idle-process toggle]' \
+        '-n[Number-of-iterations limit]' \
+        '-o[Override-sort-field]' \
+        '-O[Output-field-names]' \
+        '-p[Monitor-PIDs mode]' \
+        '-s[Secure-mode operation]' \
+        '-S[Cumulative-time toggle]' \
+        '-w[Output-width-override]' \
+        '-1[Single/Separate-Cpu-States toggle]' \
+        "*: :_files"
+
+}
+
+_top "$@"
+

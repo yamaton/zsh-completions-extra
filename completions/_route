@@ -1,0 +1,20 @@
+#compdef route
+
+# Auto-generated with h2o
+
+function _route {
+    _arguments \
+        '-A[use the specified address family (eg `inet'\''). Use route --help for a full list. You can use -6 as an alias for --inet6 and -4 as an alias for -A inet]' \
+        '-F[operate on the kernel'\''s FIB (Forwarding Information Base) routing table. This is the default.]' \
+        '-C[operate on the kernel'\''s routing cache.]' \
+        '-v[select verbose operation.]' \
+        '-n[show numerical addresses instead of trying to determine symbolic host names. This is useful if you are trying to determine why the route to your nameserver has vanished.]' \
+        '-e[use netstat(8)-format for displaying the routing table. -ee will generate a very long line with all parameters from the routing table.]' \
+        '-net[the target is a network.]' \
+        '-host[the target is a host.]' \
+        "*: :_files"
+
+}
+
+_route "$@"
+

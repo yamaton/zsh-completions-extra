@@ -1,0 +1,300 @@
+#compdef zellij
+
+# Auto-generated with h2o
+
+
+function _zellij {
+    local line state
+
+    function _commands {
+        local -a commands
+        commands=(
+            'action:Send actions to a specific session \[aliases: ac\]'
+            'attach:Attach to a session \[aliases: a\]'
+            'convert-config:Convert config'
+            'convert-layout:Convert layout'
+            'convert-theme:Convert theme'
+            'edit:Edit file with default $EDITOR / $VISUAL \[aliases: e\]'
+            'help:Print this message or the help of the given subcommand(s)'
+            'kill-all-sessions:Kill all sessions \[aliases: ka\]'
+            'kill-session:Kill the specific session \[aliases: k\]'
+            'list-sessions:List active sessions \[aliases: ls\]'
+            'options:Change the behaviour of zellij'
+            'run:Run a command in a new pane \[aliases: r\]'
+            'setup:Setup zellij and check its configuration'
+        )
+        _describe 'command' commands
+    }
+ 
+
+    _arguments -C \
+        {-c,--config}'[Change where zellij looks for the configuration file \[env: ZELLIJ_CONFIG_FILE=\]]' \
+        '--config-dir[Change where zellij looks for the configuration directory \[env: ZELLIJ_CONFIG_DIR=\]]':file:_files \
+        {-d,--debug}'[Specify emitting additional debug information]' \
+        '--data-dir[Change where zellij looks for plugins]':file:_files \
+        {-h,--help}'[Print help information]' \
+        {-l,--layout}'[Name of a predefined layout inside the layout directory or the path to a layout file]' \
+        '--max-panes[Maximum panes on screen, caution: opening more panes will close old ones]' \
+        {-s,--session}'[Specify name of a new session]' \
+        {-V,--version}'[Print version information]' \
+        ': :->cmd' \
+        '*:: :->subcmd'
+
+    case $state in
+    (cmd)
+        _commands
+        ;;
+    (subcmd)
+        case $line[1] in
+        (action)
+            _zellij_action
+            ;;
+
+        (attach)
+            _zellij_attach
+            ;;
+
+        (convert-config)
+            _zellij_convert-config
+            ;;
+
+        (convert-layout)
+            _zellij_convert-layout
+            ;;
+
+        (convert-theme)
+            _zellij_convert-theme
+            ;;
+
+        (edit)
+            _zellij_edit
+            ;;
+
+        (help)
+            _zellij_help
+            ;;
+
+        (kill-all-sessions)
+            _zellij_kill-all-sessions
+            ;;
+
+        (kill-session)
+            _zellij_kill-session
+            ;;
+
+        (list-sessions)
+            _zellij_list-sessions
+            ;;
+
+        (options)
+            _zellij_options
+            ;;
+
+        (run)
+            _zellij_run
+            ;;
+
+        (setup)
+            _zellij_setup
+            ;;
+
+        esac
+        ;;
+     esac
+
+}
+
+function _zellij_action {
+    _arguments \
+        {-h,--help}'[Print help information]' \
+        "*: :_files"
+
+}
+
+
+function _zellij_attach {
+    local line state
+
+    function _commands {
+        local -a commands
+        commands=(
+            'help:Print this message or the help of the given subcommand(s)'
+            'options:Change the behaviour of zellij'
+        )
+        _describe 'command' commands
+    }
+ 
+
+    _arguments -C \
+        {-c,--create}'[Create a session if one does not exist]' \
+        {-h,--help}'[Print help information]' \
+        '--index[Number of the session index in the active sessions ordered creation date]' \
+        ': :->cmd' \
+        '*:: :->subcmd'
+
+    case $state in
+    (cmd)
+        _commands
+        ;;
+    (subcmd)
+        case $line[1] in
+        (help)
+            _zellij_attach_help
+            ;;
+
+        (options)
+            _zellij_attach_options
+            ;;
+
+        esac
+        ;;
+     esac
+
+}
+
+function _zellij_attach_help {
+    _arguments \
+        "*: :_files"
+
+}
+
+function _zellij_attach_options {
+    _arguments \
+        '--attach-to-session[Whether to attach to a session specified in "session-name" if it exists \[possible values: true, false\]]' \
+        '--copy-clipboard[OSC52 destination clipboard \[possible values: system, primary\]]' \
+        '--copy-command[Switch to using a user supplied command for clipboard instead of OSC52]' \
+        '--copy-on-select[Automatically copy when selecting text (true or false) \[possible values: true, false\]]' \
+        '--default-layout[Set the default layout]' \
+        '--default-mode[Set the default mode]' \
+        '--default-shell[Set the default shell]' \
+        '--disable-mouse-mode[Disable handling of mouse events]' \
+        {-h,--help}'[Print help information]' \
+        '--layout-dir[Set the layout_dir, defaults to subdirectory of config dir]':file:_files \
+        '--mirror-session[Mirror session when multiple users are connected (true or false) \[possible values: true, false\]]' \
+        '--mouse-mode[Set the handling of mouse events (true or false) Can be temporarily bypassed by the \[SHIFT\] key \[possible values: true, false\]]' \
+        '--no-pane-frames[Disable display of pane frames]' \
+        '--on-force-close[Set behaviour on force close (quit or detach)]' \
+        '--pane-frames[Set display of the pane frames (true or false) \[possible values: true, false\]]' \
+        '--scrollback-editor[Explicit full path to open the scrollback editor (default is $EDITOR or $VISUAL)]' \
+        '--session-name[The name of the session to create when starting Zellij]' \
+        '--simplified-ui[Allow plugins to use a more simplified layout that is compatible with more fonts (true or false) \[possible values: true, false\]]' \
+        '--theme[Set the default theme]' \
+        '--theme-dir[Set the theme_dir, defaults to subdirectory of config dir]':file:_files \
+        "*: :_files"
+
+}
+
+function _zellij_convert-config {
+    _arguments \
+        {-h,--help}'[Print help information]' \
+        "*: :_files"
+
+}
+
+function _zellij_convert-layout {
+    _arguments \
+        {-h,--help}'[Print help information]' \
+        "*: :_files"
+
+}
+
+function _zellij_convert-theme {
+    _arguments \
+        {-h,--help}'[Print help information]' \
+        "*: :_files"
+
+}
+
+function _zellij_edit {
+    _arguments \
+        '--cwd[Change the working directory of the editor]' \
+        {-d,--direction}'[Direction to open the new pane in]':file:_files \
+        {-f,--floating}'[Open the new pane in floating mode]' \
+        {-h,--help}'[Print help information]' \
+        {-l,--line-number}'[Open the file in the specified line number]' \
+        "*: :_files"
+
+}
+
+function _zellij_help {
+    _arguments \
+        "*: :_files"
+
+}
+
+function _zellij_kill-all-sessions {
+    _arguments \
+        {-h,--help}'[Print help information]' \
+        {-y,--yes}'[Automatic yes to prompts]' \
+        "*: :_files"
+
+}
+
+function _zellij_kill-session {
+    _arguments \
+        {-h,--help}'[Print help information]' \
+        "*: :_files"
+
+}
+
+function _zellij_list-sessions {
+    _arguments \
+        {-h,--help}'[Print help information]' \
+        "*: :_files"
+
+}
+
+function _zellij_options {
+    _arguments \
+        '--attach-to-session[Whether to attach to a session specified in "session-name" if it exists \[possible values: true, false\]]' \
+        '--copy-clipboard[OSC52 destination clipboard \[possible values: system, primary\]]' \
+        '--copy-command[Switch to using a user supplied command for clipboard instead of OSC52]' \
+        '--copy-on-select[Automatically copy when selecting text (true or false) \[possible values: true, false\]]' \
+        '--default-layout[Set the default layout]' \
+        '--default-mode[Set the default mode]' \
+        '--default-shell[Set the default shell]' \
+        '--disable-mouse-mode[Disable handling of mouse events]' \
+        {-h,--help}'[Print help information]' \
+        '--layout-dir[Set the layout_dir, defaults to subdirectory of config dir]':file:_files \
+        '--mirror-session[Mirror session when multiple users are connected (true or false) \[possible values: true, false\]]' \
+        '--mouse-mode[Set the handling of mouse events (true or false) Can be temporarily bypassed by the \[SHIFT\] key \[possible values: true, false\]]' \
+        '--no-pane-frames[Disable display of pane frames]' \
+        '--on-force-close[Set behaviour on force close (quit or detach)]' \
+        '--pane-frames[Set display of the pane frames (true or false) \[possible values: true, false\]]' \
+        '--scrollback-editor[Explicit full path to open the scrollback editor (default is $EDITOR or $VISUAL)]' \
+        '--session-name[The name of the session to create when starting Zellij]' \
+        '--simplified-ui[Allow plugins to use a more simplified layout that is compatible with more fonts (true or false) \[possible values: true, false\]]' \
+        '--theme[Set the default theme]' \
+        '--theme-dir[Set the theme_dir, defaults to subdirectory of config dir]':file:_files \
+        "*: :_files"
+
+}
+
+function _zellij_run {
+    _arguments \
+        {-c,--close-on-exit}'[Close the pane immediately when its command exits]' \
+        '--cwd[Change the working directory of the new pane]' \
+        {-d,--direction}'[Direction to open the new pane in]':file:_files \
+        {-f,--floating}'[Open the new pane in floating mode]' \
+        {-h,--help}'[Print help information]' \
+        {-n,--name}'[Name of the new pane]' \
+        {-s,--start-suspended}'[Start the command suspended, only running after you first presses ENTER]' \
+        "*: :_files"
+
+}
+
+function _zellij_setup {
+    _arguments \
+        '--check[Checks the configuration of zellij and displays currently used directories]' \
+        '--clean[Disables loading of configuration file at default location, loads the defaults that zellij ships with]' \
+        '--dump-config[Dump the default configuration file to stdout]' \
+        '--dump-layout[Dump the specified layout file to stdout]' \
+        '--generate-auto-start[Generates auto-start script for the specified shell]' \
+        '--generate-completion[Generates completion for the specified shell]' \
+        {-h,--help}'[Print help information]' \
+        "*: :_files"
+
+}
+
+_zellij "$@"
+
