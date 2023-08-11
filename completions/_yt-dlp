@@ -8,6 +8,7 @@ function _yt-dlp {
         '--version[Print program version and exit]' \
         {-U,--update}'[Check if updates are available. You installed yt-dlp with pip or using the wheel from PyPi; Use that to update]' \
         '--no-update[Do not check for updates (default)]' \
+        '--update-to[Upgrade/downgrade to a specific version. CHANNEL can be a repository as well. CHANNEL and TAG default to "stable" and "latest" respectively if omitted; See "UPDATE" for details. Supported channels: stable, nightly]' \
         {-i,--ignore-errors}'[Ignore download and postprocessing errors. The download will be considered successful even if the postprocessing fails]' \
         '--no-abort-on-error[Continue with next video on download errors; e.g. to skip unavailable videos in a playlist (default)]' \
         '--abort-on-error[Abort downloading of further videos if an error occurs (Alias: --no-ignore-errors)]' \
@@ -20,14 +21,14 @@ function _yt-dlp {
         '--no-config-locations[Do not load any custom configuration files (default). When given inside a configuration file, ignore all previous --config-locations defined in the current file]' \
         '--config-locations[Location of the main configuration file; either the path to the config or its containing directory ("-" for stdin). Can be used multiple times and inside other configuration files]':file:_files \
         '--flat-playlist[Do not extract the videos of a playlist, only list them]' \
-        '--no-flat-playlist[Extract the videos of a playlist]' \
+        '--no-flat-playlist[Fully extract the videos of a playlist (default)]' \
         '--live-from-start[Download livestreams from the start. Currently only supported for YouTube (Experimental)]' \
         '--no-live-from-start[Download livestreams from the current time (default)]' \
         '--wait-for-video[Wait for scheduled streams to become available. Pass the minimum number of seconds (or range) to wait between retries]' \
         '--no-wait-for-video[Do not wait for scheduled streams (default)]' \
         '--mark-watched[Mark videos watched (even with --simulate)]' \
         '--no-mark-watched[Do not mark videos watched (default)]' \
-        '--no-colors[Do not emit color codes in output (Alias: --no-colours)]' \
+        '--color[Whether to emit color codes in output, optionally prefixed by the STREAM (stdout or stderr) to apply the setting to. Can be one of "always", "auto" (default), "never", or "no_color" (use non color terminal sequences). Can be used multiple times]' \
         '--compat-options[Options that can help keep compatibility with youtube-dl or youtube-dlc configurations by reverting some of the changes made in yt-dlp. See "Differences in default behavior" for details]' \
         '--alias[Create aliases for an option string. Unless an alias starts with a dash "-", it is prefixed with "--". Arguments are parsed according to the Python string formatting mini-language. E.g. --alias get-audio,-X "-S=aext:{0},abr -x --audio-format {0}" creates options "--get-audio" and "-X" that takes an argument (ARG0) and expands to "-S=aext:ARG0,abr -x --audio-format ARG0". All defined aliases are listed in the --help output. Alias options can trigger more aliases; so be careful to avoid defining recursive options. As a safety measure, each alias may be triggered a maximum of 100 times. This option can be used multiple times]' \
         '--proxy[Use the specified HTTP/HTTPS/SOCKS proxy. To enable SOCKS proxy, specify a proper scheme, e.g. socks5://user:pass@127.0.0.1:1080/. Pass in an empty string (--proxy "") for direct connection]' \
@@ -35,19 +36,19 @@ function _yt-dlp {
         '--source-address[Client-side IP address to bind to]' \
         {-4,--force-ipv4}'[Make all connections via IPv4]' \
         {-6,--force-ipv6}'[Make all connections via IPv6]' \
+        '--enable-file-urls[Enable file:// URLs. This is disabled by default for security reasons.]' \
         '--geo-verification-proxy[Use this proxy to verify the IP address for some geo-restricted sites. The default proxy specified by --proxy (or none, if the option is not present) is used for the actual downloading]' \
-        '--geo-bypass[Bypass geographic restriction via faking X-Forwarded-For HTTP header (default)]' \
-        '--no-geo-bypass[Do not bypass geographic restriction via faking X-Forwarded-For HTTP header]' \
-        '--geo-bypass-country[Force bypass geographic restriction with explicitly provided two-letter ISO 3166-2 country code]' \
-        '--geo-bypass-ip-block[Force bypass geographic restriction with explicitly provided IP block in CIDR notation]' \
-        {-I,--playlist-items}'[Comma separated playlist_index of the videos to download. You can specify a range using "\[START\]:\[STOP\]\[:STEP\]". For backward compatibility, START-STOP is also supported. Use negative indices to count from the right and negative STEP to download in reverse order. E.g. "-I 1:3,7,-5::2" used on a playlist of size 15 will download the videos at index 1,2,3,7,11,13,15]' \
+        '--xff[How to fake X-Forwarded-For HTTP header to try bypassing geographic restriction. One of "default" (only when known to be useful), "never", an IP block in CIDR notation, or a two-letter ISO 3166-2 country code]' \
+        {-I,--playlist-items}'[Comma separated playlist_index of the items to download. You can specify a range using "\[START\]:\[STOP\]\[:STEP\]". For backward compatibility, START-STOP is also supported. Use negative indices to count from the right and negative STEP to download in reverse order. E.g. "-I 1:3,7,-5::2" used on a playlist of size 15 will download the items at index 1,2,3,7,11,13,15]' \
         '--min-filesize[Abort download if filesize is smaller than SIZE, e.g. 50k or 44.6M]' \
-        '--max-filesize[Abort download if filesize if larger than SIZE, e.g. 50k or 44.6M]' \
-        '--date[Download only videos uploaded on this date. The date can be "YYYYMMDD" or in the format \[now|today|yesterday\]\[-N\[day|week|month|year\]\]. E.g. --date today-2weeks]' \
+        '--max-filesize[Abort download if filesize is larger than SIZE, e.g. 50k or 44.6M]' \
+        '--date[Download only videos uploaded on this date. The date can be "YYYYMMDD" or in the format \[now|today|yesterday\]\[-N\[day|week|month|year\]\]. E.g. "--date today-2weeks" downloads only videos uploaded on the same day two weeks ago]' \
         '--datebefore[Download only videos uploaded on or before this date. The date formats accepted is the same as --date]' \
         '--dateafter[Download only videos uploaded on or after this date. The date formats accepted is the same as --date]' \
         '--match-filters[Generic video filter. Any "OUTPUT TEMPLATE" field can be compared with a number or a string using the operators defined in "Filtering Formats". You can also simply specify a field to match if the field is present, use "!field" to check if the field is not present, and "&" to check multiple conditions. Use a "\" to escape "&" or quotes if needed. If used multiple times, the filter matches if atleast one of the conditions are met. E.g. --match-filter !is_live --match-filter "like_count>?100 & description~='\''(?i)\bcats \& dogs\b'\''" matches only videos that are not live OR those that have a like count more than 100 (or the like field is not available) and also has a description that contains the phrase "cats & dogs" (caseless). Use "--match-filter -" to interactively ask whether to download each video]' \
-        '--no-match-filter[Do not use generic video filter (default)]' \
+        '--no-match-filters[Do not use any --match-filter (default)]' \
+        '--break-match-filters[Same as "--match-filters" but stops the download process when a video is rejected]' \
+        '--no-break-match-filters[Do not use any --break-match-filters (default)]' \
         '--no-playlist[Download only the video, if the URL refers to a video and a playlist]' \
         '--yes-playlist[Download the playlist, if the URL refers to a video and a playlist]' \
         '--age-limit[Download only videos suitable for the given age]' \
@@ -55,8 +56,7 @@ function _yt-dlp {
         '--no-download-archive[Do not use archive file (default)]' \
         '--max-downloads[Abort after downloading NUMBER files]' \
         '--break-on-existing[Stop the download process when encountering a file that is in the archive]' \
-        '--break-on-reject[Stop the download process when encountering a file that has been filtered out]' \
-        '--break-per-input[--break-on-existing, --break-on-reject, --max-downloads, and autonumber resets per input URL]' \
+        '--break-per-input[Alters --max-downloads, --break-on-existing, --break-match-filter, and autonumber to reset per input URL]' \
         '--no-break-per-input[--break-on-existing and similar options terminates the entire download queue]' \
         '--skip-playlist-after-errors[Number of allowed failures until the rest of the playlist is skipped]' \
         {-N,--concurrent-fragments}'[Number of fragments of a dash/hlsnative video that should be downloaded concurrently (default is 1)]' \
@@ -66,8 +66,8 @@ function _yt-dlp {
         '--file-access-retries[Number of times to retry on file access error (default is 3), or "infinite"]' \
         '--fragment-retries[Number of retries for a fragment (default is 10), or "infinite" (DASH, hlsnative and ISM)]' \
         '--retry-sleep[Time to sleep between retries in seconds (optionally) prefixed by the type of retry (http (default), fragment, file_access, extractor) to apply the sleep to. EXPR can be a number, linear=START\[:END\[:STEP=1\]\] or exp=START\[:END\[:BASE=2\]\]. This option can be used multiple times to set the sleep for the different retry types, e.g. --retry-sleep linear=1::2 --retry-sleep fragment:exp=1:20]' \
-        '--skip-unavailable-fragments[Skip unavailable fragments for DASH, hlsnative and ISM downloads (default) (Alias: --no-abort-on-unavailable-fragment)]' \
-        '--abort-on-unavailable-fragment[Abort download if a fragment is unavailable (Alias: --no-skip-unavailable-fragments)]' \
+        '--skip-unavailable-fragments[Skip unavailable fragments for DASH, hlsnative and ISM downloads (default) (Alias: --no-abort-on-unavailable-fragments)]' \
+        '--abort-on-unavailable-fragments[Abort download if a fragment is unavailable (Alias: --no-skip-unavailable-fragments)]' \
         '--keep-fragments[Keep downloaded fragments on disk after downloading is finished]' \
         '--no-keep-fragments[Delete downloaded fragments after downloading is finished (default)]' \
         '--buffer-size[Size of download buffer, e.g. 1024 or 16K (default is 1024)]' \
@@ -80,7 +80,7 @@ function _yt-dlp {
         '--xattr-set-filesize[Set file xattribute ytdl.filesize with expected file size]' \
         '--hls-use-mpegts[Use the mpegts container for HLS videos; allowing some players to play the video while downloading, and reducing the chance of file corruption if download is interrupted. This is enabled by default for live streams]' \
         '--no-hls-use-mpegts[Do not use the mpegts container for HLS videos. This is default when not downloading live streams]' \
-        '--download-sections[Download only chapters whose title matches the given regular expression. Time ranges prefixed by a "*" can also be used in place of chapters to download the specified range. Needs ffmpeg. This option can be used multiple times to download multiple sections, e.g. --download-sections "*10:15-inf" --download-sections "intro"]' \
+        '--download-sections[Download only chapters that match the regular expression. A "*" prefix denotes time-range instead of chapter. Negative timestamps are calculated from the end. "*from-url" can be used to download between the "start_time" and "end_time" extracted from the URL. Needs ffmpeg. This option can be used multiple times to download multiple sections, e.g. --download-sections "*10:15-inf" --download-sections "intro"]' \
         '--downloader[Name or path of the external downloader to use (optionally) prefixed by the protocols (http, ftp, m3u8, dash, rstp, rtmp, mms) to use it for. Currently supports native, aria2c, avconv, axel, curl, ffmpeg, httpie, wget. You can use this option multiple times to set different downloaders for different protocols. E.g. --downloader aria2c --downloader "dash,m3u8:native" will use aria2c for http/ftp downloads, and the native downloader for dash/m3u8 downloads (Alias: --external-downloader)]' \
         '--downloader-args[Give these arguments to the external downloader. Specify the downloader name and the arguments separated by a colon ":". For ffmpeg, arguments can be passed to different positions using the same syntax as --postprocessor-args. You can use this option multiple times to give different arguments to different downloaders (Alias: --external-downloader-args)]' \
         {-a,--batch-file}'[File containing URLs to download ("-" for stdin), one URL per line. Lines starting with "#", ";" or "\]" are considered as comments and ignored]':file:_files \
@@ -108,14 +108,14 @@ function _yt-dlp {
         '--no-write-info-json[Do not write video metadata (default)]' \
         '--write-playlist-metafiles[Write playlist metadata in addition to the video metadata when using --write-info-json, --write-description etc. (default)]' \
         '--no-write-playlist-metafiles[Do not write playlist metadata when using --write-info-json, --write-description etc.]' \
-        '--clean-info-json[Remove some private fields such as filenames from the infojson. Note that it could still contain some personal information (default)]' \
+        '--clean-info-json[Remove some internal metadata such as filenames from the infojson (default)]' \
         '--no-clean-info-json[Write all fields to the infojson]' \
         '--write-comments[Retrieve video comments to be placed in the infojson. The comments are fetched even without this option if the extraction is known to be quick (Alias: --get-comments)]' \
         '--no-write-comments[Do not retrieve video comments unless the extraction is known to be quick (Alias: --no-get-comments)]' \
         '--load-info-json[JSON file containing the video information (created with the "--write-info-json" option)]':file:_files \
         '--cookies[Netscape formatted file to read cookies from and dump cookie jar in]':file:_files \
         '--no-cookies[Do not read/dump cookies from/to file (default)]' \
-        '--cookies-from-browser[The name of the browser to load cookies from. Currently supported browsers are: brave, chrome, chromium, edge, firefox, opera, safari, vivaldi. Optionally, the KEYRING used for decrypting Chromium cookies on Linux, the name/path of the PROFILE to load cookies from, and the CONTAINER name (if Firefox) ("none" for no container) can be given with their respective seperators. By default, all containers of the most recently accessed profile are used. Currently supported keyrings are: basictext, gnomekeyring, kwallet]':file:_files \
+        '--cookies-from-browser[The name of the browser to load cookies from. Currently supported browsers are: brave, chrome, chromium, edge, firefox, opera, safari, vivaldi. Optionally, the KEYRING used for decrypting Chromium cookies on Linux, the name/path of the PROFILE to load cookies from, and the CONTAINER name (if Firefox) ("none" for no container) can be given with their respective seperators. By default, all containers of the most recently accessed profile are used. Currently supported keyrings are: basictext, gnomekeyring, kwallet, kwallet5, kwallet6]':file:_files \
         '--no-cookies-from-browser[Do not load cookies from browser (default)]' \
         '--cache-dir[Location in the filesystem where yt-dlp can store some downloaded information (such as client ids and signatures) permanently. By default ${XDG_CACHE_HOME}/yt-dlp]':file:_files \
         '--no-cache-dir[Disable filesystem caching]' \
@@ -129,13 +129,14 @@ function _yt-dlp {
         '--write-webloc-link[Write a .webloc macOS internet shortcut]' \
         '--write-desktop-link[Write a .desktop Linux internet shortcut]' \
         {-q,--quiet}'[Activate quiet mode. If used with --verbose, print the log to stderr]' \
+        '--no-quiet[Deactivate quiet mode. (Default)]' \
         '--no-warnings[Ignore warnings]' \
         {-s,--simulate}'[Do not download the video and do not write anything to disk]' \
         '--no-simulate[Download the video even if printing/listing options are used]' \
         '--ignore-no-formats-error[Ignore "No video formats" error. Useful for extracting metadata even if the videos are not actually available for download (experimental)]' \
         '--no-ignore-no-formats-error[Throw error when no downloadable video formats are found (default)]' \
         '--skip-download[Do not download the video but write all related files (Alias: --no-download)]' \
-        {-O,--print}'[Field name or output template to print to screen, optionally prefixed with when to print it, separated by a ":". Supported values of "WHEN" are the same as that of --use-postprocessor, and "video" (default). Implies --quiet. Implies --simulate unless --no-simulate or later stages of WHEN are used. This option can be used multiple times]' \
+        {-O,--print}'[Field name or output template to print to screen, optionally prefixed with when to print it, separated by a ":". Supported values of "WHEN" are the same as that of --use-postprocessor (default: video). Implies --quiet. Implies --simulate unless --no-simulate or later stages of WHEN are used. This option can be used multiple times]' \
         '--print-to-file[Append given template to the file. The values of WHEN and TEMPLATE are same as that of --print. FILE uses the same syntax as the output template. This option can be used multiple times]':file:_files \
         {-j,--dump-json}'[Quiet, but print JSON information for each video. Simulate unless --no-simulate is used. See "OUTPUT TEMPLATE" for a description of available keys]' \
         {-J,--dump-single-json}'[Quiet, but print JSON information for each url or infojson passed. Simulate unless --no-simulate is used. If the URL refers to a playlist, the whole playlist information is dumped in a single line]' \
@@ -153,7 +154,7 @@ function _yt-dlp {
         '--legacy-server-connect[Explicitly allow HTTPS connection to servers that do not support RFC 5746 secure renegotiation]' \
         '--no-check-certificates[Suppress HTTPS certificate validation]' \
         '--prefer-insecure[Use an unencrypted connection to retrieve information about the video (Currently supported only for YouTube)]' \
-        '--add-header[Specify a custom HTTP header and its value, separated by a colon ":". You can use this option multiple times]' \
+        '--add-headers[Specify a custom HTTP header and its value, separated by a colon ":". You can use this option multiple times]' \
         '--bidi-workaround[Work around terminals that lack bidirectional text support. Requires bidiv or fribidi executable in PATH]' \
         '--sleep-requests[Number of seconds to sleep between requests during data extraction]' \
         '--sleep-interval[Number of seconds to sleep before each download. This is the minimum time to sleep when used along with --max-sleep-interval (Alias: --min-sleep-interval)]' \
@@ -186,6 +187,7 @@ function _yt-dlp {
         {-2,--twofactor}'[Two-factor authentication code]' \
         {-n,--netrc}'[Use .netrc authentication data]' \
         '--netrc-location[Location of .netrc authentication data; either the path or its containing directory. Defaults to ~/.netrc]':file:_files \
+        '--netrc-cmd[Command to execute to get the credentials for an extractor.]' \
         '--video-password[Video password (vimeo, youku)]' \
         '--ap-mso[Adobe Pass multiple-system operator (TV provider) identifier, use --ap-list-mso for a list of available MSOs]' \
         '--ap-username[Multiple-system operator account login]' \
@@ -197,7 +199,7 @@ function _yt-dlp {
         {-x,--extract-audio}'[Convert video files to audio-only files (requires ffmpeg and ffprobe)]' \
         '--audio-format[Format to convert the audio to when -x is used. (currently supported: best (default), aac, alac, flac, m4a, mp3, opus, vorbis, wav). You can specify multiple rules using similar syntax as --remux-video]' \
         '--audio-quality[Specify ffmpeg audio quality to use when converting the audio with -x. Insert a value between 0 (best) and 10 (worst) for VBR or a specific bitrate like 128K (default 5)]' \
-        '--remux-video[Remux the video into another container if necessary (currently supported: avi, flv, mkv, mov, mp4, webm, aac, aiff, alac, flac, m4a, mka, mp3, ogg, opus, vorbis, wav). If target container does not support the video/audio codec, remuxing will fail. You can specify multiple rules; e.g. "aac>m4a/mov>mp4/mkv" will remux aac to m4a, mov to mp4 and anything else to mkv]' \
+        '--remux-video[Remux the video into another container if necessary (currently supported: avi, flv, gif, mkv, mov, mp4, webm, aac, aiff, alac, flac, m4a, mka, mp3, ogg, opus, vorbis, wav). If target container does not support the video/audio codec, remuxing will fail. You can specify multiple rules; e.g. "aac>m4a/mov>mp4/mkv" will remux aac to m4a, mov to mp4 and anything else to mkv]' \
         '--recode-video[Re-encode the video into another format if necessary. The syntax and supported formats are the same as --remux-video]' \
         '--postprocessor-args[Give these arguments to the postprocessors. Specify the postprocessor/executable name and the arguments separated by a colon ":" to give the argument to the specified postprocessor/executable. Supported PP are: Merger, ModifyChapters, SplitChapters, ExtractAudio, VideoRemuxer, VideoConvertor, Metadata, EmbedSubtitle, EmbedThumbnail, SubtitlesConvertor, ThumbnailsConvertor, FixupStretched, FixupM4a, FixupM3u8, FixupTimestamp and FixupDuration. The supported executables are: AtomicParsley, FFmpeg and FFprobe. You can also specify "PP+EXE:ARGS" to give the arguments to the specified executable only when being used by the specified postprocessor. Additionally, for ffmpeg/ffprobe, "_i"/"_o" can be appended to the prefix optionally followed by a number to pass the argument before the specified input/output file, e.g. --ppa "Merger+ffmpeg_i1:-v quiet". You can use this option multiple times to give different arguments to different postprocessors. (Alias: --ppa)]' \
         {-k,--keep-video}'[Keep the intermediate video file on disk after post-processing]' \
@@ -214,13 +216,13 @@ function _yt-dlp {
         '--no-embed-chapters[Do not add chapter markers (default) (Alias: --no-add-chapters)]' \
         '--embed-info-json[Embed the infojson as an attachment to mkv/mka video files]' \
         '--no-embed-info-json[Do not embed the infojson as an attachment to the video file]' \
-        '--parse-metadata[Parse additional metadata like title/artist from other fields; see "MODIFYING METADATA" for details]' \
-        '--replace-in-metadata[Replace text in a metadata field using the given regex. This option can be used multiple times]' \
+        '--parse-metadata[Parse additional metadata like title/artist from other fields; see "MODIFYING METADATA" for details. Supported values of "WHEN" are the same as that of --use-postprocessor (default: pre_process)]' \
+        '--replace-in-metadata[Replace text in a metadata field using the given regex. This option can be used multiple times. Supported values of "WHEN" are the same as that of --use-postprocessor (default: pre_process)]' \
         '--xattrs[Write metadata to the video file'\''s xattrs (using dublin core and xdg standards)]' \
         '--concat-playlist[Concatenate videos in a playlist. One of "never", "always", or "multi_video" (default; only when the videos form a single show). All the video files must have same codecs and number of streams to be concatable. The "pl_video:" prefix can be used with "--paths" and "--output" to set the output filename for the concatenated files. See "OUTPUT TEMPLATE" for details]' \
         '--fixup[Automatically correct known faults of the file. One of never (do nothing), warn (only emit a warning), detect_or_warn (the default; fix file if we can, warn otherwise), force (try fixing even if file already exists)]' \
         '--ffmpeg-location[Location of the ffmpeg binary; either the path to the binary or its containing directory]':file:_files \
-        '--exec[Execute a command, optionally prefixed with when to execute it (after_move if unspecified), separated by a ":". Supported values of "WHEN" are the same as that of --use-postprocessor. Same syntax as the output template can be used to pass any field as arguments to the command. After download, an additional field "filepath" that contains the final path of the downloaded file is also available, and if no fields are passed, %(filepath)q is appended to the end of the command. This option can be used multiple times]' \
+        '--exec[Execute a command, optionally prefixed with when to execute it, separated by a ":". Supported values of "WHEN" are the same as that of --use-postprocessor (default: after_move). Same syntax as the output template can be used to pass any field as arguments to the command. If no fields are passed, %(filepath,_filename|)q is appended to the end of the command. This option can be used multiple times]' \
         '--no-exec[Remove any previously defined --exec]' \
         '--convert-subs[Convert the subtitles to another format (currently supported: ass, lrc, srt, vtt) (Alias: --convert-subtitles)]' \
         '--convert-thumbnails[Convert the thumbnails to another format (currently supported: jpg, png, webp). You can specify multiple rules using similar syntax as --remux-video]' \
@@ -230,7 +232,7 @@ function _yt-dlp {
         '--no-remove-chapters[Do not remove any chapters from the file (default)]' \
         '--force-keyframes-at-cuts[Force keyframes at cuts when downloading/splitting/removing sections. This is slow due to needing a re-encode, but the resulting video may have fewer artifacts around the cuts]' \
         '--no-force-keyframes-at-cuts[Do not force keyframes around the chapters when cutting/splitting (default)]' \
-        '--use-postprocessor[The (case sensitive) name of plugin postprocessors to be enabled, and (optionally) arguments to be passed to it, separated by a colon ":". ARGS are a semicolon ";" delimited list of NAME=VALUE. The "when" argument determines when the postprocessor is invoked. It can be one of "pre_process" (after video extraction), "after_filter" (after video passes filter), "before_dl" (before each video download), "post_process" (after each video download; default), "after_move" (after moving video file to it'\''s final locations), "after_video" (after downloading and processing all formats of a video), or "playlist" (at end of playlist). This option can be used multiple times to add different postprocessors]' \
+        '--use-postprocessor[The (case sensitive) name of plugin postprocessors to be enabled, and (optionally) arguments to be passed to it, separated by a colon ":". ARGS are a semicolon ";" delimited list of NAME=VALUE. The "when" argument determines when the postprocessor is invoked. It can be one of "pre_process" (after video extraction), "after_filter" (after video passes filter), "video" (after --format; before --print/--output), "before_dl" (before each video download), "post_process" (after each video download; default), "after_move" (after moving video file to it'\''s final locations), "after_video" (after downloading and processing all formats of a video), or "playlist" (at end of playlist). This option can be used multiple times to add different postprocessors]' \
         '--sponsorblock-mark[SponsorBlock categories to create chapters for, separated by commas. Available categories are sponsor, intro, outro, selfpromo, preview, filler, interaction, music_offtopic, poi_highlight, chapter, all and default (=all). You can prefix the category with a "-" to exclude it. See \[1\] for description of the categories. E.g. --sponsorblock-mark all,-preview \[1\] https://wiki.sponsor.ajay.app/w/Segment_Categories]' \
         '--sponsorblock-remove[SponsorBlock categories to be removed from the video file, separated by commas. If a category is present in both mark and remove, remove takes precedence. The syntax and available categories are the same as for --sponsorblock-mark except that "default" refers to "all,-filler" and poi_highlight, chapter are not available]' \
         '--sponsorblock-chapter-title[An output template for the title of the SponsorBlock chapters created by --sponsorblock-mark. The only available fields are start_time, end_time, category, categories, name, category_names. Defaults to "\[SponsorBlock\]: %(category_names)l"]' \
