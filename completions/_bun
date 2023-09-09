@@ -1,0 +1,199 @@
+#compdef bun
+
+# Auto-generated with h2o
+
+
+function _bun {
+    local line state
+
+    function _commands {
+        local -a commands
+        commands=(
+            'run:Run JavaScript with Bun, a package.json script, or a bin'
+            'test:Run unit tests with Bun'
+            'x:Install and execute a package bin (bunx)'
+            'repl:Start a REPL session with Bun'
+            'init:Start an empty Bun project from a blank template'
+            'create:Create a new project from a template (bun c)'
+            'install:Install dependencies for a package.json (bun i)'
+            'add:Add a dependency to package.json (bun a)'
+            'remove:Remove a dependency from package.json (bun rm)'
+            'update:Update outdated dependencies & save to package.json'
+            'link:Link an npm package globally'
+            'unlink:Globally unlink an npm package'
+            'pm:More commands for managing packages'
+            'build:Bundle TypeScript & JavaScript into a single file'
+            'upgrade:Get the latest version of Bun'
+        )
+        _describe 'command' commands
+    }
+ 
+
+    _arguments -C \
+        ': :->cmd' \
+        '*:: :->subcmd'
+
+    case $state in
+    (cmd)
+        _commands
+        ;;
+    (subcmd)
+        case $line[1] in
+        (run)
+            _bun_run
+            ;;
+
+        (test)
+            _bun_test
+            ;;
+
+        (x)
+            _bun_x
+            ;;
+
+        (repl)
+            _bun_repl
+            ;;
+
+        (init)
+            _bun_init
+            ;;
+
+        (create)
+            _bun_create
+            ;;
+
+        (install)
+            _bun_install
+            ;;
+
+        (add)
+            _bun_add
+            ;;
+
+        (remove)
+            _bun_remove
+            ;;
+
+        (update)
+            _bun_update
+            ;;
+
+        (link)
+            _bun_link
+            ;;
+
+        (unlink)
+            _bun_unlink
+            ;;
+
+        (pm)
+            _bun_pm
+            ;;
+
+        (build)
+            _bun_build
+            ;;
+
+        (upgrade)
+            _bun_upgrade
+            ;;
+
+        esac
+        ;;
+     esac
+
+}
+
+function _bun_run {
+    _arguments \
+        "*: :_files"
+
+}
+
+function _bun_test {
+    _arguments \
+        "*: :_files"
+
+}
+
+function _bun_x {
+    _arguments \
+        "*: :_files"
+
+}
+
+function _bun_repl {
+    _arguments \
+        "*: :_files"
+
+}
+
+function _bun_init {
+    _arguments \
+        "*: :_files"
+
+}
+
+function _bun_create {
+    _arguments \
+        "*: :_files"
+
+}
+
+function _bun_install {
+    _arguments \
+        "*: :_files"
+
+}
+
+function _bun_add {
+    _arguments \
+        "*: :_files"
+
+}
+
+function _bun_remove {
+    _arguments \
+        "*: :_files"
+
+}
+
+function _bun_update {
+    _arguments \
+        "*: :_files"
+
+}
+
+function _bun_link {
+    _arguments \
+        "*: :_files"
+
+}
+
+function _bun_unlink {
+    _arguments \
+        "*: :_files"
+
+}
+
+function _bun_pm {
+    _arguments \
+        "*: :_files"
+
+}
+
+function _bun_build {
+    _arguments \
+        "*: :_files"
+
+}
+
+function _bun_upgrade {
+    _arguments \
+        "*: :_files"
+
+}
+
+_bun "$@"
+
