@@ -30,6 +30,46 @@ function _bun {
  
 
     _arguments -C \
+        {-h,--help}'[Display this help and exit.]' \
+        {-b,--bun}'[Force a script or package to use Bun'\''s runtime instead of Node.js (via symlinking node)]' \
+        '--cwd[Absolute path to resolve files & entry points from. This just changes the process'\'' cwd.]' \
+        {-c,--config}'[Config file to load bun from (e.g. -c bunfig.toml]':file:_files \
+        '--extension-order[Defaults to: .tsx,.ts,.jsx,.js,.json]' \
+        '--jsx-factory[Changes the function called when compiling JSX elements using the classic JSX runtime]' \
+        '--jsx-fragment[Changes the function called when compiling JSX fragments]' \
+        '--jsx-import-source[Declares the module specifier to be used for importing the jsx and jsxs factory functions. Default: "react"]' \
+        '--jsx-runtime["automatic" (default) or "classic"]' \
+        {-r,--preload}'[Import a module before other modules are loaded]' \
+        '--main-fields[Main fields to lookup in package.json. Defaults to --target dependent]' \
+        '--no-summary[Don'\''t print a summary (when generating .bun)]' \
+        {-v,--version}'[Print version and exit]' \
+        '--revision[Print version with revision and exit]' \
+        '--tsconfig-override[Load tsconfig from path instead of cwd/tsconfig.json]' \
+        {-d,--define}'[Substitute K:V while parsing, e.g. --define process.env.NODE_ENV:"development". Values are parsed as JSON.]' \
+        {-e,--external}'[Exclude module from transpilation (can use * wildcards). ex: -e react]' \
+        {-l,--loader}'[Parse files with .ext:loader, e.g. --loader .js:jsx. Valid loaders: js, jsx, ts, tsx, json, toml, text, file, wasm, napi]' \
+        {-u,--origin}'[Rewrite import URLs to start with --origin. Default: ""]' \
+        {-p,--port}'[Port to serve bun'\''s dev server on. Default: "3000"]' \
+        '--smol[Use less memory, but run garbage collection more often]' \
+        '--minify[Minify (experimental)]' \
+        '--minify-syntax[Minify syntax and inline data (experimental)]' \
+        '--minify-whitespace[Minify whitespace (experimental)]' \
+        '--minify-identifiers[Minify identifiers]' \
+        '--no-macros[Disable macros from being executed in the bundler, transpiler and runtime]' \
+        '--target[The intended execution environment for the bundle. "browser", "bun" or "node"]' \
+        '--inspect[Activate Bun'\''s Debugger]' \
+        '--inspect-wait[Activate Bun'\''s Debugger, wait for a connection before executing]' \
+        '--inspect-brk[Activate Bun'\''s Debugger, set breakpoint on first line of code and wait]' \
+        '--hot[Enable auto reload in bun'\''s JavaScript runtime]' \
+        '--watch[Automatically restart bun'\''s JavaScript runtime on file change]' \
+        '--no-install[Disable auto install in bun'\''s JavaScript runtime]' \
+        '-i[Automatically install dependencies and use global cache in bun'\''s runtime, equivalent to --install=fallback]' \
+        '--install[Install dependencies automatically when no node_modules are present, default: "auto". "force" to ignore node_modules, fallback to install any missing]' \
+        '--prefer-offline[Skip staleness checks for packages in bun'\''s JavaScript runtime and resolve from disk]' \
+        '--prefer-latest[Use the latest matching versions of packages in bun'\''s JavaScript runtime, always checking npm]' \
+        '--silent[Don'\''t repeat the command for bun run]' \
+        '--dump-environment-variables[Dump environment variables from .env and process as JSON and quit. Useful for debugging]' \
+        '--dump-limits[Dump system limits. Useful for debugging]' \
         ': :->cmd' \
         '*:: :->subcmd'
 
@@ -143,42 +183,202 @@ function _bun_create {
 
 function _bun_install {
     _arguments \
+        {-c,--config}'[Load config (bunfig.toml)]' \
+        {-y,--yarn}'[Write a yarn.lock file (yarn v1)]' \
+        {-p,--production}'[Don'\''t install devDependencies]' \
+        '--no-save[Don'\''t save a lockfile]' \
+        '--save[Save to package.json]' \
+        '--dry-run[Don'\''t install anything]' \
+        '--lockfile[Store & load a lockfile at a specific filepath]':file:_files \
+        '--frozen-lockfile[Disallow changes to lockfile]' \
+        {-f,--force}'[Always request the latest versions from the registry & reinstall all dependencies]' \
+        '--cache-dir[Store & load cached data from a specific directory path]':file:_files \
+        '--no-cache[Ignore manifest cache entirely]' \
+        '--silent[Don'\''t log anything]' \
+        '--verbose[Excessively verbose logging]' \
+        '--no-progress[Disable the progress bar]' \
+        '--no-summary[Don'\''t print a summary]' \
+        '--no-verify[Skip verifying integrity of newly downloaded packages]' \
+        '--ignore-scripts[Skip lifecycle scripts in the project'\''s package.json (dependency scripts are never run)]' \
+        {-g,--global}'[Install globally]' \
+        '--cwd[Set a specific cwd]' \
+        '--backend[Platform-specific optimizations for installing dependencies. Possible values: "hardlink" (default), "symlink", "copyfile"]' \
+        '--link-native-bins[Link "bin" from a matching platform-specific "optionalDependencies" instead. Default: esbuild, turbo]' \
+        '--help[Print this help menu]' \
+        {-d,--dev}'[Add dependency to "devDependencies"]' \
+        {-D,--development,--optional}'[Add dependency to "optionalDependencies"]' \
+        '--exact[Add the exact version instead of the ^range]' \
         "*: :_files"
 
 }
 
 function _bun_add {
     _arguments \
+        {-c,--config}'[Load config (bunfig.toml)]' \
+        {-y,--yarn}'[Write a yarn.lock file (yarn v1)]' \
+        {-p,--production}'[Don'\''t install devDependencies]' \
+        '--no-save[Don'\''t save a lockfile]' \
+        '--save[Save to package.json]' \
+        '--dry-run[Don'\''t install anything]' \
+        '--lockfile[Store & load a lockfile at a specific filepath]':file:_files \
+        '--frozen-lockfile[Disallow changes to lockfile]' \
+        {-f,--force}'[Always request the latest versions from the registry & reinstall all dependencies]' \
+        '--cache-dir[Store & load cached data from a specific directory path]':file:_files \
+        '--no-cache[Ignore manifest cache entirely]' \
+        '--silent[Don'\''t log anything]' \
+        '--verbose[Excessively verbose logging]' \
+        '--no-progress[Disable the progress bar]' \
+        '--no-summary[Don'\''t print a summary]' \
+        '--no-verify[Skip verifying integrity of newly downloaded packages]' \
+        '--ignore-scripts[Skip lifecycle scripts in the project'\''s package.json (dependency scripts are never run)]' \
+        {-g,--global}'[Install globally]' \
+        '--cwd[Set a specific cwd]' \
+        '--backend[Platform-specific optimizations for installing dependencies. Possible values: "hardlink" (default), "symlink", "copyfile"]' \
+        '--link-native-bins[Link "bin" from a matching platform-specific "optionalDependencies" instead. Default: esbuild, turbo]' \
+        '--help[Print this help menu]' \
+        {-d,--dev}'[Add dependency to "devDependencies"]' \
+        {-D,--development,--optional}'[Add dependency to "optionalDependencies"]' \
+        '--exact[Add the exact version instead of the ^range]' \
         "*: :_files"
 
 }
 
 function _bun_remove {
     _arguments \
+        {-c,--config}'[Load config (bunfig.toml)]' \
+        {-y,--yarn}'[Write a yarn.lock file (yarn v1)]' \
+        {-p,--production}'[Don'\''t install devDependencies]' \
+        '--no-save[Don'\''t save a lockfile]' \
+        '--save[Save to package.json]' \
+        '--dry-run[Don'\''t install anything]' \
+        '--lockfile[Store & load a lockfile at a specific filepath]':file:_files \
+        '--frozen-lockfile[Disallow changes to lockfile]' \
+        {-f,--force}'[Always request the latest versions from the registry & reinstall all dependencies]' \
+        '--cache-dir[Store & load cached data from a specific directory path]':file:_files \
+        '--no-cache[Ignore manifest cache entirely]' \
+        '--silent[Don'\''t log anything]' \
+        '--verbose[Excessively verbose logging]' \
+        '--no-progress[Disable the progress bar]' \
+        '--no-summary[Don'\''t print a summary]' \
+        '--no-verify[Skip verifying integrity of newly downloaded packages]' \
+        '--ignore-scripts[Skip lifecycle scripts in the project'\''s package.json (dependency scripts are never run)]' \
+        {-g,--global}'[Install globally]' \
+        '--cwd[Set a specific cwd]' \
+        '--backend[Platform-specific optimizations for installing dependencies. Possible values: "hardlink" (default), "symlink", "copyfile"]' \
+        '--link-native-bins[Link "bin" from a matching platform-specific "optionalDependencies" instead. Default: esbuild, turbo]' \
+        '--help[Print this help menu]' \
         "*: :_files"
 
 }
 
 function _bun_update {
     _arguments \
+        {-c,--config}'[Load config (bunfig.toml)]' \
+        {-y,--yarn}'[Write a yarn.lock file (yarn v1)]' \
+        {-p,--production}'[Don'\''t install devDependencies]' \
+        '--no-save[Don'\''t save a lockfile]' \
+        '--save[Save to package.json]' \
+        '--dry-run[Don'\''t install anything]' \
+        '--lockfile[Store & load a lockfile at a specific filepath]':file:_files \
+        '--frozen-lockfile[Disallow changes to lockfile]' \
+        {-f,--force}'[Always request the latest versions from the registry & reinstall all dependencies]' \
+        '--cache-dir[Store & load cached data from a specific directory path]':file:_files \
+        '--no-cache[Ignore manifest cache entirely]' \
+        '--silent[Don'\''t log anything]' \
+        '--verbose[Excessively verbose logging]' \
+        '--no-progress[Disable the progress bar]' \
+        '--no-summary[Don'\''t print a summary]' \
+        '--no-verify[Skip verifying integrity of newly downloaded packages]' \
+        '--ignore-scripts[Skip lifecycle scripts in the project'\''s package.json (dependency scripts are never run)]' \
+        {-g,--global}'[Install globally]' \
+        '--cwd[Set a specific cwd]' \
+        '--backend[Platform-specific optimizations for installing dependencies. Possible values: "hardlink" (default), "symlink", "copyfile"]' \
+        '--link-native-bins[Link "bin" from a matching platform-specific "optionalDependencies" instead. Default: esbuild, turbo]' \
+        '--help[Print this help menu]' \
         "*: :_files"
 
 }
 
 function _bun_link {
     _arguments \
+        {-c,--config}'[Load config (bunfig.toml)]' \
+        {-y,--yarn}'[Write a yarn.lock file (yarn v1)]' \
+        {-p,--production}'[Don'\''t install devDependencies]' \
+        '--no-save[Don'\''t save a lockfile]' \
+        '--save[Save to package.json]' \
+        '--dry-run[Don'\''t install anything]' \
+        '--lockfile[Store & load a lockfile at a specific filepath]':file:_files \
+        '--frozen-lockfile[Disallow changes to lockfile]' \
+        {-f,--force}'[Always request the latest versions from the registry & reinstall all dependencies]' \
+        '--cache-dir[Store & load cached data from a specific directory path]':file:_files \
+        '--no-cache[Ignore manifest cache entirely]' \
+        '--silent[Don'\''t log anything]' \
+        '--verbose[Excessively verbose logging]' \
+        '--no-progress[Disable the progress bar]' \
+        '--no-summary[Don'\''t print a summary]' \
+        '--no-verify[Skip verifying integrity of newly downloaded packages]' \
+        '--ignore-scripts[Skip lifecycle scripts in the project'\''s package.json (dependency scripts are never run)]' \
+        {-g,--global}'[Install globally]' \
+        '--cwd[Set a specific cwd]' \
+        '--backend[Platform-specific optimizations for installing dependencies. Possible values: "hardlink" (default), "symlink", "copyfile"]' \
+        '--link-native-bins[Link "bin" from a matching platform-specific "optionalDependencies" instead. Default: esbuild, turbo]' \
+        '--help[Print this help menu]' \
         "*: :_files"
 
 }
 
 function _bun_unlink {
     _arguments \
+        {-c,--config}'[Load config (bunfig.toml)]' \
+        {-y,--yarn}'[Write a yarn.lock file (yarn v1)]' \
+        {-p,--production}'[Don'\''t install devDependencies]' \
+        '--no-save[Don'\''t save a lockfile]' \
+        '--save[Save to package.json]' \
+        '--dry-run[Don'\''t install anything]' \
+        '--lockfile[Store & load a lockfile at a specific filepath]':file:_files \
+        '--frozen-lockfile[Disallow changes to lockfile]' \
+        {-f,--force}'[Always request the latest versions from the registry & reinstall all dependencies]' \
+        '--cache-dir[Store & load cached data from a specific directory path]':file:_files \
+        '--no-cache[Ignore manifest cache entirely]' \
+        '--silent[Don'\''t log anything]' \
+        '--verbose[Excessively verbose logging]' \
+        '--no-progress[Disable the progress bar]' \
+        '--no-summary[Don'\''t print a summary]' \
+        '--no-verify[Skip verifying integrity of newly downloaded packages]' \
+        '--ignore-scripts[Skip lifecycle scripts in the project'\''s package.json (dependency scripts are never run)]' \
+        {-g,--global}'[Install globally]' \
+        '--cwd[Set a specific cwd]' \
+        '--backend[Platform-specific optimizations for installing dependencies. Possible values: "hardlink" (default), "symlink", "copyfile"]' \
+        '--link-native-bins[Link "bin" from a matching platform-specific "optionalDependencies" instead. Default: esbuild, turbo]' \
+        '--help[Print this help menu]' \
         "*: :_files"
 
 }
 
 function _bun_pm {
     _arguments \
+        {-c,--config}'[Load config (bunfig.toml)]' \
+        {-y,--yarn}'[Write a yarn.lock file (yarn v1)]' \
+        {-p,--production}'[Don'\''t install devDependencies]' \
+        '--no-save[Don'\''t save a lockfile]' \
+        '--save[Save to package.json]' \
+        '--dry-run[Don'\''t install anything]' \
+        '--lockfile[Store & load a lockfile at a specific filepath]':file:_files \
+        '--frozen-lockfile[Disallow changes to lockfile]' \
+        {-f,--force}'[Always request the latest versions from the registry & reinstall all dependencies]' \
+        '--cache-dir[Store & load cached data from a specific directory path]':file:_files \
+        '--no-cache[Ignore manifest cache entirely]' \
+        '--silent[Don'\''t log anything]' \
+        '--verbose[Excessively verbose logging]' \
+        '--no-progress[Disable the progress bar]' \
+        '--no-summary[Don'\''t print a summary]' \
+        '--no-verify[Skip verifying integrity of newly downloaded packages]' \
+        '--ignore-scripts[Skip lifecycle scripts in the project'\''s package.json (dependency scripts are never run)]' \
+        {-g,--global}'[Install globally]' \
+        '--cwd[Set a specific cwd]' \
+        '--backend[Platform-specific optimizations for installing dependencies. Possible values: "hardlink" (default), "symlink", "copyfile"]' \
+        '--link-native-bins[Link "bin" from a matching platform-specific "optionalDependencies" instead. Default: esbuild, turbo]' \
+        '--help[Print this help menu]' \
         "*: :_files"
 
 }
