@@ -10,7 +10,7 @@ function _pg_restore {
         {-l,--list}'[print summarized TOC of the archive]' \
         {-v,--verbose}'[verbose mode]' \
         {-V,--version}'[output version information, then exit]' \
-        {-?,--help}'[show this help, then exit]' \
+        {-\?,--help}'[show this help, then exit]' \
         {-a,--data-only}'[restore only the data, no schema]' \
         {-c,--clean}'[clean (drop) database objects before recreating]' \
         {-C,--create}'[create the target database]' \

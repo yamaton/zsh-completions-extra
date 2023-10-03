@@ -12,7 +12,7 @@ function _pg_checksums {
         {-P,--progress}'[show progress information]' \
         {-v,--verbose}'[output verbose messages]' \
         {-V,--version}'[output version information, then exit]' \
-        {-?,--help}'[show this help, then exit]' \
+        {-\?,--help}'[show this help, then exit]' \
         "*: :_files"
 
 }

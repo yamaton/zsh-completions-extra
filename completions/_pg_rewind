@@ -16,7 +16,7 @@ function _pg_rewind {
         '--debug[write a lot of debug messages]' \
         '--no-ensure-shutdown[do not automatically fix unclean shutdown]' \
         {-V,--version}'[output version information, then exit]' \
-        {-?,--help}'[show this help, then exit]' \
+        {-\?,--help}'[show this help, then exit]' \
         "*: :_files"
 
 }

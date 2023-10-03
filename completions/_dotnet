@@ -192,7 +192,7 @@ function _dotnet_add {
  
 
     _arguments -C \
-        {-?,-h,--help}'[Show command line help.]' \
+        {-\?,-h,--help}'[Show command line help.]' \
         ': :->cmd' \
         '*:: :->subcmd'
 
@@ -225,7 +225,7 @@ function _dotnet_add_package {
         '--package-directory[The directory to restore packages to.]':file:_files \
         '--interactive[Allows the command to stop and wait for user input or action (for example to complete authentication).]' \
         '--prerelease[Allows prerelease packages to be installed.]' \
-        {-?,-h,--help}'[Show command line help.]' \
+        {-\?,-h,--help}'[Show command line help.]' \
         "*: :_files"
 
 }
@@ -234,7 +234,7 @@ function _dotnet_add_reference {
     _arguments \
         {-f,--framework}'[Add the reference only when targeting a specific framework.]' \
         '--interactive[Allows the command to stop and wait for user input or action (for example to complete authentication).]' \
-        {-?,-h,--help}'[Show command line help.]' \
+        {-\?,-h,--help}'[Show command line help.]' \
         "*: :_files"
 
 }
@@ -257,7 +257,7 @@ function _dotnet_build {
         '--no-self-contained[Publish your application as a framework dependent application. A compatible .NET runtime must be installed on the target machine to run your application.]' \
         {-a,--arch}'[The target architecture.]' \
         '--os[The target operating system.]' \
-        {-?,-h,--help}'[Show command line help.]' \
+        {-\?,-h,--help}'[Show command line help.]' \
         "*: :_files"
 
 }
@@ -276,7 +276,7 @@ function _dotnet_build-server {
  
 
     _arguments -C \
-        {-?,-h,--help}'[Show command line help.]' \
+        {-\?,-h,--help}'[Show command line help.]' \
         ': :->cmd' \
         '*:: :->subcmd'
 
@@ -301,7 +301,7 @@ function _dotnet_build-server_shutdown {
         '--msbuild[Shut down the MSBuild build server.]' \
         '--vbcscompiler[Shut down the VB/C# compiler build server.]' \
         '--razor[Shut down the Razor build server.]' \
-        {-?,-h,--help}'[Show command line help.]' \
+        {-\?,-h,--help}'[Show command line help.]' \
         "*: :_files"
 
 }
@@ -315,7 +315,7 @@ function _dotnet_clean {
         {-v,--verbosity}'[Set the MSBuild verbosity level. Allowed values are q\[uiet\], m\[inimal\], n\[ormal\], d\[etailed\], and diag\[nostic\].]' \
         {-o,--output}'[The directory containing the build artifacts to clean.]':file:_files \
         '--nologo[Do not display the startup banner or the copyright message.]' \
-        {-?,-h,--help}'[Show command line help.]' \
+        {-\?,-h,--help}'[Show command line help.]' \
         "*: :_files"
 
 }
@@ -347,7 +347,7 @@ function _dotnet_format {
         '--binarylog[Log all project or solution load information to a binary log file.]':file:_files \
         '--report[Accepts a file path which if provided will produce a json report in the given directory.]':file:_files \
         '--version[Show version information]' \
-        {-?,-h,--help}'[Show help and usage information]' \
+        {-\?,-h,--help}'[Show help and usage information]' \
         ': :->cmd' \
         '*:: :->subcmd'
 
@@ -386,7 +386,7 @@ function _dotnet_format_whitespace {
         {-v,--verbosity}'[Set the verbosity level. Allowed values are q\[uiet\], m\[inimal\], n\[ormal\], d\[etailed\], and diag\[nostic\]]' \
         '--binarylog[Log all project or solution load information to a binary log file.]':file:_files \
         '--report[Accepts a file path which if provided will produce a json report in the given directory.]':file:_files \
-        {-?,-h,--help}'[Show help and usage information]' \
+        {-\?,-h,--help}'[Show help and usage information]' \
         "*: :_files"
 
 }
@@ -403,7 +403,7 @@ function _dotnet_format_style {
         {-v,--verbosity}'[Set the verbosity level. Allowed values are q\[uiet\], m\[inimal\], n\[ormal\], d\[etailed\], and diag\[nostic\]]' \
         '--binarylog[Log all project or solution load information to a binary log file.]':file:_files \
         '--report[Accepts a file path which if provided will produce a json report in the given directory.]':file:_files \
-        {-?,-h,--help}'[Show help and usage information]' \
+        {-\?,-h,--help}'[Show help and usage information]' \
         "*: :_files"
 
 }
@@ -420,14 +420,14 @@ function _dotnet_format_analyzers {
         {-v,--verbosity}'[Set the verbosity level. Allowed values are q\[uiet\], m\[inimal\], n\[ormal\], d\[etailed\], and diag\[nostic\]]' \
         '--binarylog[Log all project or solution load information to a binary log file.]':file:_files \
         '--report[Accepts a file path which if provided will produce a json report in the given directory.]':file:_files \
-        {-?,-h,--help}'[Show help and usage information]' \
+        {-\?,-h,--help}'[Show help and usage information]' \
         "*: :_files"
 
 }
 
 function _dotnet_help {
     _arguments \
-        {-?,-h,--help}'[Show command line help.]' \
+        {-\?,-h,--help}'[Show command line help.]' \
         "*: :_files"
 
 }
@@ -447,7 +447,7 @@ function _dotnet_list {
  
 
     _arguments -C \
-        {-?,-h,--help}'[Show command line help.]' \
+        {-\?,-h,--help}'[Show command line help.]' \
         ': :->cmd' \
         '*:: :->subcmd'
 
@@ -484,14 +484,14 @@ function _dotnet_list_package {
         '--config[The path to the NuGet config file to use. Requires the '\''--outdated'\'', '\''--deprecated'\'' or '\''--vulnerable'\'' option.]':file:_files \
         '--source[The NuGet sources to use when searching for newer packages. Requires the '\''--outdated'\'', '\''--deprecated'\'' or '\''--vulnerable'\'' option.]' \
         '--interactive[Allows the command to stop and wait for user input or action (for example to complete authentication).]' \
-        {-?,-h,--help}'[Show command line help.]' \
+        {-\?,-h,--help}'[Show command line help.]' \
         "*: :_files"
 
 }
 
 function _dotnet_list_reference {
     _arguments \
-        {-?,-h,--help}'[Show command line help.]' \
+        {-\?,-h,--help}'[Show command line help.]' \
         "*: :_files"
 
 }
@@ -1054,7 +1054,7 @@ function _dotnet_pack {
         '--version-suffix[Set the value of the $(VersionSuffix) property to use when building the project.]' \
         {-c,--configuration}'[The configuration to use for building the package. The default for most projects is '\''Debug'\''.]' \
         '--use-current-runtime[Use current runtime as the target runtime.]' \
-        {-?,-h,--help}'[Show command line help.]' \
+        {-\?,-h,--help}'[Show command line help.]' \
         "*: :_files"
 
 }
@@ -1077,7 +1077,7 @@ function _dotnet_publish {
         {-v,--verbosity}'[Set the MSBuild verbosity level. Allowed values are q\[uiet\], m\[inimal\], n\[ormal\], d\[etailed\], and diag\[nostic\].]' \
         {-a,--arch}'[The target architecture.]' \
         '--os[The target operating system.]' \
-        {-?,-h,--help}'[Show command line help.]' \
+        {-\?,-h,--help}'[Show command line help.]' \
         "*: :_files"
 
 }
@@ -1097,7 +1097,7 @@ function _dotnet_remove {
  
 
     _arguments -C \
-        {-?,-h,--help}'[Show command line help.]' \
+        {-\?,-h,--help}'[Show command line help.]' \
         ': :->cmd' \
         '*:: :->subcmd'
 
@@ -1124,7 +1124,7 @@ function _dotnet_remove {
 function _dotnet_remove_package {
     _arguments \
         '--interactive[Allows the command to stop and wait for user input or action (for example to complete authentication).]' \
-        {-?,-h,--help}'[Show command line help.]' \
+        {-\?,-h,--help}'[Show command line help.]' \
         "*: :_files"
 
 }
@@ -1132,7 +1132,7 @@ function _dotnet_remove_package {
 function _dotnet_remove_reference {
     _arguments \
         {-f,--framework}'[Remove the reference only when targeting a specific framework.]' \
-        {-?,-h,--help}'[Show command line help.]' \
+        {-\?,-h,--help}'[Show command line help.]' \
         "*: :_files"
 
 }
@@ -1155,7 +1155,7 @@ function _dotnet_restore {
         '--locked-mode[Don'\''t allow updating project lock file.]' \
         '--lock-file-path[Output location where project lock file is written. By default, this is '\''PROJECT_ROOT\packages.lock.json'\''.]':file:_files \
         '--force-evaluate[Forces restore to reevaluate all dependencies even if a lock file already exists.]' \
-        {-?,-h,--help}'[Show command line help.]' \
+        {-\?,-h,--help}'[Show command line help.]' \
         "*: :_files"
 
 }
@@ -1177,7 +1177,7 @@ function _dotnet_run {
         {-v,--verbosity}'[Set the MSBuild verbosity level. Allowed values are q\[uiet\], m\[inimal\], n\[ormal\], d\[etailed\], and diag\[nostic\].]' \
         {-a,--arch}'[The target architecture.]' \
         '--os[The target operating system.]' \
-        {-?,-h,--help}'[Show command line help.]' \
+        {-\?,-h,--help}'[Show command line help.]' \
         "*: :_files"
 
 }
@@ -1196,7 +1196,7 @@ function _dotnet_sdk {
  
 
     _arguments -C \
-        {-?,-h,--help}'[Show command line help.]' \
+        {-\?,-h,--help}'[Show command line help.]' \
         ': :->cmd' \
         '*:: :->subcmd'
 
@@ -1218,7 +1218,7 @@ function _dotnet_sdk {
 
 function _dotnet_sdk_check {
     _arguments \
-        {-?,-h,--help}'[Show command line help.]' \
+        {-\?,-h,--help}'[Show command line help.]' \
         "*: :_files"
 
 }
@@ -1239,7 +1239,7 @@ function _dotnet_sln {
  
 
     _arguments -C \
-        {-?,-h,--help}'[Show command line help.]' \
+        {-\?,-h,--help}'[Show command line help.]' \
         ': :->cmd' \
         '*:: :->subcmd'
 
@@ -1271,21 +1271,21 @@ function _dotnet_sln_add {
     _arguments \
         '--in-root[Place project in root of the solution, rather than creating a solution folder.]' \
         {-s,--solution-folder}'[The destination solution folder path to add the]' \
-        {-?,-h,--help}'[Show command line help.]' \
+        {-\?,-h,--help}'[Show command line help.]' \
         "*: :_files"
 
 }
 
 function _dotnet_sln_list {
     _arguments \
-        {-?,-h,--help}'[Show command line help.]' \
+        {-\?,-h,--help}'[Show command line help.]' \
         "*: :_files"
 
 }
 
 function _dotnet_sln_remove {
     _arguments \
-        {-?,-h,--help}'[Show command line help.]' \
+        {-\?,-h,--help}'[Show command line help.]' \
         "*: :_files"
 
 }
@@ -1302,7 +1302,7 @@ function _dotnet_store {
         {-r,--runtime}'[The target runtime to store packages for.]' \
         {-v,--verbosity}'[Set the MSBuild verbosity level. Allowed values are q\[uiet\], m\[inimal\], n\[ormal\], d\[etailed\], and diag\[nostic\].]' \
         '--use-current-runtime[Use current runtime as the target runtime.]' \
-        {-?,-h,--help}'[Show command line help.]' \
+        {-\?,-h,--help}'[Show command line help.]' \
         "*: :_files"
 
 }
@@ -1336,7 +1336,7 @@ function _dotnet_test {
         {-v,--verbosity}'[Set the MSBuild verbosity level. Allowed values are q\[uiet\], m\[inimal\], n\[ormal\], d\[etailed\], and diag\[nostic\].]' \
         '--arch[The target architecture.]' \
         '--os[The target operating system.]' \
-        {-?,-h,--help}'[Show command line help.]' \
+        {-\?,-h,--help}'[Show command line help.]' \
         "*: :_files"
 
 }
@@ -1361,7 +1361,7 @@ function _dotnet_tool {
  
 
     _arguments -C \
-        {-?,-h,--help}'[Show command line help.]' \
+        {-\?,-h,--help}'[Show command line help.]' \
         ': :->cmd' \
         '*:: :->subcmd'
 
@@ -1422,7 +1422,7 @@ function _dotnet_tool_install {
         '--interactive[Allows the command to stop and wait for user input or action (for example to complete authentication).]' \
         {-v,--verbosity}'[Set the MSBuild verbosity level. Allowed values are q\[uiet\], m\[inimal\], n\[ormal\], d\[etailed\], and diag\[nostic\].]' \
         {-a,--arch}'[The target architecture.]' \
-        {-?,-h,--help}'[Show command line help.]' \
+        {-\?,-h,--help}'[Show command line help.]' \
         "*: :_files"
 
 }
@@ -1433,7 +1433,7 @@ function _dotnet_tool_uninstall {
         '--local[Uninstall the tool and remove it from the local tool manifest.]' \
         '--tool-path[The directory containing the tool to uninstall.]':file:_files \
         '--tool-manifest[Path to the manifest file.]':file:_files \
-        {-?,-h,--help}'[Show command line help.]' \
+        {-\?,-h,--help}'[Show command line help.]' \
         "*: :_files"
 
 }
@@ -1454,7 +1454,7 @@ function _dotnet_tool_update {
         '--no-cache[Do not cache packages and http requests.]' \
         '--interactive[Allows the command to stop and wait for user input or action (for example to complete authentication).]' \
         {-v,--verbosity}'[Set the MSBuild verbosity level. Allowed values are q\[uiet\], m\[inimal\], n\[ormal\], d\[etailed\], and diag\[nostic\].]' \
-        {-?,-h,--help}'[Show command line help.]' \
+        {-\?,-h,--help}'[Show command line help.]' \
         "*: :_files"
 
 }
@@ -1464,14 +1464,14 @@ function _dotnet_tool_list {
         {-g,--global}'[List tools installed for the current user.]' \
         '--local[List the tools installed in the local tool manifest.]' \
         '--tool-path[The directory containing the tools to list.]':file:_files \
-        {-?,-h,--help}'[Show command line help.]' \
+        {-\?,-h,--help}'[Show command line help.]' \
         "*: :_files"
 
 }
 
 function _dotnet_tool_run {
     _arguments \
-        {-?,-h,--help}'[Show command line help.]' \
+        {-\?,-h,--help}'[Show command line help.]' \
         "*: :_files"
 
 }
@@ -1482,7 +1482,7 @@ function _dotnet_tool_search {
         '--skip[The number of results to skip, for pagination.]' \
         '--take[The number of results to return, for pagination.]' \
         '--prerelease[determining whether to include pre-release packages.]' \
-        {-?,-h,--help}'[Show command line help.]' \
+        {-\?,-h,--help}'[Show command line help.]' \
         "*: :_files"
 
 }
@@ -1497,7 +1497,7 @@ function _dotnet_tool_restore {
         '--no-cache[Do not cache packages and http requests.]' \
         '--interactive[Allows the command to stop and wait for user input or action (for example to complete authentication).]' \
         {-v,--verbosity}'[Set the MSBuild verbosity level. Allowed values are q\[uiet\], m\[inimal\], n\[ormal\], d\[etailed\], and diag\[nostic\].]' \
-        {-?,-h,--help}'[Show command line help.]' \
+        {-\?,-h,--help}'[Show command line help.]' \
         "*: :_files"
 
 }
@@ -1528,7 +1528,7 @@ function _dotnet_workload {
  
 
     _arguments -C \
-        {-?,-h,--help}'[Show command line help.]' \
+        {-\?,-h,--help}'[Show command line help.]' \
         ': :->cmd' \
         '*:: :->subcmd'
 
@@ -1584,7 +1584,7 @@ function _dotnet_workload_install {
         '--no-cache[Do not cache packages and http requests.]' \
         '--interactive[Allows the command to stop and wait for user input or action (for example to complete authentication).]' \
         {-v,--verbosity}'[Set the MSBuild verbosity level. Allowed values are q\[uiet\], m\[inimal\], n\[ormal\], d\[etailed\], and diag\[nostic\].]' \
-        {-?,-h,--help}'[Show command line help.]' \
+        {-\?,-h,--help}'[Show command line help.]' \
         "*: :_files"
 
 }
@@ -1602,28 +1602,28 @@ function _dotnet_workload_update {
         '--no-cache[Do not cache packages and http requests.]' \
         '--interactive[Allows the command to stop and wait for user input or action (for example to complete authentication).]' \
         {-v,--verbosity}'[Set the MSBuild verbosity level. Allowed values are q\[uiet\], m\[inimal\], n\[ormal\], d\[etailed\], and diag\[nostic\].]' \
-        {-?,-h,--help}'[Show command line help.]' \
+        {-\?,-h,--help}'[Show command line help.]' \
         "*: :_files"
 
 }
 
 function _dotnet_workload_list {
     _arguments \
-        {-?,-h,--help}'[Show command line help.]' \
+        {-\?,-h,--help}'[Show command line help.]' \
         "*: :_files"
 
 }
 
 function _dotnet_workload_search {
     _arguments \
-        {-?,-h,--help}'[Show command line help.]' \
+        {-\?,-h,--help}'[Show command line help.]' \
         "*: :_files"
 
 }
 
 function _dotnet_workload_uninstall {
     _arguments \
-        {-?,-h,--help}'[Show command line help.]' \
+        {-\?,-h,--help}'[Show command line help.]' \
         "*: :_files"
 
 }
@@ -1637,7 +1637,7 @@ function _dotnet_workload_repair {
         '--ignore-failed-sources[Treat package source failures as warnings.]' \
         '--no-cache[Do not cache packages and http requests.]' \
         '--interactive[Allows the command to stop and wait for user input or action (for example to complete authentication).]' \
-        {-?,-h,--help}'[Show command line help.]' \
+        {-\?,-h,--help}'[Show command line help.]' \
         "*: :_files"
 
 }
@@ -1654,7 +1654,7 @@ function _dotnet_workload_restore {
         '--no-cache[Do not cache packages and http requests.]' \
         '--interactive[Allows the command to stop and wait for user input or action (for example to complete authentication).]' \
         {-v,--verbosity}'[Set the MSBuild verbosity level. Allowed values are q\[uiet\], m\[inimal\], n\[ormal\], d\[etailed\], and diag\[nostic\].]' \
-        {-?,-h,--help}'[Show command line help.]' \
+        {-\?,-h,--help}'[Show command line help.]' \
         "*: :_files"
 
 }
@@ -1718,7 +1718,7 @@ function _dotnet_user-secrets {
  
 
     _arguments -C \
-        {-?,-h,--help}'[Show help information]' \
+        {-\?,-h,--help}'[Show help information]' \
         '--version[Show version information]' \
         {-v,--verbose}'[Show verbose output]' \
         {-p,--project}'[Path to project. Defaults to searching the current directory.]' \
@@ -1761,7 +1761,7 @@ function _dotnet_user-secrets {
 
 function _dotnet_user-secrets_clear {
     _arguments \
-        {-?,-h,--help}'[Show help information]' \
+        {-\?,-h,--help}'[Show help information]' \
         {-v,--verbose}'[Show verbose output]' \
         {-p,--project}'[Path to project. Defaults to searching the current directory.]' \
         {-c,--configuration}'[The project configuration to use. Defaults to '\''Debug'\''.]' \
@@ -1772,7 +1772,7 @@ function _dotnet_user-secrets_clear {
 
 function _dotnet_user-secrets_init {
     _arguments \
-        {-?,-h,--help}'[Show help information]' \
+        {-\?,-h,--help}'[Show help information]' \
         {-v,--verbose}'[Show verbose output]' \
         {-p,--project}'[Path to project. Defaults to searching the current directory.]' \
         {-c,--configuration}'[The project configuration to use. Defaults to '\''Debug'\''.]' \
@@ -1783,7 +1783,7 @@ function _dotnet_user-secrets_init {
 
 function _dotnet_user-secrets_list {
     _arguments \
-        {-?,-h,--help}'[Show help information]' \
+        {-\?,-h,--help}'[Show help information]' \
         '--json[Use json output. JSON is wrapped by '\''//BEGIN'\'' and '\''//END'\'']' \
         {-v,--verbose}'[Show verbose output]' \
         {-p,--project}'[Path to project. Defaults to searching the current directory.]' \
@@ -1795,7 +1795,7 @@ function _dotnet_user-secrets_list {
 
 function _dotnet_user-secrets_remove {
     _arguments \
-        {-?,-h,--help}'[Show help information]' \
+        {-\?,-h,--help}'[Show help information]' \
         {-v,--verbose}'[Show verbose output]' \
         {-p,--project}'[Path to project. Defaults to searching the current directory.]' \
         {-c,--configuration}'[The project configuration to use. Defaults to '\''Debug'\''.]' \
@@ -1806,7 +1806,7 @@ function _dotnet_user-secrets_remove {
 
 function _dotnet_user-secrets_set {
     _arguments \
-        {-?,-h,--help}'[Show help information]' \
+        {-\?,-h,--help}'[Show help information]' \
         {-v,--verbose}'[Show verbose output]' \
         {-p,--project}'[Path to project. Defaults to searching the current directory.]' \
         {-c,--configuration}'[The project configuration to use. Defaults to '\''Debug'\''.]' \
@@ -1823,7 +1823,7 @@ function _dotnet_watch {
         '--project[The project to watch]' \
         '--list[Lists all discovered files without starting the watcher]' \
         '--version[Show version information]' \
-        {-?,-h,--help}'[Show help and usage information]' \
+        {-\?,-h,--help}'[Show help and usage information]' \
         "*: :_files"
 
 }

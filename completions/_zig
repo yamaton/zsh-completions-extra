@@ -1362,7 +1362,7 @@ function _zig_ar {
 
 function _zig_cc {
     _arguments \
-        '-#[Print (but do not run) the commands to run for this compilation]' \
+        '-\#[Print (but do not run) the commands to run for this compilation]' \
         '--amdgpu-arch-tool[Tool used for detecting AMD GPU arch in the system.]' \
         '--analyzer-output[Static analyzer report output format (html|plist|plist-multi-file|plist-html|sarif|sarif-html|text).]' \
         '--analyze[Run the static analyzer]' \

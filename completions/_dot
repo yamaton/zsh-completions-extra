@@ -29,7 +29,7 @@ function _dot {
         '-m[Memory test (Observe no growth with top. Kill when done.)]' \
         '-m[Memory test - v iterations.]' \
         '-c[Configure plugins (Writes $prefix/lib/graphviz/config with available plugin information. Needs write privilege.)]' \
-        '-?[Print usage and exit]' \
+        '-\?[Print usage and exit]' \
         "*: :_files"
 
 }

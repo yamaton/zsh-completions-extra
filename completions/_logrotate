@@ -12,7 +12,7 @@ function _logrotate {
         {-v,--verbose}'[Display messages during rotation]' \
         {-l,--log}'[Log file or '\''syslog'\'' to log to syslog]':file:_files \
         '--version[Display version information]' \
-        {-?,--help}'[Show this help message]' \
+        {-\?,--help}'[Show this help message]' \
         '--usage[Display brief usage message]' \
         "*: :_files"
 

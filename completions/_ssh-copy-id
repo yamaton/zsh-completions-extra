@@ -8,7 +8,7 @@ function _ssh-copy-id {
         '-f[Forced mode: doesn'\''t check if the keys are present on the remote server. This means that it does not need the private key. Of course, this can result in more than one copy of the key being installed on the remote system.]' \
         '-n[do a dry-run. Instead of installing keys on the remote system simply prints the key(s) that would have been installed.]' \
         '-s[SFTP mode: usually the public keys are installed by executing commands on the remote side. With this option the user'\''s ~/.ssh/authorized_keys file will be downloaded, modified locally and uploaded with sftp. This option is useful if the server has restrictions on commands which can be used on the remote side.]' \
-        {-h,-?}'[Print Usage summary]' \
+        {-h,-\?}'[Print Usage summary]' \
         {-p,-o}'[These two options are simply passed through untouched, along with their argument, to allow one to set the port or other ssh(1) options, respectively.]' \
         "*: :_files"
 

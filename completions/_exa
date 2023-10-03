@@ -4,7 +4,7 @@
 
 function _exa {
     _arguments \
-        {-?,--help}'[show list of command-line options]' \
+        {-\?,--help}'[show list of command-line options]' \
         {-v,--version}'[show version of exa]' \
         {-1,--oneline}'[display one entry per line]' \
         {-l,--long}'[display extended file metadata as a table]' \

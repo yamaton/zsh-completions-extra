@@ -5,7 +5,7 @@
 function _ffplay {
     _arguments \
         '-L[Show license.]' \
-        {-h,-?,-help,--help}'[Show help. An optional parameter may be specified to print help about a specific item. If no argument is specified, only basic (non advanced) tool options are shown.]' \
+        {-h,-\?,-help,--help}'[Show help. An optional parameter may be specified to print help about a specific item. If no argument is specified, only basic (non advanced) tool options are shown.]' \
         '-version[Show version.]' \
         '-formats[Show available formats (including devices).]' \
         '-demuxers[Show available demuxers.]' \

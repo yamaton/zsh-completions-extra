@@ -5,7 +5,7 @@
 function _pg_controldata {
     _arguments \
         {-V,--version}'[output version information, then exit]' \
-        {-?,--help}'[show this help, then exit]' \
+        {-\?,--help}'[show this help, then exit]' \
         "*: :_files"
 
 }

@@ -22,7 +22,7 @@ function _postgres {
         {-V,--version}'[output version information, then exit]' \
         '--NAME[set run-time parameter]' \
         '--describe-config[describe configuration parameters, then exit]' \
-        {-?,--help}'[show this help, then exit]' \
+        {-\?,--help}'[show this help, then exit]' \
         '-f[forbid use of some plan types]' \
         '-n[do not reinitialize shared memory after abnormal exit]' \
         '-O[allow system table structure changes]' \

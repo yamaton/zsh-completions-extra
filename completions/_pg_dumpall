@@ -8,7 +8,7 @@ function _pg_dumpall {
         {-v,--verbose}'[verbose mode]' \
         {-V,--version}'[output version information, then exit]' \
         '--lock-wait-timeout[fail after waiting TIMEOUT for a table lock]' \
-        {-?,--help}'[show this help, then exit]' \
+        {-\?,--help}'[show this help, then exit]' \
         {-a,--data-only}'[dump only the data, not the schema]' \
         {-c,--clean}'[clean (drop) databases before recreating]' \
         {-E,--encoding}'[dump the data in encoding ENCODING]' \

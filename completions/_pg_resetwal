@@ -16,7 +16,7 @@ function _pg_resetwal {
         {-V,--version}'[output version information, then exit]' \
         {-x,--next-transaction-id}'[set next transaction ID]' \
         '--wal-segsize[size of WAL segments, in megabytes]' \
-        {-?,--help}'[show this help, then exit]' \
+        {-\?,--help}'[show this help, then exit]' \
         "*: :_files"
 
 }

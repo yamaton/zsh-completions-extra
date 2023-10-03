@@ -7,7 +7,7 @@ function _pg_isready {
         {-d,--dbname}'[database name]' \
         {-q,--quiet}'[run quietly]' \
         {-V,--version}'[output version information, then exit]' \
-        {-?,--help}'[show this help, then exit]' \
+        {-\?,--help}'[show this help, then exit]' \
         {-h,--host}'[database server host or socket directory]' \
         {-p,--port}'[database server port]' \
         {-t,--timeout}'[seconds to wait when attempting connection, 0 disables (default: 3)]' \

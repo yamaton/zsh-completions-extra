@@ -38,7 +38,7 @@ function _pg_amcheck {
         {-v,--verbose}'[write a lot of output]' \
         {-V,--version}'[output version information, then exit]' \
         '--install-missing[install missing extensions]' \
-        {-?,--help}'[show this help, then exit]' \
+        {-\?,--help}'[show this help, then exit]' \
         "*: :_files"
 
 }

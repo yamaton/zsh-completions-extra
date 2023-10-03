@@ -20,7 +20,7 @@ function _pg_waldump {
         {-w,--fullpage}'[only show records with a full page write]' \
         {-x,--xid}'[only show records with transaction ID XID]' \
         {-z,--stats}'[show statistics instead of records (optionally, show per-record statistics)]' \
-        {-?,--help}'[show this help, then exit]' \
+        {-\?,--help}'[show this help, then exit]' \
         "*: :_files"
 
 }

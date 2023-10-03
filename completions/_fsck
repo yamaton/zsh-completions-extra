@@ -16,7 +16,7 @@ function _fsck {
         '-T[do not show the title on startup]' \
         '-t[specify filesystem types to be checked; <type> is allowed to be a comma-separated list]' \
         '-V[explain what is being done]' \
-        {-?,--help}'[display this help]' \
+        {-\?,--help}'[display this help]' \
         '--version[display version]' \
         "*: :_files"
 

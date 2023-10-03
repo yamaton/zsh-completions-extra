@@ -4,7 +4,7 @@
 
 function _mysql {
     _arguments \
-        {-?,--help}'[Display this help and exit.]' \
+        {-\?,--help}'[Display this help and exit.]' \
         {-I,--help}'[Synonym for -?]' \
         '--auto-rehash[Enable automatic rehashing. One doesn'\''t need to use '\''rehash'\'' to get table and field completion, but startup and reconnecting may take a longer time. Disable with --disable-auto-rehash. (Defaults to on; use --skip-auto-rehash to disable.)]' \
         {-A,--no-auto-rehash}'[No automatic rehashing. One has to use '\''rehash'\'' to get table and field completion. This gives a quicker start of mysql and disables rehashing on reconnect.]' \
@@ -16,7 +16,7 @@ function _mysql {
         '--column-type-info[Display column type information.]' \
         {-c,--comments}'[Preserve comments. Send comments to the server. The default is --skip-comments (discard comments), enable with --comments.]' \
         {-C,--compress}'[Use compression in server/client protocol.]' \
-        {-#,--debug}'[This is a non-debug version. Catch this and exit.]' \
+        {-\#,--debug}'[This is a non-debug version. Catch this and exit.]' \
         '--debug-check[This is a non-debug version. Catch this and exit.]' \
         {-T,--debug-info}'[This is a non-debug version. Catch this and exit.]' \
         {-D,--database}'[Database to use.]' \

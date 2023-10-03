@@ -12,7 +12,7 @@ function _psql {
         {-V,--version}'[output version information, then exit]' \
         {-X,--no-psqlrc}'[do not read startup file (~/.psqlrc)]' \
         {-1,--single-transaction}'[execute as a single transaction (if non-interactive)]' \
-        {-?,--help}'[show this help, then exit]' \
+        {-\?,--help}'[show this help, then exit]' \
         '--help[list backslash commands, then exit]' \
         '--help[list special variables, then exit]' \
         {-a,--echo-all}'[echo all input from script]' \

@@ -30,7 +30,7 @@ function _pg_basebackup {
         '--no-manifest[suppress generation of backup manifest]' \
         '--no-slot[prevent creation of temporary replication slot]' \
         '--no-verify-checksums[do not verify checksums]' \
-        {-?,--help}'[show this help, then exit]' \
+        {-\?,--help}'[show this help, then exit]' \
         {-d,--dbname}'[connection string]' \
         {-h,--host}'[database server host or socket directory]' \
         {-p,--port}'[database server port number]' \

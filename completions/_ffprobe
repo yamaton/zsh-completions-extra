@@ -6,7 +6,7 @@ function _ffprobe {
     _arguments \
         '-L[show license]' \
         '-h[show help]' \
-        '-?[show help]' \
+        '-\?[show help]' \
         '-help[show help]' \
         '--help[show help]' \
         '-version[show version]' \

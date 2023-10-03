@@ -64,7 +64,7 @@ function _robot {
         {-K,--consolemarkers}'[Show markers on the console when top level keywords in a test case end. Values have same semantics as with --consolecolors.]' \
         {-P,--pythonpath}'[Additional locations (directories, ZIPs, JARs) where to search test libraries and other extensions when they are imported. Multiple paths can be given by separating them with a colon (`:`) or by using this option several times. Given path can also be a glob pattern matching multiple paths. Examples: --pythonpath libs/ --pythonpath resources/*.jar --pythonpath /opt/testlibs:mylibs.zip:yourlibs]':file:_files \
         {-A,--argumentfile}'[Text file to read more arguments from. Use special path `STDIN` to read contents from the standard input stream. File can have both options and input files or directories, one per line. Contents do not need to be escaped but spaces in the beginning and end of lines are removed. Empty lines and lines starting with a hash character (#) are ignored. Example file: | --include regression | --name Regression Tests | # This is a comment line | my_tests.robot | path/to/test/directory/ Examples: --argumentfile argfile.txt --argumentfile STDIN]':file:_files \
-        {-h,-?,--help}'[Print usage instructions.]' \
+        {-h,-\?,--help}'[Print usage instructions.]' \
         '--version[Print version information.]' \
         "*: :_files"
 

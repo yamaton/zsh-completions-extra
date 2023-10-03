@@ -46,7 +46,7 @@ function _rebot {
         {-C,--consolecolors}'[Use colors on console output or not. auto: use colors when output not redirected (default) on: always use colors ansi: like `on` but use ANSI colors also on Windows off: disable colors altogether Note that colors do not work with Jython on Windows.]' \
         {-P,--pythonpath}'[Additional locations to add to the module search path that is used when importing Python based extensions.]':file:_files \
         {-A,--argumentfile}'[Text file to read more arguments from. File can have both options and output files, one per line. Contents do not need to be escaped but spaces in the beginning and end of lines are removed. Empty lines and lines starting with a hash character (#) are ignored. Example file: | --include regression | --name Regression Tests | # This is a comment line | output.xml]':file:_files \
-        {-h,-?,--help}'[Print usage instructions.]' \
+        {-h,-\?,--help}'[Print usage instructions.]' \
         '--version[Print version information.]' \
         "*: :_files"
 

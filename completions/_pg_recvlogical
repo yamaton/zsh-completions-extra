@@ -20,7 +20,7 @@ function _pg_recvlogical {
         {-t,--two-phase}'[enable decoding of prepared transactions when creating a slot]' \
         {-v,--verbose}'[output verbose messages]' \
         {-V,--version}'[output version information, then exit]' \
-        {-?,--help}'[show this help, then exit]' \
+        {-\?,--help}'[show this help, then exit]' \
         {-d,--dbname}'[database to connect to]' \
         {-h,--host}'[database server host or socket directory]' \
         {-p,--port}'[database server port number]' \

@@ -15,7 +15,7 @@ function _pg_receivewal {
         {-v,--verbose}'[output verbose messages]' \
         {-V,--version}'[output version information, then exit]' \
         {-Z,--compress}'[compress as specified]' \
-        {-?,--help}'[show this help, then exit]' \
+        {-\?,--help}'[show this help, then exit]' \
         {-d,--dbname}'[connection string]' \
         {-h,--host}'[database server host or socket directory]' \
         {-p,--port}'[database server port number]' \

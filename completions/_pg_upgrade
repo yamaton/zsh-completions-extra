@@ -22,7 +22,7 @@ function _pg_upgrade {
         {-v,--verbose}'[enable verbose internal logging]' \
         {-V,--version}'[display version information, then exit]' \
         '--clone[clone instead of copying files to new cluster]' \
-        {-?,--help}'[show this help, then exit]' \
+        {-\?,--help}'[show this help, then exit]' \
         "*: :_files"
 
 }

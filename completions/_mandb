@@ -13,7 +13,7 @@ function _mandb {
         {-s,--no-straycats}'[don'\''t look for or add stray cats to the dbs]' \
         {-t,--test}'[check manual pages for correctness]' \
         {-u,--user-db}'[produce user databases only]' \
-        {-?,--help}'[give this help list]' \
+        {-\?,--help}'[give this help list]' \
         '--usage[give a short usage message]' \
         {-V,--version}'[print program version]' \
         "*: :_files"
