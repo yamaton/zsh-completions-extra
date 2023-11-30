@@ -1,0 +1,262 @@
+#compdef datasette
+
+# Auto-generated with h2o
+
+
+function _datasette {
+    local line state
+
+    function _commands {
+        local -a commands
+        commands=(
+            'serve:Serve up specified SQLite database files with a web UI'
+            'inspect:Generate JSON summary of provided database files'
+            'install:Install plugins and packages from PyPI into the same...'
+            'package:Package SQLite files into a Datasette Docker container'
+            'plugins:List currently installed plugins'
+            'publish:Publish specified SQLite database files to the internet...'
+            'uninstall:Uninstall plugins and Python packages from the Datasette...'
+        )
+        _describe 'command' commands
+    }
+ 
+
+    _arguments -C \
+        '--version[Show the version and exit.]' \
+        '--help[Show this message and exit.]' \
+        ': :->cmd' \
+        '*:: :->subcmd'
+
+    case $state in
+    (cmd)
+        _commands
+        ;;
+    (subcmd)
+        case $line[1] in
+        (serve)
+            _datasette_serve
+            ;;
+
+        (inspect)
+            _datasette_inspect
+            ;;
+
+        (install)
+            _datasette_install
+            ;;
+
+        (package)
+            _datasette_package
+            ;;
+
+        (plugins)
+            _datasette_plugins
+            ;;
+
+        (publish)
+            _datasette_publish
+            ;;
+
+        (uninstall)
+            _datasette_uninstall
+            ;;
+
+        esac
+        ;;
+     esac
+
+}
+
+function _datasette_serve {
+    _arguments \
+        {-i,--immutable}'[Database files to open in immutable mode]':file:_files \
+        {-h,--host}'[Host for server. Defaults to 127.0.0.1 which means only connections from the local machine will be allowed. Use 0.0.0.0 to listen to all IPs and allow access from other machines.]' \
+        {-p,--port}'[Port for server, defaults to 8001. Use -p 0 to automatically assign an available port. \[0<=x<=65535\]]' \
+        '--uds[Bind to a Unix domain socket]' \
+        '--reload[Automatically reload if code or metadata change detected - useful for development]' \
+        '--cors[Enable CORS by serving Access-Control-AllowOrigin: *]' \
+        '--inspect-file[Path to JSON file created using "datasette inspect"]' \
+        {-m,--metadata}'[Path to JSON/YAML file containing license/source metadata]':file:_files \
+        '--template-dir[Path to directory containing custom templates]':file:_files \
+        '--plugins-dir[Path to directory containing custom plugins]':file:_files \
+        '--static[Serve static files from this directory at /MOUNT/...]':file:_files \
+        '--memory[Make /_memory database available]' \
+        '--config[Deprecated: set config option using configname:value. Use --setting instead.]' \
+        '--setting[Setting, see docs.datasette.io/en/stable/settings.html]' \
+        '--secret[Secret used for signing secure values, such as signed cookies]' \
+        '--root[Output URL that sets a cookie authenticating the root user]' \
+        '--get[Run an HTTP GET request against this path, print results and exit]' \
+        '--version-note[Additional note to show on /-/versions]' \
+        '--help-settings[Show available settings]' \
+        '--pdb[Launch debugger on any errors]' \
+        {-o,--open}'[Open Datasette in your web browser]' \
+        '--create[Create database files if they do not exist]' \
+        '--crossdb[Enable cross-database joins using the /_memory database]' \
+        '--nolock[Ignore locking, open locked files in readonly mode]' \
+        '--ssl-keyfile[SSL key file]' \
+        '--ssl-certfile[SSL certificate file]' \
+        '--help[Show this message and exit.]' \
+        "*: :_files"
+
+}
+
+function _datasette_inspect {
+    _arguments \
+        '--help[Show this message and exit.]' \
+        "*: :_files"
+
+}
+
+function _datasette_install {
+    _arguments \
+        {-U,--upgrade}'[Upgrade packages to latest version]' \
+        '--help[Show this message and exit.]' \
+        "*: :_files"
+
+}
+
+function _datasette_package {
+    _arguments \
+        {-t,--tag}'[Name for the resulting Docker container, can optionally use name:tag format]' \
+        {-m,--metadata}'[Path to JSON/YAML file containing metadata to publish]':file:_files \
+        '--extra-options[Extra options to pass to datasette serve]' \
+        '--branch[Install datasette from a GitHub branch e.g. main]' \
+        '--template-dir[Path to directory containing custom templates]':file:_files \
+        '--plugins-dir[Path to directory containing custom plugins]':file:_files \
+        '--static[Serve static files from this directory at /MOUNT/...]':file:_files \
+        '--install[Additional packages (e.g. plugins) to install]' \
+        '--spatialite[Enable SpatialLite extension]' \
+        '--version-note[Additional note to show on /-/versions]' \
+        '--secret[Secret used for signing secure values, such as signed cookies]' \
+        {-p,--port}'[Port to run the server on, defaults to 8001 \[1<=x<=65535\]]' \
+        '--title[Title for metadata]' \
+        '--license[License label for metadata]' \
+        '--license_url[License URL for metadata]' \
+        '--source[Source label for metadata]' \
+        '--source_url[Source URL for metadata]' \
+        '--about[About label for metadata]' \
+        '--about_url[About URL for metadata]' \
+        '--help[Show this message and exit.]' \
+        "*: :_files"
+
+}
+
+function _datasette_plugins {
+    _arguments \
+        '--all[Include built-in default plugins]' \
+        '--plugins-dir[Path to directory containing custom plugins]':file:_files \
+        '--help[Show this message and exit.]' \
+        "*: :_files"
+
+}
+
+
+function _datasette_publish {
+    local line state
+
+    function _commands {
+        local -a commands
+        commands=(
+            'cloudrun:Publish databases to Datasette running on Cloud Run'
+            'heroku:Publish databases to Datasette running on Heroku'
+        )
+        _describe 'command' commands
+    }
+ 
+
+    _arguments -C \
+        '--help[Show this message and exit.]' \
+        ': :->cmd' \
+        '*:: :->subcmd'
+
+    case $state in
+    (cmd)
+        _commands
+        ;;
+    (subcmd)
+        case $line[1] in
+        (cloudrun)
+            _datasette_publish_cloudrun
+            ;;
+
+        (heroku)
+            _datasette_publish_heroku
+            ;;
+
+        esac
+        ;;
+     esac
+
+}
+
+function _datasette_publish_cloudrun {
+    _arguments \
+        {-m,--metadata}'[Path to JSON/YAML file containing metadata to publish]':file:_files \
+        '--extra-options[Extra options to pass to datasette serve]' \
+        '--branch[Install datasette from a GitHub branch e.g. main]' \
+        '--template-dir[Path to directory containing custom templates]':file:_files \
+        '--plugins-dir[Path to directory containing custom plugins]':file:_files \
+        '--static[Serve static files from this directory at /MOUNT/...]':file:_files \
+        '--install[Additional packages (e.g. plugins) to install]' \
+        '--plugin-secret[Secrets to pass to plugins, e.g. --pluginsecret datasette-auth-github client_id xxx]' \
+        '--version-note[Additional note to show on /-/versions]' \
+        '--secret[Secret used for signing secure values, such as signed cookies]' \
+        '--title[Title for metadata]' \
+        '--license[License label for metadata]' \
+        '--license_url[License URL for metadata]' \
+        '--source[Source label for metadata]' \
+        '--source_url[Source URL for metadata]' \
+        '--about[About label for metadata]' \
+        '--about_url[About URL for metadata]' \
+        {-n,--name}'[Application name to use when building]' \
+        '--service[Cloud Run service to deploy (or over-write)]' \
+        '--spatialite[Enable SpatialLite extension]' \
+        '--show-files[Output the generated Dockerfile and metadata.json]' \
+        '--memory[Memory to allocate in Cloud Run, e.g. 1Gi]' \
+        '--cpu[Number of vCPUs to allocate in Cloud Run]' \
+        '--timeout[Build timeout in seconds]' \
+        '--apt-get-install[Additional packages to apt-get install]' \
+        '--max-instances[Maximum Cloud Run instances]' \
+        '--min-instances[Minimum Cloud Run instances]' \
+        '--help[Show this message and exit.]' \
+        "*: :_files"
+
+}
+
+function _datasette_publish_heroku {
+    _arguments \
+        {-m,--metadata}'[Path to JSON/YAML file containing metadata to publish]':file:_files \
+        '--extra-options[Extra options to pass to datasette serve]' \
+        '--branch[Install datasette from a GitHub branch e.g. main]' \
+        '--template-dir[Path to directory containing custom templates]':file:_files \
+        '--plugins-dir[Path to directory containing custom plugins]':file:_files \
+        '--static[Serve static files from this directory at /MOUNT/...]':file:_files \
+        '--install[Additional packages (e.g. plugins) to install]' \
+        '--plugin-secret[Secrets to pass to plugins, e.g. --pluginsecret datasette-auth-github client_id xxx]' \
+        '--version-note[Additional note to show on /-/versions]' \
+        '--secret[Secret used for signing secure values, such as signed cookies]' \
+        '--title[Title for metadata]' \
+        '--license[License label for metadata]' \
+        '--license_url[License URL for metadata]' \
+        '--source[Source label for metadata]' \
+        '--source_url[Source URL for metadata]' \
+        '--about[About label for metadata]' \
+        '--about_url[About URL for metadata]' \
+        {-n,--name}'[Application name to use when deploying]' \
+        '--tar[--tar option to pass to Heroku, e.g.   --tar=/usr/local/bin/gtar]' \
+        '--generate-dir[Output generated application files and stop without deploying]':file:_files \
+        '--help[Show this message and exit.]' \
+        "*: :_files"
+
+}
+
+function _datasette_uninstall {
+    _arguments \
+        {-y,--yes}'[Don'\''t ask for confirmation]' \
+        '--help[Show this message and exit.]' \
+        "*: :_files"
+
+}
+
+_datasette "$@"
+
