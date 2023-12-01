@@ -1,0 +1,39 @@
+#compdef nix-shell
+
+# Auto-generated with h2o
+
+function _nix-shell {
+    _arguments \
+        '--command[In the environment of the derivation, run the shell command cmd. This command is executed in an interactive shell. (Use --run to use a non-interactive shell instead.) However, a call to exit is implicitly added to the command, so the shell will exit after running the command. To prevent this, add return at the end; e.g. --command "echo Hello; return" will print Hello and then drop you into the interactive shell. This can be useful for doing any additional initialisation.]' \
+        '--run[Like --command, but executes the command in a non-interactive shell. This means (among other things) that if you hit Ctrl-C while the command is running, the shell exits.]' \
+        '--exclude[Do not build any dependencies whose store path matches the regular expression regexp. This option may be specified multiple times.]' \
+        '--pure[If this flag is specified, the environment is almost entirely cleared before the interactive shell is started, so you get an environment that more closely corresponds to the “real” Nix build. A few variables, in particular HOME, USER and DISPLAY, are retained.]' \
+        '-i[The chained script interpreter to be invoked by nix-shell. Only applicable in #!-scripts (described below).]' \
+        '--keep[When a --pure shell is started, keep the listed environment variables.]' \
+        '--help[Prints out a summary of the command syntax and exits.]' \
+        '--version[Prints out the Nix version number on standard output and exits.]' \
+        {--verbose,-v}'[Increases the level of verbosity of diagnostic messages printed on standard error. For each Nix operation, the information printed on standard output is well-defined; any diagnostic information is printed on standard error, never on standard output.]' \
+        '--quiet[Decreases the level of verbosity of diagnostic messages printed on standard error. This is the inverse option to -v / --verbose.]' \
+        '--log-format[This option can be used to change the output of the log format, with format being one of:]' \
+        {--no-build-output,-Q}'[By default, output written by builders to standard output and standard error is echoed to the Nix command’s standard error. This option suppresses this behaviour. Note that the builder’s standard output and error are always written to a log file in prefix/nix/var/log/nix.]' \
+        {--max-jobs,-j}'[Sets the maximum number of build jobs that Nix will perform in parallel to the specified number. Specify auto to use the number of CPUs in the system. The default is specified by the max-jobs configuration setting, which itself defaults to 1. A higher value is useful on SMP systems or to exploit I/O latency.]' \
+        '--cores[Sets the value of the NIX_BUILD_CORES environment variable in the invocation of builders. Builders can use this variable at their discretion to control the maximum amount of parallelism. For instance, in Nixpkgs, if the derivation attribute enableParallelBuilding is set to true, the builder passes the -jN flag to GNU Make. It defaults to the value of the cores configuration setting, if set, or 1 otherwise. The value 0 means that the builder should use all available CPU cores in the system.]' \
+        '--max-silent-time[Sets the maximum number of seconds that a builder can go without producing any data on standard output or standard error. The default is specified by the max-silent-time configuration setting. 0 means no time-out.]' \
+        '--timeout[Sets the maximum number of seconds that a builder can run. The default is specified by the timeout configuration setting. 0 means no timeout.]' \
+        {--keep-going,-k}'[Keep going in case of failed builds, to the greatest extent possible. That is, if building an input of some derivation fails, Nix will still build the other inputs, but not the derivation itself. Without this option, Nix stops if any build fails (except for builds of substitutes), possibly killing builds in progress (in case of parallel or distributed builds).]' \
+        {--keep-failed,-K}'[Specifies that in case of a build failure, the temporary directory (usually in /tmp) in which the build takes place should not be deleted. The path of the build directory is printed as an informational message.]' \
+        '--fallback[Whenever Nix attempts to build a derivation for which substitutes are known for each output path, but realising the output paths through the substitutes fails, fall back on building the derivation.]' \
+        '--readonly-mode[When this option is used, no attempt is made to open the Nix database. Most Nix operations do need database access, so those operations will fail.]' \
+        '--arg[This option is accepted by nix-env, nix-instantiate, nix-shell and nix-build. When evaluating Nix expressions, the expression evaluator will automatically try to call functions that it encounters. It can automatically call functions for which every argument has a default value (e.g., { argName ? defaultValue }: ...).]' \
+        '--argstr[This option is like --arg, only the value is not a Nix expression but a string. So instead of --arg system \"i686-linux\" (the outer quotes are to keep the shell happy) you can say --argstr system i686-linux.]' \
+        {--attr,-A}'[Select an attribute from the top-level Nix expression being evaluated. (nix-env, nix-instantiate, nix-build and nix-shell only.) The attribute path attrPath is a sequence of attribute names separated by dots. For instance, given a top-level Nix expression e, the attribute path xorg.xorgserver would cause the expression e.xorg.xorgserver to be used. See nix-env --install for some concrete examples.]':file:_files \
+        {--expr,-E}'[Interpret the command line arguments as a list of Nix expressions to be parsed and evaluated, rather than as a list of file names of Nix expressions. (nix-instantiate, nix-build and nix-shell only.)]' \
+        '-I[Add an entry to the Nix expression search path. This option may be given multiple times. Paths added through -I take precedence over NIX_PATH.]':file:_files \
+        '--option[Set the Nix configuration option name to value. This overrides settings in the Nix configuration file (see nix.conf5).]' \
+        '--repair[Fix corrupted or missing store paths by redownloading or rebuilding them. Note that this is slow because it requires computing a cryptographic hash of the contents of every path in the closure of the build. Also note the warning under nix-store --repair-path.]' \
+        "*: :_files"
+
+}
+
+_nix-shell "$@"
+
