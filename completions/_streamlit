@@ -1,0 +1,280 @@
+#compdef streamlit
+
+# Auto-generated with h2o
+
+
+function _streamlit {
+    local line state
+
+    function _commands {
+        local -a commands
+        commands=(
+            'activate:Activate Streamlit by entering your email.'
+            'cache:Manage the Streamlit cache.'
+            'config:Manage Streamlit'\''s config settings.'
+            'docs:Show help in browser.'
+            'hello:Runs the Hello World script.'
+            'help:Print this help message.'
+            'run:Run a Python script, piping stderr to Streamlit.'
+            'version:Print Streamlit'\''s version number.'
+        )
+        _describe 'command' commands
+    }
+ 
+
+    _arguments -C \
+        '--log_level[--version Show the version and exit.]' \
+        '--help[Show this message and exit.]' \
+        ': :->cmd' \
+        '*:: :->subcmd'
+
+    case $state in
+    (cmd)
+        _commands
+        ;;
+    (subcmd)
+        case $line[1] in
+        (activate)
+            _streamlit_activate
+            ;;
+
+        (cache)
+            _streamlit_cache
+            ;;
+
+        (config)
+            _streamlit_config
+            ;;
+
+        (docs)
+            _streamlit_docs
+            ;;
+
+        (hello)
+            _streamlit_hello
+            ;;
+
+        (help)
+            _streamlit_help
+            ;;
+
+        (run)
+            _streamlit_run
+            ;;
+
+        (version)
+            _streamlit_version
+            ;;
+
+        esac
+        ;;
+     esac
+
+}
+
+function _streamlit_activate {
+    _arguments \
+        '--help[Show this message and exit.]' \
+        "*: :_files"
+
+}
+
+
+function _streamlit_cache {
+    local line state
+
+    function _commands {
+        local -a commands
+        commands=(
+            'clear:Clear st.cache, st.cache_data, and st.cache_resource caches.'
+        )
+        _describe 'command' commands
+    }
+ 
+
+    _arguments -C \
+        '--help[Show this message and exit.]' \
+        ': :->cmd' \
+        '*:: :->subcmd'
+
+    case $state in
+    (cmd)
+        _commands
+        ;;
+    (subcmd)
+        case $line[1] in
+        (clear)
+            _streamlit_cache_clear
+            ;;
+
+        esac
+        ;;
+     esac
+
+}
+
+function _streamlit_cache_clear {
+    _arguments \
+        '--help[Show this message and exit.]' \
+        "*: :_files"
+
+}
+
+function _streamlit_config {
+    _arguments \
+        '--help[Show this message and exit.]' \
+        "*: :_files"
+
+}
+
+function _streamlit_docs {
+    _arguments \
+        '--help[Show this message and exit.]' \
+        "*: :_files"
+
+}
+
+function _streamlit_hello {
+    _arguments \
+        '--global.disableWatchdogWarning[By default, Streamlit checks if the]' \
+        '--global.disableWidgetStateDuplicationWarning[By default, Streamlit displays a warning]' \
+        '--global.showWarningOnDirectExecution[If True, will show a warning when you run a]' \
+        '--global.developmentMode[Are we in development mode.]' \
+        '--global.logLevel[Level of logging: '\''error'\'', '\''warning'\'',]' \
+        '--global.unitTest[Are we in a unit test? \[env var:]' \
+        '--global.suppressDeprecationWarnings[Hide deprecation warnings in the streamlit]' \
+        '--global.minCachedMessageSize[Only cache ForwardMsgs that are greater than]' \
+        '--global.maxCachedMessageAge[Expire cached ForwardMsgs whose age is]' \
+        '--global.dataFrameSerialization[DataFrame serialization.]' \
+        '--logger.level[Level of logging: '\''error'\'', '\''warning'\'',]' \
+        '--logger.messageFormat[String format for logging messages. If]' \
+        '--logger.enableRich[Controls whether uncaught app exceptions are]' \
+        '--client.caching[Whether to enable st.cache. This does]' \
+        '--client.displayEnabled[If false, makes your Streamlit script not]' \
+        '--client.showErrorDetails[Controls whether uncaught app exceptions and]' \
+        '--client.toolbarMode[Change the visibility of items in the]' \
+        '--runner.magicEnabled[Allows you to type a variable or string by]' \
+        '--runner.installTracer[Install a Python tracer to allow you]' \
+        '--runner.fixMatplotlib[Sets the MPLBACKEND environment]' \
+        '--runner.postScriptGC[Run the Python Garbage Collector after each]' \
+        '--runner.fastReruns[Handle script rerun requests immediately,]' \
+        '--runner.enforceSerializableSessionState[Raise an exception after adding]' \
+        '--runner.enumCoercion[Adjust how certain '\''options'\'' widgets like]' \
+        '--server.folderWatchBlacklist[List of folders that should not be watched]' \
+        '--server.fileWatcherType[Change the type of file watcher used by]' \
+        '--server.headless[If false, will attempt to open a browser]' \
+        '--server.runOnSave[Automatically rerun script when the file is]' \
+        '--server.allowRunOnSave[Allows users to automatically rerun when app]' \
+        '--server.address[The address where the server will listen for]' \
+        '--server.port[The port where the server will listen for]' \
+        '--server.scriptHealthCheckEnabled[Flag for enabling the script health check]' \
+        '--server.baseUrlPath[The base path for the URL where Streamlit]' \
+        '--server.enableCORS[Enables support for Cross-Origin Resource]' \
+        '--server.enableXsrfProtection[Enables support for Cross-Site Request]' \
+        '--server.maxUploadSize[Max size, in megabytes, for files uploaded]' \
+        '--server.maxMessageSize[Max size, in megabytes, of messages that can]' \
+        '--server.enableWebsocketCompression[Enables support for websocket compression.]' \
+        '--server.enableStaticServing[Enable serving files from a `static`]' \
+        '--browser.serverAddress[Internet address where users should point]' \
+        '--browser.gatherUsageStats[Whether to send usage statistics to]' \
+        '--browser.serverPort[Port where users should point their browsers]' \
+        '--server.sslCertFile[Server certificate file for connecting via]' \
+        '--server.sslKeyFile[Cryptographic key file for connecting via]' \
+        '--ui.hideTopBar[Flag to hide most of the UI elements found]' \
+        '--ui.hideSidebarNav[Flag to hide the sidebar page navigation]' \
+        '--magic.displayRootDocString[Streamlit'\''s "magic" parser typically skips]' \
+        '--magic.displayLastExprIfNoSemicolon[Make Streamlit'\''s "magic" parser always]' \
+        '--deprecation.showfileUploaderEncoding[Set to false to disable the deprecation]' \
+        '--deprecation.showImageFormat[Set to false to disable the deprecation]' \
+        '--deprecation.showPyplotGlobalUse[Set to false to disable the deprecation]' \
+        '--theme.base[The preset Streamlit theme that your custom]' \
+        '--theme.primaryColor[Primary accent color for interactive]' \
+        '--theme.backgroundColor[Background color for the main content area.]' \
+        '--theme.secondaryBackgroundColor[Background color used for the sidebar and]' \
+        '--theme.textColor[Color used for almost all text. \[env var:]' \
+        '--theme.font[Font family for all text in the app, except]' \
+        '--help[Show this message and exit.]' \
+        "*: :_files"
+
+}
+
+function _streamlit_help {
+    _arguments \
+        '--help[Show this message and exit.]' \
+        "*: :_files"
+
+}
+
+function _streamlit_run {
+    _arguments \
+        '--global.disableWatchdogWarning[By default, Streamlit checks if the]' \
+        '--global.disableWidgetStateDuplicationWarning[By default, Streamlit displays a warning]' \
+        '--global.showWarningOnDirectExecution[If True, will show a warning when you run a]' \
+        '--global.developmentMode[Are we in development mode.]' \
+        '--global.logLevel[Level of logging: '\''error'\'', '\''warning'\'',]' \
+        '--global.unitTest[Are we in a unit test? \[env var:]' \
+        '--global.suppressDeprecationWarnings[Hide deprecation warnings in the streamlit]' \
+        '--global.minCachedMessageSize[Only cache ForwardMsgs that are greater than]' \
+        '--global.maxCachedMessageAge[Expire cached ForwardMsgs whose age is]' \
+        '--global.dataFrameSerialization[DataFrame serialization.]' \
+        '--logger.level[Level of logging: '\''error'\'', '\''warning'\'',]' \
+        '--logger.messageFormat[String format for logging messages. If]' \
+        '--logger.enableRich[Controls whether uncaught app exceptions are]' \
+        '--client.caching[Whether to enable st.cache. This does]' \
+        '--client.displayEnabled[If false, makes your Streamlit script not]' \
+        '--client.showErrorDetails[Controls whether uncaught app exceptions and]' \
+        '--client.toolbarMode[Change the visibility of items in the]' \
+        '--runner.magicEnabled[Allows you to type a variable or string by]' \
+        '--runner.installTracer[Install a Python tracer to allow you]' \
+        '--runner.fixMatplotlib[Sets the MPLBACKEND environment]' \
+        '--runner.postScriptGC[Run the Python Garbage Collector after each]' \
+        '--runner.fastReruns[Handle script rerun requests immediately,]' \
+        '--runner.enforceSerializableSessionState[Raise an exception after adding]' \
+        '--runner.enumCoercion[Adjust how certain '\''options'\'' widgets like]' \
+        '--server.folderWatchBlacklist[List of folders that should not be watched]' \
+        '--server.fileWatcherType[Change the type of file watcher used by]' \
+        '--server.headless[If false, will attempt to open a browser]' \
+        '--server.runOnSave[Automatically rerun script when the file is]' \
+        '--server.allowRunOnSave[Allows users to automatically rerun when app]' \
+        '--server.address[The address where the server will listen for]' \
+        '--server.port[The port where the server will listen for]' \
+        '--server.scriptHealthCheckEnabled[Flag for enabling the script health check]' \
+        '--server.baseUrlPath[The base path for the URL where Streamlit]' \
+        '--server.enableCORS[Enables support for Cross-Origin Resource]' \
+        '--server.enableXsrfProtection[Enables support for Cross-Site Request]' \
+        '--server.maxUploadSize[Max size, in megabytes, for files uploaded]' \
+        '--server.maxMessageSize[Max size, in megabytes, of messages that can]' \
+        '--server.enableWebsocketCompression[Enables support for websocket compression.]' \
+        '--server.enableStaticServing[Enable serving files from a `static`]' \
+        '--browser.serverAddress[Internet address where users should point]' \
+        '--browser.gatherUsageStats[Whether to send usage statistics to]' \
+        '--browser.serverPort[Port where users should point their browsers]' \
+        '--server.sslCertFile[Server certificate file for connecting via]' \
+        '--server.sslKeyFile[Cryptographic key file for connecting via]' \
+        '--ui.hideTopBar[Flag to hide most of the UI elements found]' \
+        '--ui.hideSidebarNav[Flag to hide the sidebar page navigation]' \
+        '--magic.displayRootDocString[Streamlit'\''s "magic" parser typically skips]' \
+        '--magic.displayLastExprIfNoSemicolon[Make Streamlit'\''s "magic" parser always]' \
+        '--deprecation.showfileUploaderEncoding[Set to false to disable the deprecation]' \
+        '--deprecation.showImageFormat[Set to false to disable the deprecation]' \
+        '--deprecation.showPyplotGlobalUse[Set to false to disable the deprecation]' \
+        '--theme.base[The preset Streamlit theme that your custom]' \
+        '--theme.primaryColor[Primary accent color for interactive]' \
+        '--theme.backgroundColor[Background color for the main content area.]' \
+        '--theme.secondaryBackgroundColor[Background color used for the sidebar and]' \
+        '--theme.textColor[Color used for almost all text. \[env var:]' \
+        '--theme.font[Font family for all text in the app, except]' \
+        '--help[Show this message and exit.]' \
+        "*: :_files"
+
+}
+
+function _streamlit_version {
+    _arguments \
+        '--help[Show this message and exit.]' \
+        "*: :_files"
+
+}
+
+_streamlit "$@"
+
