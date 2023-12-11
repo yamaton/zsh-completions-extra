@@ -1,0 +1,3855 @@
+#compdef virsh
+
+# Auto-generated with h2o
+
+
+function _virsh {
+    local line state
+
+    function _commands {
+        local -a commands
+        commands=(
+            'attach-device:attach device from an XML file'
+            'attach-disk:attach disk device'
+            'attach-interface:attach network interface'
+            'autostart:autostart a domain'
+            'blkdeviotune:Set or query a block device I/O tuning parameters.'
+            'blkiotune:Get or set blkio parameters'
+            'blockcommit:Start a block commit operation.'
+            'blockcopy:Start a block copy operation.'
+            'blockjob:Manage active block operations'
+            'blockpull:Populate a disk from its backing image.'
+            'blockresize:Resize block device of domain.'
+            'change-media:Change media of CD or floppy drive'
+            'console:connect to the guest console'
+            'cpu-stats:show domain cpu statistics'
+            'create:create a domain from an XML file'
+            'define:define (but don'\''t start) a domain from an XML file'
+            'desc:show or set domain'\''s description or title'
+            'destroy:destroy (stop) a domain'
+            'detach-device:detach device from an XML file'
+            'detach-device-alias:detach device from an alias'
+            'detach-disk:detach disk device'
+            'detach-interface:detach network interface'
+            'domdisplay:domain display connection URI'
+            'domfsfreeze:Freeze domain'\''s mounted filesystems.'
+            'domfsthaw:Thaw domain'\''s mounted filesystems.'
+            'domfsinfo:Get information of domain'\''s mounted filesystems.'
+            'domfstrim:Invoke fstrim on domain'\''s mounted filesystems.'
+            'domhostname:print the domain'\''s hostname'
+            'domid:convert a domain name or UUID to domain id'
+            'domif-setlink:set link state of a virtual interface'
+            'domiftune:get/set parameters of a virtual interface'
+            'domjobabort:abort active domain job'
+            'domjobinfo:domain job information'
+            'domlaunchsecinfo:Get domain launch security info'
+            'domsetlaunchsecstate:Set domain launch security state'
+            'domname:convert a domain id or UUID to domain name'
+            'domrename:rename a domain'
+            'dompmsuspend:suspend a domain gracefully using power management functions'
+            'dompmwakeup:wakeup a domain from pmsuspended state'
+            'domuuid:convert a domain name or id to domain UUID'
+            'domxml-from-native:Convert native config to domain XML'
+            'domxml-to-native:Convert domain XML to native config'
+            'dump:dump the core of a domain to a file for analysis'
+            'dumpxml:domain information in XML'
+            'edit:edit XML configuration for a domain'
+            'event:Domain Events'
+            'get-user-sshkeys:list authorized SSH keys for given user (via agent)'
+            'inject-nmi:Inject NMI to the guest'
+            'iothreadinfo:view domain IOThreads'
+            'iothreadpin:control domain IOThread affinity'
+            'iothreadadd:add an IOThread to the guest domain'
+            'iothreadset:modifies an existing IOThread of the guest domain'
+            'iothreaddel:delete an IOThread from the guest domain'
+            'send-key:Send keycodes to the guest'
+            'send-process-signal:Send signals to processes'
+            'lxc-enter-namespace:LXC Guest Enter Namespace'
+            'managedsave:managed save of a domain state'
+            'managedsave-remove:Remove managed save of a domain'
+            'managedsave-edit:edit XML for a domain'\''s managed save state file'
+            'managedsave-dumpxml:Domain information of managed save state file in XML'
+            'managedsave-define:redefine the XML for a domain'\''s managed save state file'
+            'memtune:Get or set memory parameters'
+            'perf:Get or set perf event'
+            'metadata:show or set domain'\''s custom XML metadata'
+            'migrate:migrate domain to another host'
+            'migrate-setmaxdowntime:set maximum tolerable downtime'
+            'migrate-getmaxdowntime:get maximum tolerable downtime'
+            'migrate-compcache:get/set compression cache size'
+            'migrate-setspeed:Set the maximum migration bandwidth'
+            'migrate-getspeed:Get the maximum migration bandwidth'
+            'migrate-postcopy:Switch running migration from pre-copy to post-copy'
+            'numatune:Get or set numa parameters'
+            'qemu-attach:QEMU Attach'
+            'qemu-monitor-command:QEMU Monitor Command'
+            'qemu-monitor-event:QEMU Monitor Events'
+            'qemu-agent-command:QEMU Guest Agent Command'
+            'guest-agent-timeout:Set the guest agent timeout'
+            'reboot:reboot a domain'
+            'reset:reset a domain'
+            'restore:restore a domain from a saved state in a file'
+            'resume:resume a domain'
+            'save:save a domain state to a file'
+            'save-image-define:redefine the XML for a domain'\''s saved state file'
+            'save-image-dumpxml:saved state domain information in XML'
+            'save-image-edit:edit XML for a domain'\''s saved state file'
+            'schedinfo:show/set scheduler parameters'
+            'screenshot:take a screenshot of a current domain console and store it into a file'
+            'set-lifecycle-action:change lifecycle actions'
+            'set-user-sshkeys:manipulate authorized SSH keys file for given user (via agent)'
+            'set-user-password:set the user password inside the domain'
+            'setmaxmem:change maximum memory limit'
+            'setmem:change memory allocation'
+            'setvcpus:change number of virtual CPUs'
+            'shutdown:gracefully shutdown a domain'
+            'start:start a (previously defined) inactive domain'
+            'suspend:suspend a domain'
+            'ttyconsole:tty console'
+            'undefine:undefine a domain'
+            'update-device:update device from an XML file'
+            'update-memory-device:update memory device of a domain'
+            'vcpucount:domain vcpu counts'
+            'vcpuinfo:detailed domain vcpu information'
+            'vcpupin:control or query domain vcpu affinity'
+            'emulatorpin:control or query domain emulator affinity'
+            'vncdisplay:vnc display'
+            'guestvcpus:query or modify state of vcpu in the guest (via agent)'
+            'setvcpu:attach/detach vcpu or groups of threads'
+            'domblkthreshold:set the threshold for block-threshold event for a given block device or it'\''s backing chain element'
+            'guestinfo:query information about the guest (via agent)'
+            'domdirtyrate-calc:Calculate a vm'\''s memory dirty rate'
+            'domblkerror:Show errors on block devices'
+            'domblkinfo:domain block device size information'
+            'domblklist:list all domain blocks'
+            'domblkstat:get device block stats for a domain'
+            'domcontrol:domain control interface state'
+            'domif-getlink:get link state of a virtual interface'
+            'domifaddr:Get network interfaces'\'' addresses for a running domain'
+            'domiflist:list all domain virtual interfaces'
+            'domifstat:get network interface stats for a domain'
+            'dominfo:domain information'
+            'dommemstat:get memory statistics for a domain'
+            'domstate:domain state'
+            'domstats:get statistics about one or multiple domains'
+            'domtime:domain time'
+            'list:list domains'
+            'allocpages:Manipulate pages pool size'
+            'capabilities:capabilities'
+            'cpu-baseline:compute baseline CPU'
+            'cpu-compare:compare host CPU with a CPU described by an XML file'
+            'cpu-models:CPU models'
+            'domcapabilities:domain capabilities'
+            'freecell:NUMA free memory'
+            'freepages:NUMA free pages'
+            'hostname:print the hypervisor hostname'
+            'hypervisor-cpu-baseline:compute baseline CPU usable by a specific hypervisor'
+            'hypervisor-cpu-compare:compare a CPU with the CPU created by a hypervisor on the host'
+            'maxvcpus:connection vcpu maximum'
+            'node-memory-tune:Get or set node memory parameters'
+            'nodecpumap:node cpu map'
+            'nodecpustats:Prints cpu stats of the node.'
+            'nodeinfo:node information'
+            'nodememstats:Prints memory stats of the node.'
+            'nodesevinfo:node SEV information'
+            'nodesuspend:suspend the host node for a given time duration'
+            'sysinfo:print the hypervisor sysinfo'
+            'uri:print the hypervisor canonical URI'
+            'version:show version'
+            'checkpoint-create:Create a checkpoint from XML'
+            'checkpoint-create-as:Create a checkpoint from a set of args'
+            'checkpoint-delete:Delete a domain checkpoint'
+            'checkpoint-dumpxml:Dump XML for a domain checkpoint'
+            'checkpoint-edit:edit XML for a checkpoint'
+            'checkpoint-info:checkpoint information'
+            'checkpoint-list:List checkpoints for a domain'
+            'checkpoint-parent:Get the name of the parent of a checkpoint'
+            'iface-begin:create a snapshot of current interfaces settings, which can be later committed (iface-commit) or restored (iface-rollback)'
+            'iface-bridge:create a bridge device and attach an existing network device to it'
+            'iface-commit:commit changes made since iface-begin and free restore point'
+            'iface-define:define an inactive persistent physical host interface or modify an existing persistent one from an XML file'
+            'iface-destroy:destroy a physical host interface (disable it / "if-down")'
+            'iface-dumpxml:interface information in XML'
+            'iface-edit:edit XML configuration for a physical host interface'
+            'iface-list:list physical host interfaces'
+            'iface-mac:convert an interface name to interface MAC address'
+            'iface-name:convert an interface MAC address to interface name'
+            'iface-rollback:rollback to previous saved configuration created via iface-begin'
+            'iface-start:start a physical host interface (enable it / "if-up")'
+            'iface-unbridge:undefine a bridge device after detaching its device(s)'
+            'iface-undefine:undefine a physical host interface (remove it from configuration)'
+            'nwfilter-define:define or update a network filter from an XML file'
+            'nwfilter-dumpxml:network filter information in XML'
+            'nwfilter-edit:edit XML configuration for a network filter'
+            'nwfilter-list:list network filters'
+            'nwfilter-undefine:undefine a network filter'
+            'nwfilter-binding-create:create a network filter binding from an XML file'
+            'nwfilter-binding-delete:delete a network filter binding'
+            'nwfilter-binding-dumpxml:network filter information in XML'
+            'nwfilter-binding-list:list network filter bindings'
+            'net-autostart:autostart a network'
+            'net-create:create a network from an XML file'
+            'net-define:define an inactive persistent virtual network or modify an existing persistent one from an XML file'
+            'net-destroy:destroy (stop) a network'
+            'net-dhcp-leases:print lease info for a given network'
+            'net-dumpxml:network information in XML'
+            'net-edit:edit XML configuration for a network'
+            'net-event:Network Events'
+            'net-info:network information'
+            'net-list:list networks'
+            'net-name:convert a network UUID to network name'
+            'net-start:start a (previously defined) inactive network'
+            'net-undefine:undefine a persistent network'
+            'net-update:update parts of an existing network'\''s configuration'
+            'net-uuid:convert a network name to network UUID'
+            'net-port-list:list network ports'
+            'net-port-create:create a network port from an XML file'
+            'net-port-dumpxml:network port information in XML'
+            'net-port-delete:delete the specified network port'
+            'nodedev-create:create a device defined by an XML file on the node'
+            'nodedev-destroy:destroy (stop) a device on the node'
+            'nodedev-detach:detach node device from its device driver'
+            'nodedev-dumpxml:node device details in XML'
+            'nodedev-list:enumerate devices on this host'
+            'nodedev-reattach:reattach node device to its device driver'
+            'nodedev-reset:reset node device'
+            'nodedev-event:Node Device Events'
+            'nodedev-define:Define a device by an xml file on a node'
+            'nodedev-undefine:Undefine an inactive node device'
+            'nodedev-start:Start an inactive node device'
+            'nodedev-autostart:autostart a defined node device'
+            'nodedev-info:node device information'
+            'secret-define:define or modify a secret from an XML file'
+            'secret-dumpxml:secret attributes in XML'
+            'secret-event:Secret Events'
+            'secret-get-value:Output a secret value'
+            'secret-list:list secrets'
+            'secret-set-value:set a secret value'
+            'secret-undefine:undefine a secret'
+            'snapshot-create:Create a snapshot from XML'
+            'snapshot-create-as:Create a snapshot from a set of args'
+            'snapshot-current:Get or set the current snapshot'
+            'snapshot-delete:Delete a domain snapshot'
+            'snapshot-dumpxml:Dump XML for a domain snapshot'
+            'snapshot-edit:edit XML for a snapshot'
+            'snapshot-info:snapshot information'
+            'snapshot-list:List snapshots for a domain'
+            'snapshot-parent:Get the name of the parent of a snapshot'
+            'snapshot-revert:Revert a domain to a snapshot'
+            'backup-begin:Start a disk backup of a live domain'
+            'backup-dumpxml:Dump XML for an ongoing domain block backup job'
+            'find-storage-pool-sources-as:find potential storage pool sources'
+            'find-storage-pool-sources:discover potential storage pool sources'
+            'pool-autostart:autostart a pool'
+            'pool-build:build a pool'
+            'pool-create-as:create a pool from a set of args'
+            'pool-create:create a pool from an XML file'
+            'pool-define-as:define a pool from a set of args'
+            'pool-define:define an inactive persistent storage pool or modify an existing persistent one from an XML file'
+            'pool-delete:delete a pool'
+            'pool-destroy:destroy (stop) a pool'
+            'pool-dumpxml:pool information in XML'
+            'pool-edit:edit XML configuration for a storage pool'
+            'pool-info:storage pool information'
+            'pool-list:list pools'
+            'pool-name:convert a pool UUID to pool name'
+            'pool-refresh:refresh a pool'
+            'pool-start:start a (previously defined) inactive pool'
+            'pool-undefine:undefine an inactive pool'
+            'pool-uuid:convert a pool name to pool UUID'
+            'pool-event:Storage Pool Events'
+            'pool-capabilities:storage pool capabilities'
+            'vol-clone:clone a volume.'
+            'vol-create-as:create a volume from a set of args'
+            'vol-create:create a vol from an XML file'
+            'vol-create-from:create a vol, using another volume as input'
+            'vol-delete:delete a vol'
+            'vol-download:download volume contents to a file'
+            'vol-dumpxml:vol information in XML'
+            'vol-info:storage vol information'
+            'vol-key:returns the volume key for a given volume name or path'
+            'vol-list:list vols'
+            'vol-name:returns the volume name for a given volume key or path'
+            'vol-path:returns the volume path for a given volume name or key'
+            'vol-pool:returns the storage pool for a given volume key or path'
+            'vol-resize:resize a vol'
+            'vol-upload:upload file contents to a volume'
+            'vol-wipe:wipe a vol'
+            'cd:change the current directory'
+            'echo:echo arguments. Used for internal testing.'
+            'exit:quit this interactive terminal'
+            'help:print help'
+            'pwd:print the current directory'
+            'quit:quit this interactive terminal'
+            'connect:(re)connect to hypervisor'
+        )
+        _describe 'command' commands
+    }
+ 
+
+    _arguments -C \
+        {-c,--connect}'[hypervisor connection URI]' \
+        {-d,--debug}'[debug level \[0-4\]]' \
+        {-e,--escape}'[set escape sequence for console]' \
+        {-h,--help}'[this help]' \
+        {-k,--keepalive-interval}'[keepalive interval in seconds, 0 for disable]' \
+        {-K,--keepalive-count}'[number of possible missed keepalive messages]' \
+        {-l,--log}'[output logging to file]':file:_files \
+        {-q,--quiet}'[quiet mode]' \
+        {-r,--readonly}'[connect readonly]' \
+        {-t,--timing}'[print timing information]' \
+        '-v[short version]' \
+        '-V[long version]' \
+        '--version[version, TYPE is short or long (default short)]' \
+        ': :->cmd' \
+        '*:: :->subcmd'
+
+    case $state in
+    (cmd)
+        _commands
+        ;;
+    (subcmd)
+        case $line[1] in
+        (attach-device)
+            _virsh_attach-device
+            ;;
+
+        (attach-disk)
+            _virsh_attach-disk
+            ;;
+
+        (attach-interface)
+            _virsh_attach-interface
+            ;;
+
+        (autostart)
+            _virsh_autostart
+            ;;
+
+        (blkdeviotune)
+            _virsh_blkdeviotune
+            ;;
+
+        (blkiotune)
+            _virsh_blkiotune
+            ;;
+
+        (blockcommit)
+            _virsh_blockcommit
+            ;;
+
+        (blockcopy)
+            _virsh_blockcopy
+            ;;
+
+        (blockjob)
+            _virsh_blockjob
+            ;;
+
+        (blockpull)
+            _virsh_blockpull
+            ;;
+
+        (blockresize)
+            _virsh_blockresize
+            ;;
+
+        (change-media)
+            _virsh_change-media
+            ;;
+
+        (console)
+            _virsh_console
+            ;;
+
+        (cpu-stats)
+            _virsh_cpu-stats
+            ;;
+
+        (create)
+            _virsh_create
+            ;;
+
+        (define)
+            _virsh_define
+            ;;
+
+        (desc)
+            _virsh_desc
+            ;;
+
+        (destroy)
+            _virsh_destroy
+            ;;
+
+        (detach-device)
+            _virsh_detach-device
+            ;;
+
+        (detach-device-alias)
+            _virsh_detach-device-alias
+            ;;
+
+        (detach-disk)
+            _virsh_detach-disk
+            ;;
+
+        (detach-interface)
+            _virsh_detach-interface
+            ;;
+
+        (domdisplay)
+            _virsh_domdisplay
+            ;;
+
+        (domfsfreeze)
+            _virsh_domfsfreeze
+            ;;
+
+        (domfsthaw)
+            _virsh_domfsthaw
+            ;;
+
+        (domfsinfo)
+            _virsh_domfsinfo
+            ;;
+
+        (domfstrim)
+            _virsh_domfstrim
+            ;;
+
+        (domhostname)
+            _virsh_domhostname
+            ;;
+
+        (domid)
+            _virsh_domid
+            ;;
+
+        (domif-setlink)
+            _virsh_domif-setlink
+            ;;
+
+        (domiftune)
+            _virsh_domiftune
+            ;;
+
+        (domjobabort)
+            _virsh_domjobabort
+            ;;
+
+        (domjobinfo)
+            _virsh_domjobinfo
+            ;;
+
+        (domlaunchsecinfo)
+            _virsh_domlaunchsecinfo
+            ;;
+
+        (domsetlaunchsecstate)
+            _virsh_domsetlaunchsecstate
+            ;;
+
+        (domname)
+            _virsh_domname
+            ;;
+
+        (domrename)
+            _virsh_domrename
+            ;;
+
+        (dompmsuspend)
+            _virsh_dompmsuspend
+            ;;
+
+        (dompmwakeup)
+            _virsh_dompmwakeup
+            ;;
+
+        (domuuid)
+            _virsh_domuuid
+            ;;
+
+        (domxml-from-native)
+            _virsh_domxml-from-native
+            ;;
+
+        (domxml-to-native)
+            _virsh_domxml-to-native
+            ;;
+
+        (dump)
+            _virsh_dump
+            ;;
+
+        (dumpxml)
+            _virsh_dumpxml
+            ;;
+
+        (edit)
+            _virsh_edit
+            ;;
+
+        (event)
+            _virsh_event
+            ;;
+
+        (get-user-sshkeys)
+            _virsh_get-user-sshkeys
+            ;;
+
+        (inject-nmi)
+            _virsh_inject-nmi
+            ;;
+
+        (iothreadinfo)
+            _virsh_iothreadinfo
+            ;;
+
+        (iothreadpin)
+            _virsh_iothreadpin
+            ;;
+
+        (iothreadadd)
+            _virsh_iothreadadd
+            ;;
+
+        (iothreadset)
+            _virsh_iothreadset
+            ;;
+
+        (iothreaddel)
+            _virsh_iothreaddel
+            ;;
+
+        (send-key)
+            _virsh_send-key
+            ;;
+
+        (send-process-signal)
+            _virsh_send-process-signal
+            ;;
+
+        (lxc-enter-namespace)
+            _virsh_lxc-enter-namespace
+            ;;
+
+        (managedsave)
+            _virsh_managedsave
+            ;;
+
+        (managedsave-remove)
+            _virsh_managedsave-remove
+            ;;
+
+        (managedsave-edit)
+            _virsh_managedsave-edit
+            ;;
+
+        (managedsave-dumpxml)
+            _virsh_managedsave-dumpxml
+            ;;
+
+        (managedsave-define)
+            _virsh_managedsave-define
+            ;;
+
+        (memtune)
+            _virsh_memtune
+            ;;
+
+        (perf)
+            _virsh_perf
+            ;;
+
+        (metadata)
+            _virsh_metadata
+            ;;
+
+        (migrate)
+            _virsh_migrate
+            ;;
+
+        (migrate-setmaxdowntime)
+            _virsh_migrate-setmaxdowntime
+            ;;
+
+        (migrate-getmaxdowntime)
+            _virsh_migrate-getmaxdowntime
+            ;;
+
+        (migrate-compcache)
+            _virsh_migrate-compcache
+            ;;
+
+        (migrate-setspeed)
+            _virsh_migrate-setspeed
+            ;;
+
+        (migrate-getspeed)
+            _virsh_migrate-getspeed
+            ;;
+
+        (migrate-postcopy)
+            _virsh_migrate-postcopy
+            ;;
+
+        (numatune)
+            _virsh_numatune
+            ;;
+
+        (qemu-attach)
+            _virsh_qemu-attach
+            ;;
+
+        (qemu-monitor-command)
+            _virsh_qemu-monitor-command
+            ;;
+
+        (qemu-monitor-event)
+            _virsh_qemu-monitor-event
+            ;;
+
+        (qemu-agent-command)
+            _virsh_qemu-agent-command
+            ;;
+
+        (guest-agent-timeout)
+            _virsh_guest-agent-timeout
+            ;;
+
+        (reboot)
+            _virsh_reboot
+            ;;
+
+        (reset)
+            _virsh_reset
+            ;;
+
+        (restore)
+            _virsh_restore
+            ;;
+
+        (resume)
+            _virsh_resume
+            ;;
+
+        (save)
+            _virsh_save
+            ;;
+
+        (save-image-define)
+            _virsh_save-image-define
+            ;;
+
+        (save-image-dumpxml)
+            _virsh_save-image-dumpxml
+            ;;
+
+        (save-image-edit)
+            _virsh_save-image-edit
+            ;;
+
+        (schedinfo)
+            _virsh_schedinfo
+            ;;
+
+        (screenshot)
+            _virsh_screenshot
+            ;;
+
+        (set-lifecycle-action)
+            _virsh_set-lifecycle-action
+            ;;
+
+        (set-user-sshkeys)
+            _virsh_set-user-sshkeys
+            ;;
+
+        (set-user-password)
+            _virsh_set-user-password
+            ;;
+
+        (setmaxmem)
+            _virsh_setmaxmem
+            ;;
+
+        (setmem)
+            _virsh_setmem
+            ;;
+
+        (setvcpus)
+            _virsh_setvcpus
+            ;;
+
+        (shutdown)
+            _virsh_shutdown
+            ;;
+
+        (start)
+            _virsh_start
+            ;;
+
+        (suspend)
+            _virsh_suspend
+            ;;
+
+        (ttyconsole)
+            _virsh_ttyconsole
+            ;;
+
+        (undefine)
+            _virsh_undefine
+            ;;
+
+        (update-device)
+            _virsh_update-device
+            ;;
+
+        (update-memory-device)
+            _virsh_update-memory-device
+            ;;
+
+        (vcpucount)
+            _virsh_vcpucount
+            ;;
+
+        (vcpuinfo)
+            _virsh_vcpuinfo
+            ;;
+
+        (vcpupin)
+            _virsh_vcpupin
+            ;;
+
+        (emulatorpin)
+            _virsh_emulatorpin
+            ;;
+
+        (vncdisplay)
+            _virsh_vncdisplay
+            ;;
+
+        (guestvcpus)
+            _virsh_guestvcpus
+            ;;
+
+        (setvcpu)
+            _virsh_setvcpu
+            ;;
+
+        (domblkthreshold)
+            _virsh_domblkthreshold
+            ;;
+
+        (guestinfo)
+            _virsh_guestinfo
+            ;;
+
+        (domdirtyrate-calc)
+            _virsh_domdirtyrate-calc
+            ;;
+
+        (domblkerror)
+            _virsh_domblkerror
+            ;;
+
+        (domblkinfo)
+            _virsh_domblkinfo
+            ;;
+
+        (domblklist)
+            _virsh_domblklist
+            ;;
+
+        (domblkstat)
+            _virsh_domblkstat
+            ;;
+
+        (domcontrol)
+            _virsh_domcontrol
+            ;;
+
+        (domif-getlink)
+            _virsh_domif-getlink
+            ;;
+
+        (domifaddr)
+            _virsh_domifaddr
+            ;;
+
+        (domiflist)
+            _virsh_domiflist
+            ;;
+
+        (domifstat)
+            _virsh_domifstat
+            ;;
+
+        (dominfo)
+            _virsh_dominfo
+            ;;
+
+        (dommemstat)
+            _virsh_dommemstat
+            ;;
+
+        (domstate)
+            _virsh_domstate
+            ;;
+
+        (domstats)
+            _virsh_domstats
+            ;;
+
+        (domtime)
+            _virsh_domtime
+            ;;
+
+        (list)
+            _virsh_list
+            ;;
+
+        (allocpages)
+            _virsh_allocpages
+            ;;
+
+        (capabilities)
+            _virsh_capabilities
+            ;;
+
+        (cpu-baseline)
+            _virsh_cpu-baseline
+            ;;
+
+        (cpu-compare)
+            _virsh_cpu-compare
+            ;;
+
+        (cpu-models)
+            _virsh_cpu-models
+            ;;
+
+        (domcapabilities)
+            _virsh_domcapabilities
+            ;;
+
+        (freecell)
+            _virsh_freecell
+            ;;
+
+        (freepages)
+            _virsh_freepages
+            ;;
+
+        (hostname)
+            _virsh_hostname
+            ;;
+
+        (hypervisor-cpu-baseline)
+            _virsh_hypervisor-cpu-baseline
+            ;;
+
+        (hypervisor-cpu-compare)
+            _virsh_hypervisor-cpu-compare
+            ;;
+
+        (maxvcpus)
+            _virsh_maxvcpus
+            ;;
+
+        (node-memory-tune)
+            _virsh_node-memory-tune
+            ;;
+
+        (nodecpumap)
+            _virsh_nodecpumap
+            ;;
+
+        (nodecpustats)
+            _virsh_nodecpustats
+            ;;
+
+        (nodeinfo)
+            _virsh_nodeinfo
+            ;;
+
+        (nodememstats)
+            _virsh_nodememstats
+            ;;
+
+        (nodesevinfo)
+            _virsh_nodesevinfo
+            ;;
+
+        (nodesuspend)
+            _virsh_nodesuspend
+            ;;
+
+        (sysinfo)
+            _virsh_sysinfo
+            ;;
+
+        (uri)
+            _virsh_uri
+            ;;
+
+        (version)
+            _virsh_version
+            ;;
+
+        (checkpoint-create)
+            _virsh_checkpoint-create
+            ;;
+
+        (checkpoint-create-as)
+            _virsh_checkpoint-create-as
+            ;;
+
+        (checkpoint-delete)
+            _virsh_checkpoint-delete
+            ;;
+
+        (checkpoint-dumpxml)
+            _virsh_checkpoint-dumpxml
+            ;;
+
+        (checkpoint-edit)
+            _virsh_checkpoint-edit
+            ;;
+
+        (checkpoint-info)
+            _virsh_checkpoint-info
+            ;;
+
+        (checkpoint-list)
+            _virsh_checkpoint-list
+            ;;
+
+        (checkpoint-parent)
+            _virsh_checkpoint-parent
+            ;;
+
+        (iface-begin)
+            _virsh_iface-begin
+            ;;
+
+        (iface-bridge)
+            _virsh_iface-bridge
+            ;;
+
+        (iface-commit)
+            _virsh_iface-commit
+            ;;
+
+        (iface-define)
+            _virsh_iface-define
+            ;;
+
+        (iface-destroy)
+            _virsh_iface-destroy
+            ;;
+
+        (iface-dumpxml)
+            _virsh_iface-dumpxml
+            ;;
+
+        (iface-edit)
+            _virsh_iface-edit
+            ;;
+
+        (iface-list)
+            _virsh_iface-list
+            ;;
+
+        (iface-mac)
+            _virsh_iface-mac
+            ;;
+
+        (iface-name)
+            _virsh_iface-name
+            ;;
+
+        (iface-rollback)
+            _virsh_iface-rollback
+            ;;
+
+        (iface-start)
+            _virsh_iface-start
+            ;;
+
+        (iface-unbridge)
+            _virsh_iface-unbridge
+            ;;
+
+        (iface-undefine)
+            _virsh_iface-undefine
+            ;;
+
+        (nwfilter-define)
+            _virsh_nwfilter-define
+            ;;
+
+        (nwfilter-dumpxml)
+            _virsh_nwfilter-dumpxml
+            ;;
+
+        (nwfilter-edit)
+            _virsh_nwfilter-edit
+            ;;
+
+        (nwfilter-list)
+            _virsh_nwfilter-list
+            ;;
+
+        (nwfilter-undefine)
+            _virsh_nwfilter-undefine
+            ;;
+
+        (nwfilter-binding-create)
+            _virsh_nwfilter-binding-create
+            ;;
+
+        (nwfilter-binding-delete)
+            _virsh_nwfilter-binding-delete
+            ;;
+
+        (nwfilter-binding-dumpxml)
+            _virsh_nwfilter-binding-dumpxml
+            ;;
+
+        (nwfilter-binding-list)
+            _virsh_nwfilter-binding-list
+            ;;
+
+        (net-autostart)
+            _virsh_net-autostart
+            ;;
+
+        (net-create)
+            _virsh_net-create
+            ;;
+
+        (net-define)
+            _virsh_net-define
+            ;;
+
+        (net-destroy)
+            _virsh_net-destroy
+            ;;
+
+        (net-dhcp-leases)
+            _virsh_net-dhcp-leases
+            ;;
+
+        (net-dumpxml)
+            _virsh_net-dumpxml
+            ;;
+
+        (net-edit)
+            _virsh_net-edit
+            ;;
+
+        (net-event)
+            _virsh_net-event
+            ;;
+
+        (net-info)
+            _virsh_net-info
+            ;;
+
+        (net-list)
+            _virsh_net-list
+            ;;
+
+        (net-name)
+            _virsh_net-name
+            ;;
+
+        (net-start)
+            _virsh_net-start
+            ;;
+
+        (net-undefine)
+            _virsh_net-undefine
+            ;;
+
+        (net-update)
+            _virsh_net-update
+            ;;
+
+        (net-uuid)
+            _virsh_net-uuid
+            ;;
+
+        (net-port-list)
+            _virsh_net-port-list
+            ;;
+
+        (net-port-create)
+            _virsh_net-port-create
+            ;;
+
+        (net-port-dumpxml)
+            _virsh_net-port-dumpxml
+            ;;
+
+        (net-port-delete)
+            _virsh_net-port-delete
+            ;;
+
+        (nodedev-create)
+            _virsh_nodedev-create
+            ;;
+
+        (nodedev-destroy)
+            _virsh_nodedev-destroy
+            ;;
+
+        (nodedev-detach)
+            _virsh_nodedev-detach
+            ;;
+
+        (nodedev-dumpxml)
+            _virsh_nodedev-dumpxml
+            ;;
+
+        (nodedev-list)
+            _virsh_nodedev-list
+            ;;
+
+        (nodedev-reattach)
+            _virsh_nodedev-reattach
+            ;;
+
+        (nodedev-reset)
+            _virsh_nodedev-reset
+            ;;
+
+        (nodedev-event)
+            _virsh_nodedev-event
+            ;;
+
+        (nodedev-define)
+            _virsh_nodedev-define
+            ;;
+
+        (nodedev-undefine)
+            _virsh_nodedev-undefine
+            ;;
+
+        (nodedev-start)
+            _virsh_nodedev-start
+            ;;
+
+        (nodedev-autostart)
+            _virsh_nodedev-autostart
+            ;;
+
+        (nodedev-info)
+            _virsh_nodedev-info
+            ;;
+
+        (secret-define)
+            _virsh_secret-define
+            ;;
+
+        (secret-dumpxml)
+            _virsh_secret-dumpxml
+            ;;
+
+        (secret-event)
+            _virsh_secret-event
+            ;;
+
+        (secret-get-value)
+            _virsh_secret-get-value
+            ;;
+
+        (secret-list)
+            _virsh_secret-list
+            ;;
+
+        (secret-set-value)
+            _virsh_secret-set-value
+            ;;
+
+        (secret-undefine)
+            _virsh_secret-undefine
+            ;;
+
+        (snapshot-create)
+            _virsh_snapshot-create
+            ;;
+
+        (snapshot-create-as)
+            _virsh_snapshot-create-as
+            ;;
+
+        (snapshot-current)
+            _virsh_snapshot-current
+            ;;
+
+        (snapshot-delete)
+            _virsh_snapshot-delete
+            ;;
+
+        (snapshot-dumpxml)
+            _virsh_snapshot-dumpxml
+            ;;
+
+        (snapshot-edit)
+            _virsh_snapshot-edit
+            ;;
+
+        (snapshot-info)
+            _virsh_snapshot-info
+            ;;
+
+        (snapshot-list)
+            _virsh_snapshot-list
+            ;;
+
+        (snapshot-parent)
+            _virsh_snapshot-parent
+            ;;
+
+        (snapshot-revert)
+            _virsh_snapshot-revert
+            ;;
+
+        (backup-begin)
+            _virsh_backup-begin
+            ;;
+
+        (backup-dumpxml)
+            _virsh_backup-dumpxml
+            ;;
+
+        (find-storage-pool-sources-as)
+            _virsh_find-storage-pool-sources-as
+            ;;
+
+        (find-storage-pool-sources)
+            _virsh_find-storage-pool-sources
+            ;;
+
+        (pool-autostart)
+            _virsh_pool-autostart
+            ;;
+
+        (pool-build)
+            _virsh_pool-build
+            ;;
+
+        (pool-create-as)
+            _virsh_pool-create-as
+            ;;
+
+        (pool-create)
+            _virsh_pool-create
+            ;;
+
+        (pool-define-as)
+            _virsh_pool-define-as
+            ;;
+
+        (pool-define)
+            _virsh_pool-define
+            ;;
+
+        (pool-delete)
+            _virsh_pool-delete
+            ;;
+
+        (pool-destroy)
+            _virsh_pool-destroy
+            ;;
+
+        (pool-dumpxml)
+            _virsh_pool-dumpxml
+            ;;
+
+        (pool-edit)
+            _virsh_pool-edit
+            ;;
+
+        (pool-info)
+            _virsh_pool-info
+            ;;
+
+        (pool-list)
+            _virsh_pool-list
+            ;;
+
+        (pool-name)
+            _virsh_pool-name
+            ;;
+
+        (pool-refresh)
+            _virsh_pool-refresh
+            ;;
+
+        (pool-start)
+            _virsh_pool-start
+            ;;
+
+        (pool-undefine)
+            _virsh_pool-undefine
+            ;;
+
+        (pool-uuid)
+            _virsh_pool-uuid
+            ;;
+
+        (pool-event)
+            _virsh_pool-event
+            ;;
+
+        (pool-capabilities)
+            _virsh_pool-capabilities
+            ;;
+
+        (vol-clone)
+            _virsh_vol-clone
+            ;;
+
+        (vol-create-as)
+            _virsh_vol-create-as
+            ;;
+
+        (vol-create)
+            _virsh_vol-create
+            ;;
+
+        (vol-create-from)
+            _virsh_vol-create-from
+            ;;
+
+        (vol-delete)
+            _virsh_vol-delete
+            ;;
+
+        (vol-download)
+            _virsh_vol-download
+            ;;
+
+        (vol-dumpxml)
+            _virsh_vol-dumpxml
+            ;;
+
+        (vol-info)
+            _virsh_vol-info
+            ;;
+
+        (vol-key)
+            _virsh_vol-key
+            ;;
+
+        (vol-list)
+            _virsh_vol-list
+            ;;
+
+        (vol-name)
+            _virsh_vol-name
+            ;;
+
+        (vol-path)
+            _virsh_vol-path
+            ;;
+
+        (vol-pool)
+            _virsh_vol-pool
+            ;;
+
+        (vol-resize)
+            _virsh_vol-resize
+            ;;
+
+        (vol-upload)
+            _virsh_vol-upload
+            ;;
+
+        (vol-wipe)
+            _virsh_vol-wipe
+            ;;
+
+        (cd)
+            _virsh_cd
+            ;;
+
+        (echo)
+            _virsh_echo
+            ;;
+
+        (exit)
+            _virsh_exit
+            ;;
+
+        (help)
+            _virsh_help
+            ;;
+
+        (pwd)
+            _virsh_pwd
+            ;;
+
+        (quit)
+            _virsh_quit
+            ;;
+
+        (connect)
+            _virsh_connect
+            ;;
+
+        esac
+        ;;
+     esac
+
+}
+
+function _virsh_attach-device {
+    _arguments \
+        '--persistent[make live change persistent]' \
+        '--config[affect next boot]' \
+        '--live[affect running domain]' \
+        '--current[affect current domain]' \
+        "*: :_files"
+
+}
+
+function _virsh_attach-disk {
+    _arguments \
+        '--targetbus[target bus of disk device]' \
+        '--driver[driver of disk device]' \
+        '--subdriver[subdriver of disk device]' \
+        '--iothread[IOThread to be used by supported device]' \
+        '--cache[cache mode of disk device]' \
+        '--io[io policy of disk device]' \
+        '--type[target device type]' \
+        '--mode[mode of device reading and writing]' \
+        '--sourcetype[type of source (block|file|network)]' \
+        '--serial[serial of disk device]' \
+        '--wwn[wwn of disk device]' \
+        '--alias[custom alias name of disk device]' \
+        '--rawio[needs rawio capability]' \
+        '--address[address of disk device]' \
+        '--multifunction[use multifunction pci under specified address]' \
+        '--print-xml[print XML document rather than attach the disk]' \
+        '--source-protocol[protocol used by disk device source]' \
+        '--source-host-name[host name for source of disk device]' \
+        '--source-host-transport[host transport for source of disk device]' \
+        '--source-host-socket[host socket for source of disk device]' \
+        '--persistent[make live change persistent]' \
+        '--config[affect next boot]' \
+        '--live[affect running domain]' \
+        '--current[affect current domain]' \
+        "*: :_files"
+
+}
+
+function _virsh_attach-interface {
+    _arguments \
+        '--target[target network name]' \
+        '--mac[MAC address]' \
+        '--script[script used to bridge network interface]' \
+        '--model[model type]' \
+        '--alias[custom alias name of interface device]' \
+        '--inbound[control domain'\''s incoming traffics]' \
+        '--outbound[control domain'\''s outgoing traffics]' \
+        '--persistent[make live change persistent]' \
+        '--config[affect next boot]' \
+        '--live[affect running domain]' \
+        '--current[affect current domain]' \
+        '--print-xml[print XML document rather than attach the interface]' \
+        '--managed[libvirt will automatically detach/attach the device from/to host]' \
+        '--source-mode[mode attribute of <source/> element]' \
+        "*: :_files"
+
+}
+
+function _virsh_autostart {
+    _arguments \
+        '--disable[disable autostarting]' \
+        "*: :_files"
+
+}
+
+function _virsh_blkdeviotune {
+    _arguments \
+        '--total-bytes-sec[total throughput limit, as scaled integer (default bytes)]' \
+        '--read-bytes-sec[read throughput limit, as scaled integer (default bytes)]' \
+        '--write-bytes-sec[write throughput limit, as scaled integer (default bytes)]' \
+        '--total-iops-sec[total I/O operations limit per second]' \
+        '--read-iops-sec[read I/O operations limit per second]' \
+        '--write-iops-sec[write I/O operations limit per second]' \
+        '--total-bytes-sec-max[total max, as scaled integer (default bytes)]' \
+        '--read-bytes-sec-max[read max, as scaled integer (default bytes)]' \
+        '--write-bytes-sec-max[write max, as scaled integer (default bytes)]' \
+        '--total-iops-sec-max[total I/O operations max]' \
+        '--read-iops-sec-max[read I/O operations max]' \
+        '--write-iops-sec-max[write I/O operations max]' \
+        '--size-iops-sec[I/O size in bytes]' \
+        '--group-name[group name to share I/O quota between multiple drives]' \
+        '--total-bytes-sec-max-length[duration in seconds to allow total max bytes]' \
+        '--read-bytes-sec-max-length[duration in seconds to allow read max bytes]' \
+        '--write-bytes-sec-max-length[duration in seconds to allow write max bytes]' \
+        '--total-iops-sec-max-length[duration in seconds to allow total I/O operations max]' \
+        '--read-iops-sec-max-length[duration in seconds to allow read I/O operations max]' \
+        '--write-iops-sec-max-length[duration in seconds to allow write I/O operations max]' \
+        '--config[affect next boot]' \
+        '--live[affect running domain]' \
+        '--current[affect current domain]' \
+        "*: :_files"
+
+}
+
+function _virsh_blkiotune {
+    _arguments \
+        '--weight[IO Weight]' \
+        '--device-weights[per-device IO Weights, in the form of /path/to/device,weight,...]' \
+        '--device-read-iops-sec[per-device read I/O limit per second, in the form of /path/to/device,read_iops_sec,...]' \
+        '--device-write-iops-sec[per-device write I/O limit per second, in the form of /path/to/device,write_iops_sec,...]' \
+        '--device-read-bytes-sec[per-device bytes read per second, in the form of /path/to/device,read_bytes_sec,...]' \
+        '--device-write-bytes-sec[per-device bytes wrote per second, in the form of /path/to/device,write_bytes_sec,...]' \
+        '--config[affect next boot]' \
+        '--live[affect running domain]' \
+        '--current[affect current domain]' \
+        "*: :_files"
+
+}
+
+function _virsh_blockcommit {
+    _arguments \
+        '--bandwidth[bandwidth limit in MiB/s]' \
+        '--base[path of base file to commit into (default bottom of chain)]' \
+        '--shallow[use backing file of top as base]' \
+        '--top[path of top file to commit from (default top of chain)]' \
+        '--active[trigger two-stage active commit of top file]' \
+        '--delete[delete files that were successfully committed]' \
+        '--wait[wait for job to complete (with --active, wait for job to sync)]' \
+        '--verbose[with --wait, display the progress]' \
+        '--timeout[implies --wait, abort if copy exceeds timeout (in seconds)]' \
+        '--pivot[implies --active --wait, pivot when commit is synced]' \
+        '--keep-overlay[implies --active --wait, quit when commit is synced]' \
+        '--async[with --wait, don'\''t wait for cancel to finish]' \
+        '--keep-relative[keep the backing chain relatively referenced]' \
+        '--bytes[the bandwidth limit is in bytes/s rather than MiB/s]' \
+        "*: :_files"
+
+}
+
+function _virsh_blockcopy {
+    _arguments \
+        '--dest[path of the copy to create]' \
+        '--bandwidth[bandwidth limit in MiB/s]' \
+        '--shallow[make the copy share a backing chain]' \
+        '--reuse-external[reuse existing destination]' \
+        '--blockdev[copy destination is block device instead of regular file]' \
+        '--wait[wait for job to reach mirroring phase]' \
+        '--verbose[with --wait, display the progress]' \
+        '--timeout[implies --wait, abort if copy exceeds timeout (in seconds)]' \
+        '--pivot[implies --wait, pivot when mirroring starts]' \
+        '--finish[implies --wait, quit when mirroring starts]' \
+        '--async[with --wait, don'\''t wait for cancel to finish]' \
+        '--xml[filename containing XML description of the copy destination]' \
+        '--format[format of the destination file]' \
+        '--granularity[power-of-two granularity to use during the copy]' \
+        '--buf-size[maximum amount of in-flight data during the copy]' \
+        '--bytes[the bandwidth limit is in bytes/s rather than MiB/s]' \
+        '--transient-job[the copy job is not persisted if VM is turned off]' \
+        '--synchronous-writes[the copy job forces guest writes to be synchronously written to the destination]' \
+        "*: :_files"
+
+}
+
+function _virsh_blockjob {
+    _arguments \
+        '--abort[abort the active job on the specified disk]' \
+        '--async[implies --abort; request but don'\''t wait for job end]' \
+        '--pivot[implies --abort; conclude and pivot a copy or commit job]' \
+        '--info[get active job information for the specified disk]' \
+        '--bytes[get/set bandwidth in bytes rather than MiB/s]' \
+        '--raw[implies --info; output details rather than human summary]' \
+        '--bandwidth[set the bandwidth limit in MiB/s]' \
+        "*: :_files"
+
+}
+
+function _virsh_blockpull {
+    _arguments \
+        '--bandwidth[bandwidth limit in MiB/s]' \
+        '--base[path of backing file in chain for a partial pull]' \
+        '--wait[wait for job to finish]' \
+        '--verbose[with --wait, display the progress]' \
+        '--timeout[with --wait, abort if pull exceeds timeout (in seconds)]' \
+        '--async[with --wait, don'\''t wait for cancel to finish]' \
+        '--keep-relative[keep the backing chain relatively referenced]' \
+        '--bytes[the bandwidth limit is in bytes/s rather than MiB/s]' \
+        "*: :_files"
+
+}
+
+function _virsh_blockresize {
+    _arguments \
+        "*: :_files"
+
+}
+
+function _virsh_change-media {
+    _arguments \
+        '--source[source of the media]' \
+        '--eject[Eject the media]' \
+        '--insert[Insert the media]' \
+        '--update[Update the media]' \
+        '--current[can be either or both of --live and --config, depends on implementation hypervisor driver]' \
+        '--live[alter live configuration of running domain]' \
+        '--config[alter persistent configuration, effect observed on next boot]' \
+        '--force[force media changing]' \
+        '--print-xml[print XML document rather than change media]' \
+        '--block[source media is a block device]' \
+        "*: :_files"
+
+}
+
+function _virsh_console {
+    _arguments \
+        '--devname[character device name]' \
+        '--force[force console connection (disconnect already connected sessions)]' \
+        '--safe[only connect if safe console handling is supported]' \
+        "*: :_files"
+
+}
+
+function _virsh_cpu-stats {
+    _arguments \
+        '--total[Show total statistics only]' \
+        '--start[Show statistics from this CPU]' \
+        '--count[Number of shown CPUs at most]' \
+        "*: :_files"
+
+}
+
+function _virsh_create {
+    _arguments \
+        '--console[attach to console after creation]' \
+        '--paused[leave the guest paused after creation]' \
+        '--autodestroy[automatically destroy the guest when virsh disconnects]' \
+        '--pass-fds[pass file descriptors N,M,... to the guest]' \
+        '--validate[validate the XML against the schema]' \
+        "*: :_files"
+
+}
+
+function _virsh_define {
+    _arguments \
+        '--validate[validate the XML against the schema]' \
+        "*: :_files"
+
+}
+
+function _virsh_desc {
+    _arguments \
+        '--live[modify/get running state]' \
+        '--config[modify/get persistent configuration]' \
+        '--current[modify/get current state configuration]' \
+        '--title[modify/get the title instead of description]' \
+        '--edit[open an editor to modify the description]' \
+        "*: :_files"
+
+}
+
+function _virsh_destroy {
+    _arguments \
+        '--graceful[terminate gracefully]' \
+        "*: :_files"
+
+}
+
+function _virsh_detach-device {
+    _arguments \
+        '--persistent[make live change persistent]' \
+        '--config[affect next boot]' \
+        '--live[affect running domain]' \
+        '--current[affect current domain]' \
+        "*: :_files"
+
+}
+
+function _virsh_detach-device-alias {
+    _arguments \
+        '--config[affect next boot]' \
+        '--live[affect running domain]' \
+        '--current[affect current domain]' \
+        "*: :_files"
+
+}
+
+function _virsh_detach-disk {
+    _arguments \
+        '--persistent[make live change persistent]' \
+        '--config[affect next boot]' \
+        '--live[affect running domain]' \
+        '--current[affect current domain]' \
+        '--print-xml[print XML document rather than detach the disk]' \
+        "*: :_files"
+
+}
+
+function _virsh_detach-interface {
+    _arguments \
+        '--mac[MAC address]' \
+        '--persistent[make live change persistent]' \
+        '--config[affect next boot]' \
+        '--live[affect running domain]' \
+        '--current[affect current domain]' \
+        "*: :_files"
+
+}
+
+function _virsh_domdisplay {
+    _arguments \
+        '--include-password[includes the password into the connection URI if available]' \
+        '--type[select particular graphical display (e.g. "vnc", "spice", "rdp")]' \
+        '--all[show all possible graphical displays]' \
+        "*: :_files"
+
+}
+
+function _virsh_domfsfreeze {
+    _arguments \
+        "*: :_files"
+
+}
+
+function _virsh_domfsthaw {
+    _arguments \
+        "*: :_files"
+
+}
+
+function _virsh_domfsinfo {
+    _arguments \
+        "*: :_files"
+
+}
+
+function _virsh_domfstrim {
+    _arguments \
+        '--minimum[Just a hint to ignore contiguous free ranges smaller than this (Bytes)]' \
+        '--mountpoint[which mount point to trim]' \
+        "*: :_files"
+
+}
+
+function _virsh_domhostname {
+    _arguments \
+        '--source[address source: '\''lease'\'' or '\''agent'\'']' \
+        "*: :_files"
+
+}
+
+function _virsh_domid {
+    _arguments \
+        "*: :_files"
+
+}
+
+function _virsh_domif-setlink {
+    _arguments \
+        '--config[affect next boot]' \
+        "*: :_files"
+
+}
+
+function _virsh_domiftune {
+    _arguments \
+        '--inbound[control domain'\''s incoming traffics]' \
+        '--outbound[control domain'\''s outgoing traffics]' \
+        '--config[affect next boot]' \
+        '--live[affect running domain]' \
+        '--current[affect current domain]' \
+        "*: :_files"
+
+}
+
+function _virsh_domjobabort {
+    _arguments \
+        "*: :_files"
+
+}
+
+function _virsh_domjobinfo {
+    _arguments \
+        '--completed[return statistics of a recently completed job]' \
+        '--keep-completed[don'\''t destroy statistics of a recently completed job when reading]' \
+        '--anystats[print statistics for any kind of job (even failed ones)]' \
+        '--rawstats[print the raw data returned by libvirt]' \
+        "*: :_files"
+
+}
+
+function _virsh_domlaunchsecinfo {
+    _arguments \
+        "*: :_files"
+
+}
+
+function _virsh_domsetlaunchsecstate {
+    _arguments \
+        '--secrethdr[path to file containing the secret header]' \
+        '--secret[path to file containing the secret]' \
+        '--set-address[physical address within the guest domain'\''s memory to set the secret]' \
+        "*: :_files"
+
+}
+
+function _virsh_domname {
+    _arguments \
+        "*: :_files"
+
+}
+
+function _virsh_domrename {
+    _arguments \
+        "*: :_files"
+
+}
+
+function _virsh_dompmsuspend {
+    _arguments \
+        '--duration[duration in seconds]' \
+        "*: :_files"
+
+}
+
+function _virsh_dompmwakeup {
+    _arguments \
+        "*: :_files"
+
+}
+
+function _virsh_domuuid {
+    _arguments \
+        "*: :_files"
+
+}
+
+function _virsh_domxml-from-native {
+    _arguments \
+        "*: :_files"
+
+}
+
+function _virsh_domxml-to-native {
+    _arguments \
+        '--domain[domain name, id or uuid]' \
+        '--xml[xml data file to export from]' \
+        "*: :_files"
+
+}
+
+function _virsh_dump {
+    _arguments \
+        '--live[perform a live core dump if supported]' \
+        '--crash[crash the domain after core dump]' \
+        '--bypass-cache[avoid file system cache when dumping]' \
+        '--reset[reset the domain after core dump]' \
+        '--verbose[display the progress of dump]' \
+        '--memory-only[dump domain'\''s memory only]' \
+        '--format[specify the format of memory-only dump]' \
+        "*: :_files"
+
+}
+
+function _virsh_dumpxml {
+    _arguments \
+        '--inactive[show inactive defined XML]' \
+        '--security-info[include security sensitive information in XML dump]' \
+        '--update-cpu[update guest CPU according to host CPU]' \
+        '--migratable[provide XML suitable for migrations]' \
+        "*: :_files"
+
+}
+
+function _virsh_edit {
+    _arguments \
+        '--skip-validate[skip validation of the XML against the schema]' \
+        "*: :_files"
+
+}
+
+function _virsh_event {
+    _arguments \
+        '--domain[filter by domain name, id or uuid]' \
+        '--event[which event type to wait for]' \
+        '--all[wait for all events instead of just one type]' \
+        '--loop[loop until timeout or interrupt, rather than one-shot]' \
+        '--timeout[timeout seconds]' \
+        '--list[list valid event types]' \
+        '--timestamp[show timestamp for each printed event]' \
+        "*: :_files"
+
+}
+
+function _virsh_get-user-sshkeys {
+    _arguments \
+        "*: :_files"
+
+}
+
+function _virsh_inject-nmi {
+    _arguments \
+        "*: :_files"
+
+}
+
+function _virsh_iothreadinfo {
+    _arguments \
+        '--config[affect next boot]' \
+        '--live[affect running domain]' \
+        '--current[affect current domain]' \
+        "*: :_files"
+
+}
+
+function _virsh_iothreadpin {
+    _arguments \
+        '--config[affect next boot]' \
+        '--live[affect running domain]' \
+        '--current[affect current domain]' \
+        "*: :_files"
+
+}
+
+function _virsh_iothreadadd {
+    _arguments \
+        '--config[affect next boot]' \
+        '--live[affect running domain]' \
+        '--current[affect current domain]' \
+        "*: :_files"
+
+}
+
+function _virsh_iothreadset {
+    _arguments \
+        '--poll-max-ns[set the maximum IOThread polling time in ns]' \
+        '--poll-grow[set the value to increase the IOThread polling time]' \
+        '--poll-shrink[set the value for reduction of the IOThread polling time]' \
+        '--live[affect running domain]' \
+        '--current[affect current domain]' \
+        "*: :_files"
+
+}
+
+function _virsh_iothreaddel {
+    _arguments \
+        '--config[affect next boot]' \
+        '--live[affect running domain]' \
+        '--current[affect current domain]' \
+        "*: :_files"
+
+}
+
+function _virsh_send-key {
+    _arguments \
+        '--codeset[the codeset of keycodes, default:linux,--holdtime <number>  the time (in milliseconds) how long the keys will be held   \[--keycode\] <string> the key code]' \
+        "*: :_files"
+
+}
+
+function _virsh_send-process-signal {
+    _arguments \
+        "*: :_files"
+
+}
+
+function _virsh_lxc-enter-namespace {
+    _arguments \
+        '--noseclabel[Do not change process security label]' \
+        "*: :_files"
+
+}
+
+function _virsh_managedsave {
+    _arguments \
+        '--bypass-cache[avoid file system cache when saving]' \
+        '--running[set domain to be running on next start]' \
+        '--paused[set domain to be paused on next start]' \
+        '--verbose[display the progress of save]' \
+        "*: :_files"
+
+}
+
+function _virsh_managedsave-remove {
+    _arguments \
+        "*: :_files"
+
+}
+
+function _virsh_managedsave-edit {
+    _arguments \
+        '--running[set domain to be running on start]' \
+        '--paused[set domain to be paused on start]' \
+        "*: :_files"
+
+}
+
+function _virsh_managedsave-dumpxml {
+    _arguments \
+        '--security-info[include security sensitive information in XML dump]' \
+        "*: :_files"
+
+}
+
+function _virsh_managedsave-define {
+    _arguments \
+        '--running[set domain to be running on start]' \
+        '--paused[set domain to be paused on start]' \
+        "*: :_files"
+
+}
+
+function _virsh_memtune {
+    _arguments \
+        '--hard-limit[Max memory, as scaled integer (default KiB)]' \
+        '--soft-limit[Memory during contention, as scaled integer (default KiB)]' \
+        '--swap-hard-limit[Max memory plus swap, as scaled integer (default KiB)]' \
+        '--min-guarantee[Min guaranteed memory, as scaled integer (default KiB)]' \
+        '--config[affect next boot]' \
+        '--live[affect running domain]' \
+        '--current[affect current domain]' \
+        "*: :_files"
+
+}
+
+function _virsh_perf {
+    _arguments \
+        '--enable[perf events which will be enabled]' \
+        '--disable[perf events which will be disabled]' \
+        '--config[affect next boot]' \
+        '--live[affect running domain]' \
+        '--current[affect current domain]' \
+        "*: :_files"
+
+}
+
+function _virsh_metadata {
+    _arguments \
+        '--live[modify/get running state]' \
+        '--config[modify/get persistent configuration]' \
+        '--current[modify/get current state configuration]' \
+        '--edit[use an editor to change the metadata]' \
+        '--key[key to be used as a namespace identifier]' \
+        '--set[new metadata to set]' \
+        '--remove[remove the metadata corresponding to an uri]' \
+        "*: :_files"
+
+}
+
+function _virsh_migrate {
+    _arguments \
+        '--live[live migration]' \
+        '--offline[offline migration]' \
+        '--p2p[peer-2-peer migration]' \
+        '--direct[direct migration]' \
+        '--tunnelled[tunnelled migration]' \
+        '--persistent[persist VM on destination]' \
+        '--undefinesource[undefine VM on source]' \
+        '--suspend[do not restart the domain on the destination host]' \
+        '--copy-storage-all[migration with non-shared storage with full disk copy]' \
+        '--copy-storage-inc[migration with non-shared storage with incremental copy (same base image shared between source and destination)]' \
+        '--copy-storage-synchronous-writes[force guest disk writes to be synchronously written to the destination to improve storage migration convergence]' \
+        '--change-protection[prevent any configuration changes to domain until migration ends]' \
+        '--unsafe[force migration even if it may be unsafe]' \
+        '--verbose[display the progress of migration]' \
+        '--compressed[compress repeated pages during live migration]' \
+        '--auto-converge[force convergence during live migration]' \
+        '--rdma-pin-all[pin all memory before starting RDMA live migration]' \
+        '--abort-on-error[abort on soft errors during migration]' \
+        '--postcopy[enable post-copy migration; switch to it using migrate-postcopy command]' \
+        '--postcopy-after-precopy[automatically switch to post-copy migration after one pass of pre-copy]' \
+        '--migrateuri[migration URI, usually can be omitted]' \
+        '--graphicsuri[graphics URI to be used for seamless graphics migration]' \
+        '--listen-address[listen address that destination should bind to for incoming migration]' \
+        '--dname[rename to new name during migration (if supported)]' \
+        '--timeout[run action specified by --timeout-* option (suspend by default) if live migration exceeds timeout (in seconds)]' \
+        '--timeout-suspend[suspend the guest after timeout]' \
+        '--timeout-postcopy[switch to post-copy after timeout]' \
+        '--xml[filename containing updated XML for the target]' \
+        '--migrate-disks[comma separated list of disks to be migrated]' \
+        '--disks-port[port to use by target server for incoming disks migration]' \
+        '--disks-uri[URI to use for disks migration (overrides --disks-port)]' \
+        '--comp-methods[comma separated list of compression methods to be used]' \
+        '--comp-mt-level[compress level for multithread compression]' \
+        '--comp-mt-threads[number of compression threads for multithread compression]' \
+        '--comp-mt-dthreads[number of decompression threads for multithread compression]' \
+        '--comp-xbzrle-cache[page cache size for xbzrle compression]' \
+        '--auto-converge-initial[initial CPU throttling rate for auto-convergence]' \
+        '--auto-converge-increment[CPU throttling rate increment for auto-convergence]' \
+        '--persistent-xml[filename containing updated persistent XML for the target]' \
+        '--tls[use TLS for migration]' \
+        '--postcopy-bandwidth[post-copy migration bandwidth limit in MiB/s]' \
+        '--parallel[enable parallel migration]' \
+        '--parallel-connections[number of connections for parallel migration]' \
+        '--bandwidth[migration bandwidth limit in MiB/s]' \
+        '--tls-destination[override the destination host name used for TLS verification]' \
+        "*: :_files"
+
+}
+
+function _virsh_migrate-setmaxdowntime {
+    _arguments \
+        "*: :_files"
+
+}
+
+function _virsh_migrate-getmaxdowntime {
+    _arguments \
+        "*: :_files"
+
+}
+
+function _virsh_migrate-compcache {
+    _arguments \
+        '--size[requested size of the cache (in bytes) used for compression]' \
+        "*: :_files"
+
+}
+
+function _virsh_migrate-setspeed {
+    _arguments \
+        '--postcopy[set post-copy migration bandwidth]' \
+        "*: :_files"
+
+}
+
+function _virsh_migrate-getspeed {
+    _arguments \
+        '--postcopy[get post-copy migration bandwidth]' \
+        "*: :_files"
+
+}
+
+function _virsh_migrate-postcopy {
+    _arguments \
+        "*: :_files"
+
+}
+
+function _virsh_numatune {
+    _arguments \
+        '--mode[NUMA mode, one of strict, preferred and interleave]' \
+        '--nodeset[NUMA node selections to set]' \
+        '--config[affect next boot]' \
+        '--live[affect running domain]' \
+        '--current[affect current domain]' \
+        "*: :_files"
+
+}
+
+function _virsh_qemu-attach {
+    _arguments \
+        "*: :_files"
+
+}
+
+function _virsh_qemu-monitor-command {
+    _arguments \
+        '--hmp[command is in human monitor protocol]' \
+        '--pretty[pretty-print any qemu monitor protocol output]' \
+        '--return-value[extract the value of the '\''return'\'' key from the returned string]' \
+        "*: :_files"
+
+}
+
+function _virsh_qemu-monitor-event {
+    _arguments \
+        '--domain[filter by domain name, id or uuid]' \
+        '--event[filter by event name]' \
+        '--pretty[pretty-print any JSON output]' \
+        '--loop[loop until timeout or interrupt, rather than one-shot]' \
+        '--timeout[timeout seconds]' \
+        '--regex[treat event as a regex rather than literal filter]' \
+        '--no-case[treat event case-insensitively]' \
+        '--timestamp[show timestamp for each printed event]' \
+        "*: :_files"
+
+}
+
+function _virsh_qemu-agent-command {
+    _arguments \
+        '--timeout[timeout seconds. must be positive.]' \
+        '--async[execute command without waiting for timeout]' \
+        '--block[execute command without timeout]' \
+        '--pretty[pretty-print the output]' \
+        "*: :_files"
+
+}
+
+function _virsh_guest-agent-timeout {
+    _arguments \
+        '--timeout[timeout seconds.]' \
+        "*: :_files"
+
+}
+
+function _virsh_reboot {
+    _arguments \
+        '--mode[shutdown mode: acpi|agent|initctl|signal|paravirt]' \
+        "*: :_files"
+
+}
+
+function _virsh_reset {
+    _arguments \
+        "*: :_files"
+
+}
+
+function _virsh_restore {
+    _arguments \
+        '--bypass-cache[avoid file system cache when restoring]' \
+        '--xml[filename containing updated XML for the target]' \
+        '--running[restore domain into running state]' \
+        '--paused[restore domain into paused state]' \
+        "*: :_files"
+
+}
+
+function _virsh_resume {
+    _arguments \
+        "*: :_files"
+
+}
+
+function _virsh_save {
+    _arguments \
+        '--bypass-cache[avoid file system cache when saving]' \
+        '--xml[filename containing updated XML for the target]' \
+        '--running[set domain to be running on restore]' \
+        '--paused[set domain to be paused on restore]' \
+        '--verbose[display the progress of save]' \
+        "*: :_files"
+
+}
+
+function _virsh_save-image-define {
+    _arguments \
+        '--running[set domain to be running on restore]' \
+        '--paused[set domain to be paused on restore]' \
+        "*: :_files"
+
+}
+
+function _virsh_save-image-dumpxml {
+    _arguments \
+        '--security-info[include security sensitive information in XML dump]' \
+        "*: :_files"
+
+}
+
+function _virsh_save-image-edit {
+    _arguments \
+        '--running[set domain to be running on restore]' \
+        '--paused[set domain to be paused on restore]' \
+        "*: :_files"
+
+}
+
+function _virsh_schedinfo {
+    _arguments \
+        '--weight[weight for XEN_CREDIT]' \
+        '--cap[cap for XEN_CREDIT]' \
+        '--current[get/set current scheduler info]' \
+        '--config[get/set value to be used on next boot]' \
+        '--live[get/set value from running domain]' \
+        "*: :_files"
+
+}
+
+function _virsh_screenshot {
+    _arguments \
+        '--file[where to store the screenshot]' \
+        '--screen[ID of a screen to take screenshot of]' \
+        "*: :_files"
+
+}
+
+function _virsh_set-lifecycle-action {
+    _arguments \
+        '--config[affect next boot]' \
+        '--live[affect running domain]' \
+        '--current[affect current domain]' \
+        "*: :_files"
+
+}
+
+function _virsh_set-user-sshkeys {
+    _arguments \
+        '--file[optional file to read keys from]' \
+        '--reset[clear out authorized keys file before adding new keys]' \
+        '--remove[remove keys from the authorized keys file]' \
+        "*: :_files"
+
+}
+
+function _virsh_set-user-password {
+    _arguments \
+        '--encrypted[the password is already encrypted]' \
+        "*: :_files"
+
+}
+
+function _virsh_setmaxmem {
+    _arguments \
+        '--config[affect next boot]' \
+        '--live[affect running domain]' \
+        '--current[affect current domain]' \
+        "*: :_files"
+
+}
+
+function _virsh_setmem {
+    _arguments \
+        '--config[affect next boot]' \
+        '--live[affect running domain]' \
+        '--current[affect current domain]' \
+        "*: :_files"
+
+}
+
+function _virsh_setvcpus {
+    _arguments \
+        '--maximum[set maximum limit on next boot]' \
+        '--config[affect next boot]' \
+        '--live[affect running domain]' \
+        '--current[affect current domain]' \
+        '--guest[modify cpu state in the guest]' \
+        '--hotpluggable[make added vcpus hot(un)pluggable]' \
+        "*: :_files"
+
+}
+
+function _virsh_shutdown {
+    _arguments \
+        '--mode[shutdown mode: acpi|agent|initctl|signal|paravirt]' \
+        "*: :_files"
+
+}
+
+function _virsh_start {
+    _arguments \
+        '--console[attach to console after creation]' \
+        '--paused[leave the guest paused after creation]' \
+        '--autodestroy[automatically destroy the guest when virsh disconnects]' \
+        '--bypass-cache[avoid file system cache when loading]' \
+        '--force-boot[force fresh boot by discarding any managed save]' \
+        '--pass-fds[pass file descriptors N,M,... to the guest]' \
+        "*: :_files"
+
+}
+
+function _virsh_suspend {
+    _arguments \
+        "*: :_files"
+
+}
+
+function _virsh_ttyconsole {
+    _arguments \
+        "*: :_files"
+
+}
+
+function _virsh_undefine {
+    _arguments \
+        '--managed-save[remove domain managed state file]' \
+        '--storage[remove associated storage volumes (comma separated list of targets or source paths) (see domblklist)]' \
+        '--remove-all-storage[remove all associated storage volumes (use with caution)]' \
+        '--delete-storage-volume-snapshots[delete snapshots associated with volume(s), requires --remove-all-storage (must be supported by storage driver)]' \
+        '--wipe-storage[wipe data on the removed volumes]' \
+        '--snapshots-metadata[remove all domain snapshot metadata (vm must be inactive)]' \
+        '--checkpoints-metadata[remove all domain checkpoint metadata (vm must be inactive)]' \
+        '--nvram[remove nvram file]' \
+        '--keep-nvram[keep nvram file]' \
+        "*: :_files"
+
+}
+
+function _virsh_update-device {
+    _arguments \
+        '--persistent[make live change persistent]' \
+        '--config[affect next boot]' \
+        '--live[affect running domain]' \
+        '--current[affect current domain]' \
+        '--force[force device update]' \
+        "*: :_files"
+
+}
+
+function _virsh_update-memory-device {
+    _arguments \
+        '--config[affect next boot]' \
+        '--live[affect running domain]' \
+        '--current[affect current domain]' \
+        '--print-xml[print updated memory device XML instead of executing the change]' \
+        '--alias[memory device alias]' \
+        '--node[memory device target node]' \
+        '--requested-size[new value of <requested/> size, as scaled integer (default KiB)]' \
+        "*: :_files"
+
+}
+
+function _virsh_vcpucount {
+    _arguments \
+        '--maximum[get maximum count of vcpus]' \
+        '--active[get number of currently active vcpus]' \
+        '--live[get value from running domain]' \
+        '--config[get value to be used on next boot]' \
+        '--current[get value according to current domain state]' \
+        '--guest[retrieve vcpu count from the guest instead of the hypervisor]' \
+        "*: :_files"
+
+}
+
+function _virsh_vcpuinfo {
+    _arguments \
+        '--pretty[return human readable output]' \
+        "*: :_files"
+
+}
+
+function _virsh_vcpupin {
+    _arguments \
+        '--vcpu[vcpu number]' \
+        '--cpulist[host cpu number(s) to set, or omit option to query]' \
+        '--config[affect next boot]' \
+        '--live[affect running domain]' \
+        '--current[affect current domain]' \
+        "*: :_files"
+
+}
+
+function _virsh_emulatorpin {
+    _arguments \
+        '--cpulist[host cpu number(s) to set, or omit option to query]' \
+        '--config[affect next boot]' \
+        '--live[affect running domain]' \
+        '--current[affect current domain]' \
+        "*: :_files"
+
+}
+
+function _virsh_vncdisplay {
+    _arguments \
+        "*: :_files"
+
+}
+
+function _virsh_guestvcpus {
+    _arguments \
+        '--cpulist[list of cpus to enable or disable]' \
+        '--enable[enable cpus specified by cpulist]' \
+        '--disable[disable cpus specified by cpulist]' \
+        "*: :_files"
+
+}
+
+function _virsh_setvcpu {
+    _arguments \
+        '--enable[enable cpus specified by cpumap]' \
+        '--disable[disable cpus specified by cpumap]' \
+        '--config[affect next boot]' \
+        '--live[affect running domain]' \
+        '--current[affect current domain]' \
+        "*: :_files"
+
+}
+
+function _virsh_domblkthreshold {
+    _arguments \
+        "*: :_files"
+
+}
+
+function _virsh_guestinfo {
+    _arguments \
+        '--user[report active users]' \
+        '--os[report operating system information]' \
+        '--timezone[report timezone information]' \
+        '--hostname[report hostname]' \
+        '--filesystem[report filesystem information]' \
+        '--disk[report disk information]' \
+        '--interface[report interface information]' \
+        "*: :_files"
+
+}
+
+function _virsh_domdirtyrate-calc {
+    _arguments \
+        '--seconds[calculate memory dirty rate within specified seconds, the supported value range from 1 to 60, default to 1.]' \
+        "*: :_files"
+
+}
+
+function _virsh_domblkerror {
+    _arguments \
+        "*: :_files"
+
+}
+
+function _virsh_domblkinfo {
+    _arguments \
+        '--device[block device]' \
+        '--human[Human readable output]' \
+        '--all[display all block devices info]' \
+        "*: :_files"
+
+}
+
+function _virsh_domblklist {
+    _arguments \
+        '--inactive[get inactive rather than running configuration]' \
+        '--details[additionally display the type and device value]' \
+        "*: :_files"
+
+}
+
+function _virsh_domblkstat {
+    _arguments \
+        '--device[block device]' \
+        '--human[print a more human readable output]' \
+        "*: :_files"
+
+}
+
+function _virsh_domcontrol {
+    _arguments \
+        "*: :_files"
+
+}
+
+function _virsh_domif-getlink {
+    _arguments \
+        '--config[Get persistent interface state]' \
+        "*: :_files"
+
+}
+
+function _virsh_domifaddr {
+    _arguments \
+        '--interface[network interface name]' \
+        '--full[always display names and MACs of interfaces]' \
+        '--source[address source: '\''lease'\'', '\''agent'\'', or '\''arp'\'']' \
+        "*: :_files"
+
+}
+
+function _virsh_domiflist {
+    _arguments \
+        '--inactive[get inactive rather than running configuration]' \
+        "*: :_files"
+
+}
+
+function _virsh_domifstat {
+    _arguments \
+        "*: :_files"
+
+}
+
+function _virsh_dominfo {
+    _arguments \
+        "*: :_files"
+
+}
+
+function _virsh_dommemstat {
+    _arguments \
+        '--period[period in seconds to set collection]' \
+        '--config[affect next boot]' \
+        '--live[affect running domain]' \
+        '--current[affect current domain]' \
+        "*: :_files"
+
+}
+
+function _virsh_domstate {
+    _arguments \
+        '--reason[also print reason for the state]' \
+        "*: :_files"
+
+}
+
+function _virsh_domstats {
+    _arguments \
+        '--state[report domain state]' \
+        '--cpu-total[report domain physical cpu usage]' \
+        '--balloon[report domain balloon statistics]' \
+        '--vcpu[report domain virtual cpu information]' \
+        '--interface[report domain network interface information]' \
+        '--block[report domain block device statistics]' \
+        '--perf[report domain perf event statistics]' \
+        '--iothread[report domain IOThread information]' \
+        '--memory[report domain memory usage]' \
+        '--dirtyrate[report domain dirty rate information]' \
+        '--list-active[list only active domains]' \
+        '--list-inactive[list only inactive domains]' \
+        '--list-persistent[list only persistent domains]' \
+        '--list-transient[list only transient domains]' \
+        '--list-running[list only running domains]' \
+        '--list-paused[list only paused domains]' \
+        '--list-shutoff[list only shutoff domains]' \
+        '--list-other[list only domains in other states]' \
+        '--raw[do not pretty-print the fields]' \
+        '--enforce[enforce requested stats parameters]' \
+        '--backing[add backing chain information to block stats]' \
+        '--nowait[report only stats that are accessible instantly]' \
+        "*: :_files"
+
+}
+
+function _virsh_domtime {
+    _arguments \
+        '--now[set to the time of the host running virsh]' \
+        '--pretty[print domain'\''s time in human readable form]' \
+        '--sync[instead of setting given time, synchronize from domain'\''s RTC]' \
+        '--time[time to set]' \
+        "*: :_files"
+
+}
+
+function _virsh_list {
+    _arguments \
+        '--inactive[list inactive domains]' \
+        '--all[list inactive & active domains]' \
+        '--transient[list transient domains]' \
+        '--persistent[list persistent domains]' \
+        '--with-snapshot[list domains with existing snapshot]' \
+        '--without-snapshot[list domains without a snapshot]' \
+        '--with-checkpoint[list domains with existing checkpoint]' \
+        '--without-checkpoint[list domains without a checkpoint]' \
+        '--state-running[list domains in running state]' \
+        '--state-paused[list domains in paused state]' \
+        '--state-shutoff[list domains in shutoff state]' \
+        '--state-other[list domains in other states]' \
+        '--autostart[list domains with autostart enabled]' \
+        '--no-autostart[list domains with autostart disabled]' \
+        '--with-managed-save[list domains with managed save state]' \
+        '--without-managed-save[list domains without managed save]' \
+        '--uuid[list uuid'\''s only]' \
+        '--name[list domain names only]' \
+        '--id[list domain IDs only]' \
+        '--table[list table (default)]' \
+        '--managed-save[mark inactive domains with managed save state]' \
+        '--title[show domain title]' \
+        "*: :_files"
+
+}
+
+function _virsh_allocpages {
+    _arguments \
+        '--cellno[NUMA cell number]' \
+        '--add[instead of setting new pool size add pages to it]' \
+        '--all[set on all NUMA cells]' \
+        "*: :_files"
+
+}
+
+function _virsh_capabilities {
+    _arguments \
+        "*: :_files"
+
+}
+
+function _virsh_cpu-baseline {
+    _arguments \
+        '--features[Show features that are part of the CPU model type]' \
+        '--migratable[Do not include features that block migration]' \
+        "*: :_files"
+
+}
+
+function _virsh_cpu-compare {
+    _arguments \
+        '--error[report error if CPUs are incompatible]' \
+        '--validate[validate the XML document against schema]' \
+        "*: :_files"
+
+}
+
+function _virsh_cpu-models {
+    _arguments \
+        "*: :_files"
+
+}
+
+function _virsh_domcapabilities {
+    _arguments \
+        '--virttype[virtualization type (/domain/@type)]' \
+        '--emulatorbin[path to emulator binary (/domain/devices/emulator)]' \
+        '--arch[domain architecture (/domain/os/type/@arch)]' \
+        '--machine[machine type (/domain/os/type/@machine)]' \
+        "*: :_files"
+
+}
+
+function _virsh_freecell {
+    _arguments \
+        '--cellno[NUMA cell number]' \
+        '--all[show free memory for all NUMA cells]' \
+        "*: :_files"
+
+}
+
+function _virsh_freepages {
+    _arguments \
+        '--cellno[NUMA cell number]' \
+        '--pagesize[page size (in kibibytes)]' \
+        '--all[show free pages for all NUMA cells]' \
+        "*: :_files"
+
+}
+
+function _virsh_hostname {
+    _arguments \
+        "*: :_files"
+
+}
+
+function _virsh_hypervisor-cpu-baseline {
+    _arguments \
+        '--virttype[virtualization type (/domain/@type)]' \
+        '--emulator[path to emulator binary (/domain/devices/emulator)]' \
+        '--arch[CPU architecture (/domain/os/type/@arch)]' \
+        '--machine[machine type (/domain/os/type/@machine)]' \
+        '--features[Show features that are part of the CPU model type]' \
+        '--migratable[Do not include features that block migration]' \
+        "*: :_files"
+
+}
+
+function _virsh_hypervisor-cpu-compare {
+    _arguments \
+        '--virttype[virtualization type (/domain/@type)]' \
+        '--emulator[path to emulator binary (/domain/devices/emulator)]' \
+        '--arch[CPU architecture (/domain/os/type/@arch)]' \
+        '--machine[machine type (/domain/os/type/@machine)]' \
+        '--error[report error if CPUs are incompatible]' \
+        '--validate[validate the XML document against schema]' \
+        "*: :_files"
+
+}
+
+function _virsh_maxvcpus {
+    _arguments \
+        '--type[domain type]' \
+        "*: :_files"
+
+}
+
+function _virsh_node-memory-tune {
+    _arguments \
+        '--shm-pages-to-scan[number of pages to scan before the shared memory service goes to sleep]' \
+        '--shm-sleep-millisecs[number of millisecs the shared memory service should sleep before next scan]' \
+        '--shm-merge-across-nodes[Specifies if pages from different numa nodes can be merged]' \
+        "*: :_files"
+
+}
+
+function _virsh_nodecpumap {
+    _arguments \
+        '--pretty[return human readable output]' \
+        "*: :_files"
+
+}
+
+function _virsh_nodecpustats {
+    _arguments \
+        '--cpu[prints specified cpu statistics only.]' \
+        '--percent[prints by percentage during 1 second.]' \
+        "*: :_files"
+
+}
+
+function _virsh_nodeinfo {
+    _arguments \
+        "*: :_files"
+
+}
+
+function _virsh_nodememstats {
+    _arguments \
+        '--cell[prints specified cell statistics only.]' \
+        "*: :_files"
+
+}
+
+function _virsh_nodesevinfo {
+    _arguments \
+        "*: :_files"
+
+}
+
+function _virsh_nodesuspend {
+    _arguments \
+        "*: :_files"
+
+}
+
+function _virsh_sysinfo {
+    _arguments \
+        "*: :_files"
+
+}
+
+function _virsh_uri {
+    _arguments \
+        "*: :_files"
+
+}
+
+function _virsh_version {
+    _arguments \
+        '--daemon[report daemon version too]' \
+        "*: :_files"
+
+}
+
+function _virsh_checkpoint-create {
+    _arguments \
+        '--xmlfile[domain checkpoint XML]' \
+        '--redefine[redefine metadata for existing checkpoint]' \
+        '--redefine-validate[validate the redefined checkpoint]' \
+        '--quiesce[quiesce guest'\''s file systems]' \
+        "*: :_files"
+
+}
+
+function _virsh_checkpoint-create-as {
+    _arguments \
+        '--name[name of checkpoint]' \
+        '--description[description of checkpoint]' \
+        '--print-xml[print XML document rather than create]' \
+        '--quiesce[quiesce guest'\''s file systems]' \
+        "*: :_files"
+
+}
+
+function _virsh_checkpoint-delete {
+    _arguments \
+        '--checkpointname[checkpoint name]' \
+        '--children[delete checkpoint and all children]' \
+        '--children-only[delete children but not checkpoint]' \
+        '--metadata[delete only libvirt metadata, leaving checkpoint contents behind]' \
+        "*: :_files"
+
+}
+
+function _virsh_checkpoint-dumpxml {
+    _arguments \
+        '--checkpointname[checkpoint name]' \
+        '--security-info[include security sensitive information in XML dump]' \
+        '--no-domain[exclude <domain> from XML]' \
+        '--size[include backup size estimate in XML dump]' \
+        "*: :_files"
+
+}
+
+function _virsh_checkpoint-edit {
+    _arguments \
+        '--checkpointname[checkpoint name]' \
+        "*: :_files"
+
+}
+
+function _virsh_checkpoint-info {
+    _arguments \
+        '--checkpointname[checkpoint name]' \
+        "*: :_files"
+
+}
+
+function _virsh_checkpoint-list {
+    _arguments \
+        '--parent[add a column showing parent checkpoint]' \
+        '--roots[list only checkpoints without parents]' \
+        '--leaves[list only checkpoints without children]' \
+        '--no-leaves[list only checkpoints that are not leaves (with children)]' \
+        '--tree[list checkpoints in a tree]' \
+        '--from[limit list to children of given checkpoint]' \
+        '--descendants[with --from, list all descendants]' \
+        '--name[list checkpoint names only]' \
+        '--topological[sort list topologically rather than by name]' \
+        "*: :_files"
+
+}
+
+function _virsh_checkpoint-parent {
+    _arguments \
+        '--checkpointname[find parent of checkpoint name]' \
+        "*: :_files"
+
+}
+
+function _virsh_iface-begin {
+    _arguments \
+        "*: :_files"
+
+}
+
+function _virsh_iface-bridge {
+    _arguments \
+        '--no-stp[do not enable STP for this bridge]' \
+        '--delay[number of seconds to squelch traffic on newly connected ports]' \
+        '--no-start[don'\''t start the bridge immediately]' \
+        "*: :_files"
+
+}
+
+function _virsh_iface-commit {
+    _arguments \
+        "*: :_files"
+
+}
+
+function _virsh_iface-define {
+    _arguments \
+        '--validate[validate the XML against the schema]' \
+        "*: :_files"
+
+}
+
+function _virsh_iface-destroy {
+    _arguments \
+        "*: :_files"
+
+}
+
+function _virsh_iface-dumpxml {
+    _arguments \
+        '--inactive[show inactive defined XML]' \
+        "*: :_files"
+
+}
+
+function _virsh_iface-edit {
+    _arguments \
+        "*: :_files"
+
+}
+
+function _virsh_iface-list {
+    _arguments \
+        '--inactive[list inactive interfaces]' \
+        '--all[list inactive & active interfaces]' \
+        "*: :_files"
+
+}
+
+function _virsh_iface-mac {
+    _arguments \
+        "*: :_files"
+
+}
+
+function _virsh_iface-name {
+    _arguments \
+        "*: :_files"
+
+}
+
+function _virsh_iface-rollback {
+    _arguments \
+        "*: :_files"
+
+}
+
+function _virsh_iface-start {
+    _arguments \
+        "*: :_files"
+
+}
+
+function _virsh_iface-unbridge {
+    _arguments \
+        '--no-start[don'\''t start the detached interface immediately (not recommended)]' \
+        "*: :_files"
+
+}
+
+function _virsh_iface-undefine {
+    _arguments \
+        "*: :_files"
+
+}
+
+function _virsh_nwfilter-define {
+    _arguments \
+        '--validate[validate the XML against the schema]' \
+        "*: :_files"
+
+}
+
+function _virsh_nwfilter-dumpxml {
+    _arguments \
+        "*: :_files"
+
+}
+
+function _virsh_nwfilter-edit {
+    _arguments \
+        "*: :_files"
+
+}
+
+function _virsh_nwfilter-list {
+    _arguments \
+        "*: :_files"
+
+}
+
+function _virsh_nwfilter-undefine {
+    _arguments \
+        "*: :_files"
+
+}
+
+function _virsh_nwfilter-binding-create {
+    _arguments \
+        '--validate[validate the XML against the schema]' \
+        "*: :_files"
+
+}
+
+function _virsh_nwfilter-binding-delete {
+    _arguments \
+        "*: :_files"
+
+}
+
+function _virsh_nwfilter-binding-dumpxml {
+    _arguments \
+        "*: :_files"
+
+}
+
+function _virsh_nwfilter-binding-list {
+    _arguments \
+        "*: :_files"
+
+}
+
+function _virsh_net-autostart {
+    _arguments \
+        '--disable[disable autostarting]' \
+        "*: :_files"
+
+}
+
+function _virsh_net-create {
+    _arguments \
+        '--validate[validate the XML against the schema]' \
+        "*: :_files"
+
+}
+
+function _virsh_net-define {
+    _arguments \
+        '--validate[validate the XML against the schema]' \
+        "*: :_files"
+
+}
+
+function _virsh_net-destroy {
+    _arguments \
+        "*: :_files"
+
+}
+
+function _virsh_net-dhcp-leases {
+    _arguments \
+        '--mac[MAC address]' \
+        "*: :_files"
+
+}
+
+function _virsh_net-dumpxml {
+    _arguments \
+        '--inactive[show inactive defined XML]' \
+        "*: :_files"
+
+}
+
+function _virsh_net-edit {
+    _arguments \
+        "*: :_files"
+
+}
+
+function _virsh_net-event {
+    _arguments \
+        '--network[filter by network name or uuid]' \
+        '--event[which event type to wait for]' \
+        '--loop[loop until timeout or interrupt, rather than one-shot]' \
+        '--timeout[timeout seconds]' \
+        '--list[list valid event types]' \
+        '--timestamp[show timestamp for each printed event]' \
+        "*: :_files"
+
+}
+
+function _virsh_net-info {
+    _arguments \
+        "*: :_files"
+
+}
+
+function _virsh_net-list {
+    _arguments \
+        '--inactive[list inactive networks]' \
+        '--all[list inactive & active networks]' \
+        '--persistent[list persistent networks]' \
+        '--transient[list transient networks]' \
+        '--autostart[list networks with autostart enabled]' \
+        '--no-autostart[list networks with autostart disabled]' \
+        '--uuid[list uuid'\''s only]' \
+        '--name[list network names only]' \
+        '--table[list table (default)]' \
+        "*: :_files"
+
+}
+
+function _virsh_net-name {
+    _arguments \
+        "*: :_files"
+
+}
+
+function _virsh_net-start {
+    _arguments \
+        "*: :_files"
+
+}
+
+function _virsh_net-undefine {
+    _arguments \
+        "*: :_files"
+
+}
+
+function _virsh_net-update {
+    _arguments \
+        '--parent-index[which parent object to search through]' \
+        '--config[affect next network startup]' \
+        '--live[affect running network]' \
+        '--current[affect current state of network]' \
+        "*: :_files"
+
+}
+
+function _virsh_net-uuid {
+    _arguments \
+        "*: :_files"
+
+}
+
+function _virsh_net-port-list {
+    _arguments \
+        '--uuid[list uuid'\''s only]' \
+        '--table[list table (default)]' \
+        "*: :_files"
+
+}
+
+function _virsh_net-port-create {
+    _arguments \
+        '--validate[validate the XML against the schema]' \
+        "*: :_files"
+
+}
+
+function _virsh_net-port-dumpxml {
+    _arguments \
+        "*: :_files"
+
+}
+
+function _virsh_net-port-delete {
+    _arguments \
+        "*: :_files"
+
+}
+
+function _virsh_nodedev-create {
+    _arguments \
+        "*: :_files"
+
+}
+
+function _virsh_nodedev-destroy {
+    _arguments \
+        "*: :_files"
+
+}
+
+function _virsh_nodedev-detach {
+    _arguments \
+        '--driver[pci device assignment backend driver (e.g. '\''vfio'\'' or '\''kvm'\'')]' \
+        "*: :_files"
+
+}
+
+function _virsh_nodedev-dumpxml {
+    _arguments \
+        "*: :_files"
+
+}
+
+function _virsh_nodedev-list {
+    _arguments \
+        '--tree[list devices in a tree]' \
+        '--cap[capability names, separated by comma]' \
+        '--inactive[list inactive devices]' \
+        '--all[list inactive & active devices]' \
+        "*: :_files"
+
+}
+
+function _virsh_nodedev-reattach {
+    _arguments \
+        "*: :_files"
+
+}
+
+function _virsh_nodedev-reset {
+    _arguments \
+        "*: :_files"
+
+}
+
+function _virsh_nodedev-event {
+    _arguments \
+        '--device[filter by node device name]' \
+        '--event[which event type to wait for]' \
+        '--loop[loop until timeout or interrupt, rather than one-shot]' \
+        '--timeout[timeout seconds]' \
+        '--list[list valid event types]' \
+        '--timestamp[show timestamp for each printed event]' \
+        "*: :_files"
+
+}
+
+function _virsh_nodedev-define {
+    _arguments \
+        "*: :_files"
+
+}
+
+function _virsh_nodedev-undefine {
+    _arguments \
+        "*: :_files"
+
+}
+
+function _virsh_nodedev-start {
+    _arguments \
+        "*: :_files"
+
+}
+
+function _virsh_nodedev-autostart {
+    _arguments \
+        '--disable[disable autostarting]' \
+        "*: :_files"
+
+}
+
+function _virsh_nodedev-info {
+    _arguments \
+        "*: :_files"
+
+}
+
+function _virsh_secret-define {
+    _arguments \
+        '--validate[validate the XML against the schema]' \
+        "*: :_files"
+
+}
+
+function _virsh_secret-dumpxml {
+    _arguments \
+        "*: :_files"
+
+}
+
+function _virsh_secret-event {
+    _arguments \
+        '--secret[filter by secret name or uuid]' \
+        '--event[which event type to wait for]' \
+        '--loop[loop until timeout or interrupt, rather than one-shot]' \
+        '--timeout[timeout seconds]' \
+        '--list[list valid event types]' \
+        '--timestamp[show timestamp for each printed event]' \
+        "*: :_files"
+
+}
+
+function _virsh_secret-get-value {
+    _arguments \
+        '--plain[get value without converting to base64]' \
+        "*: :_files"
+
+}
+
+function _virsh_secret-list {
+    _arguments \
+        '--ephemeral[list ephemeral secrets]' \
+        '--no-ephemeral[list non-ephemeral secrets]' \
+        '--private[list private secrets]' \
+        '--no-private[list non-private secrets]' \
+        "*: :_files"
+
+}
+
+function _virsh_secret-set-value {
+    _arguments \
+        '--file[read secret from file]' \
+        '--plain[read the secret from file without converting from base64]' \
+        '--interactive[read the secret from the terminal]' \
+        '--base64[base64-encoded secret value]' \
+        "*: :_files"
+
+}
+
+function _virsh_secret-undefine {
+    _arguments \
+        "*: :_files"
+
+}
+
+function _virsh_snapshot-create {
+    _arguments \
+        '--xmlfile[domain snapshot XML]' \
+        '--redefine[redefine metadata for existing snapshot]' \
+        '--current[with redefine, set current snapshot]' \
+        '--no-metadata[take snapshot but create no metadata]' \
+        '--halt[halt domain after snapshot is created]' \
+        '--disk-only[capture disk state but not vm state]' \
+        '--reuse-external[reuse any existing external files]' \
+        '--quiesce[quiesce guest'\''s file systems]' \
+        '--atomic[require atomic operation]' \
+        '--live[take a live snapshot]' \
+        '--validate[validate the XML against the schema]' \
+        "*: :_files"
+
+}
+
+function _virsh_snapshot-create-as {
+    _arguments \
+        '--name[name of snapshot]' \
+        '--description[description of snapshot]' \
+        '--print-xml[print XML document rather than create]' \
+        '--no-metadata[take snapshot but create no metadata]' \
+        '--halt[halt domain after snapshot is created]' \
+        '--disk-only[capture disk state but not vm state]' \
+        '--reuse-external[reuse any existing external files]' \
+        '--quiesce[quiesce guest'\''s file systems]' \
+        '--atomic[require atomic operation]' \
+        '--live[take a live snapshot]' \
+        '--validate[validate the XML against the schema]' \
+        '--memspec[memory attributes: \[file=\]name\[,snapshot=type\]]' \
+        "*: :_files"
+
+}
+
+function _virsh_snapshot-current {
+    _arguments \
+        '--name[list the name, rather than the full xml]' \
+        '--security-info[include security sensitive information in XML dump]' \
+        '--snapshotname[name of existing snapshot to make current]' \
+        "*: :_files"
+
+}
+
+function _virsh_snapshot-delete {
+    _arguments \
+        '--snapshotname[snapshot name]' \
+        '--current[delete current snapshot]' \
+        '--children[delete snapshot and all children]' \
+        '--children-only[delete children but not snapshot]' \
+        '--metadata[delete only libvirt metadata, leaving snapshot contents behind]' \
+        "*: :_files"
+
+}
+
+function _virsh_snapshot-dumpxml {
+    _arguments \
+        '--security-info[include security sensitive information in XML dump]' \
+        "*: :_files"
+
+}
+
+function _virsh_snapshot-edit {
+    _arguments \
+        '--snapshotname[snapshot name]' \
+        '--current[also set edited snapshot as current]' \
+        '--rename[allow renaming an existing snapshot]' \
+        '--clone[allow cloning to new name]' \
+        "*: :_files"
+
+}
+
+function _virsh_snapshot-info {
+    _arguments \
+        '--snapshotname[snapshot name]' \
+        '--current[info on current snapshot]' \
+        "*: :_files"
+
+}
+
+function _virsh_snapshot-list {
+    _arguments \
+        '--parent[add a column showing parent snapshot]' \
+        '--roots[list only snapshots without parents]' \
+        '--leaves[list only snapshots without children]' \
+        '--no-leaves[list only snapshots that are not leaves (with children)]' \
+        '--metadata[list only snapshots that have metadata that would prevent undefine]' \
+        '--no-metadata[list only snapshots that have no metadata managed by libvirt]' \
+        '--inactive[filter by snapshots taken while inactive]' \
+        '--active[filter by snapshots taken while active (full system snapshots)]' \
+        '--disk-only[filter by disk-only snapshots]' \
+        '--internal[filter by internal snapshots]' \
+        '--external[filter by external snapshots]' \
+        '--tree[list snapshots in a tree]' \
+        '--from[limit list to children of given snapshot]' \
+        '--current[limit list to children of current snapshot]' \
+        '--descendants[with --from, list all descendants]' \
+        '--name[list snapshot names only]' \
+        '--topological[sort list topologically rather than by name]' \
+        "*: :_files"
+
+}
+
+function _virsh_snapshot-parent {
+    _arguments \
+        '--snapshotname[find parent of snapshot name]' \
+        '--current[find parent of current snapshot]' \
+        "*: :_files"
+
+}
+
+function _virsh_snapshot-revert {
+    _arguments \
+        '--snapshotname[snapshot name]' \
+        '--current[revert to current snapshot]' \
+        '--running[after reverting, change state to running]' \
+        '--paused[after reverting, change state to paused]' \
+        '--force[try harder on risky reverts]' \
+        "*: :_files"
+
+}
+
+function _virsh_backup-begin {
+    _arguments \
+        '--backupxml[domain backup XML]' \
+        '--checkpointxml[domain checkpoint XML]' \
+        '--reuse-external[reuse files provided by caller]' \
+        "*: :_files"
+
+}
+
+function _virsh_backup-dumpxml {
+    _arguments \
+        "*: :_files"
+
+}
+
+function _virsh_find-storage-pool-sources-as {
+    _arguments \
+        '--host[optional host to query]' \
+        '--port[optional port to query]' \
+        '--initiator[optional initiator IQN to use for query]' \
+        "*: :_files"
+
+}
+
+function _virsh_find-storage-pool-sources {
+    _arguments \
+        '--srcSpec[optional file of source xml to query for pools]' \
+        "*: :_files"
+
+}
+
+function _virsh_pool-autostart {
+    _arguments \
+        '--disable[disable autostarting]' \
+        "*: :_files"
+
+}
+
+function _virsh_pool-build {
+    _arguments \
+        '--no-overwrite[do not overwrite any existing data]' \
+        '--overwrite[overwrite any existing data]' \
+        "*: :_files"
+
+}
+
+function _virsh_pool-create-as {
+    _arguments \
+        '--print-xml[print XML document, but don'\''t define/create]' \
+        '--source-host[source-host for underlying storage]' \
+        '--source-path[source path for underlying storage]' \
+        '--source-dev[source device for underlying storage]' \
+        '--source-name[source name for underlying storage]' \
+        '--target[target for underlying storage]' \
+        '--source-format[format for underlying storage]' \
+        '--auth-type[auth type to be used for underlying storage]' \
+        '--auth-username[auth username to be used for underlying storage]' \
+        '--secret-usage[auth secret usage to be used for underlying storage]' \
+        '--secret-uuid[auth secret UUID to be used for underlying storage]' \
+        '--adapter-name[adapter name to be used for underlying storage]' \
+        '--adapter-wwnn[adapter wwnn to be used for underlying storage]' \
+        '--adapter-wwpn[adapter wwpn to be used for underlying storage]' \
+        '--adapter-parent[adapter parent scsi_hostN to be used for underlying vHBA storage]' \
+        '--adapter-parent-wwnn[adapter parent scsi_hostN wwnn to be used for underlying vHBA storage]' \
+        '--adapter-parent-wwpn[adapter parent scsi_hostN wwpn to be used for underlying vHBA storage]' \
+        '--adapter-parent-fabric-wwn[adapter parent scsi_hostN fabric_wwn to be used for underlying vHBA storage]' \
+        '--source-protocol-ver[nfsvers value for NFS pool mount option]' \
+        '--source-initiator[initiator iqn for underlying storage]' \
+        '--build[build the pool as normal]' \
+        '--no-overwrite[do not overwrite any existing data]' \
+        '--overwrite[overwrite any existing data]' \
+        "*: :_files"
+
+}
+
+function _virsh_pool-create {
+    _arguments \
+        '--build[build the pool as normal]' \
+        '--no-overwrite[do not overwrite any existing data]' \
+        '--overwrite[overwrite any existing data]' \
+        "*: :_files"
+
+}
+
+function _virsh_pool-define-as {
+    _arguments \
+        '--print-xml[print XML document, but don'\''t define/create]' \
+        '--source-host[source-host for underlying storage]' \
+        '--source-path[source path for underlying storage]' \
+        '--source-dev[source device for underlying storage]' \
+        '--source-name[source name for underlying storage]' \
+        '--target[target for underlying storage]' \
+        '--source-format[format for underlying storage]' \
+        '--auth-type[auth type to be used for underlying storage]' \
+        '--auth-username[auth username to be used for underlying storage]' \
+        '--secret-usage[auth secret usage to be used for underlying storage]' \
+        '--secret-uuid[auth secret UUID to be used for underlying storage]' \
+        '--adapter-name[adapter name to be used for underlying storage]' \
+        '--adapter-wwnn[adapter wwnn to be used for underlying storage]' \
+        '--adapter-wwpn[adapter wwpn to be used for underlying storage]' \
+        '--adapter-parent[adapter parent scsi_hostN to be used for underlying vHBA storage]' \
+        '--adapter-parent-wwnn[adapter parent scsi_hostN wwnn to be used for underlying vHBA storage]' \
+        '--adapter-parent-wwpn[adapter parent scsi_hostN wwpn to be used for underlying vHBA storage]' \
+        '--adapter-parent-fabric-wwn[adapter parent scsi_hostN fabric_wwn to be used for underlying vHBA storage]' \
+        '--source-protocol-ver[nfsvers value for NFS pool mount option]' \
+        '--source-initiator[initiator iqn for underlying storage]' \
+        "*: :_files"
+
+}
+
+function _virsh_pool-define {
+    _arguments \
+        '--validate[validate the XML against the schema]' \
+        "*: :_files"
+
+}
+
+function _virsh_pool-delete {
+    _arguments \
+        "*: :_files"
+
+}
+
+function _virsh_pool-destroy {
+    _arguments \
+        "*: :_files"
+
+}
+
+function _virsh_pool-dumpxml {
+    _arguments \
+        '--inactive[show inactive defined XML]' \
+        "*: :_files"
+
+}
+
+function _virsh_pool-edit {
+    _arguments \
+        "*: :_files"
+
+}
+
+function _virsh_pool-info {
+    _arguments \
+        '--bytes[Return pool info in bytes]' \
+        "*: :_files"
+
+}
+
+function _virsh_pool-list {
+    _arguments \
+        '--inactive[list inactive pools]' \
+        '--all[list inactive & active pools]' \
+        '--transient[list transient pools]' \
+        '--persistent[list persistent pools]' \
+        '--autostart[list pools with autostart enabled]' \
+        '--no-autostart[list pools with autostart disabled]' \
+        '--type[only list pool of specified type(s) (if supported)]' \
+        '--details[display extended details for pools]' \
+        '--uuid[list UUID of active pools only]' \
+        '--name[list name of active pools only]' \
+        "*: :_files"
+
+}
+
+function _virsh_pool-name {
+    _arguments \
+        "*: :_files"
+
+}
+
+function _virsh_pool-refresh {
+    _arguments \
+        "*: :_files"
+
+}
+
+function _virsh_pool-start {
+    _arguments \
+        '--build[build the pool as normal]' \
+        '--no-overwrite[do not overwrite any existing data]' \
+        '--overwrite[overwrite any existing data]' \
+        "*: :_files"
+
+}
+
+function _virsh_pool-undefine {
+    _arguments \
+        "*: :_files"
+
+}
+
+function _virsh_pool-uuid {
+    _arguments \
+        "*: :_files"
+
+}
+
+function _virsh_pool-event {
+    _arguments \
+        '--pool[filter by storage pool name or uuid]' \
+        '--event[which event type to wait for]' \
+        '--loop[loop until timeout or interrupt, rather than one-shot]' \
+        '--timeout[timeout seconds]' \
+        '--list[list valid event types]' \
+        '--timestamp[show timestamp for each printed event]' \
+        "*: :_files"
+
+}
+
+function _virsh_pool-capabilities {
+    _arguments \
+        "*: :_files"
+
+}
+
+function _virsh_vol-clone {
+    _arguments \
+        '--pool[pool name or uuid]' \
+        '--prealloc-metadata[preallocate metadata (for qcow2 instead of full allocation)]' \
+        '--reflink[use btrfs COW lightweight copy]' \
+        "*: :_files"
+
+}
+
+function _virsh_vol-create-as {
+    _arguments \
+        '--allocation[initial allocation size, as scaled integer (default bytes)]' \
+        '--format[file format type raw,bochs,qcow,qcow2,qed,vmdk]' \
+        '--backing-vol[the backing volume if taking a snapshot]' \
+        '--backing-vol-format[format of backing volume if taking a snapshot]' \
+        '--prealloc-metadata[preallocate metadata (for qcow2 instead of full allocation)]' \
+        '--print-xml[print XML document, but don'\''t define/create]' \
+        "*: :_files"
+
+}
+
+function _virsh_vol-create {
+    _arguments \
+        '--prealloc-metadata[preallocate metadata (for qcow2 instead of full allocation)]' \
+        "*: :_files"
+
+}
+
+function _virsh_vol-create-from {
+    _arguments \
+        '--inputpool[pool name or uuid of the input volume'\''s pool]' \
+        '--prealloc-metadata[preallocate metadata (for qcow2 instead of full allocation)]' \
+        '--reflink[use btrfs COW lightweight copy]' \
+        "*: :_files"
+
+}
+
+function _virsh_vol-delete {
+    _arguments \
+        '--pool[pool name or uuid]' \
+        '--delete-snapshots[delete snapshots associated with volume (must be supported by storage driver)]' \
+        "*: :_files"
+
+}
+
+function _virsh_vol-download {
+    _arguments \
+        '--pool[pool name or uuid]' \
+        '--offset[volume offset to download from]' \
+        '--length[amount of data to download]' \
+        '--sparse[preserve sparseness of volume]' \
+        "*: :_files"
+
+}
+
+function _virsh_vol-dumpxml {
+    _arguments \
+        '--pool[pool name or uuid]' \
+        "*: :_files"
+
+}
+
+function _virsh_vol-info {
+    _arguments \
+        '--pool[pool name or uuid]' \
+        '--bytes[sizes are represented in bytes rather than pretty units]' \
+        '--physical[return the physical size of the volume in allocation field]' \
+        "*: :_files"
+
+}
+
+function _virsh_vol-key {
+    _arguments \
+        '--pool[pool name or uuid]' \
+        "*: :_files"
+
+}
+
+function _virsh_vol-list {
+    _arguments \
+        '--details[display extended details for volumes]' \
+        "*: :_files"
+
+}
+
+function _virsh_vol-name {
+    _arguments \
+        "*: :_files"
+
+}
+
+function _virsh_vol-path {
+    _arguments \
+        '--pool[pool name or uuid]' \
+        "*: :_files"
+
+}
+
+function _virsh_vol-pool {
+    _arguments \
+        '--uuid[return the pool uuid rather than pool name]' \
+        "*: :_files"
+
+}
+
+function _virsh_vol-resize {
+    _arguments \
+        '--pool[pool name or uuid]' \
+        '--allocate[allocate the new capacity, rather than leaving it sparse]' \
+        '--delta[use capacity as a delta to current size, rather than the new size]' \
+        '--shrink[allow the resize to shrink the volume]' \
+        "*: :_files"
+
+}
+
+function _virsh_vol-upload {
+    _arguments \
+        '--pool[pool name or uuid]' \
+        '--offset[volume offset to upload to]' \
+        '--length[amount of data to upload]' \
+        '--sparse[preserve sparseness of volume]' \
+        "*: :_files"
+
+}
+
+function _virsh_vol-wipe {
+    _arguments \
+        '--pool[pool name or uuid]' \
+        '--algorithm[perform selected wiping algorithm]' \
+        "*: :_files"
+
+}
+
+function _virsh_cd {
+    _arguments \
+        '--dir[directory to switch to (default: home or else root)]' \
+        "*: :_files"
+
+}
+
+function _virsh_echo {
+    _arguments \
+        '--shell[escape for shell use]' \
+        '--xml[escape for XML use]' \
+        '--split[split each argument on '\'','\''; '\'',,'\'' is an escape sequence]' \
+        '--err[output to stderr]' \
+        "*: :_files"
+
+}
+
+function _virsh_exit {
+    _arguments \
+        "*: :_files"
+
+}
+
+function _virsh_help {
+    _arguments \
+        '--command[Prints global help, command specific help, or help for a group of related commands]' \
+        "*: :_files"
+
+}
+
+function _virsh_pwd {
+    _arguments \
+        "*: :_files"
+
+}
+
+function _virsh_quit {
+    _arguments \
+        "*: :_files"
+
+}
+
+function _virsh_connect {
+    _arguments \
+        '--name[hypervisor connection URI]' \
+        '--readonly[read-only connection]' \
+        "*: :_files"
+
+}
+
+_virsh "$@"
+
