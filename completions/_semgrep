@@ -1,0 +1,412 @@
+#compdef semgrep
+
+# Auto-generated with h2o
+
+
+function _semgrep {
+    local line state
+
+    function _commands {
+        local -a commands
+        commands=(
+            'ci:Run Semgrep on a git diff (for use in CI)'
+            'install-semgrep-pro:Install the Semgrep Pro Engine'
+            'login:Obtain and save credentials for semgrep.dev'
+            'logout:Remove locally stored credentials to semgrep.dev'
+            'lsp:Start the Semgrep LSP server (useful for IDEs)'
+            'publish:Upload rule to semgrep.dev'
+            'scan:Run Semgrep rules on local folders or files'
+            'show:Show various types of information'
+            'test:Test the rules (EXPERIMENTAL improvements over scan --test)'
+            'validate:Validate the rules (EXPERIMENTAL improvements over scan --validate)'
+            'mcp:Start the Semgrep MCP server'
+        )
+        _describe 'command' commands
+    }
+ 
+
+    _arguments -C \
+        {-h,--help}'[Show this message and exit.]' \
+        ': :->cmd' \
+        '*:: :->subcmd'
+
+    case $state in
+    (cmd)
+        _commands
+        ;;
+    (subcmd)
+        case $line[1] in
+        (ci)
+            _semgrep_ci
+            ;;
+
+        (install-semgrep-pro)
+            _semgrep_install-semgrep-pro
+            ;;
+
+        (login)
+            _semgrep_login
+            ;;
+
+        (logout)
+            _semgrep_logout
+            ;;
+
+        (lsp)
+            _semgrep_lsp
+            ;;
+
+        (publish)
+            _semgrep_publish
+            ;;
+
+        (scan)
+            _semgrep_scan
+            ;;
+
+        (show)
+            _semgrep_show
+            ;;
+
+        (test)
+            _semgrep_test
+            ;;
+
+        (validate)
+            _semgrep_validate
+            ;;
+
+        (mcp)
+            _semgrep_mcp
+            ;;
+
+        esac
+        ;;
+     esac
+
+}
+
+function _semgrep_ci {
+    _arguments \
+        {-a,--autofix}'[Currently ignored.]' \
+        '--allow-local-builds[Experimental: allow building projects contained in the repository. This allows Semgrep to identify dependencies and dependency relationships when lockfiles are not present or are insufficient. However, building code may inherently require the execution of code contained in the scanned project or in its dependencies, which is a security risk.]' \
+        '--allow-untrusted-validators[Allows running rules with validators from origins other than semgrep.dev. Avoid running rules from origins you don'\''t trust.]' \
+        '--baseline-commit[Only show results that are not found in this commit hash. Aborts run if not currently in a git directory, there are unstaged changes, or given baseline hash doesn'\''t exist.]' \
+        '--code[Run Semgrep Code (SAST) product.]' \
+        {-d,--dump-command-for-core}'[<internal, do not use>]' \
+        '--dataflow-traces[Explain how non-local values reach the location of a finding (only affects text and SARIF output).]' \
+        '--disable-nosem[negates --enable-nosem]' \
+        '--disable-version-check[negates --enable-version-check]' \
+        '--dry-run[When set, will not start a scan on semgrep.dev and will not report findings. Instead will print out json objects it would have sent.]' \
+        '--dryrun[Currently ignored.]' \
+        '--emacs[Output results in Emacs single-line format.]' \
+        '--emacs-output[Write a copy of the emacs output to a file or post to URL.]' \
+        '--enable-nosem[Enables '\''nosem'\''. Findings will not be reported on lines containing a '\''nosem'\'' comment at the end. Enabled by default.]' \
+        '--enable-version-check[Checks Semgrep servers to see if the latest version is run; disabling this may reduce exit time after returning results.]' \
+        '--exclude[Skip any file or directory whose path that matches PATTERN. '\''--exclude=*.py'\'' will ignore the following: '\''foo.py'\'', '\''src/foo.py'\'', '\''foo.py/bar.sh'\''. '\''--exclude=tests'\'' will ignore '\''tests/foo.py'\'' as well as '\''a/b/tests/c/foo.py'\''. Multiple '\''--exclude'\'' options may be specified. PATTERN is a glob-style pattern that uses the same syntax as gitignore and semgrepignore, which is documented at https://git-scm.com/docs/gitignore#_pattern_format]' \
+        '--exclude-minified-files[Skip minified files. These are files that are < 7% whitespace, or which have an average of > 1000 bytes per line. By default minified files are scanned.]' \
+        '--exclude-rule[Skip any rule with the given id. Can add multiple times.]' \
+        {-f,-c,--config}'[Not supported in '\''ci'\'' mode]' \
+        '--fake-backend[Internal flag.]' \
+        '--files-with-matches[Output only the names of files containing matches. REQUIRES --experimental]' \
+        '--force-color[Always include ANSI color in the output, even if not writing to a TTY; defaults to using the TTY status]' \
+        '--gitlab-sast[Output results in GitLab SAST format.]' \
+        '--gitlab-sast-output[Write a copy of the GitLab SAST output to a file or post to URL.]' \
+        '--gitlab-secrets[Output results in GitLab Secrets format.]' \
+        '--gitlab-secrets-output[Write a copy of the GitLab Secrets output to a file or post to URL.]' \
+        '--historical-secrets[Scans git history using Secrets rules.]' \
+        '--include[Specify files or directories that should be scanned by semgrep, excluding other files. This filter is applied after these other filters: '\''--exclude'\'' options, any filtering done by git (or other SCM), and filtering by '\''.semgrepignore'\'' files. Multiple '\''--include'\'' options can be specified. A file path is selected if it matches at least one of the include patterns. PATTERN is a glob-style pattern such as '\''foo.*'\'' that must match the path. For example, specifying the language with '\''-l javascript'\'' might preselect files '\''src/foo.jsx'\'' and '\''lib/bar.js'\''. Specifying one of '\''--include=src'\'', '\''--include=*.jsx'\'', or '\''--include=src/foo.*'\'' will restrict the selection to the single file '\''src/foo.jsx'\''. A choice of multiple '\''--include'\'' patterns can be specified. For example, '\''--include=foo.* --include=bar.*'\'' will select both '\''src/foo.jsx'\'' and '\''lib/bar.js'\''. Glob-style patterns follow the syntax supported by gitignore and semgrepignore, which is documented at https://git-scm.com/docs/gitignore#_pattern_format]' \
+        '--incremental-output[Output results incrementally. REQUIRES --experimental]' \
+        '--interfile-timeout[Maximum time to spend on interfile analysis. If set to 0 will not have time limit. Defaults to 0 s for all CLI scans. For CI scans, it defaults to 3 hours.]' \
+        '--internal-ci-scan-results[Internal flag.]' \
+        {-j,--jobs}'[Degree of parallelism to use for parallel scanning, either using shared-memory threads (the default) or the legacy process-based parallelism (enabled with the deprecated --x-parmap flag). Semgrep recommends under-provisioning the job count by 10-15 percent to account for overhead from the garbage collector managing the shared heap (for example, on a 12-core box, a -j value of 10 or 11 would be considered a good starting value). We highly recommend that users do not _oversubscribe_ threads to CPUs, since this has been seen to induce significant GC latency and slow scan times. (Doing so will log a warning in debug mode.) The default jobs value is derived from the number of logical cores that are detected by Semgrep, scaled by 0.85.]' \
+        '--json[Output results in Semgrep'\''s JSON format.]' \
+        '--json-output[Write a copy of the json output to a file or post to URL.]' \
+        '--junit-xml[Output results in JUnit XML format.]' \
+        '--junit-xml-output[Write a copy of the JUnit XML output to a file or post to URL.]' \
+        '--log-backend[Internal flag.]' \
+        '--matching-explanations[Add debugging information in the JSON output to trace how different parts of a rule are matched (a.k.a., "Inspect Rule" in the Semgrep playground)]' \
+        '--max-chars-per-line[Maximum number of characters to show per line.]' \
+        '--max-lines-per-finding[Maximum number of lines of code that will be shown for each match before trimming (set to 0 for unlimited).]' \
+        '--max-log-list-entries[Maximum number of entries that will be shown in the log (e.g., list of rule ids, list of skipped files). A zero or negative value disables this filter. Defaults to 100]' \
+        '--max-memory[Maximum system memory in MiB to use during the interfile pre-processing phase, or when running a rule on a single file. If set to 0, will not have memory limit. Defaults to 0. For CI scans that use the Pro Engine, defaults to 5000 MiB.]' \
+        '--max-target-bytes[Maximum size for a file to be scanned by Semgrep, e.g '\''1.5MB'\''. Any input program larger than this will be ignored. A zero or negative value disables this filter. Defaults to 1000000 bytes]' \
+        '--metrics[Configures how usage metrics are sent to the Semgrep server. If '\''auto'\'', metrics are sent whenever the --config value pulls from the Semgrep server or if the user is logged in. If '\''on'\'', metrics are always sent. If '\''off'\'', metrics are disabled altogether and not sent. If absent, the SEMGREP_SEND_METRICS environment variable value will be used. If no environment variable, defaults to '\''auto'\''.]' \
+        '--no-autofix[negates -a/--autofix]' \
+        '--no-dryrun[negates --dryrun]' \
+        '--no-exclude-minified-files[negates --exclude-minified-files]' \
+        '--no-force-color[negates --force-color]' \
+        '--no-git-ignore[negates --use-git-ignore]' \
+        '--no-rewrite-rule-ids[negates --rewrite-rule-ids]' \
+        '--no-secrets-validation[Disables secret validation.]' \
+        '--no-suppress-errors[negates --suppress-errors]' \
+        {-o,--output}'[Save search results to a file or post to URL. Default is to print to stdout.]' \
+        '--optimizations[Turn on/off optimizations. Default = '\''all'\''. Use '\''none'\'' to turn all optimizations off.]' \
+        '--oss-only[Run using only the OSS engine, even if the Semgrep Pro toggle is on. This may still run Pro rules, but only using the OSS features.]' \
+        '--pro[Inter-file analysis and Pro languages (currently Apex, C#, and Elixir. Requires Semgrep Pro Engine. See https://semgrep.dev/products/pro-engine/ for more.]' \
+        '--pro-intrafile[Intra-file inter-procedural taint analysis. Implies --pro-languages. Requires Semgrep Pro Engine. See https://semgrep.dev/products/pro-engine/ for more.]' \
+        '--pro-languages[Enable Pro languages (currently Apex, C#, and Elixir). Requires Semgrep Pro Engine. See https://semgrep.dev/products/pro-engine/ for more.]' \
+        '--pro-path-sensitive[Path sensitivity. Implies --pro-intrafile. Requires Semgrep Pro Engine. See https://semgrep.dev/products/pro-engine/ for more.]' \
+        '--rewrite-rule-ids[Rewrite rule ids when they appear in nested sub-directories (Rule '\''foo'\'' in test/rules.yaml will be renamed '\''test.foo'\'').]' \
+        '--sarif[Output results in SARIF format.]' \
+        '--sarif-output[Write a copy of the SARIF output to a file or post to URL.]' \
+        '--scan-unknown-extensions[If true, target files specified directly on the command line will bypass normal language detection. They will be analyzed according to the value of --lang if applicable, or otherwise with the analyzers/languages specified in the Semgrep rule(s) regardless of file extension or file type. This setting doesn'\''t apply to target files discovered by scanning folders. Defaults to false.]' \
+        '--secrets[Run Semgrep Secrets product, including support for secret validation. Requires access to Secrets, contact support@semgrep.com for more information.]' \
+        '--semgrepignore-v2[\[DEPRECATED\] '\''--semgrepignore-v2'\'' used to force the use of the newer Semgrepignore v2 implementation for discovering and filtering target files. It is now the default and only behavior. The transitional option '\''--no-semgrepignore-v2'\'' is no longer available.]' \
+        '--skip-unknown-extensions[negates --scan-unknown-extensions]' \
+        '--subdir[Scan only a subdirectory of this folder. This creates a project specific to the subdirectory unless SEMGREP_REPO_DISPLAY_NAME is set. Expects a relative path. (Note that when two scans have the same SEMGREP_REPO_DISPLAY_NAME but different targeted directories, the results of the second scan overwrite the first.)]' \
+        '--supply-chain[Run Semgrep Supply Chain product.]' \
+        '--suppress-errors[Configures how the CI command reacts when an error occurs. If true, encountered errors are suppressed and the exit code is zero (success). If false, encountered errors are not suppressed and the exit code is non-zero (failure).]' \
+        '--text[Output results in text format.]' \
+        '--text-output[Write a copy of the text output to a file or post to URL.]' \
+        '--timeout[Maximum time to spend running a rule on a single file in seconds. If set to 0 will not have time limit. Defaults to 5.0 s.]' \
+        '--timeout-threshold[Maximum number of rules that can time out on a file before the file is skipped. If set to 0 will not have limit. Defaults to 3.]' \
+        '--use-git-ignore['\''--use-git-ignore'\'' is Semgrep'\''s default behavior. Under the default behavior, Git-tracked files are not excluded by Gitignore rules and only untracked files are excluded by Gitignore rules. '\''--no-git-ignore'\'' causes semgrep to not call '\''git'\'' and not consult '\''.gitignore'\'' files to determine which files semgrep should scan. As a result of '\''--no-git-ignore'\'', gitignored files and Git submodules will be scanned unless excluded by other means ('\''.semgrepignore'\'', '\''--exclude'\'', etc.). This flag has no effect if the scanning root is not in a Git repository.]' \
+        '--vim[Output results in vim single-line format.]' \
+        '--vim-output[Write a copy of the vim output to a file or post to URL.]' \
+        '--debug[All of --verbose, but with additional debugging information.]' \
+        '--develop[Living on the edge.]' \
+        '--experimental[Enable experimental features.]' \
+        '--help[Show this help in format FMT. The value FMT must be one of auto, pager, groff or plain. With auto, the format is pager or plain whenever the TERM env var is dumb or undefined.]' \
+        '--legacy[Prefer old (legacy) behavior.]' \
+        '--no-trace[negates --trace]' \
+        '--profile[Record profiles via Pyro Caml. By default sends them to localhost:4040]' \
+        {-q,--quiet}'[Only output findings.]' \
+        '--trace[Record traces from Semgrep scans to help debugging. This feature is meant for internal use and may be changed or removed without warning. Currently only used by `semgrep lsp`.]' \
+        '--trace-endpoint[Endpoint to send OpenTelemetry traces to, if `--trace` is present. The value may be `semgrep-prod` (default), `semgrep-dev`, `semgrep-local`, or any valid URL. This feature is meant for internal use and may be changed or removed without warning. Currently only used by `semgrep lsp`.]' \
+        {-v,--verbose}'[Show more details about what rules are running, which files failed to parse, etc.]' \
+        '--x-disable-transitive-reachability[\[INTERNAL\] Disable transitive reachability analysis regardless of app-based configuration.]' \
+        '--x-dump-rule-partitions[Internal flag.]' \
+        '--x-dump-rule-partitions-dir[Internal flag.]' \
+        '--x-dump-rule-partitions-strategy[Internal flag.]' \
+        '--x-eio[\[INTERNAL\] <deprecated>]' \
+        '--x-ignore-semgrepignore-files[\[INTERNAL\] Ignore all '\''.semgrepignore'\'' files found in the project tree for the purpose of selecting target files to be scanned by semgrep. Other filters may still apply. THIS OPTION IS NOT PART OF THE SEMGREP API AND MAY CHANGE OR DISAPPEAR WITHOUT NOTICE.]' \
+        '--x-mcp[\[INTERNAL\] This flag indicates that the scan is run by the MCP server. It is used to output extra info (e.g. rules, num bytes scanned) at the end of the scan for the MCP server to use and makes sure that metrics are not sent so that the MCP server can send its own metrics.]' \
+        '--x-merge-partial-results-dir[Internal flag.]' \
+        '--x-merge-partial-results-output[Internal flag.]' \
+        '--x-no-python-schema-validation[\[INTERNAL\] Skip JSON schema validation; rely on osemgrep parser to validate rules files]' \
+        '--x-parmap[\[INTERNAL\] Rely on legacy Parmap-based parallelism]' \
+        '--x-partial-config[Internal flag.]' \
+        '--x-partial-output[Internal flag.]' \
+        '--x-pro-naming[\[INTERNAL\] Do not use]' \
+        '--x-semgrepignore-filename[\[INTERNAL\] Files named FILENAME shall be consulted instead of the files named '\''.semgrepignore'\''. This option can be useful for testing semgrep on intentionally broken code that should normally be ignored.]':file:_files \
+        '--x-simple-profiling[Upon exit, print on stderr a report showing how long certain operations took, in an unspecified text format.]' \
+        {--x-tr,--x-enable-transitive-reachability}'[\[INTERNAL\] Enable transitive reachability analysis regardless of app-based configuration. Typically used with '\''--allow-local-builds'\''.]' \
+        '--x-upload-partial-results[Internal flag.]' \
+        '--x-upload-partial-results-scan-id[Internal flag.]' \
+        '--x-validate-partial-results-actual[Internal flag.]' \
+        '--x-validate-partial-results-expected[Internal flag.]' \
+        "*: :_files"
+
+}
+
+function _semgrep_install-semgrep-pro {
+    _arguments \
+        '--x-eio[\[INTERNAL\] <deprecated>]' \
+        '--x-no-python-schema-validation[\[INTERNAL\] Skip JSON schema validation; rely on osemgrep parser to validate rules files]' \
+        '--x-parmap[\[INTERNAL\] Rely on legacy Parmap-based parallelism]' \
+        '--x-simple-profiling[Upon exit, print on stderr a report showing how long certain operations took, in an unspecified text format.]' \
+        '--custom-binary[Supply a binary to use as semgrep-core-proprietary, rather than downloading it. You are responsible for ensuring compatibility.]' \
+        '--debug[All of --verbose, but with additional debugging information.]' \
+        '--develop[Living on the edge.]' \
+        '--experimental[Enable experimental features.]' \
+        '--help[Show this help in format FMT. The value FMT must be one of auto, pager, groff or plain. With auto, the format is pager or plain whenever the TERM env var is dumb or undefined.]' \
+        '--legacy[Prefer old (legacy) behavior.]' \
+        '--no-trace[negates --trace]' \
+        '--profile[Record profiles via Pyro Caml. By default sends them to localhost:4040]' \
+        {-q,--quiet}'[Only output findings.]' \
+        '--trace[Record traces from Semgrep scans to help debugging. This feature is meant for internal use and may be changed or removed without warning. Currently only used by `semgrep lsp`.]' \
+        '--trace-endpoint[Endpoint to send OpenTelemetry traces to, if `--trace` is present. The value may be `semgrep-prod` (default), `semgrep-dev`, `semgrep-local`, or any valid URL. This feature is meant for internal use and may be changed or removed without warning. Currently only used by `semgrep lsp`.]' \
+        {-v,--verbose}'[Show more details about what rules are running, which files failed to parse, etc.]' \
+        "*: :_files"
+
+}
+
+function _semgrep_login {
+    _arguments \
+        '--force[Ignore saved login/provided token and force login (opens browser window)]' \
+        '--override-tty[Login from a non-interactive terminal. Used by agents calling to our MCP server.]' \
+        '--help[Show this message and exit.]' \
+        "*: :_files"
+
+}
+
+function _semgrep_logout {
+    _arguments \
+        '--x-eio[\[INTERNAL\] <deprecated>]' \
+        '--x-no-python-schema-validation[\[INTERNAL\] Skip JSON schema validation; rely on osemgrep parser to validate rules files]' \
+        '--x-parmap[\[INTERNAL\] Rely on legacy Parmap-based parallelism]' \
+        '--x-simple-profiling[Upon exit, print on stderr a report showing how long certain operations took, in an unspecified text format.]' \
+        '--debug[All of --verbose, but with additional debugging information.]' \
+        '--develop[Living on the edge.]' \
+        '--experimental[Enable experimental features.]' \
+        '--help[Show this help in format FMT. The value FMT must be one of auto, pager, groff or plain. With auto, the format is pager or plain whenever the TERM env var is dumb or undefined.]' \
+        '--legacy[Prefer old (legacy) behavior.]' \
+        '--no-trace[negates --trace]' \
+        '--profile[Record profiles via Pyro Caml. By default sends them to localhost:4040]' \
+        {-q,--quiet}'[Only output findings.]' \
+        '--trace[Record traces from Semgrep scans to help debugging. This feature is meant for internal use and may be changed or removed without warning. Currently only used by `semgrep lsp`.]' \
+        '--trace-endpoint[Endpoint to send OpenTelemetry traces to, if `--trace` is present. The value may be `semgrep-prod` (default), `semgrep-dev`, `semgrep-local`, or any valid URL. This feature is meant for internal use and may be changed or removed without warning. Currently only used by `semgrep lsp`.]' \
+        {-v,--verbose}'[Show more details about what rules are running, which files failed to parse, etc.]' \
+        "*: :_files"
+
+}
+
+function _semgrep_lsp {
+    _arguments \
+        '--no-x-eio-ls[negates --x-eio-ls]' \
+        '--x-eio[\[INTERNAL\] <deprecated>]' \
+        '--x-eio-ls[Run with '\''--x-eio-ls'\'' to use the new, experimental `Eio`-based language server.]' \
+        '--x-no-python-schema-validation[\[INTERNAL\] Skip JSON schema validation; rely on osemgrep parser to validate rules files]' \
+        '--x-parmap[\[INTERNAL\] Rely on legacy Parmap-based parallelism]' \
+        '--x-simple-profiling[Upon exit, print on stderr a report showing how long certain operations took, in an unspecified text format.]' \
+        '--debug[All of --verbose, but with additional debugging information.]' \
+        '--develop[Living on the edge.]' \
+        '--experimental[Enable experimental features.]' \
+        '--help[Show this help in format FMT. The value FMT must be one of auto, pager, groff or plain. With auto, the format is pager or plain whenever the TERM env var is dumb or undefined.]' \
+        '--legacy[Prefer old (legacy) behavior.]' \
+        '--no-trace[negates --trace]' \
+        '--profile[Record profiles via Pyro Caml. By default sends them to localhost:4040]' \
+        {-q,--quiet}'[Only output findings.]' \
+        '--trace[Record traces from Semgrep scans to help debugging. This feature is meant for internal use and may be changed or removed without warning. Currently only used by `semgrep lsp`.]' \
+        '--trace-endpoint[Endpoint to send OpenTelemetry traces to, if `--trace` is present. The value may be `semgrep-prod` (default), `semgrep-dev`, `semgrep-local`, or any valid URL. This feature is meant for internal use and may be changed or removed without warning. Currently only used by `semgrep lsp`.]' \
+        {-v,--verbose}'[Show more details about what rules are running, which files failed to parse, etc.]' \
+        "*: :_files"
+
+}
+
+function _semgrep_publish {
+    _arguments \
+        '--visibility[Sets visibility of the uploaded rules. If '\''org_private'\'', rules will be private to your org (default) If '\''unlisted'\'', rules will be listed in your org, but not listed to nonorg members If '\''public'\'', rules will be published to the Semgrep Registry (requires --registry-id)]' \
+        '--registry-id[If --visibility is set to public, this is the path the rule will have in the registry (example: python.flask.my-new-rule]' \
+        '--help[Show this message and exit.]' \
+        "*: :_files"
+
+}
+
+function _semgrep_scan {
+    _arguments \
+        "*: :_files"
+
+}
+
+
+function _semgrep_show {
+    local line state
+
+    function _commands {
+        local -a commands
+        commands=(
+            'resources:\[--json\] \[OPTION\]…'
+        )
+        _describe 'command' commands
+    }
+ 
+
+    _arguments -C \
+        '--help[Show this help in format FMT. The value FMT must be one of auto, pager, groff or plain. With auto, the format is pager or plain whenever the TERM env var is dumb or undefined.]' \
+        ': :->cmd' \
+        '*:: :->subcmd'
+
+    case $state in
+    (cmd)
+        _commands
+        ;;
+    (subcmd)
+        case $line[1] in
+        (resources)
+            _semgrep_show_resources
+            ;;
+
+        esac
+        ;;
+     esac
+
+}
+
+function _semgrep_show_resources {
+    _arguments \
+        '--x-eio[\[INTERNAL\] <deprecated>]' \
+        '--x-no-python-schema-validation[\[INTERNAL\] Skip JSON schema validation; rely on osemgrep parser to validate rules files]' \
+        '--x-parmap[\[INTERNAL\] Rely on legacy Parmap-based parallelism]' \
+        '--x-simple-profiling[Upon exit, print on stderr a report showing how long certain operations took, in an unspecified text format.]' \
+        '--json[Output results in JSON format.]' \
+        '--debug[All of --verbose, but with additional debugging information.]' \
+        '--develop[Living on the edge.]' \
+        '--experimental[Enable experimental features.]' \
+        '--help[Show this help in format FMT. The value FMT must be one of auto, pager, groff or plain. With auto, the format is pager or plain whenever the TERM env var is dumb or undefined.]' \
+        '--legacy[Prefer old (legacy) behavior.]' \
+        '--no-trace[negates --trace]' \
+        '--profile[Record profiles via Pyro Caml. By default sends them to localhost:4040]' \
+        {-q,--quiet}'[Only output findings.]' \
+        '--trace[Record traces from Semgrep scans to help debugging. This feature is meant for internal use and may be changed or removed without warning. Currently only used by `semgrep lsp`.]' \
+        '--trace-endpoint[Endpoint to send OpenTelemetry traces to, if `--trace` is present. The value may be `semgrep-prod` (default), `semgrep-dev`, `semgrep-local`, or any valid URL. This feature is meant for internal use and may be changed or removed without warning. Currently only used by `semgrep lsp`.]' \
+        {-v,--verbose}'[Show more details about what rules are running, which files failed to parse, etc.]' \
+        "*: :_files"
+
+}
+
+function _semgrep_test {
+    _arguments \
+        {-f,-c,--config}'[YAML configuration file, directory of YAML files ending in .yml|.yaml, URL of a configuration file, or Semgrep registry entry name.]' \
+        '--json[Output results in JSON format.]' \
+        '--matching-diagnosis[Whether to emit "matching diagnosis", which analyzes failing test annotation cases and matching explanations to determine why a rule did or did not match.]' \
+        '--no-test-ignore-todo[negates --test-ignore-todo]' \
+        '--strict[???.]' \
+        '--test-ignore-todo[If --test-ignore-todo, ignores rules marked as '\''#todoruleid:'\'' in test files.]' \
+        '--pro[support pro languages (currently Apex and Elixir)Requires Semgrep]' \
+        '--debug[All of --verbose, but with additional debugging information.]' \
+        '--develop[Living on the edge.]' \
+        '--experimental[Enable experimental features.]' \
+        '--help[Show this help in format FMT. The value FMT must be one of auto, pager, groff or plain. With auto, the format is pager or plain whenever the TERM env var is dumb or undefined.]' \
+        '--legacy[Prefer old (legacy) behavior.]' \
+        '--no-trace[negates --trace]' \
+        '--profile[Record profiles via Pyro Caml. By default sends them to localhost:4040]' \
+        {-q,--quiet}'[Only output findings.]' \
+        '--trace[Record traces from Semgrep scans to help debugging. This feature is meant for internal use and may be changed or removed without warning. Currently only used by `semgrep lsp`.]' \
+        '--trace-endpoint[Endpoint to send OpenTelemetry traces to, if `--trace` is present. The value may be `semgrep-prod` (default), `semgrep-dev`, `semgrep-local`, or any valid URL. This feature is meant for internal use and may be changed or removed without warning. Currently only used by `semgrep lsp`.]' \
+        {-v,--verbose}'[Show more details about what rules are running, which files failed to parse, etc.]' \
+        '--x-eio[\[INTERNAL\] <deprecated>]' \
+        '--x-no-python-schema-validation[\[INTERNAL\] Skip JSON schema validation; rely on osemgrep parser to validate rules files]' \
+        '--x-parmap[\[INTERNAL\] Rely on legacy Parmap-based parallelism]' \
+        '--x-simple-profiling[Upon exit, print on stderr a report showing how long certain operations took, in an unspecified text format.]' \
+        "*: :_files"
+
+}
+
+function _semgrep_validate {
+    _arguments \
+        '--x-eio[\[INTERNAL\] <deprecated>]' \
+        '--x-no-python-schema-validation[\[INTERNAL\] Skip JSON schema validation; rely on osemgrep parser to validate rules files]' \
+        '--x-parmap[\[INTERNAL\] Rely on legacy Parmap-based parallelism]' \
+        '--x-simple-profiling[Upon exit, print on stderr a report showing how long certain operations took, in an unspecified text format.]' \
+        '--pro[support pro languages (currently Apex and Elixir)Requires Semgrep]' \
+        '--debug[All of --verbose, but with additional debugging information.]' \
+        '--develop[Living on the edge.]' \
+        '--experimental[Enable experimental features.]' \
+        '--help[Show this help in format FMT. The value FMT must be one of auto, pager, groff or plain. With auto, the format is pager or plain whenever the TERM env var is dumb or undefined.]' \
+        '--legacy[Prefer old (legacy) behavior.]' \
+        '--no-trace[negates --trace]' \
+        '--profile[Record profiles via Pyro Caml. By default sends them to localhost:4040]' \
+        {-q,--quiet}'[Only output findings.]' \
+        '--trace[Record traces from Semgrep scans to help debugging. This feature is meant for internal use and may be changed or removed without warning. Currently only used by `semgrep lsp`.]' \
+        '--trace-endpoint[Endpoint to send OpenTelemetry traces to, if `--trace` is present. The value may be `semgrep-prod` (default), `semgrep-dev`, `semgrep-local`, or any valid URL. This feature is meant for internal use and may be changed or removed without warning. Currently only used by `semgrep lsp`.]' \
+        {-v,--verbose}'[Show more details about what rules are running, which files failed to parse, etc.]' \
+        "*: :_files"
+
+}
+
+function _semgrep_mcp {
+    _arguments \
+        {-v,--version}'[Show version and exit.]' \
+        {-t,--transport}'[Transport protocol to use: stdio or streamable-http]' \
+        {-p,--port}'[Port to use for the MCP server]' \
+        {-k,--hook}'[Run specified functionality for agent hooks. Currently supports: 1. Running a Semgrep CLI scan (via PostTool hook, flag: `post-toolcli-scan`). 2. Running a Semgrep CLI scan (via Stop hook, flag: `stop-cli-scan`), must be used in conjunction with an AfterFileEdit hook (flag: `record-file-edit`). 3. Injecting secure defaults context (via UserPromptSubmit hook or SessionStart hook, flag: `inject-secure-defaults`).]':file:_files \
+        {-a,--agent}'[Agent to use for the MCP server]' \
+        {-h,--help}'[Show this message and exit.]' \
+        "*: :_files"
+
+}
+
+_semgrep "$@"
+
