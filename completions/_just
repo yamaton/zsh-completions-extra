@@ -1,0 +1,67 @@
+#compdef just
+
+# Auto-generated with h2o
+
+function _just {
+    _arguments \
+        '--alias-style[Set list command alias display style \[env: JUST_ALIAS_STYLE=\] \[default: right\] \[possible values: left, right, separate\]]' \
+        '--ceiling[Do not ascend above <CEILING> directory when searching for a justfile. \[env: JUST_CEILING=\]]' \
+        '--check[Run `--fmt` in '\''check'\'' mode. Exits with 0 if justfile is formatted correctly. Exits with 1 and prints a diff if formatting is required.]' \
+        '--chooser[Override binary invoked by `--choose` \[env: JUST_CHOOSER=\]]' \
+        '--clear-shell-args[Clear shell arguments]' \
+        '--color[Print colorful output \[env: JUST_COLOR=\] \[default: auto\] \[possible values: always, auto, never\]]' \
+        '--command-color[Echo recipe lines in <COMMAND-COLOR> \[env: JUST_COMMAND_COLOR=\] \[possible values: black, blue, cyan, green, purple, red, yellow\]]' \
+        '--cygpath[Use binary at <CYGPATH> to convert between unix and Windows paths. \[env: JUST_CYGPATH=\] \[default: cygpath\]]':file:_files \
+        '--dotenv-filename[Search for environment file named <DOTENV-FILENAME> instead of `.env`]':file:_files \
+        {-E,--dotenv-path}'[Load <DOTENV-PATH> as environment file instead of searching for one]':file:_files \
+        {-n,--dry-run}'[Print what just would do without doing it \[env: JUST_DRY_RUN=\]]' \
+        '--dump-format[Dump justfile as <FORMAT> \[env: JUST_DUMP_FORMAT=\] \[default: just\] \[possible values: json, just\]]' \
+        '--explain[Print recipe doc comment before running it \[env: JUST_EXPLAIN=\]]' \
+        {-g,--global-justfile}'[Use global justfile]' \
+        '--highlight[Highlight echoed recipe lines in bold \[env: JUST_HIGHLIGHT=\]]' \
+        {-f,--justfile}'[Use <JUSTFILE> as justfile \[env: JUST_JUSTFILE=\]]':file:_files \
+        '--list-heading[Print <TEXT> before list \[env: JUST_LIST_HEADING=\] \[default: "Available recipes:\n"\]]' \
+        '--list-prefix[Print <TEXT> before each list item \[env: JUST_LIST_PREFIX=\] \[default: " "\]]' \
+        '--list-submodules[List recipes in submodules \[env: JUST_LIST_SUBMODULES=\]]' \
+        '--no-aliases[Don'\''t show aliases in list \[env: JUST_NO_ALIASES=\]]' \
+        '--no-deps[Don'\''t run recipe dependencies \[env: JUST_NO_DEPS=\]]' \
+        '--no-dotenv[Don'\''t load `.env` file \[env: JUST_NO_DOTENV=\]]' \
+        '--no-highlight[Don'\''t highlight echoed recipe lines in bold \[env: JUST_NO_HIGHLIGHT=\]]' \
+        '--one[Forbid multiple recipes from being invoked on the command line \[env: JUST_ONE=\]]' \
+        {-q,--quiet}'[Suppress all output \[env: JUST_QUIET=\]]' \
+        '--allow-missing[Ignore missing recipe and module errors \[env: JUST_ALLOW_MISSING=\]]' \
+        '--set[Override <VARIABLE> with <VALUE>]' \
+        '--shell[Invoke <SHELL> to run recipes]' \
+        '--shell-arg[Invoke shell with <SHELL-ARG> as an argument]' \
+        '--shell-command[Invoke <COMMAND> with the shell used to run recipe lines and backticks]' \
+        '--tempdir[Save temporary files to <TEMPDIR>. \[env: JUST_TEMPDIR=\]]':file:_files \
+        '--timestamp[Print recipe command timestamps \[env: JUST_TIMESTAMP=\]]' \
+        '--timestamp-format[Timestamp format string \[env: JUST_TIMESTAMP_FORMAT=\] \[default: %H:%M:%S\]]' \
+        {-u,--unsorted}'[Return list and summary entries in source order \[env: JUST_UNSORTED=\]]' \
+        '--unstable[Enable unstable features \[env: JUST_UNSTABLE=\]]' \
+        {-d,--working-directory}'[Use <WORKING-DIRECTORY> as working directory. --justfile must also be set \[env: JUST_WORKING_DIRECTORY=\]]':file:_files \
+        '--yes[Automatically confirm all recipes. \[env: JUST_YES=\]]' \
+        {-h,--help}'[Print help]' \
+        {-V,--version}'[Print version]' \
+        '--changelog[Print changelog]' \
+        '--choose[Select one or more recipes to run using a binary chooser. If `--chooser` is not passed the chooser defaults to the value of $JUST_CHOOSER, falling back to `fzf`]' \
+        {-c,--command}'[Run an arbitrary command with the working directory, `.env`, overrides, and exports set]' \
+        '--completions[Print shell completion script for <SHELL> \[possible values: bash, elvish, fish, nushell, powershell, zsh\]]' \
+        '--dump[Print justfile]' \
+        {-e,--edit}'[Edit justfile with editor given by $VISUAL or $EDITOR, falling back to `vim`]' \
+        '--evaluate[Evaluate and print all variables. If a variable name is given as an argument, only print that variable'\''s value.]' \
+        '--fmt[Format and overwrite justfile]' \
+        '--groups[List recipe groups]' \
+        '--init[Initialize new justfile in project root]' \
+        {-l,--list}'[List available recipes in <MODULE> or root if omitted]' \
+        '--man[Print man page]' \
+        {-s,--show}'[Show recipe at <PATH>]':file:_files \
+        '--summary[List names of available recipes]' \
+        '--usage[Print recipe usage information]':file:_files \
+        '--variables[List names of variables]' \
+        "*: :_files"
+
+}
+
+_just "$@"
+

@@ -1,0 +1,1204 @@
+#compdef llm
+
+# Auto-generated with h2o
+
+
+function _llm {
+    local line state
+
+    function _commands {
+        local -a commands
+        commands=(
+            'prompt:Execute a prompt'
+            'aliases:Manage model aliases'
+            'chat:Hold an ongoing chat with a model.'
+            'collections:View and manage collections of embeddings'
+            'embed:Embed text and store or return the result'
+            'embed-models:Manage available embedding models'
+            'embed-multi:Store embeddings for multiple strings at once in the...'
+            'fragments:Manage fragments that are stored in the database'
+            'install:Install packages from PyPI into the same environment as LLM'
+            'keys:Manage stored API keys for different models'
+            'logs:Tools for exploring logged prompts and responses'
+            'models:Manage available models'
+            'openai:Commands for working directly with the OpenAI API'
+            'plugins:List installed plugins'
+            'schemas:Manage stored schemas'
+            'similar:Return top N similar IDs from a collection using cosine...'
+            'templates:Manage stored prompt templates'
+            'tools:Manage tools that can be made available to LLMs'
+            'uninstall:Uninstall Python packages from the LLM environment'
+        )
+        _describe 'command' commands
+    }
+ 
+
+    _arguments -C \
+        '--version[Show the version and exit.]' \
+        {-h,--help}'[Show this message and exit.]' \
+        ': :->cmd' \
+        '*:: :->subcmd'
+
+    case $state in
+    (cmd)
+        _commands
+        ;;
+    (subcmd)
+        case $line[1] in
+        (prompt)
+            _llm_prompt
+            ;;
+
+        (aliases)
+            _llm_aliases
+            ;;
+
+        (chat)
+            _llm_chat
+            ;;
+
+        (collections)
+            _llm_collections
+            ;;
+
+        (embed)
+            _llm_embed
+            ;;
+
+        (embed-models)
+            _llm_embed-models
+            ;;
+
+        (embed-multi)
+            _llm_embed-multi
+            ;;
+
+        (fragments)
+            _llm_fragments
+            ;;
+
+        (install)
+            _llm_install
+            ;;
+
+        (keys)
+            _llm_keys
+            ;;
+
+        (logs)
+            _llm_logs
+            ;;
+
+        (models)
+            _llm_models
+            ;;
+
+        (openai)
+            _llm_openai
+            ;;
+
+        (plugins)
+            _llm_plugins
+            ;;
+
+        (schemas)
+            _llm_schemas
+            ;;
+
+        (similar)
+            _llm_similar
+            ;;
+
+        (templates)
+            _llm_templates
+            ;;
+
+        (tools)
+            _llm_tools
+            ;;
+
+        (uninstall)
+            _llm_uninstall
+            ;;
+
+        esac
+        ;;
+     esac
+
+}
+
+function _llm_prompt {
+    _arguments \
+        {-s,--system}'[System prompt to use]' \
+        {-m,--model}'[Model to use]' \
+        {-d,--database}'[Path to log database]':file:_files \
+        {-q,--query}'[Use first model matching these strings]' \
+        {-a,--attachment}'[Attachment path or URL or -]' \
+        {--at,--attachment-type}'[Attachment with explicit mimetype, --at image.jpg image/jpeg]' \
+        {-T,--tool}'[Name of a tool to make available to the model]' \
+        '--functions[Python code block or file path defining functions to register as tools]' \
+        {--td,--tools-debug}'[Show full details of tool executions]' \
+        {--ta,--tools-approve}'[Manually approve every tool execution]' \
+        {--cl,--chain-limit}'[How many chained tool responses to allow, default 5, set 0 for unlimited]' \
+        {-o,--option}'[key/value options for the model]' \
+        '--schema[JSON schema, filepath or ID]' \
+        '--schema-multi[JSON schema to use for multiple results]' \
+        {-f,--fragment}'[Fragment (alias, URL, hash or file path) to add to the prompt]' \
+        {--sf,--system-fragment}'[Fragment to add to system prompt]' \
+        {-t,--template}'[Template to use]' \
+        {-p,--param}'[Parameters for template]' \
+        '--no-stream[Do not stream output]' \
+        {-n,--no-log}'[Don'\''t log to database]' \
+        '--log[Log prompt and response to the database]' \
+        {-c,--continue}'[Continue the most recent conversation.]' \
+        {--cid,--conversation}'[Continue the conversation with the given ID.]' \
+        '--key[API key to use]' \
+        '--save[Save prompt with this template name]' \
+        '--async[Run prompt asynchronously]' \
+        {-u,--usage}'[Show token usage]' \
+        {-x,--extract}'[Extract first fenced code block]' \
+        {--xl,--extract-last}'[Extract last fenced code block]' \
+        {-h,--help}'[Show this message and exit.]' \
+        "*: :_files"
+
+}
+
+
+function _llm_aliases {
+    local line state
+
+    function _commands {
+        local -a commands
+        commands=(
+            'list:List current aliases'
+            'path:Output the path to the aliases.json file'
+            'remove:Remove an alias'
+            'set:Set an alias for a model'
+        )
+        _describe 'command' commands
+    }
+ 
+
+    _arguments -C \
+        {-h,--help}'[Show this message and exit.]' \
+        ': :->cmd' \
+        '*:: :->subcmd'
+
+    case $state in
+    (cmd)
+        _commands
+        ;;
+    (subcmd)
+        case $line[1] in
+        (list)
+            _llm_aliases_list
+            ;;
+
+        (path)
+            _llm_aliases_path
+            ;;
+
+        (remove)
+            _llm_aliases_remove
+            ;;
+
+        (set)
+            _llm_aliases_set
+            ;;
+
+        esac
+        ;;
+     esac
+
+}
+
+function _llm_aliases_list {
+    _arguments \
+        '--json[Output as JSON]' \
+        {-h,--help}'[Show this message and exit.]' \
+        "*: :_files"
+
+}
+
+function _llm_aliases_path {
+    _arguments \
+        {-h,--help}'[Show this message and exit.]' \
+        "*: :_files"
+
+}
+
+function _llm_aliases_remove {
+    _arguments \
+        {-h,--help}'[Show this message and exit.]' \
+        "*: :_files"
+
+}
+
+function _llm_aliases_set {
+    _arguments \
+        {-q,--query}'[Set alias for model matching these strings]' \
+        {-h,--help}'[Show this message and exit.]' \
+        "*: :_files"
+
+}
+
+function _llm_chat {
+    _arguments \
+        {-s,--system}'[System prompt to use]' \
+        {-m,--model}'[Model to use]' \
+        {-c,--continue}'[Continue the most recent conversation.]' \
+        {--cid,--conversation}'[Continue the conversation with the given ID.]' \
+        {-f,--fragment}'[Fragment (alias, URL, hash or file path) to add to the prompt]' \
+        {--sf,--system-fragment}'[Fragment to add to system prompt]' \
+        {-t,--template}'[Template to use]' \
+        {-p,--param}'[Parameters for template]' \
+        {-o,--option}'[key/value options for the model]' \
+        {-d,--database}'[Path to log database]':file:_files \
+        '--no-stream[Do not stream output]' \
+        '--key[API key to use]' \
+        {-T,--tool}'[Name of a tool to make available to the model]' \
+        '--functions[Python code block or file path defining functions to register as tools]' \
+        {--td,--tools-debug}'[Show full details of tool executions]' \
+        {--ta,--tools-approve}'[Manually approve every tool execution]' \
+        {--cl,--chain-limit}'[How many chained tool responses to allow, default 5, set 0 for unlimited]' \
+        {-h,--help}'[Show this message and exit.]' \
+        "*: :_files"
+
+}
+
+
+function _llm_collections {
+    local line state
+
+    function _commands {
+        local -a commands
+        commands=(
+            'list:View a list of collections'
+            'delete:Delete the specified collection'
+            'path:Output the path to the embeddings database'
+        )
+        _describe 'command' commands
+    }
+ 
+
+    _arguments -C \
+        {-h,--help}'[Show this message and exit.]' \
+        ': :->cmd' \
+        '*:: :->subcmd'
+
+    case $state in
+    (cmd)
+        _commands
+        ;;
+    (subcmd)
+        case $line[1] in
+        (list)
+            _llm_collections_list
+            ;;
+
+        (delete)
+            _llm_collections_delete
+            ;;
+
+        (path)
+            _llm_collections_path
+            ;;
+
+        esac
+        ;;
+     esac
+
+}
+
+function _llm_collections_list {
+    _arguments \
+        {-d,--database}'[Path to embeddings database]':file:_files \
+        '--json[Output as JSON]' \
+        {-h,--help}'[Show this message and exit.]' \
+        "*: :_files"
+
+}
+
+function _llm_collections_delete {
+    _arguments \
+        {-d,--database}'[Path to embeddings database]':file:_files \
+        {-h,--help}'[Show this message and exit.]' \
+        "*: :_files"
+
+}
+
+function _llm_collections_path {
+    _arguments \
+        {-h,--help}'[Show this message and exit.]' \
+        "*: :_files"
+
+}
+
+function _llm_embed {
+    _arguments \
+        {-i,--input}'[File to embed]':file:_files \
+        {-m,--model}'[Embedding model to use]' \
+        '--store[Store the text itself in the database]' \
+        {-d,--database,-c,--content}'[Content to embed]':file:_files \
+        '--binary[Treat input as binary data]' \
+        '--metadata[JSON object metadata to store]' \
+        {-f,--format}'[Output format]' \
+        {-h,--help}'[Show this message and exit.]' \
+        "*: :_files"
+
+}
+
+
+function _llm_embed-models {
+    local line state
+
+    function _commands {
+        local -a commands
+        commands=(
+            'list:List available embedding models'
+            'default:Show or set the default embedding model'
+        )
+        _describe 'command' commands
+    }
+ 
+
+    _arguments -C \
+        {-h,--help}'[Show this message and exit.]' \
+        ': :->cmd' \
+        '*:: :->subcmd'
+
+    case $state in
+    (cmd)
+        _commands
+        ;;
+    (subcmd)
+        case $line[1] in
+        (list)
+            _llm_embed-models_list
+            ;;
+
+        (default)
+            _llm_embed-models_default
+            ;;
+
+        esac
+        ;;
+     esac
+
+}
+
+function _llm_embed-models_list {
+    _arguments \
+        {-q,--query}'[Search for embedding models matching these strings]' \
+        {-h,--help}'[Show this message and exit.]' \
+        "*: :_files"
+
+}
+
+function _llm_embed-models_default {
+    _arguments \
+        '--remove-default[Reset to specifying no default model]' \
+        {-h,--help}'[Show this message and exit.]' \
+        "*: :_files"
+
+}
+
+function _llm_embed-multi {
+    _arguments \
+        '--format[Format of input file - defaults to auto-detect]' \
+        '--files[Embed files in this directory - specify directory and glob pattern]':file:_files \
+        '--encoding[Encodings to try when reading --files]' \
+        '--binary[Treat --files as binary data]' \
+        '--sql[Read input using this SQL query]' \
+        '--attach[Additional databases to attach - specify alias and file path]':file:_files \
+        '--batch-size[Batch size to use when running embeddings]' \
+        '--prefix[Prefix to add to the IDs]' \
+        {-m,--model}'[Embedding model to use]' \
+        '--prepend[Prepend this string to all content before embedding]' \
+        '--store[Store the text itself in the database]' \
+        {-d,--database,-h,--help}'[Show this message and exit.]':file:_files \
+        "*: :_files"
+
+}
+
+
+function _llm_fragments {
+    local line state
+
+    function _commands {
+        local -a commands
+        commands=(
+            'list:List current fragments'
+            'loaders:Show fragment loaders registered by plugins'
+            'remove:Remove a fragment alias'
+            'set:Set an alias for a fragment'
+            'show:Display the fragment stored under an alias or hash'
+        )
+        _describe 'command' commands
+    }
+ 
+
+    _arguments -C \
+        {-h,--help}'[Show this message and exit.]' \
+        ': :->cmd' \
+        '*:: :->subcmd'
+
+    case $state in
+    (cmd)
+        _commands
+        ;;
+    (subcmd)
+        case $line[1] in
+        (list)
+            _llm_fragments_list
+            ;;
+
+        (loaders)
+            _llm_fragments_loaders
+            ;;
+
+        (remove)
+            _llm_fragments_remove
+            ;;
+
+        (set)
+            _llm_fragments_set
+            ;;
+
+        (show)
+            _llm_fragments_show
+            ;;
+
+        esac
+        ;;
+     esac
+
+}
+
+function _llm_fragments_list {
+    _arguments \
+        {-q,--query}'[Search for fragments matching these strings]' \
+        '--aliases[Show only fragments with aliases]' \
+        '--json[Output as JSON]' \
+        {-h,--help}'[Show this message and exit.]' \
+        "*: :_files"
+
+}
+
+function _llm_fragments_loaders {
+    _arguments \
+        {-h,--help}'[Show this message and exit.]' \
+        "*: :_files"
+
+}
+
+function _llm_fragments_remove {
+    _arguments \
+        {-h,--help}'[Show this message and exit.]' \
+        "*: :_files"
+
+}
+
+function _llm_fragments_set {
+    _arguments \
+        {-h,--help}'[Show this message and exit.]' \
+        "*: :_files"
+
+}
+
+function _llm_fragments_show {
+    _arguments \
+        {-h,--help}'[Show this message and exit.]' \
+        "*: :_files"
+
+}
+
+function _llm_install {
+    _arguments \
+        {-U,--upgrade}'[Upgrade packages to latest version]' \
+        {-e,--editable}'[Install a project in editable mode from this path]' \
+        '--force-reinstall[Reinstall all packages even if they are already up-todate]' \
+        '--no-cache-dir[Disable the cache]' \
+        '--pre[Include pre-release and development versions]' \
+        {-h,--help}'[Show this message and exit.]' \
+        "*: :_files"
+
+}
+
+
+function _llm_keys {
+    local line state
+
+    function _commands {
+        local -a commands
+        commands=(
+            'Manage:stored API keys for different models'
+            'list:List names of all stored keys'
+            'get:Return the value of a stored key'
+            'path:Output the path to the keys.json file'
+            'set:Save a key in the keys.json file'
+        )
+        _describe 'command' commands
+    }
+ 
+
+    _arguments -C \
+        {-h,--help}'[Show this message and exit.]' \
+        ': :->cmd' \
+        '*:: :->subcmd'
+
+    case $state in
+    (cmd)
+        _commands
+        ;;
+    (subcmd)
+        case $line[1] in
+        (Manage)
+            _llm_keys_Manage
+            ;;
+
+        (list)
+            _llm_keys_list
+            ;;
+
+        (get)
+            _llm_keys_get
+            ;;
+
+        (path)
+            _llm_keys_path
+            ;;
+
+        (set)
+            _llm_keys_set
+            ;;
+
+        esac
+        ;;
+     esac
+
+}
+
+function _llm_keys_Manage {
+    _arguments \
+        {-h,--help}'[Show this message and exit.]' \
+        "*: :_files"
+
+}
+
+function _llm_keys_list {
+    _arguments \
+        {-h,--help}'[Show this message and exit.]' \
+        "*: :_files"
+
+}
+
+function _llm_keys_get {
+    _arguments \
+        {-h,--help}'[Show this message and exit.]' \
+        "*: :_files"
+
+}
+
+function _llm_keys_path {
+    _arguments \
+        {-h,--help}'[Show this message and exit.]' \
+        "*: :_files"
+
+}
+
+function _llm_keys_set {
+    _arguments \
+        '--value[Value to set]' \
+        {-h,--help}'[Show this message and exit.]' \
+        "*: :_files"
+
+}
+
+
+function _llm_logs {
+    local line state
+
+    function _commands {
+        local -a commands
+        commands=(
+            'list:Show logged prompts and their responses'
+            'backup:Backup your logs database to this file'
+            'off:Turn off logging for all prompts'
+            'on:Turn on logging for all prompts'
+            'path:Output the path to the logs.db file'
+            'status:Show current status of database logging'
+        )
+        _describe 'command' commands
+    }
+ 
+
+    _arguments -C \
+        {-h,--help}'[Show this message and exit.]' \
+        ': :->cmd' \
+        '*:: :->subcmd'
+
+    case $state in
+    (cmd)
+        _commands
+        ;;
+    (subcmd)
+        case $line[1] in
+        (list)
+            _llm_logs_list
+            ;;
+
+        (backup)
+            _llm_logs_backup
+            ;;
+
+        (off)
+            _llm_logs_off
+            ;;
+
+        (on)
+            _llm_logs_on
+            ;;
+
+        (path)
+            _llm_logs_path
+            ;;
+
+        (status)
+            _llm_logs_status
+            ;;
+
+        esac
+        ;;
+     esac
+
+}
+
+function _llm_logs_list {
+    _arguments \
+        {-n,--count}'[Number of entries to show - defaults to 3, use 0 for all]' \
+        {-d,--database}'[Path to log database]':file:_files \
+        {-m,--model}'[Filter by model or model alias]' \
+        {-q,--query}'[Search for logs matching this string]' \
+        {-f,--fragment}'[Filter for prompts using these fragments]' \
+        {-T,--tool}'[Filter for prompts with results from these tools]' \
+        '--tools[Filter for prompts with results from any tools]' \
+        '--schema[JSON schema, filepath or ID]' \
+        '--schema-multi[JSON schema used for multiple results]' \
+        {-l,--latest}'[Return latest results matching search query]' \
+        '--data[Output newline-delimited JSON data for schema]' \
+        '--data-array[Output JSON array of data for schema]' \
+        '--data-key[Return JSON objects from array in this key]' \
+        '--data-ids[Attach corresponding IDs to JSON objects]' \
+        {-t,--truncate}'[Truncate long strings in output]' \
+        {-s,--short}'[Shorter YAML output with truncated prompts]' \
+        {-u,--usage}'[Include token usage]' \
+        {-r,--response}'[Just output the last response]' \
+        {-x,--extract}'[Extract first fenced code block]' \
+        {--xl,--extract-last}'[Extract last fenced code block]' \
+        {-c,--current}'[Show logs from the current conversation]' \
+        {--cid,--conversation}'[Show logs for this conversation ID]' \
+        '--id-gt[Return responses with ID > this]' \
+        '--id-gte[Return responses with ID >= this]' \
+        '--json[Output logs as JSON]' \
+        {-e,--expand}'[Expand fragments to show their content]' \
+        {-h,--help}'[Show this message and exit.]' \
+        "*: :_files"
+
+}
+
+function _llm_logs_backup {
+    _arguments \
+        {-h,--help}'[Show this message and exit.]' \
+        "*: :_files"
+
+}
+
+function _llm_logs_off {
+    _arguments \
+        {-h,--help}'[Show this message and exit.]' \
+        "*: :_files"
+
+}
+
+function _llm_logs_on {
+    _arguments \
+        {-h,--help}'[Show this message and exit.]' \
+        "*: :_files"
+
+}
+
+function _llm_logs_path {
+    _arguments \
+        {-h,--help}'[Show this message and exit.]' \
+        "*: :_files"
+
+}
+
+function _llm_logs_status {
+    _arguments \
+        {-h,--help}'[Show this message and exit.]' \
+        "*: :_files"
+
+}
+
+
+function _llm_models {
+    local line state
+
+    function _commands {
+        local -a commands
+        commands=(
+            'list:List available models'
+            'default:Show or set the default model'
+            'options:Manage default options for models'
+        )
+        _describe 'command' commands
+    }
+ 
+
+    _arguments -C \
+        {-h,--help}'[Show this message and exit.]' \
+        ': :->cmd' \
+        '*:: :->subcmd'
+
+    case $state in
+    (cmd)
+        _commands
+        ;;
+    (subcmd)
+        case $line[1] in
+        (list)
+            _llm_models_list
+            ;;
+
+        (default)
+            _llm_models_default
+            ;;
+
+        (options)
+            _llm_models_options
+            ;;
+
+        esac
+        ;;
+     esac
+
+}
+
+function _llm_models_list {
+    _arguments \
+        '--options[Show options for each model, if available]' \
+        '--async[List async models]' \
+        '--schemas[List models that support schemas]' \
+        '--tools[List models that support tools]' \
+        {-q,--query}'[Search for models matching these strings]' \
+        {-m,--model}'[Specific model IDs]' \
+        {-h,--help}'[Show this message and exit.]' \
+        "*: :_files"
+
+}
+
+function _llm_models_default {
+    _arguments \
+        {-h,--help}'[Show this message and exit.]' \
+        "*: :_files"
+
+}
+
+
+function _llm_models_options {
+    local line state
+
+    function _commands {
+        local -a commands
+        commands=(
+            'Manage:default options for models'
+            'list:List default options for all models'
+            'clear:Clear default option(s) for a model'
+            'set:Set a default option for a model'
+            'show:List default options set for a specific model'
+        )
+        _describe 'command' commands
+    }
+ 
+
+    _arguments -C \
+        {-h,--help}'[Show this message and exit.]' \
+        ': :->cmd' \
+        '*:: :->subcmd'
+
+    case $state in
+    (cmd)
+        _commands
+        ;;
+    (subcmd)
+        case $line[1] in
+        (Manage)
+            _llm_models_options_Manage
+            ;;
+
+        (list)
+            _llm_models_options_list
+            ;;
+
+        (clear)
+            _llm_models_options_clear
+            ;;
+
+        (set)
+            _llm_models_options_set
+            ;;
+
+        (show)
+            _llm_models_options_show
+            ;;
+
+        esac
+        ;;
+     esac
+
+}
+
+function _llm_models_options_Manage {
+    _arguments \
+        {-h,--help}'[Show this message and exit.]' \
+        "*: :_files"
+
+}
+
+function _llm_models_options_list {
+    _arguments \
+        {-h,--help}'[Show this message and exit.]' \
+        "*: :_files"
+
+}
+
+function _llm_models_options_clear {
+    _arguments \
+        {-h,--help}'[Show this message and exit.]' \
+        "*: :_files"
+
+}
+
+function _llm_models_options_set {
+    _arguments \
+        {-h,--help}'[Show this message and exit.]' \
+        "*: :_files"
+
+}
+
+function _llm_models_options_show {
+    _arguments \
+        {-h,--help}'[Show this message and exit.]' \
+        "*: :_files"
+
+}
+
+
+function _llm_openai {
+    local line state
+
+    function _commands {
+        local -a commands
+        commands=(
+            'Commands:for working directly with the OpenAI API'
+        )
+        _describe 'command' commands
+    }
+ 
+
+    _arguments -C \
+        {-h,--help}'[Show this message and exit.]' \
+        ': :->cmd' \
+        '*:: :->subcmd'
+
+    case $state in
+    (cmd)
+        _commands
+        ;;
+    (subcmd)
+        case $line[1] in
+        (Commands)
+            _llm_openai_Commands
+            ;;
+
+        esac
+        ;;
+     esac
+
+}
+
+function _llm_openai_Commands {
+    _arguments \
+        "*: :_files"
+
+}
+
+function _llm_plugins {
+    _arguments \
+        '--all[Include built-in default plugins]' \
+        '--hook[Filter for plugins that implement this hook]' \
+        {-h,--help}'[Show this message and exit.]' \
+        "*: :_files"
+
+}
+
+
+function _llm_schemas {
+    local line state
+
+    function _commands {
+        local -a commands
+        commands=(
+            'Manage:stored schemas'
+            'list:List stored schemas'
+            'dsl:Convert LLM'\''s schema DSL to a JSON schema'
+            'show:Show a stored schema'
+        )
+        _describe 'command' commands
+    }
+ 
+
+    _arguments -C \
+        {-h,--help}'[Show this message and exit.]' \
+        ': :->cmd' \
+        '*:: :->subcmd'
+
+    case $state in
+    (cmd)
+        _commands
+        ;;
+    (subcmd)
+        case $line[1] in
+        (Manage)
+            _llm_schemas_Manage
+            ;;
+
+        (list)
+            _llm_schemas_list
+            ;;
+
+        (dsl)
+            _llm_schemas_dsl
+            ;;
+
+        (show)
+            _llm_schemas_show
+            ;;
+
+        esac
+        ;;
+     esac
+
+}
+
+function _llm_schemas_Manage {
+    _arguments \
+        {-d,--database}'[Path to log database]':file:_files \
+        {-q,--query}'[Search for schemas matching this string]' \
+        '--full[Output full schema contents]' \
+        '--json[Output as JSON]' \
+        '--nl[Output as newline-delimited JSON]' \
+        {-h,--help}'[Show this message and exit.]' \
+        "*: :_files"
+
+}
+
+function _llm_schemas_list {
+    _arguments \
+        {-d,--database}'[Path to log database]':file:_files \
+        {-q,--query}'[Search for schemas matching this string]' \
+        '--full[Output full schema contents]' \
+        '--json[Output as JSON]' \
+        '--nl[Output as newline-delimited JSON]' \
+        {-h,--help}'[Show this message and exit.]' \
+        "*: :_files"
+
+}
+
+function _llm_schemas_dsl {
+    _arguments \
+        '--multi[Wrap in an array]' \
+        {-h,--help}'[Show this message and exit.]' \
+        "*: :_files"
+
+}
+
+function _llm_schemas_show {
+    _arguments \
+        {-d,--database}'[Path to log database]':file:_files \
+        {-h,--help}'[Show this message and exit.]' \
+        "*: :_files"
+
+}
+
+function _llm_similar {
+    _arguments \
+        {-i,--input}'[File to embed for comparison]':file:_files \
+        {-c,--content}'[Content to embed for comparison]' \
+        '--binary[Treat input as binary data]' \
+        {-n,--number}'[Number of results to return]' \
+        {-p,--plain}'[Output in plain text format]' \
+        {-d,--database,--prefix}'[Just IDs with this prefix]':file:_files \
+        {-h,--help}'[Show this message and exit.]' \
+        "*: :_files"
+
+}
+
+
+function _llm_templates {
+    local line state
+
+    function _commands {
+        local -a commands
+        commands=(
+            'list:List available prompt templates'
+            'edit:Edit the specified prompt template using the default $EDITOR'
+            'loaders:Show template loaders registered by plugins'
+            'path:Output the path to the templates directory'
+            'show:Show the specified prompt template'
+        )
+        _describe 'command' commands
+    }
+ 
+
+    _arguments -C \
+        {-h,--help}'[Show this message and exit.]' \
+        ': :->cmd' \
+        '*:: :->subcmd'
+
+    case $state in
+    (cmd)
+        _commands
+        ;;
+    (subcmd)
+        case $line[1] in
+        (list)
+            _llm_templates_list
+            ;;
+
+        (edit)
+            _llm_templates_edit
+            ;;
+
+        (loaders)
+            _llm_templates_loaders
+            ;;
+
+        (path)
+            _llm_templates_path
+            ;;
+
+        (show)
+            _llm_templates_show
+            ;;
+
+        esac
+        ;;
+     esac
+
+}
+
+function _llm_templates_list {
+    _arguments \
+        {-h,--help}'[Show this message and exit.]' \
+        "*: :_files"
+
+}
+
+function _llm_templates_edit {
+    _arguments \
+        {-h,--help}'[Show this message and exit.]' \
+        "*: :_files"
+
+}
+
+function _llm_templates_loaders {
+    _arguments \
+        {-h,--help}'[Show this message and exit.]' \
+        "*: :_files"
+
+}
+
+function _llm_templates_path {
+    _arguments \
+        {-h,--help}'[Show this message and exit.]' \
+        "*: :_files"
+
+}
+
+function _llm_templates_show {
+    _arguments \
+        {-h,--help}'[Show this message and exit.]' \
+        "*: :_files"
+
+}
+
+
+function _llm_tools {
+    local line state
+
+    function _commands {
+        local -a commands
+        commands=(
+            'Manage:tools that can be made available to LLMs'
+            'list:List available tools that have been provided by plugins'
+        )
+        _describe 'command' commands
+    }
+ 
+
+    _arguments -C \
+        {-h,--help}'[Show this message and exit.]' \
+        ': :->cmd' \
+        '*:: :->subcmd'
+
+    case $state in
+    (cmd)
+        _commands
+        ;;
+    (subcmd)
+        case $line[1] in
+        (Manage)
+            _llm_tools_Manage
+            ;;
+
+        (list)
+            _llm_tools_list
+            ;;
+
+        esac
+        ;;
+     esac
+
+}
+
+function _llm_tools_Manage {
+    _arguments \
+        '--json[Output as JSON]' \
+        '--functions[Python code block or file path defining functions to register as tools]' \
+        {-h,--help}'[Show this message and exit.]' \
+        "*: :_files"
+
+}
+
+function _llm_tools_list {
+    _arguments \
+        '--json[Output as JSON]' \
+        '--functions[Python code block or file path defining functions to register as tools]' \
+        {-h,--help}'[Show this message and exit.]' \
+        "*: :_files"
+
+}
+
+function _llm_uninstall {
+    _arguments \
+        {-y,--yes}'[Don'\''t ask for confirmation]' \
+        {-h,--help}'[Show this message and exit.]' \
+        "*: :_files"
+
+}
+
+_llm "$@"
+
