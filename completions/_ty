@@ -1,0 +1,103 @@
+#compdef ty
+
+# Auto-generated with h2o
+
+
+function _ty {
+    local line state
+
+    function _commands {
+        local -a commands
+        commands=(
+            'check:Check a project for type errors'
+            'server:Start the language server'
+            'version:Display ty'\''s version'
+            'help:Print this message or the help of the given subcommand(s)'
+        )
+        _describe 'command' commands
+    }
+ 
+
+    _arguments -C \
+        {-h,--help}'[Print help]' \
+        {-V,--version}'[Print version]' \
+        ': :->cmd' \
+        '*:: :->subcmd'
+
+    case $state in
+    (cmd)
+        _commands
+        ;;
+    (subcmd)
+        case $line[1] in
+        (check)
+            _ty_check
+            ;;
+
+        (server)
+            _ty_server
+            ;;
+
+        (version)
+            _ty_version
+            ;;
+
+        (help)
+            _ty_help
+            ;;
+
+        esac
+        ;;
+     esac
+
+}
+
+function _ty_check {
+    _arguments \
+        '--add-ignore[Adds `ty: ignore` comments to suppress all rule diagnostics]' \
+        '--project[Run the command within the given project directory.]' \
+        '--python[Path to your project'\''s Python environment or interpreter.]':file:_files \
+        '--typeshed[Custom directory to use for stdlib typeshed stubs]':file:_files \
+        '--extra-search-path[Additional path to use as a module-resolution source (can be passed multiple times).]':file:_files \
+        '--python-version[Python version to assume when resolving types.]' \
+        '--python-platform[Target platform to assume when resolving types.]' \
+        '--config-file[The path to a `ty.toml` file to use for configuration.]':file:_files \
+        '--output-format[The format to use for printing diagnostic messages]' \
+        '--error-on-warning[Use exit code 1 if there are any warning-level diagnostics]' \
+        '--exit-zero[Always use exit code 0, even when there are error-level diagnostics]' \
+        {-W,--watch}'[Watch files for changes and recheck files related to the changed files]' \
+        {-h,--help}'[Print help (see a summary with '\''-h'\'')]' \
+        '--error[Treat the given rule as having severity '\''error'\''. Can be specified multiple times.]' \
+        '--warn[Treat the given rule as having severity '\''warn'\''. Can be specified multiple times.]' \
+        '--ignore[Disables the rule. Can be specified multiple times.]' \
+        '--respect-ignore-files[Respect file exclusions via `.gitignore` and other standard ignore files. Use `--no-respect-ignore-files` to disable]' \
+        '--force-exclude[Enforce exclusions, even for paths passed to ty directly on the command-line. Use `--no-force-exclude` to disable]' \
+        '--exclude[Glob patterns for files to exclude from type checking.]' \
+        '--no-progress[Hide all progress outputs.]' \
+        '--color[Control when colored output is used]' \
+        "*: :_files"
+
+}
+
+function _ty_server {
+    _arguments \
+        {-h,--help}'[Print help]' \
+        "*: :_files"
+
+}
+
+function _ty_version {
+    _arguments \
+        {-h,--help}'[Print help]' \
+        "*: :_files"
+
+}
+
+function _ty_help {
+    _arguments \
+        "*: :_files"
+
+}
+
+_ty "$@"
+

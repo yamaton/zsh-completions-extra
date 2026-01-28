@@ -9,14 +9,17 @@ function _uv {
     function _commands {
         local -a commands
         commands=(
+            'auth:Manage authentication'
             'run:Run a command or script'
             'init:Create a new project'
             'add:Add dependencies to the project'
             'remove:Remove dependencies from the project'
+            'version:Read or update the project'\''s version'
             'sync:Update the project'\''s environment'
             'lock:Update the project'\''s lockfile'
             'export:Export the project'\''s lockfile to an alternate format'
             'tree:Display the project'\''s dependency tree'
+            'format:Format Python code in the project'
             'tool:Run and install commands provided by Python packages'
             'python:Manage Python versions and installations'
             'pip:Manage Python packages with a pip-compatible interface'
@@ -25,7 +28,6 @@ function _uv {
             'publish:Upload distributions to an index'
             'cache:Manage uv'\''s cache'
             'self:Manage the uv executable'
-            'version:Read or update the project'\''s version'
             'help:Display documentation for a command'
         )
         _describe 'command' commands
@@ -38,15 +40,13 @@ function _uv {
         '--managed-python[Require use of uv-managed Python versions \[env: UV_MANAGED_PYTHON=\]]' \
         '--no-managed-python[Disable use of uv-managed Python versions \[env: UV_NO_MANAGED_PYTHON=\]]' \
         '--no-python-downloads[Disable automatic downloads of Python. \[env: "UV_PYTHON_DOWNLOADS=never"\]]' \
-        {-q,--quiet}'[Use quiet output]' \
-        {-v,--verbose}'[Use verbose output]' \
         '--color[Control the use of color in output \[possible values: auto, always, never\]]' \
-        '--native-tls[Whether to load TLS certificates from the platform'\''s native certificate store \[env: UV_NATIVE_TLS=\]]' \
+        '--native-tls[Whether to load TLS certificates from the platform'\''s native store \[env: UV_NATIVE_TLS=\]]' \
         '--offline[Disable network access \[env: UV_OFFLINE=\]]' \
         '--allow-insecure-host[Allow insecure connections to a host \[env: UV_INSECURE_HOST=\]]' \
         '--no-progress[Hide all progress outputs \[env: UV_NO_PROGRESS=\]]' \
-        '--directory[Change to the given directory prior to running the command]':file:_files \
-        '--project[Run the command within the given project directory \[env: UV_PROJECT=\]]' \
+        '--directory[Change to the given directory prior to running the command \[env: UV_WORKING_DIR=\]]':file:_files \
+        '--project[Discover a project in the given directory \[env: UV_PROJECT=\]]' \
         '--config-file[The path to a `uv.toml` file to use for configuration \[env: UV_CONFIG_FILE=\]]':file:_files \
         '--no-config[Avoid discovering configuration files (`pyproject.toml`, `uv.toml`) \[env: UV_NO_CONFIG=\]]' \
         {-h,--help}'[Display the concise help for this command]' \
@@ -60,6 +60,10 @@ function _uv {
         ;;
     (subcmd)
         case $line[1] in
+        (auth)
+            _uv_auth
+            ;;
+
         (run)
             _uv_run
             ;;
@@ -76,6 +80,10 @@ function _uv {
             _uv_remove
             ;;
 
+        (version)
+            _uv_version
+            ;;
+
         (sync)
             _uv_sync
             ;;
@@ -90,6 +98,10 @@ function _uv {
 
         (tree)
             _uv_tree
+            ;;
+
+        (format)
+            _uv_format
             ;;
 
         (tool)
@@ -124,10 +136,6 @@ function _uv {
             _uv_self
             ;;
 
-        (version)
-            _uv_version
-            ;;
-
         (help)
             _uv_help
             ;;
@@ -138,15 +146,170 @@ function _uv {
 
 }
 
+
+function _uv_auth {
+    local line state
+
+    function _commands {
+        local -a commands
+        commands=(
+            'login:Login to a service'
+            'logout:Logout of a service'
+            'token:Show the authentication token for a service'
+            'dir:Show the path to the uv credentials directory'
+        )
+        _describe 'command' commands
+    }
+ 
+
+    _arguments -C \
+        {-n,--no-cache}'[Avoid reading from or writing to the cache, instead using a temporary directory for the duration of the operation \[env: UV_NO_CACHE=\]]' \
+        '--cache-dir[Path to the cache directory \[env: UV_CACHE_DIR=\]]':file:_files \
+        '--managed-python[Require use of uv-managed Python versions \[env: UV_MANAGED_PYTHON=\]]' \
+        '--no-managed-python[Disable use of uv-managed Python versions \[env: UV_NO_MANAGED_PYTHON=\]]' \
+        '--no-python-downloads[Disable automatic downloads of Python. \[env: "UV_PYTHON_DOWNLOADS=never"\]]' \
+        '--color[Control the use of color in output \[possible values: auto, always, never\]]' \
+        '--native-tls[Whether to load TLS certificates from the platform'\''s native store \[env: UV_NATIVE_TLS=\]]' \
+        '--offline[Disable network access \[env: UV_OFFLINE=\]]' \
+        '--allow-insecure-host[Allow insecure connections to a host \[env: UV_INSECURE_HOST=\]]' \
+        '--no-progress[Hide all progress outputs \[env: UV_NO_PROGRESS=\]]' \
+        '--directory[Change to the given directory prior to running the command \[env: UV_WORKING_DIR=\]]':file:_files \
+        '--project[Discover a project in the given directory \[env: UV_PROJECT=\]]' \
+        '--config-file[The path to a `uv.toml` file to use for configuration \[env: UV_CONFIG_FILE=\]]':file:_files \
+        '--no-config[Avoid discovering configuration files (`pyproject.toml`, `uv.toml`) \[env: UV_NO_CONFIG=\]]' \
+        {-h,--help}'[Display the concise help for this command]' \
+        ': :->cmd' \
+        '*:: :->subcmd'
+
+    case $state in
+    (cmd)
+        _commands
+        ;;
+    (subcmd)
+        case $line[1] in
+        (login)
+            _uv_auth_login
+            ;;
+
+        (logout)
+            _uv_auth_logout
+            ;;
+
+        (token)
+            _uv_auth_token
+            ;;
+
+        (dir)
+            _uv_auth_dir
+            ;;
+
+        esac
+        ;;
+     esac
+
+}
+
+function _uv_auth_login {
+    _arguments \
+        {-u,--username}'[The username to use for the service]' \
+        '--password[The password to use for the service]' \
+        {-t,--token}'[The token to use for the service]' \
+        '--keyring-provider[The keyring provider to use for storage of credentials \[env: UV_KEYRING_PROVIDER=\] \[possible values: disabled, subprocess\]]' \
+        {-n,--no-cache}'[Avoid reading from or writing to the cache, instead using a temporary directory for the duration of the operation \[env: UV_NO_CACHE=\]]' \
+        '--cache-dir[Path to the cache directory \[env: UV_CACHE_DIR=\]]':file:_files \
+        '--managed-python[Require use of uv-managed Python versions \[env: UV_MANAGED_PYTHON=\]]' \
+        '--no-managed-python[Disable use of uv-managed Python versions \[env: UV_NO_MANAGED_PYTHON=\]]' \
+        '--no-python-downloads[Disable automatic downloads of Python. \[env: "UV_PYTHON_DOWNLOADS=never"\]]' \
+        '--color[Control the use of color in output \[possible values: auto, always, never\]]' \
+        '--native-tls[Whether to load TLS certificates from the platform'\''s native store \[env: UV_NATIVE_TLS=\]]' \
+        '--offline[Disable network access \[env: UV_OFFLINE=\]]' \
+        '--allow-insecure-host[Allow insecure connections to a host \[env: UV_INSECURE_HOST=\]]' \
+        '--no-progress[Hide all progress outputs \[env: UV_NO_PROGRESS=\]]' \
+        '--directory[Change to the given directory prior to running the command \[env: UV_WORKING_DIR=\]]':file:_files \
+        '--project[Discover a project in the given directory \[env: UV_PROJECT=\]]' \
+        '--config-file[The path to a `uv.toml` file to use for configuration \[env: UV_CONFIG_FILE=\]]':file:_files \
+        '--no-config[Avoid discovering configuration files (`pyproject.toml`, `uv.toml`) \[env: UV_NO_CONFIG=\]]' \
+        {-h,--help}'[Display the concise help for this command]' \
+        "*: :_files"
+
+}
+
+function _uv_auth_logout {
+    _arguments \
+        {-u,--username}'[The username to logout]' \
+        '--keyring-provider[The keyring provider to use for storage of credentials \[env: UV_KEYRING_PROVIDER=\] \[possible values: disabled, subprocess\]]' \
+        {-n,--no-cache}'[Avoid reading from or writing to the cache, instead using a temporary directory for the duration of the operation \[env: UV_NO_CACHE=\]]' \
+        '--cache-dir[Path to the cache directory \[env: UV_CACHE_DIR=\]]':file:_files \
+        '--managed-python[Require use of uv-managed Python versions \[env: UV_MANAGED_PYTHON=\]]' \
+        '--no-managed-python[Disable use of uv-managed Python versions \[env: UV_NO_MANAGED_PYTHON=\]]' \
+        '--no-python-downloads[Disable automatic downloads of Python. \[env: "UV_PYTHON_DOWNLOADS=never"\]]' \
+        '--color[Control the use of color in output \[possible values: auto, always, never\]]' \
+        '--native-tls[Whether to load TLS certificates from the platform'\''s native store \[env: UV_NATIVE_TLS=\]]' \
+        '--offline[Disable network access \[env: UV_OFFLINE=\]]' \
+        '--allow-insecure-host[Allow insecure connections to a host \[env: UV_INSECURE_HOST=\]]' \
+        '--no-progress[Hide all progress outputs \[env: UV_NO_PROGRESS=\]]' \
+        '--directory[Change to the given directory prior to running the command \[env: UV_WORKING_DIR=\]]':file:_files \
+        '--project[Discover a project in the given directory \[env: UV_PROJECT=\]]' \
+        '--config-file[The path to a `uv.toml` file to use for configuration \[env: UV_CONFIG_FILE=\]]':file:_files \
+        '--no-config[Avoid discovering configuration files (`pyproject.toml`, `uv.toml`) \[env: UV_NO_CONFIG=\]]' \
+        {-h,--help}'[Display the concise help for this command]' \
+        "*: :_files"
+
+}
+
+function _uv_auth_token {
+    _arguments \
+        {-u,--username}'[The username to lookup]' \
+        '--keyring-provider[The keyring provider to use for reading credentials \[env: UV_KEYRING_PROVIDER=\] \[possible values: disabled, subprocess\]]' \
+        {-n,--no-cache}'[Avoid reading from or writing to the cache, instead using a temporary directory for the duration of the operation \[env: UV_NO_CACHE=\]]' \
+        '--cache-dir[Path to the cache directory \[env: UV_CACHE_DIR=\]]':file:_files \
+        '--managed-python[Require use of uv-managed Python versions \[env: UV_MANAGED_PYTHON=\]]' \
+        '--no-managed-python[Disable use of uv-managed Python versions \[env: UV_NO_MANAGED_PYTHON=\]]' \
+        '--no-python-downloads[Disable automatic downloads of Python. \[env: "UV_PYTHON_DOWNLOADS=never"\]]' \
+        '--color[Control the use of color in output \[possible values: auto, always, never\]]' \
+        '--native-tls[Whether to load TLS certificates from the platform'\''s native store \[env: UV_NATIVE_TLS=\]]' \
+        '--offline[Disable network access \[env: UV_OFFLINE=\]]' \
+        '--allow-insecure-host[Allow insecure connections to a host \[env: UV_INSECURE_HOST=\]]' \
+        '--no-progress[Hide all progress outputs \[env: UV_NO_PROGRESS=\]]' \
+        '--directory[Change to the given directory prior to running the command \[env: UV_WORKING_DIR=\]]':file:_files \
+        '--project[Discover a project in the given directory \[env: UV_PROJECT=\]]' \
+        '--config-file[The path to a `uv.toml` file to use for configuration \[env: UV_CONFIG_FILE=\]]':file:_files \
+        '--no-config[Avoid discovering configuration files (`pyproject.toml`, `uv.toml`) \[env: UV_NO_CONFIG=\]]' \
+        {-h,--help}'[Display the concise help for this command]' \
+        "*: :_files"
+
+}
+
+function _uv_auth_dir {
+    _arguments \
+        {-n,--no-cache}'[Avoid reading from or writing to the cache, instead using a temporary directory for the duration of the operation \[env: UV_NO_CACHE=\]]' \
+        '--cache-dir[Path to the cache directory \[env: UV_CACHE_DIR=\]]':file:_files \
+        '--managed-python[Require use of uv-managed Python versions \[env: UV_MANAGED_PYTHON=\]]' \
+        '--no-managed-python[Disable use of uv-managed Python versions \[env: UV_NO_MANAGED_PYTHON=\]]' \
+        '--no-python-downloads[Disable automatic downloads of Python. \[env: "UV_PYTHON_DOWNLOADS=never"\]]' \
+        '--color[Control the use of color in output \[possible values: auto, always, never\]]' \
+        '--native-tls[Whether to load TLS certificates from the platform'\''s native store \[env: UV_NATIVE_TLS=\]]' \
+        '--offline[Disable network access \[env: UV_OFFLINE=\]]' \
+        '--allow-insecure-host[Allow insecure connections to a host \[env: UV_INSECURE_HOST=\]]' \
+        '--no-progress[Hide all progress outputs \[env: UV_NO_PROGRESS=\]]' \
+        '--directory[Change to the given directory prior to running the command \[env: UV_WORKING_DIR=\]]':file:_files \
+        '--project[Discover a project in the given directory \[env: UV_PROJECT=\]]' \
+        '--config-file[The path to a `uv.toml` file to use for configuration \[env: UV_CONFIG_FILE=\]]':file:_files \
+        '--no-config[Avoid discovering configuration files (`pyproject.toml`, `uv.toml`) \[env: UV_NO_CONFIG=\]]' \
+        {-h,--help}'[Display the concise help for this command]' \
+        "*: :_files"
+
+}
+
 function _uv_run {
     _arguments \
         '--extra[Include optional dependencies from the specified extra name]' \
         '--all-extras[Include all optional dependencies]' \
         '--no-extra[Exclude the specified optional dependencies, if `--all-extras` is supplied]' \
-        '--no-dev[Disable the development dependency group]' \
+        '--no-dev[Disable the development dependency group \[env: UV_NO_DEV=\]]' \
         '--group[Include dependencies from the specified dependency group]' \
-        '--no-group[Disable the specified dependency group]' \
-        '--no-default-groups[Ignore the default dependency groups]' \
+        '--no-group[Disable the specified dependency group \[env: UV_NO_GROUP=\]]' \
+        '--no-default-groups[Ignore the default dependency groups \[env: UV_NO_DEFAULT_GROUPS=\]]' \
         '--only-group[Only include dependencies from the specified dependency group]' \
         '--all-groups[Include dependencies from all dependency groups]' \
         {-m,--module}'[Run a Python module]' \
@@ -155,10 +318,10 @@ function _uv_run {
         '--exact[Perform an exact sync, removing extraneous packages]' \
         '--env-file[Load environment variables from a `.env` file \[env: UV_ENV_FILE=\]]':file:_files \
         '--no-env-file[Avoid reading environment variables from a `.env` file \[env: UV_NO_ENV_FILE=\]]' \
-        '--with[Run with the given packages installed]' \
+        {-w,--with}'[Run with the given packages installed]' \
         '--with-editable[Run with the given packages installed in editable mode]' \
-        '--with-requirements[Run with all packages listed in the given `requirements.txt` files]' \
-        '--isolated[Run the command in an isolated virtual environment]' \
+        '--with-requirements[Run with the packages listed in the given files]' \
+        '--isolated[Run the command in an isolated virtual environment \[env: UV_ISOLATED=\]]' \
         '--active[Prefer the active virtual environment over the project'\''s virtual environment]' \
         '--no-sync[Avoid syncing the virtual environment \[env: UV_NO_SYNC=\]]' \
         '--locked[Assert that the `uv.lock` will remain unchanged \[env: UV_LOCKED=\]]' \
@@ -168,6 +331,7 @@ function _uv_run {
         '--all-packages[Run the command with all workspace members installed]' \
         '--package[Run the command in a specific package in the workspace]' \
         '--no-project[Avoid discovering the project or workspace]' \
+        '--python-platform[The platform for which requirements should be installed \[possible values: windows, linux, macos, x86_64-pc-windows-msvc, aarch64-pc-windows-msvc, i686-pc-windows-msvc, x86_64-unknown-linux-gnu, aarch64-apple-darwin, x86_64-apple-darwin, aarch64-unknown-linux-gnu, aarch64-unknown-linux-musl, x86_64-unknown-linux-musl, riscv64-unknown-linux, x86_64-manylinux2014, x86_64-manylinux_2_17, x86_64-manylinux_2_28, x86_64-manylinux_2_31, x86_64-manylinux_2_32, x86_64-manylinux_2_33, x86_64-manylinux_2_34, x86_64-manylinux_2_35, x86_64-manylinux_2_36, x86_64-manylinux_2_37, x86_64-manylinux_2_38, x86_64-manylinux_2_39, x86_64-manylinux_2_40, aarch64-manylinux2014, aarch64-manylinux_2_17, aarch64-manylinux_2_28, aarch64-manylinux_2_31, aarch64-manylinux_2_32, aarch64-manylinux_2_33, aarch64-manylinux_2_34, aarch64-manylinux_2_35, aarch64-manylinux_2_36, aarch64-manylinux_2_37, aarch64-manylinux_2_38, aarch64-manylinux_2_39, aarch64-manylinux_2_40, aarch64-linux-android, x86_64-linux-android, wasm32-pyodide2024, arm64-apple-ios, arm64-apple-ios-simulator, x86_64-apple-ios-simulator\]]' \
         '--index[The URLs to use when resolving dependencies, in addition to the default index \[env: UV_INDEX=\]]' \
         '--default-index[The URL of the default package index (by default: <https://pypi.org/simple>) \[env: UV_DEFAULT_INDEX=\]]' \
         {-i,--index-url}'[(Deprecated: use `--default-index` instead) The URL of the Python package index (by default: <https://pypi.org/simple>) \[env: UV_INDEX_URL=\]]' \
@@ -182,12 +346,15 @@ function _uv_run {
         '--prerelease[The strategy to use when considering pre-release versions \[env: UV_PRERELEASE=\] \[possible values: disallow, allow, if-necessary, explicit, if-necessary-or-explicit\]]' \
         '--fork-strategy[The strategy to use when selecting multiple versions of a given package across Python versions and platforms \[env: UV_FORK_STRATEGY=\] \[possible values: fewest, requires-python\]]' \
         '--exclude-newer[Limit candidate packages to those that were uploaded prior to the given date \[env: UV_EXCLUDE_NEWER=\]]' \
-        '--no-sources[Ignore the `tool.uv.sources` table when resolving dependencies. Used to lock against the standards-compliant, publishable package metadata, as opposed to using any workspace, Git, URL, or local path sources]' \
+        '--exclude-newer-package[Limit candidate packages for specific packages to those that were uploaded prior to the given date]' \
+        '--no-sources[Ignore the `tool.uv.sources` table when resolving dependencies. Used to lock against the standards-compliant, publishable package metadata, as opposed to using any workspace, Git, URL, or local path sources \[env: UV_NO_SOURCES=\]]' \
+        '--no-sources-package[Don'\''t use sources from the `tool.uv.sources` table for the specified packages \[env: UV_NO_SOURCES_PACKAGE=\]]' \
         '--reinstall[Reinstall all packages, regardless of whether they'\''re already installed. Implies `--refresh`]' \
         '--reinstall-package[Reinstall a specific package, regardless of whether it'\''s already installed. Implies `--refresh-package`]' \
         '--link-mode[The method to use when installing packages from the global cache \[env: UV_LINK_MODE=\] \[possible values: clone, copy, hardlink, symlink\]]' \
         '--compile-bytecode[Compile Python files to bytecode after installation \[env: UV_COMPILE_BYTECODE=\]]' \
         {-C,--config-setting}'[Settings to pass to the PEP 517 build backend, specified as `KEY=VALUE` pairs]' \
+        '--config-settings-package[Settings to pass to the PEP 517 build backend for a specific package, specified as `PACKAGE:KEY=VALUE` pairs]' \
         '--no-build-isolation[Disable isolation when building source distributions \[env: UV_NO_BUILD_ISOLATION=\]]' \
         '--no-build-isolation-package[Disable isolation when building source distributions for a specific package]' \
         '--no-build[Don'\''t build source distributions \[env: UV_NO_BUILD=\]]' \
@@ -203,12 +370,12 @@ function _uv_run {
         '--no-managed-python[Disable use of uv-managed Python versions \[env: UV_NO_MANAGED_PYTHON=\]]' \
         '--no-python-downloads[Disable automatic downloads of Python. \[env: "UV_PYTHON_DOWNLOADS=never"\]]' \
         '--color[Control the use of color in output \[possible values: auto, always, never\]]' \
-        '--native-tls[Whether to load TLS certificates from the platform'\''s native certificate store \[env: UV_NATIVE_TLS=\]]' \
+        '--native-tls[Whether to load TLS certificates from the platform'\''s native store \[env: UV_NATIVE_TLS=\]]' \
         '--offline[Disable network access \[env: UV_OFFLINE=\]]' \
         '--allow-insecure-host[Allow insecure connections to a host \[env: UV_INSECURE_HOST=\]]' \
         '--no-progress[Hide all progress outputs \[env: UV_NO_PROGRESS=\]]' \
-        '--directory[Change to the given directory prior to running the command]':file:_files \
-        '--project[Run the command within the given project directory \[env: UV_PROJECT=\]]' \
+        '--directory[Change to the given directory prior to running the command \[env: UV_WORKING_DIR=\]]':file:_files \
+        '--project[Discover a project in the given directory \[env: UV_PROJECT=\]]' \
         '--config-file[The path to a `uv.toml` file to use for configuration \[env: UV_CONFIG_FILE=\]]':file:_files \
         '--no-config[Avoid discovering configuration files (`pyproject.toml`, `uv.toml`) \[env: UV_NO_CONFIG=\]]' \
         {-h,--help}'[Display the concise help for this command]' \
@@ -228,7 +395,7 @@ function _uv_init {
         '--description[Set the project description]' \
         '--no-description[Disable the description for the project]' \
         '--vcs[Initialize a version control system for the project \[possible values: git, none\]]' \
-        '--build-backend[Initialize a build-backend of choice for the project \[possible values: hatch, flit, pdm, poetry, setuptools, maturin, scikit\]]' \
+        '--build-backend[Initialize a build-backend of choice for the project \[env: UV_INIT_BUILD_BACKEND=\] \[possible values: uv, hatch, flit, pdm, poetry, setuptools, maturin, scikit\]]' \
         '--no-readme[Do not create a `README.md` file]' \
         '--author-from[Fill in the `authors` field in the `pyproject.toml` \[possible values: auto, git, none\]]' \
         '--no-pin-python[Do not create a `.python-version` file for the project]' \
@@ -240,12 +407,12 @@ function _uv_init {
         {-n,--no-cache}'[Avoid reading from or writing to the cache, instead using a temporary directory for the duration of the operation \[env: UV_NO_CACHE=\]]' \
         '--cache-dir[Path to the cache directory \[env: UV_CACHE_DIR=\]]':file:_files \
         '--color[Control the use of color in output \[possible values: auto, always, never\]]' \
-        '--native-tls[Whether to load TLS certificates from the platform'\''s native certificate store \[env: UV_NATIVE_TLS=\]]' \
+        '--native-tls[Whether to load TLS certificates from the platform'\''s native store \[env: UV_NATIVE_TLS=\]]' \
         '--offline[Disable network access \[env: UV_OFFLINE=\]]' \
         '--allow-insecure-host[Allow insecure connections to a host \[env: UV_INSECURE_HOST=\]]' \
         '--no-progress[Hide all progress outputs \[env: UV_NO_PROGRESS=\]]' \
-        '--directory[Change to the given directory prior to running the command]':file:_files \
-        '--project[Run the command within the given project directory \[env: UV_PROJECT=\]]' \
+        '--directory[Change to the given directory prior to running the command \[env: UV_WORKING_DIR=\]]':file:_files \
+        '--project[Discover a project in the given directory \[env: UV_PROJECT=\]]' \
         '--config-file[The path to a `uv.toml` file to use for configuration \[env: UV_CONFIG_FILE=\]]':file:_files \
         '--no-config[Avoid discovering configuration files (`pyproject.toml`, `uv.toml`) \[env: UV_NO_CONFIG=\]]' \
         {-h,--help}'[Display the concise help for this command]' \
@@ -255,17 +422,19 @@ function _uv_init {
 
 function _uv_add {
     _arguments \
-        {-r,--requirements}'[Add all packages listed in the given `requirements.txt` files]' \
+        {-r,--requirements}'[Add the packages listed in the given files]' \
         {-c,--constraints}'[Constrain versions using the given requirements files \[env: UV_CONSTRAINT=\]]' \
         {-m,--marker}'[Apply this marker to all added packages]' \
-        '--dev[Add the requirements to the development dependency group]' \
+        '--dev[Add the requirements to the development dependency group \[env: UV_DEV=\]]' \
         '--optional[Add the requirements to the package'\''s optional dependencies for the specified extra]' \
         '--group[Add the requirements to the specified dependency group]' \
         '--editable[Add the requirements as editable]' \
-        '--raw-sources[Add source requirements to `project.dependencies`, rather than `tool.uv.sources`]' \
+        '--raw[Add a dependency as provided]' \
+        '--bounds[The kind of version specifier to use when adding dependencies \[possible values: lower, major, minor, exact\]]' \
         '--rev[Commit to use when adding a dependency from Git]' \
         '--tag[Tag to use when adding a dependency from Git]' \
         '--branch[Branch to use when adding a dependency from Git]' \
+        '--lfs[Whether to use Git LFS when adding a dependency from Git]' \
         '--extra[Extras to enable for the dependency]' \
         '--no-sync[Avoid syncing the virtual environment \[env: UV_NO_SYNC=\]]' \
         '--locked[Assert that the `uv.lock` will remain unchanged \[env: UV_LOCKED=\]]' \
@@ -273,6 +442,12 @@ function _uv_add {
         '--active[Prefer the active virtual environment over the project'\''s virtual environment]' \
         '--package[Add the dependency to a specific package in the workspace]' \
         '--script[Add the dependency to the specified Python script, rather than to a project]' \
+        '--workspace[Add the dependency as a workspace member]' \
+        '--no-workspace[Don'\''t add the dependency as a workspace member]' \
+        '--no-install-project[Do not install the current project]' \
+        '--no-install-workspace[Do not install any workspace members, including the current project]' \
+        '--no-install-local[Do not install local path dependencies]' \
+        '--no-install-package[Do not install the given package(s)]' \
         '--index[The URLs to use when resolving dependencies, in addition to the default index \[env: UV_INDEX=\]]' \
         '--default-index[The URL of the default package index (by default: <https://pypi.org/simple>) \[env: UV_DEFAULT_INDEX=\]]' \
         {-i,--index-url}'[(Deprecated: use `--default-index` instead) The URL of the Python package index (by default: <https://pypi.org/simple>) \[env: UV_INDEX_URL=\]]' \
@@ -287,12 +462,15 @@ function _uv_add {
         '--prerelease[The strategy to use when considering pre-release versions \[env: UV_PRERELEASE=\] \[possible values: disallow, allow, if-necessary, explicit, if-necessary-or-explicit\]]' \
         '--fork-strategy[The strategy to use when selecting multiple versions of a given package across Python versions and platforms \[env: UV_FORK_STRATEGY=\] \[possible values: fewest, requires-python\]]' \
         '--exclude-newer[Limit candidate packages to those that were uploaded prior to the given date \[env: UV_EXCLUDE_NEWER=\]]' \
-        '--no-sources[Ignore the `tool.uv.sources` table when resolving dependencies. Used to lock against the standards-compliant, publishable package metadata, as opposed to using any workspace, Git, URL, or local path sources]' \
+        '--exclude-newer-package[Limit candidate packages for specific packages to those that were uploaded prior to the given date]' \
+        '--no-sources[Ignore the `tool.uv.sources` table when resolving dependencies. Used to lock against the standards-compliant, publishable package metadata, as opposed to using any workspace, Git, URL, or local path sources \[env: UV_NO_SOURCES=\]]' \
+        '--no-sources-package[Don'\''t use sources from the `tool.uv.sources` table for the specified packages \[env: UV_NO_SOURCES_PACKAGE=\]]' \
         '--reinstall[Reinstall all packages, regardless of whether they'\''re already installed. Implies `--refresh`]' \
         '--reinstall-package[Reinstall a specific package, regardless of whether it'\''s already installed. Implies `--refresh-package`]' \
         '--link-mode[The method to use when installing packages from the global cache \[env: UV_LINK_MODE=\] \[possible values: clone, copy, hardlink, symlink\]]' \
         '--compile-bytecode[Compile Python files to bytecode after installation \[env: UV_COMPILE_BYTECODE=\]]' \
         {-C,--config-setting}'[Settings to pass to the PEP 517 build backend, specified as `KEY=VALUE` pairs]' \
+        '--config-settings-package[Settings to pass to the PEP 517 build backend for a specific package, specified as `PACKAGE:KEY=VALUE` pairs]' \
         '--no-build-isolation[Disable isolation when building source distributions \[env: UV_NO_BUILD_ISOLATION=\]]' \
         '--no-build-isolation-package[Disable isolation when building source distributions for a specific package]' \
         '--no-build[Don'\''t build source distributions \[env: UV_NO_BUILD=\]]' \
@@ -308,12 +486,12 @@ function _uv_add {
         '--no-managed-python[Disable use of uv-managed Python versions \[env: UV_NO_MANAGED_PYTHON=\]]' \
         '--no-python-downloads[Disable automatic downloads of Python. \[env: "UV_PYTHON_DOWNLOADS=never"\]]' \
         '--color[Control the use of color in output \[possible values: auto, always, never\]]' \
-        '--native-tls[Whether to load TLS certificates from the platform'\''s native certificate store \[env: UV_NATIVE_TLS=\]]' \
+        '--native-tls[Whether to load TLS certificates from the platform'\''s native store \[env: UV_NATIVE_TLS=\]]' \
         '--offline[Disable network access \[env: UV_OFFLINE=\]]' \
         '--allow-insecure-host[Allow insecure connections to a host \[env: UV_INSECURE_HOST=\]]' \
         '--no-progress[Hide all progress outputs \[env: UV_NO_PROGRESS=\]]' \
-        '--directory[Change to the given directory prior to running the command]':file:_files \
-        '--project[Run the command within the given project directory \[env: UV_PROJECT=\]]' \
+        '--directory[Change to the given directory prior to running the command \[env: UV_WORKING_DIR=\]]':file:_files \
+        '--project[Discover a project in the given directory \[env: UV_PROJECT=\]]' \
         '--config-file[The path to a `uv.toml` file to use for configuration \[env: UV_CONFIG_FILE=\]]':file:_files \
         '--no-config[Avoid discovering configuration files (`pyproject.toml`, `uv.toml`) \[env: UV_NO_CONFIG=\]]' \
         {-h,--help}'[Display the concise help for this command]' \
@@ -323,7 +501,7 @@ function _uv_add {
 
 function _uv_remove {
     _arguments \
-        '--dev[Remove the packages from the development dependency group]' \
+        '--dev[Remove the packages from the development dependency group \[env: UV_DEV=\]]' \
         '--optional[Remove the packages from the project'\''s optional dependencies for the specified extra]' \
         '--group[Remove the packages from the specified dependency group]' \
         '--no-sync[Avoid syncing the virtual environment after re-locking the project \[env: UV_NO_SYNC=\]]' \
@@ -346,12 +524,15 @@ function _uv_remove {
         '--prerelease[The strategy to use when considering pre-release versions \[env: UV_PRERELEASE=\] \[possible values: disallow, allow, if-necessary, explicit, if-necessary-or-explicit\]]' \
         '--fork-strategy[The strategy to use when selecting multiple versions of a given package across Python versions and platforms \[env: UV_FORK_STRATEGY=\] \[possible values: fewest, requires-python\]]' \
         '--exclude-newer[Limit candidate packages to those that were uploaded prior to the given date \[env: UV_EXCLUDE_NEWER=\]]' \
-        '--no-sources[Ignore the `tool.uv.sources` table when resolving dependencies. Used to lock against the standards-compliant, publishable package metadata, as opposed to using any workspace, Git, URL, or local path sources]' \
+        '--exclude-newer-package[Limit candidate packages for specific packages to those that were uploaded prior to the given date]' \
+        '--no-sources[Ignore the `tool.uv.sources` table when resolving dependencies. Used to lock against the standards-compliant, publishable package metadata, as opposed to using any workspace, Git, URL, or local path sources \[env: UV_NO_SOURCES=\]]' \
+        '--no-sources-package[Don'\''t use sources from the `tool.uv.sources` table for the specified packages \[env: UV_NO_SOURCES_PACKAGE=\]]' \
         '--reinstall[Reinstall all packages, regardless of whether they'\''re already installed. Implies `--refresh`]' \
         '--reinstall-package[Reinstall a specific package, regardless of whether it'\''s already installed. Implies `--refresh-package`]' \
         '--link-mode[The method to use when installing packages from the global cache \[env: UV_LINK_MODE=\] \[possible values: clone, copy, hardlink, symlink\]]' \
         '--compile-bytecode[Compile Python files to bytecode after installation \[env: UV_COMPILE_BYTECODE=\]]' \
         {-C,--config-setting}'[Settings to pass to the PEP 517 build backend, specified as `KEY=VALUE` pairs]' \
+        '--config-settings-package[Settings to pass to the PEP 517 build backend for a specific package, specified as `PACKAGE:KEY=VALUE` pairs]' \
         '--no-build-isolation[Disable isolation when building source distributions \[env: UV_NO_BUILD_ISOLATION=\]]' \
         '--no-build-isolation-package[Disable isolation when building source distributions for a specific package]' \
         '--no-build[Don'\''t build source distributions \[env: UV_NO_BUILD=\]]' \
@@ -367,12 +548,74 @@ function _uv_remove {
         '--no-managed-python[Disable use of uv-managed Python versions \[env: UV_NO_MANAGED_PYTHON=\]]' \
         '--no-python-downloads[Disable automatic downloads of Python. \[env: "UV_PYTHON_DOWNLOADS=never"\]]' \
         '--color[Control the use of color in output \[possible values: auto, always, never\]]' \
-        '--native-tls[Whether to load TLS certificates from the platform'\''s native certificate store \[env: UV_NATIVE_TLS=\]]' \
+        '--native-tls[Whether to load TLS certificates from the platform'\''s native store \[env: UV_NATIVE_TLS=\]]' \
         '--offline[Disable network access \[env: UV_OFFLINE=\]]' \
         '--allow-insecure-host[Allow insecure connections to a host \[env: UV_INSECURE_HOST=\]]' \
         '--no-progress[Hide all progress outputs \[env: UV_NO_PROGRESS=\]]' \
-        '--directory[Change to the given directory prior to running the command]':file:_files \
-        '--project[Run the command within the given project directory \[env: UV_PROJECT=\]]' \
+        '--directory[Change to the given directory prior to running the command \[env: UV_WORKING_DIR=\]]':file:_files \
+        '--project[Discover a project in the given directory \[env: UV_PROJECT=\]]' \
+        '--config-file[The path to a `uv.toml` file to use for configuration \[env: UV_CONFIG_FILE=\]]':file:_files \
+        '--no-config[Avoid discovering configuration files (`pyproject.toml`, `uv.toml`) \[env: UV_NO_CONFIG=\]]' \
+        {-h,--help}'[Display the concise help for this command]' \
+        "*: :_files"
+
+}
+
+function _uv_version {
+    _arguments \
+        '--bump[Update the project version using the given semantics \[possible values: major, minor, patch, stable, alpha, beta, rc, post, dev\]]' \
+        '--dry-run[Don'\''t write a new version to the `pyproject.toml`]' \
+        '--short[Only show the version]' \
+        '--output-format[The format of the output \[default: text\] \[possible values: text, json\]]' \
+        '--no-sync[Avoid syncing the virtual environment after re-locking the project \[env: UV_NO_SYNC=\]]' \
+        '--active[Prefer the active virtual environment over the project'\''s virtual environment]' \
+        '--locked[Assert that the `uv.lock` will remain unchanged \[env: UV_LOCKED=\]]' \
+        '--frozen[Update the version without re-locking the project \[env: UV_FROZEN=\]]' \
+        '--package[Update the version of a specific package in the workspace]' \
+        '--index[The URLs to use when resolving dependencies, in addition to the default index \[env: UV_INDEX=\]]' \
+        '--default-index[The URL of the default package index (by default: <https://pypi.org/simple>) \[env: UV_DEFAULT_INDEX=\]]' \
+        {-i,--index-url}'[(Deprecated: use `--default-index` instead) The URL of the Python package index (by default: <https://pypi.org/simple>) \[env: UV_INDEX_URL=\]]' \
+        '--extra-index-url[(Deprecated: use `--index` instead) Extra URLs of package indexes to use, in addition to `--index-url` \[env: UV_EXTRA_INDEX_URL=\]]' \
+        {-f,--find-links}'[Locations to search for candidate distributions, in addition to those found in the registry indexes \[env: UV_FIND_LINKS=\]]' \
+        '--no-index[Ignore the registry index (e.g., PyPI), instead relying on direct URL dependencies and those provided via `--find-links`]' \
+        '--index-strategy[The strategy to use when resolving against multiple index URLs \[env: UV_INDEX_STRATEGY=\] \[possible values: first-index, unsafe-first-match, unsafe-best-match\]]' \
+        '--keyring-provider[Attempt to use `keyring` for authentication for index URLs \[env: UV_KEYRING_PROVIDER=\] \[possible values: disabled, subprocess\]]' \
+        {-U,--upgrade}'[Allow package upgrades, ignoring pinned versions in any existing output file. Implies `--refresh`]' \
+        {-P,--upgrade-package}'[Allow upgrades for a specific package, ignoring pinned versions in any existing output file. Implies `--refresh-package`]' \
+        '--resolution[The strategy to use when selecting between the different compatible versions for a given package requirement \[env: UV_RESOLUTION=\] \[possible values: highest, lowest, lowest-direct\]]' \
+        '--prerelease[The strategy to use when considering pre-release versions \[env: UV_PRERELEASE=\] \[possible values: disallow, allow, if-necessary, explicit, if-necessary-or-explicit\]]' \
+        '--fork-strategy[The strategy to use when selecting multiple versions of a given package across Python versions and platforms \[env: UV_FORK_STRATEGY=\] \[possible values: fewest, requires-python\]]' \
+        '--exclude-newer[Limit candidate packages to those that were uploaded prior to the given date \[env: UV_EXCLUDE_NEWER=\]]' \
+        '--exclude-newer-package[Limit candidate packages for specific packages to those that were uploaded prior to the given date]' \
+        '--no-sources[Ignore the `tool.uv.sources` table when resolving dependencies. Used to lock against the standards-compliant, publishable package metadata, as opposed to using any workspace, Git, URL, or local path sources \[env: UV_NO_SOURCES=\]]' \
+        '--no-sources-package[Don'\''t use sources from the `tool.uv.sources` table for the specified packages \[env: UV_NO_SOURCES_PACKAGE=\]]' \
+        '--reinstall[Reinstall all packages, regardless of whether they'\''re already installed. Implies `--refresh`]' \
+        '--reinstall-package[Reinstall a specific package, regardless of whether it'\''s already installed. Implies `--refresh-package`]' \
+        '--link-mode[The method to use when installing packages from the global cache \[env: UV_LINK_MODE=\] \[possible values: clone, copy, hardlink, symlink\]]' \
+        '--compile-bytecode[Compile Python files to bytecode after installation \[env: UV_COMPILE_BYTECODE=\]]' \
+        {-C,--config-setting}'[Settings to pass to the PEP 517 build backend, specified as `KEY=VALUE` pairs]' \
+        '--config-settings-package[Settings to pass to the PEP 517 build backend for a specific package, specified as `PACKAGE:KEY=VALUE` pairs]' \
+        '--no-build-isolation[Disable isolation when building source distributions \[env: UV_NO_BUILD_ISOLATION=\]]' \
+        '--no-build-isolation-package[Disable isolation when building source distributions for a specific package]' \
+        '--no-build[Don'\''t build source distributions \[env: UV_NO_BUILD=\]]' \
+        '--no-build-package[Don'\''t build source distributions for a specific package \[env: UV_NO_BUILD_PACKAGE=\]]' \
+        '--no-binary[Don'\''t install pre-built wheels \[env: UV_NO_BINARY=\]]' \
+        '--no-binary-package[Don'\''t install pre-built wheels for a specific package \[env: UV_NO_BINARY_PACKAGE=\]]' \
+        {-n,--no-cache}'[Avoid reading from or writing to the cache, instead using a temporary directory for the duration of the operation \[env: UV_NO_CACHE=\]]' \
+        '--cache-dir[Path to the cache directory \[env: UV_CACHE_DIR=\]]':file:_files \
+        '--refresh[Refresh all cached data]' \
+        '--refresh-package[Refresh cached data for a specific package]' \
+        {-p,--python}'[The Python interpreter to use for resolving and syncing. \[env: UV_PYTHON=\]]' \
+        '--managed-python[Require use of uv-managed Python versions \[env: UV_MANAGED_PYTHON=\]]' \
+        '--no-managed-python[Disable use of uv-managed Python versions \[env: UV_NO_MANAGED_PYTHON=\]]' \
+        '--no-python-downloads[Disable automatic downloads of Python. \[env: "UV_PYTHON_DOWNLOADS=never"\]]' \
+        '--color[Control the use of color in output \[possible values: auto, always, never\]]' \
+        '--native-tls[Whether to load TLS certificates from the platform'\''s native store \[env: UV_NATIVE_TLS=\]]' \
+        '--offline[Disable network access \[env: UV_OFFLINE=\]]' \
+        '--allow-insecure-host[Allow insecure connections to a host \[env: UV_INSECURE_HOST=\]]' \
+        '--no-progress[Hide all progress outputs \[env: UV_NO_PROGRESS=\]]' \
+        '--directory[Change to the given directory prior to running the command \[env: UV_WORKING_DIR=\]]':file:_files \
+        '--project[Discover a project in the given directory \[env: UV_PROJECT=\]]' \
         '--config-file[The path to a `uv.toml` file to use for configuration \[env: UV_CONFIG_FILE=\]]':file:_files \
         '--no-config[Avoid discovering configuration files (`pyproject.toml`, `uv.toml`) \[env: UV_NO_CONFIG=\]]' \
         {-h,--help}'[Display the concise help for this command]' \
@@ -383,13 +626,14 @@ function _uv_remove {
 function _uv_sync {
     _arguments \
         '--extra[Include optional dependencies from the specified extra name]' \
+        '--output-format[Select the output format \[default: text\] \[possible values: text, json\]]' \
         '--all-extras[Include all optional dependencies]' \
         '--no-extra[Exclude the specified optional dependencies, if `--all-extras` is supplied]' \
-        '--no-dev[Disable the development dependency group]' \
+        '--no-dev[Disable the development dependency group \[env: UV_NO_DEV=\]]' \
         '--only-dev[Only include the development dependency group]' \
         '--group[Include dependencies from the specified dependency group]' \
-        '--no-group[Disable the specified dependency group]' \
-        '--no-default-groups[Ignore the default dependency groups]' \
+        '--no-group[Disable the specified dependency group \[env: UV_NO_GROUP=\]]' \
+        '--no-default-groups[Ignore the default dependency groups \[env: UV_NO_DEFAULT_GROUPS=\]]' \
         '--only-group[Only include dependencies from the specified dependency group]' \
         '--all-groups[Include dependencies from all dependency groups]' \
         '--no-editable[Install any editable dependencies, including the project and any workspace members, as non-editable \[env: UV_NO_EDITABLE=\]]' \
@@ -397,13 +641,15 @@ function _uv_sync {
         '--active[Sync dependencies to the active virtual environment]' \
         '--no-install-project[Do not install the current project]' \
         '--no-install-workspace[Do not install any workspace members, including the root project]' \
+        '--no-install-local[Do not install local path dependencies]' \
         '--no-install-package[Do not install the given package(s)]' \
         '--locked[Assert that the `uv.lock` will remain unchanged \[env: UV_LOCKED=\]]' \
         '--frozen[Sync without updating the `uv.lock` file \[env: UV_FROZEN=\]]' \
         '--dry-run[Perform a dry run, without writing the lockfile or modifying the project environment]' \
         '--all-packages[Sync all packages in the workspace]' \
-        '--package[Sync for a specific package in the workspace]' \
+        '--package[Sync for specific packages in the workspace]' \
         '--script[Sync the environment for a Python script, rather than the current project]' \
+        '--python-platform[The platform for which requirements should be installed \[possible values: windows, linux, macos, x86_64-pc-windows-msvc, aarch64-pc-windows-msvc, i686-pc-windows-msvc, x86_64-unknown-linux-gnu, aarch64-apple-darwin, x86_64-apple-darwin, aarch64-unknown-linux-gnu, aarch64-unknown-linux-musl, x86_64-unknown-linux-musl, riscv64-unknown-linux, x86_64-manylinux2014, x86_64-manylinux_2_17, x86_64-manylinux_2_28, x86_64-manylinux_2_31, x86_64-manylinux_2_32, x86_64-manylinux_2_33, x86_64-manylinux_2_34, x86_64-manylinux_2_35, x86_64-manylinux_2_36, x86_64-manylinux_2_37, x86_64-manylinux_2_38, x86_64-manylinux_2_39, x86_64-manylinux_2_40, aarch64-manylinux2014, aarch64-manylinux_2_17, aarch64-manylinux_2_28, aarch64-manylinux_2_31, aarch64-manylinux_2_32, aarch64-manylinux_2_33, aarch64-manylinux_2_34, aarch64-manylinux_2_35, aarch64-manylinux_2_36, aarch64-manylinux_2_37, aarch64-manylinux_2_38, aarch64-manylinux_2_39, aarch64-manylinux_2_40, aarch64-linux-android, x86_64-linux-android, wasm32-pyodide2024, arm64-apple-ios, arm64-apple-ios-simulator, x86_64-apple-ios-simulator\]]' \
         '--check[Check if the Python environment is synchronized with the project]' \
         '--index[The URLs to use when resolving dependencies, in addition to the default index \[env: UV_INDEX=\]]' \
         '--default-index[The URL of the default package index (by default: <https://pypi.org/simple>) \[env: UV_DEFAULT_INDEX=\]]' \
@@ -419,12 +665,15 @@ function _uv_sync {
         '--prerelease[The strategy to use when considering pre-release versions \[env: UV_PRERELEASE=\] \[possible values: disallow, allow, if-necessary, explicit, if-necessary-or-explicit\]]' \
         '--fork-strategy[The strategy to use when selecting multiple versions of a given package across Python versions and platforms \[env: UV_FORK_STRATEGY=\] \[possible values: fewest, requires-python\]]' \
         '--exclude-newer[Limit candidate packages to those that were uploaded prior to the given date \[env: UV_EXCLUDE_NEWER=\]]' \
-        '--no-sources[Ignore the `tool.uv.sources` table when resolving dependencies. Used to lock against the standards-compliant, publishable package metadata, as opposed to using any workspace, Git, URL, or local path sources]' \
+        '--exclude-newer-package[Limit candidate packages for specific packages to those that were uploaded prior to the given date]' \
+        '--no-sources[Ignore the `tool.uv.sources` table when resolving dependencies. Used to lock against the standards-compliant, publishable package metadata, as opposed to using any workspace, Git, URL, or local path sources \[env: UV_NO_SOURCES=\]]' \
+        '--no-sources-package[Don'\''t use sources from the `tool.uv.sources` table for the specified packages \[env: UV_NO_SOURCES_PACKAGE=\]]' \
         '--reinstall[Reinstall all packages, regardless of whether they'\''re already installed. Implies `--refresh`]' \
         '--reinstall-package[Reinstall a specific package, regardless of whether it'\''s already installed. Implies `--refresh-package`]' \
         '--link-mode[The method to use when installing packages from the global cache \[env: UV_LINK_MODE=\] \[possible values: clone, copy, hardlink, symlink\]]' \
         '--compile-bytecode[Compile Python files to bytecode after installation \[env: UV_COMPILE_BYTECODE=\]]' \
         {-C,--config-setting}'[Settings to pass to the PEP 517 build backend, specified as `KEY=VALUE` pairs]' \
+        '--config-settings-package[Settings to pass to the PEP 517 build backend for a specific package, specified as `PACKAGE:KEY=VALUE` pairs]' \
         '--no-build-isolation[Disable isolation when building source distributions \[env: UV_NO_BUILD_ISOLATION=\]]' \
         '--no-build-isolation-package[Disable isolation when building source distributions for a specific package]' \
         '--no-build[Don'\''t build source distributions \[env: UV_NO_BUILD=\]]' \
@@ -440,12 +689,12 @@ function _uv_sync {
         '--no-managed-python[Disable use of uv-managed Python versions \[env: UV_NO_MANAGED_PYTHON=\]]' \
         '--no-python-downloads[Disable automatic downloads of Python. \[env: "UV_PYTHON_DOWNLOADS=never"\]]' \
         '--color[Control the use of color in output \[possible values: auto, always, never\]]' \
-        '--native-tls[Whether to load TLS certificates from the platform'\''s native certificate store \[env: UV_NATIVE_TLS=\]]' \
+        '--native-tls[Whether to load TLS certificates from the platform'\''s native store \[env: UV_NATIVE_TLS=\]]' \
         '--offline[Disable network access \[env: UV_OFFLINE=\]]' \
         '--allow-insecure-host[Allow insecure connections to a host \[env: UV_INSECURE_HOST=\]]' \
         '--no-progress[Hide all progress outputs \[env: UV_NO_PROGRESS=\]]' \
-        '--directory[Change to the given directory prior to running the command]':file:_files \
-        '--project[Run the command within the given project directory \[env: UV_PROJECT=\]]' \
+        '--directory[Change to the given directory prior to running the command \[env: UV_WORKING_DIR=\]]':file:_files \
+        '--project[Discover a project in the given directory \[env: UV_PROJECT=\]]' \
         '--config-file[The path to a `uv.toml` file to use for configuration \[env: UV_CONFIG_FILE=\]]':file:_files \
         '--no-config[Avoid discovering configuration files (`pyproject.toml`, `uv.toml`) \[env: UV_NO_CONFIG=\]]' \
         {-h,--help}'[Display the concise help for this command]' \
@@ -455,7 +704,7 @@ function _uv_sync {
 
 function _uv_lock {
     _arguments \
-        '--check[Check if the lockfile is up-to-date \[env: UV_LOCKED=\]]' \
+        '--check[Check if the lockfile is up-to-date]' \
         '--check-exists[Assert that a `uv.lock` exists without checking if it is up-to-date \[env: UV_FROZEN=\]]' \
         '--dry-run[Perform a dry run, without writing the lockfile]' \
         '--script[Lock the specified Python script, rather than the current project]' \
@@ -473,8 +722,11 @@ function _uv_lock {
         '--prerelease[The strategy to use when considering pre-release versions \[env: UV_PRERELEASE=\] \[possible values: disallow, allow, if-necessary, explicit, if-necessary-or-explicit\]]' \
         '--fork-strategy[The strategy to use when selecting multiple versions of a given package across Python versions and platforms \[env: UV_FORK_STRATEGY=\] \[possible values: fewest, requires-python\]]' \
         '--exclude-newer[Limit candidate packages to those that were uploaded prior to the given date \[env: UV_EXCLUDE_NEWER=\]]' \
-        '--no-sources[Ignore the `tool.uv.sources` table when resolving dependencies. Used to lock against the standards-compliant, publishable package metadata, as opposed to using any workspace, Git, URL, or local path sources]' \
+        '--exclude-newer-package[Limit candidate packages for specific packages to those that were uploaded prior to the given date]' \
+        '--no-sources[Ignore the `tool.uv.sources` table when resolving dependencies. Used to lock against the standards-compliant, publishable package metadata, as opposed to using any workspace, Git, URL, or local path sources \[env: UV_NO_SOURCES=\]]' \
+        '--no-sources-package[Don'\''t use sources from the `tool.uv.sources` table for the specified packages \[env: UV_NO_SOURCES_PACKAGE=\]]' \
         {-C,--config-setting}'[Settings to pass to the PEP 517 build backend, specified as `KEY=VALUE` pairs]' \
+        '--config-settings-package[Settings to pass to the PEP 517 build backend for a specific package, specified as `PACKAGE:KEY=VALUE` pairs]' \
         '--no-build-isolation[Disable isolation when building source distributions \[env: UV_NO_BUILD_ISOLATION=\]]' \
         '--no-build-isolation-package[Disable isolation when building source distributions for a specific package]' \
         '--no-build[Don'\''t build source distributions \[env: UV_NO_BUILD=\]]' \
@@ -491,12 +743,12 @@ function _uv_lock {
         '--no-managed-python[Disable use of uv-managed Python versions \[env: UV_NO_MANAGED_PYTHON=\]]' \
         '--no-python-downloads[Disable automatic downloads of Python. \[env: "UV_PYTHON_DOWNLOADS=never"\]]' \
         '--color[Control the use of color in output \[possible values: auto, always, never\]]' \
-        '--native-tls[Whether to load TLS certificates from the platform'\''s native certificate store \[env: UV_NATIVE_TLS=\]]' \
+        '--native-tls[Whether to load TLS certificates from the platform'\''s native store \[env: UV_NATIVE_TLS=\]]' \
         '--offline[Disable network access \[env: UV_OFFLINE=\]]' \
         '--allow-insecure-host[Allow insecure connections to a host \[env: UV_INSECURE_HOST=\]]' \
         '--no-progress[Hide all progress outputs \[env: UV_NO_PROGRESS=\]]' \
-        '--directory[Change to the given directory prior to running the command]':file:_files \
-        '--project[Run the command within the given project directory \[env: UV_PROJECT=\]]' \
+        '--directory[Change to the given directory prior to running the command \[env: UV_WORKING_DIR=\]]':file:_files \
+        '--project[Discover a project in the given directory \[env: UV_PROJECT=\]]' \
         '--config-file[The path to a `uv.toml` file to use for configuration \[env: UV_CONFIG_FILE=\]]':file:_files \
         '--no-config[Avoid discovering configuration files (`pyproject.toml`, `uv.toml`) \[env: UV_NO_CONFIG=\]]' \
         {-h,--help}'[Display the concise help for this command]' \
@@ -506,27 +758,28 @@ function _uv_lock {
 
 function _uv_export {
     _arguments \
-        '--format[The format to which `uv.lock` should be exported \[possible values: requirements.txt, pylock.toml\]]' \
+        '--format[The format to which `uv.lock` should be exported \[possible values: requirements.txt, pylock.toml, cyclonedx1.5\]]' \
         '--all-packages[Export the entire workspace]' \
-        '--package[Export the dependencies for a specific package in the workspace]' \
+        '--package[Export the dependencies for specific packages in the workspace]' \
         '--prune[Prune the given package from the dependency tree]' \
         '--extra[Include optional dependencies from the specified extra name]' \
         '--all-extras[Include all optional dependencies]' \
         '--no-extra[Exclude the specified optional dependencies, if `--all-extras` is supplied]' \
-        '--no-dev[Disable the development dependency group]' \
+        '--no-dev[Disable the development dependency group \[env: UV_NO_DEV=\]]' \
         '--only-dev[Only include the development dependency group]' \
         '--group[Include dependencies from the specified dependency group]' \
-        '--no-group[Disable the specified dependency group]' \
-        '--no-default-groups[Ignore the default dependency groups]' \
+        '--no-group[Disable the specified dependency group \[env: UV_NO_GROUP=\]]' \
+        '--no-default-groups[Ignore the default dependency groups \[env: UV_NO_DEFAULT_GROUPS=\]]' \
         '--only-group[Only include dependencies from the specified dependency group]' \
         '--all-groups[Include dependencies from all dependency groups]' \
         '--no-annotate[Exclude comment annotations indicating the source of each package]' \
         '--no-header[Exclude the comment header at the top of the generated output file]' \
-        '--no-editable[Install any editable dependencies, including the project and any workspace members, as non-editable]' \
+        '--no-editable[Export any editable dependencies, including the project and any workspace members, as non-editable \[env: UV_NO_EDITABLE=\]]' \
         '--no-hashes[Omit hashes in the generated output]' \
         {-o,--output-file}'[Write the exported requirements to the given file]':file:_files \
         '--no-emit-project[Do not emit the current project]' \
         '--no-emit-workspace[Do not emit any workspace members, including the root project]' \
+        '--no-emit-local[Do not include local path dependencies in the exported requirements]' \
         '--no-emit-package[Do not emit the given package(s)]' \
         '--locked[Assert that the `uv.lock` will remain unchanged \[env: UV_LOCKED=\]]' \
         '--frozen[Do not update the `uv.lock` before exporting \[env: UV_FROZEN=\]]' \
@@ -545,8 +798,11 @@ function _uv_export {
         '--prerelease[The strategy to use when considering pre-release versions \[env: UV_PRERELEASE=\] \[possible values: disallow, allow, if-necessary, explicit, if-necessary-or-explicit\]]' \
         '--fork-strategy[The strategy to use when selecting multiple versions of a given package across Python versions and platforms \[env: UV_FORK_STRATEGY=\] \[possible values: fewest, requires-python\]]' \
         '--exclude-newer[Limit candidate packages to those that were uploaded prior to the given date \[env: UV_EXCLUDE_NEWER=\]]' \
-        '--no-sources[Ignore the `tool.uv.sources` table when resolving dependencies. Used to lock against the standards-compliant, publishable package metadata, as opposed to using any workspace, Git, URL, or local path sources]' \
+        '--exclude-newer-package[Limit candidate packages for specific packages to those that were uploaded prior to the given date]' \
+        '--no-sources[Ignore the `tool.uv.sources` table when resolving dependencies. Used to lock against the standards-compliant, publishable package metadata, as opposed to using any workspace, Git, URL, or local path sources \[env: UV_NO_SOURCES=\]]' \
+        '--no-sources-package[Don'\''t use sources from the `tool.uv.sources` table for the specified packages \[env: UV_NO_SOURCES_PACKAGE=\]]' \
         {-C,--config-setting}'[Settings to pass to the PEP 517 build backend, specified as `KEY=VALUE` pairs]' \
+        '--config-settings-package[Settings to pass to the PEP 517 build backend for a specific package, specified as `PACKAGE:KEY=VALUE` pairs]' \
         '--no-build-isolation[Disable isolation when building source distributions \[env: UV_NO_BUILD_ISOLATION=\]]' \
         '--no-build-isolation-package[Disable isolation when building source distributions for a specific package]' \
         '--no-build[Don'\''t build source distributions \[env: UV_NO_BUILD=\]]' \
@@ -563,12 +819,12 @@ function _uv_export {
         '--no-managed-python[Disable use of uv-managed Python versions \[env: UV_NO_MANAGED_PYTHON=\]]' \
         '--no-python-downloads[Disable automatic downloads of Python. \[env: "UV_PYTHON_DOWNLOADS=never"\]]' \
         '--color[Control the use of color in output \[possible values: auto, always, never\]]' \
-        '--native-tls[Whether to load TLS certificates from the platform'\''s native certificate store \[env: UV_NATIVE_TLS=\]]' \
+        '--native-tls[Whether to load TLS certificates from the platform'\''s native store \[env: UV_NATIVE_TLS=\]]' \
         '--offline[Disable network access \[env: UV_OFFLINE=\]]' \
         '--allow-insecure-host[Allow insecure connections to a host \[env: UV_INSECURE_HOST=\]]' \
         '--no-progress[Hide all progress outputs \[env: UV_NO_PROGRESS=\]]' \
-        '--directory[Change to the given directory prior to running the command]':file:_files \
-        '--project[Run the command within the given project directory \[env: UV_PROJECT=\]]' \
+        '--directory[Change to the given directory prior to running the command \[env: UV_WORKING_DIR=\]]':file:_files \
+        '--project[Discover a project in the given directory \[env: UV_PROJECT=\]]' \
         '--config-file[The path to a `uv.toml` file to use for configuration \[env: UV_CONFIG_FILE=\]]':file:_files \
         '--no-config[Avoid discovering configuration files (`pyproject.toml`, `uv.toml`) \[env: UV_NO_CONFIG=\]]' \
         {-h,--help}'[Display the concise help for this command]' \
@@ -585,23 +841,25 @@ function _uv_tree {
         '--no-dedupe[Do not de-duplicate repeated dependencies. Usually, when a package has already displayed its dependencies, further occurrences will not re-display its dependencies, and will include a (*) to indicate it has already been shown. This flag will cause those duplicates to be repeated]' \
         '--invert[Show the reverse dependencies for the given package. This flag will invert the tree and display the packages that depend on the given package]' \
         '--outdated[Show the latest available version of each package in the tree]' \
+        '--show-sizes[Show compressed wheel sizes for packages in the tree]' \
         '--only-dev[Only include the development dependency group]' \
-        '--no-dev[Disable the development dependency group]' \
+        '--no-dev[Disable the development dependency group \[env: UV_NO_DEV=\]]' \
         '--group[Include dependencies from the specified dependency group]' \
-        '--no-group[Disable the specified dependency group]' \
-        '--no-default-groups[Ignore the default dependency groups]' \
+        '--no-group[Disable the specified dependency group \[env: UV_NO_GROUP=\]]' \
+        '--no-default-groups[Ignore the default dependency groups \[env: UV_NO_DEFAULT_GROUPS=\]]' \
         '--only-group[Only include dependencies from the specified dependency group]' \
         '--all-groups[Include dependencies from all dependency groups]' \
         '--locked[Assert that the `uv.lock` will remain unchanged \[env: UV_LOCKED=\]]' \
         '--frozen[Display the requirements without locking the project \[env: UV_FROZEN=\]]' \
         '--script[Show the dependency tree the specified PEP 723 Python script, rather than the current project]' \
         '--python-version[The Python version to use when filtering the tree]' \
-        '--python-platform[The platform to use when filtering the tree \[possible values: windows, linux, macos, x86_64-pc-windows-msvc, i686-pc-windows-msvc, x86_64-unknown-linux-gnu, aarch64-apple-darwin, x86_64-apple-darwin, aarch64-unknown-linux-gnu, aarch64-unknown-linux-musl, x86_64-unknown-linux-musl, x86_64-manylinux2014, x86_64-manylinux_2_17, x86_64-manylinux_2_28, x86_64-manylinux_2_31, x86_64-manylinux_2_32, x86_64-manylinux_2_33, x86_64-manylinux_2_34, x86_64-manylinux_2_35, x86_64-manylinux_2_36, x86_64-manylinux_2_37, x86_64-manylinux_2_38, x86_64-manylinux_2_39, x86_64-manylinux_2_40, aarch64-manylinux2014, aarch64-manylinux_2_17, aarch64-manylinux_2_28, aarch64-manylinux_2_31, aarch64-manylinux_2_32, aarch64-manylinux_2_33, aarch64-manylinux_2_34, aarch64-manylinux_2_35, aarch64-manylinux_2_36, aarch64-manylinux_2_37, aarch64-manylinux_2_38, aarch64-manylinux_2_39, aarch64-manylinux_2_40\]]' \
+        '--python-platform[The platform to use when filtering the tree \[possible values: windows, linux, macos, x86_64-pc-windows-msvc, aarch64-pc-windows-msvc, i686-pc-windows-msvc, x86_64-unknown-linux-gnu, aarch64-apple-darwin, x86_64-apple-darwin, aarch64-unknown-linux-gnu, aarch64-unknown-linux-musl, x86_64-unknown-linux-musl, riscv64-unknown-linux, x86_64-manylinux2014, x86_64-manylinux_2_17, x86_64-manylinux_2_28, x86_64-manylinux_2_31, x86_64-manylinux_2_32, x86_64-manylinux_2_33, x86_64-manylinux_2_34, x86_64-manylinux_2_35, x86_64-manylinux_2_36, x86_64-manylinux_2_37, x86_64-manylinux_2_38, x86_64-manylinux_2_39, x86_64-manylinux_2_40, aarch64-manylinux2014, aarch64-manylinux_2_17, aarch64-manylinux_2_28, aarch64-manylinux_2_31, aarch64-manylinux_2_32, aarch64-manylinux_2_33, aarch64-manylinux_2_34, aarch64-manylinux_2_35, aarch64-manylinux_2_36, aarch64-manylinux_2_37, aarch64-manylinux_2_38, aarch64-manylinux_2_39, aarch64-manylinux_2_40, aarch64-linux-android, x86_64-linux-android, wasm32-pyodide2024, arm64-apple-ios, arm64-apple-ios-simulator, x86_64-apple-ios-simulator\]]' \
         '--no-build[Don'\''t build source distributions \[env: UV_NO_BUILD=\]]' \
         '--no-build-package[Don'\''t build source distributions for a specific package \[env: UV_NO_BUILD_PACKAGE=\]]' \
         '--no-binary[Don'\''t install pre-built wheels \[env: UV_NO_BINARY=\]]' \
         '--no-binary-package[Don'\''t install pre-built wheels for a specific package \[env: UV_NO_BINARY_PACKAGE=\]]' \
         {-C,--config-setting}'[Settings to pass to the PEP 517 build backend, specified as `KEY=VALUE` pairs]' \
+        '--config-settings-package[Settings to pass to the PEP 517 build backend for a specific package, specified as `PACKAGE:KEY=VALUE` pairs]' \
         '--no-build-isolation[Disable isolation when building source distributions \[env: UV_NO_BUILD_ISOLATION=\]]' \
         '--no-build-isolation-package[Disable isolation when building source distributions for a specific package]' \
         '--index[The URLs to use when resolving dependencies, in addition to the default index \[env: UV_INDEX=\]]' \
@@ -618,7 +876,9 @@ function _uv_tree {
         '--prerelease[The strategy to use when considering pre-release versions \[env: UV_PRERELEASE=\] \[possible values: disallow, allow, if-necessary, explicit, if-necessary-or-explicit\]]' \
         '--fork-strategy[The strategy to use when selecting multiple versions of a given package across Python versions and platforms \[env: UV_FORK_STRATEGY=\] \[possible values: fewest, requires-python\]]' \
         '--exclude-newer[Limit candidate packages to those that were uploaded prior to the given date \[env: UV_EXCLUDE_NEWER=\]]' \
-        '--no-sources[Ignore the `tool.uv.sources` table when resolving dependencies. Used to lock against the standards-compliant, publishable package metadata, as opposed to using any workspace, Git, URL, or local path sources]' \
+        '--exclude-newer-package[Limit candidate packages for specific packages to those that were uploaded prior to the given date]' \
+        '--no-sources[Ignore the `tool.uv.sources` table when resolving dependencies. Used to lock against the standards-compliant, publishable package metadata, as opposed to using any workspace, Git, URL, or local path sources \[env: UV_NO_SOURCES=\]]' \
+        '--no-sources-package[Don'\''t use sources from the `tool.uv.sources` table for the specified packages \[env: UV_NO_SOURCES_PACKAGE=\]]' \
         '--link-mode[The method to use when installing packages from the global cache \[env: UV_LINK_MODE=\] \[possible values: clone, copy, hardlink, symlink\]]' \
         {-p,--python}'[The Python interpreter to use for locking and filtering. \[env: UV_PYTHON=\]]' \
         '--managed-python[Require use of uv-managed Python versions \[env: UV_MANAGED_PYTHON=\]]' \
@@ -627,12 +887,37 @@ function _uv_tree {
         {-n,--no-cache}'[Avoid reading from or writing to the cache, instead using a temporary directory for the duration of the operation \[env: UV_NO_CACHE=\]]' \
         '--cache-dir[Path to the cache directory \[env: UV_CACHE_DIR=\]]':file:_files \
         '--color[Control the use of color in output \[possible values: auto, always, never\]]' \
-        '--native-tls[Whether to load TLS certificates from the platform'\''s native certificate store \[env: UV_NATIVE_TLS=\]]' \
+        '--native-tls[Whether to load TLS certificates from the platform'\''s native store \[env: UV_NATIVE_TLS=\]]' \
         '--offline[Disable network access \[env: UV_OFFLINE=\]]' \
         '--allow-insecure-host[Allow insecure connections to a host \[env: UV_INSECURE_HOST=\]]' \
         '--no-progress[Hide all progress outputs \[env: UV_NO_PROGRESS=\]]' \
-        '--directory[Change to the given directory prior to running the command]':file:_files \
-        '--project[Run the command within the given project directory \[env: UV_PROJECT=\]]' \
+        '--directory[Change to the given directory prior to running the command \[env: UV_WORKING_DIR=\]]':file:_files \
+        '--project[Discover a project in the given directory \[env: UV_PROJECT=\]]' \
+        '--config-file[The path to a `uv.toml` file to use for configuration \[env: UV_CONFIG_FILE=\]]':file:_files \
+        '--no-config[Avoid discovering configuration files (`pyproject.toml`, `uv.toml`) \[env: UV_NO_CONFIG=\]]' \
+        {-h,--help}'[Display the concise help for this command]' \
+        "*: :_files"
+
+}
+
+function _uv_format {
+    _arguments \
+        '--check[Check if files are formatted without applying changes]' \
+        '--diff[Show a diff of formatting changes without applying them]' \
+        '--version[The version of Ruff to use for formatting]' \
+        '--no-project[Avoid discovering a project or workspace]' \
+        {-n,--no-cache}'[Avoid reading from or writing to the cache, instead using a temporary directory for the duration of the operation \[env: UV_NO_CACHE=\]]' \
+        '--cache-dir[Path to the cache directory \[env: UV_CACHE_DIR=\]]':file:_files \
+        '--managed-python[Require use of uv-managed Python versions \[env: UV_MANAGED_PYTHON=\]]' \
+        '--no-managed-python[Disable use of uv-managed Python versions \[env: UV_NO_MANAGED_PYTHON=\]]' \
+        '--no-python-downloads[Disable automatic downloads of Python. \[env: "UV_PYTHON_DOWNLOADS=never"\]]' \
+        '--color[Control the use of color in output \[possible values: auto, always, never\]]' \
+        '--native-tls[Whether to load TLS certificates from the platform'\''s native store \[env: UV_NATIVE_TLS=\]]' \
+        '--offline[Disable network access \[env: UV_OFFLINE=\]]' \
+        '--allow-insecure-host[Allow insecure connections to a host \[env: UV_INSECURE_HOST=\]]' \
+        '--no-progress[Hide all progress outputs \[env: UV_NO_PROGRESS=\]]' \
+        '--directory[Change to the given directory prior to running the command \[env: UV_WORKING_DIR=\]]':file:_files \
+        '--project[Discover a project in the given directory \[env: UV_PROJECT=\]]' \
         '--config-file[The path to a `uv.toml` file to use for configuration \[env: UV_CONFIG_FILE=\]]':file:_files \
         '--no-config[Avoid discovering configuration files (`pyproject.toml`, `uv.toml`) \[env: UV_NO_CONFIG=\]]' \
         {-h,--help}'[Display the concise help for this command]' \
@@ -666,12 +951,12 @@ function _uv_tool {
         '--no-managed-python[Disable use of uv-managed Python versions \[env: UV_NO_MANAGED_PYTHON=\]]' \
         '--no-python-downloads[Disable automatic downloads of Python. \[env: "UV_PYTHON_DOWNLOADS=never"\]]' \
         '--color[Control the use of color in output \[possible values: auto, always, never\]]' \
-        '--native-tls[Whether to load TLS certificates from the platform'\''s native certificate store \[env: UV_NATIVE_TLS=\]]' \
+        '--native-tls[Whether to load TLS certificates from the platform'\''s native store \[env: UV_NATIVE_TLS=\]]' \
         '--offline[Disable network access \[env: UV_OFFLINE=\]]' \
         '--allow-insecure-host[Allow insecure connections to a host \[env: UV_INSECURE_HOST=\]]' \
         '--no-progress[Hide all progress outputs \[env: UV_NO_PROGRESS=\]]' \
-        '--directory[Change to the given directory prior to running the command]':file:_files \
-        '--project[Run the command within the given project directory \[env: UV_PROJECT=\]]' \
+        '--directory[Change to the given directory prior to running the command \[env: UV_WORKING_DIR=\]]':file:_files \
+        '--project[Discover a project in the given directory \[env: UV_PROJECT=\]]' \
         '--config-file[The path to a `uv.toml` file to use for configuration \[env: UV_CONFIG_FILE=\]]':file:_files \
         '--no-config[Avoid discovering configuration files (`pyproject.toml`, `uv.toml`) \[env: UV_NO_CONFIG=\]]' \
         {-h,--help}'[Display the concise help for this command]' \
@@ -721,15 +1006,18 @@ function _uv_tool {
 function _uv_tool_run {
     _arguments \
         '--from[Use the given package to provide the command]' \
-        '--with[Run with the given packages installed]' \
+        {-w,--with}'[Run with the given packages installed]' \
         '--with-editable[Run with the given packages installed in editable mode]' \
-        '--with-requirements[Run with all packages listed in the given `requirements.txt` files]' \
+        '--with-requirements[Run with the packages listed in the given files]' \
         {-c,--constraints}'[Constrain versions using the given requirements files \[env: UV_CONSTRAINT=\]]' \
         {-b,--build-constraints}'[Constrain build dependencies using the given requirements files when building source distributions \[env: UV_BUILD_CONSTRAINT=\]]' \
         '--overrides[Override versions using the given requirements files \[env: UV_OVERRIDE=\]]' \
-        '--isolated[Run the tool in an isolated virtual environment, ignoring any already-installed tools]' \
+        '--isolated[Run the tool in an isolated virtual environment, ignoring any already-installed tools \[env: UV_ISOLATED=\]]' \
         '--env-file[Load environment variables from a `.env` file \[env: UV_ENV_FILE=\]]':file:_files \
         '--no-env-file[Avoid reading environment variables from a `.env` file \[env: UV_NO_ENV_FILE=\]]' \
+        '--lfs[Whether to use Git LFS when adding a dependency from Git]' \
+        '--python-platform[The platform for which requirements should be installed \[possible values: windows, linux, macos, x86_64-pc-windows-msvc, aarch64-pc-windows-msvc, i686-pc-windows-msvc, x86_64-unknown-linux-gnu, aarch64-apple-darwin, x86_64-apple-darwin, aarch64-unknown-linux-gnu, aarch64-unknown-linux-musl, x86_64-unknown-linux-musl, riscv64-unknown-linux, x86_64-manylinux2014, x86_64-manylinux_2_17, x86_64-manylinux_2_28, x86_64-manylinux_2_31, x86_64-manylinux_2_32, x86_64-manylinux_2_33, x86_64-manylinux_2_34, x86_64-manylinux_2_35, x86_64-manylinux_2_36, x86_64-manylinux_2_37, x86_64-manylinux_2_38, x86_64-manylinux_2_39, x86_64-manylinux_2_40, aarch64-manylinux2014, aarch64-manylinux_2_17, aarch64-manylinux_2_28, aarch64-manylinux_2_31, aarch64-manylinux_2_32, aarch64-manylinux_2_33, aarch64-manylinux_2_34, aarch64-manylinux_2_35, aarch64-manylinux_2_36, aarch64-manylinux_2_37, aarch64-manylinux_2_38, aarch64-manylinux_2_39, aarch64-manylinux_2_40, aarch64-linux-android, x86_64-linux-android, wasm32-pyodide2024, arm64-apple-ios, arm64-apple-ios-simulator, x86_64-apple-ios-simulator\]]' \
+        '--torch-backend[The backend to use when fetching packages in the PyTorch ecosystem (e.g., `cpu`, `cu126`, or `auto`) \[env: UV_TORCH_BACKEND=\] \[possible values: auto, cpu, cu130, cu129, cu128, cu126, cu125, cu124, cu123, cu122, cu121, cu120, cu118, cu117, cu116, cu115, cu114, cu113, cu112, cu111, cu110, cu102, cu101, cu100, cu92, cu91, cu90, cu80, rocm6.4, rocm6.3, rocm6.2.4, rocm6.2, rocm6.1, rocm6.0, rocm5.7, rocm5.6, rocm5.5, rocm5.4.2, rocm5.4, rocm5.3, rocm5.2, rocm5.1.1, rocm4.2, rocm4.1, rocm4.0.1, xpu\]]' \
         '--index[The URLs to use when resolving dependencies, in addition to the default index \[env: UV_INDEX=\]]' \
         '--default-index[The URL of the default package index (by default: <https://pypi.org/simple>) \[env: UV_DEFAULT_INDEX=\]]' \
         {-i,--index-url}'[(Deprecated: use `--default-index` instead) The URL of the Python package index (by default: <https://pypi.org/simple>) \[env: UV_INDEX_URL=\]]' \
@@ -744,12 +1032,15 @@ function _uv_tool_run {
         '--prerelease[The strategy to use when considering pre-release versions \[env: UV_PRERELEASE=\] \[possible values: disallow, allow, if-necessary, explicit, if-necessary-or-explicit\]]' \
         '--fork-strategy[The strategy to use when selecting multiple versions of a given package across Python versions and platforms \[env: UV_FORK_STRATEGY=\] \[possible values: fewest, requires-python\]]' \
         '--exclude-newer[Limit candidate packages to those that were uploaded prior to the given date \[env: UV_EXCLUDE_NEWER=\]]' \
-        '--no-sources[Ignore the `tool.uv.sources` table when resolving dependencies. Used to lock against the standards-compliant, publishable package metadata, as opposed to using any workspace, Git, URL, or local path sources]' \
+        '--exclude-newer-package[Limit candidate packages for specific packages to those that were uploaded prior to the given date]' \
+        '--no-sources[Ignore the `tool.uv.sources` table when resolving dependencies. Used to lock against the standards-compliant, publishable package metadata, as opposed to using any workspace, Git, URL, or local path sources \[env: UV_NO_SOURCES=\]]' \
+        '--no-sources-package[Don'\''t use sources from the `tool.uv.sources` table for the specified packages \[env: UV_NO_SOURCES_PACKAGE=\]]' \
         '--reinstall[Reinstall all packages, regardless of whether they'\''re already installed. Implies `--refresh`]' \
         '--reinstall-package[Reinstall a specific package, regardless of whether it'\''s already installed. Implies `--refresh-package`]' \
         '--link-mode[The method to use when installing packages from the global cache \[env: UV_LINK_MODE=\] \[possible values: clone, copy, hardlink, symlink\]]' \
         '--compile-bytecode[Compile Python files to bytecode after installation \[env: UV_COMPILE_BYTECODE=\]]' \
         {-C,--config-setting}'[Settings to pass to the PEP 517 build backend, specified as `KEY=VALUE` pairs]' \
+        '--config-settings-package[Settings to pass to the PEP 517 build backend for a specific package, specified as `PACKAGE:KEY=VALUE` pairs]' \
         '--no-build-isolation[Disable isolation when building source distributions \[env: UV_NO_BUILD_ISOLATION=\]]' \
         '--no-build-isolation-package[Disable isolation when building source distributions for a specific package]' \
         '--no-build[Don'\''t build source distributions \[env: UV_NO_BUILD=\]]' \
@@ -765,12 +1056,12 @@ function _uv_tool_run {
         '--no-managed-python[Disable use of uv-managed Python versions \[env: UV_NO_MANAGED_PYTHON=\]]' \
         '--no-python-downloads[Disable automatic downloads of Python. \[env: "UV_PYTHON_DOWNLOADS=never"\]]' \
         '--color[Control the use of color in output \[possible values: auto, always, never\]]' \
-        '--native-tls[Whether to load TLS certificates from the platform'\''s native certificate store \[env: UV_NATIVE_TLS=\]]' \
+        '--native-tls[Whether to load TLS certificates from the platform'\''s native store \[env: UV_NATIVE_TLS=\]]' \
         '--offline[Disable network access \[env: UV_OFFLINE=\]]' \
         '--allow-insecure-host[Allow insecure connections to a host \[env: UV_INSECURE_HOST=\]]' \
         '--no-progress[Hide all progress outputs \[env: UV_NO_PROGRESS=\]]' \
-        '--directory[Change to the given directory prior to running the command]':file:_files \
-        '--project[Run the command within the given project directory \[env: UV_PROJECT=\]]' \
+        '--directory[Change to the given directory prior to running the command \[env: UV_WORKING_DIR=\]]':file:_files \
+        '--project[Discover a project in the given directory \[env: UV_PROJECT=\]]' \
         '--config-file[The path to a `uv.toml` file to use for configuration \[env: UV_CONFIG_FILE=\]]':file:_files \
         '--no-config[Avoid discovering configuration files (`pyproject.toml`, `uv.toml`) \[env: UV_NO_CONFIG=\]]' \
         {-h,--help}'[Display the concise help for this command]' \
@@ -780,14 +1071,19 @@ function _uv_tool_run {
 
 function _uv_tool_install {
     _arguments \
-        '--with[Include the following additional requirements]' \
-        '--with-requirements[Include all requirements listed in the given `requirements.txt` files]' \
+        {-w,--with}'[Include the following additional requirements]' \
+        '--with-requirements[Run with the packages listed in the given files]' \
         {-e,--editable}'[Install the target package in editable mode, such that changes in the package'\''s source directory are reflected without reinstallation]' \
         '--with-editable[Include the given packages in editable mode]' \
+        '--with-executables-from[Install executables from the following packages]' \
         {-c,--constraints}'[Constrain versions using the given requirements files \[env: UV_CONSTRAINT=\]]' \
         '--overrides[Override versions using the given requirements files \[env: UV_OVERRIDE=\]]' \
+        '--excludes[Exclude packages from resolution using the given requirements files \[env: UV_EXCLUDE=\]]' \
         {-b,--build-constraints}'[Constrain build dependencies using the given requirements files when building source distributions \[env: UV_BUILD_CONSTRAINT=\]]' \
         '--force[Force installation of the tool]' \
+        '--lfs[Whether to use Git LFS when adding a dependency from Git]' \
+        '--python-platform[The platform for which requirements should be installed \[possible values: windows, linux, macos, x86_64-pc-windows-msvc, aarch64-pc-windows-msvc, i686-pc-windows-msvc, x86_64-unknown-linux-gnu, aarch64-apple-darwin, x86_64-apple-darwin, aarch64-unknown-linux-gnu, aarch64-unknown-linux-musl, x86_64-unknown-linux-musl, riscv64-unknown-linux, x86_64-manylinux2014, x86_64-manylinux_2_17, x86_64-manylinux_2_28, x86_64-manylinux_2_31, x86_64-manylinux_2_32, x86_64-manylinux_2_33, x86_64-manylinux_2_34, x86_64-manylinux_2_35, x86_64-manylinux_2_36, x86_64-manylinux_2_37, x86_64-manylinux_2_38, x86_64-manylinux_2_39, x86_64-manylinux_2_40, aarch64-manylinux2014, aarch64-manylinux_2_17, aarch64-manylinux_2_28, aarch64-manylinux_2_31, aarch64-manylinux_2_32, aarch64-manylinux_2_33, aarch64-manylinux_2_34, aarch64-manylinux_2_35, aarch64-manylinux_2_36, aarch64-manylinux_2_37, aarch64-manylinux_2_38, aarch64-manylinux_2_39, aarch64-manylinux_2_40, aarch64-linux-android, x86_64-linux-android, wasm32-pyodide2024, arm64-apple-ios, arm64-apple-ios-simulator, x86_64-apple-ios-simulator\]]' \
+        '--torch-backend[The backend to use when fetching packages in the PyTorch ecosystem (e.g., `cpu`, `cu126`, or `auto`) \[env: UV_TORCH_BACKEND=\] \[possible values: auto, cpu, cu130, cu129, cu128, cu126, cu125, cu124, cu123, cu122, cu121, cu120, cu118, cu117, cu116, cu115, cu114, cu113, cu112, cu111, cu110, cu102, cu101, cu100, cu92, cu91, cu90, cu80, rocm6.4, rocm6.3, rocm6.2.4, rocm6.2, rocm6.1, rocm6.0, rocm5.7, rocm5.6, rocm5.5, rocm5.4.2, rocm5.4, rocm5.3, rocm5.2, rocm5.1.1, rocm4.2, rocm4.1, rocm4.0.1, xpu\]]' \
         '--index[The URLs to use when resolving dependencies, in addition to the default index \[env: UV_INDEX=\]]' \
         '--default-index[The URL of the default package index (by default: <https://pypi.org/simple>) \[env: UV_DEFAULT_INDEX=\]]' \
         {-i,--index-url}'[(Deprecated: use `--default-index` instead) The URL of the Python package index (by default: <https://pypi.org/simple>) \[env: UV_INDEX_URL=\]]' \
@@ -802,12 +1098,15 @@ function _uv_tool_install {
         '--prerelease[The strategy to use when considering pre-release versions \[env: UV_PRERELEASE=\] \[possible values: disallow, allow, if-necessary, explicit, if-necessary-or-explicit\]]' \
         '--fork-strategy[The strategy to use when selecting multiple versions of a given package across Python versions and platforms \[env: UV_FORK_STRATEGY=\] \[possible values: fewest, requires-python\]]' \
         '--exclude-newer[Limit candidate packages to those that were uploaded prior to the given date \[env: UV_EXCLUDE_NEWER=\]]' \
-        '--no-sources[Ignore the `tool.uv.sources` table when resolving dependencies. Used to lock against the standards-compliant, publishable package metadata, as opposed to using any workspace, Git, URL, or local path sources]' \
+        '--exclude-newer-package[Limit candidate packages for specific packages to those that were uploaded prior to the given date]' \
+        '--no-sources[Ignore the `tool.uv.sources` table when resolving dependencies. Used to lock against the standards-compliant, publishable package metadata, as opposed to using any workspace, Git, URL, or local path sources \[env: UV_NO_SOURCES=\]]' \
+        '--no-sources-package[Don'\''t use sources from the `tool.uv.sources` table for the specified packages \[env: UV_NO_SOURCES_PACKAGE=\]]' \
         '--reinstall[Reinstall all packages, regardless of whether they'\''re already installed. Implies `--refresh`]' \
         '--reinstall-package[Reinstall a specific package, regardless of whether it'\''s already installed. Implies `--refresh-package`]' \
         '--link-mode[The method to use when installing packages from the global cache \[env: UV_LINK_MODE=\] \[possible values: clone, copy, hardlink, symlink\]]' \
         '--compile-bytecode[Compile Python files to bytecode after installation \[env: UV_COMPILE_BYTECODE=\]]' \
         {-C,--config-setting}'[Settings to pass to the PEP 517 build backend, specified as `KEY=VALUE` pairs]' \
+        '--config-settings-package[Settings to pass to the PEP 517 build backend for a specific package, specified as `PACKAGE:KEY=VALUE` pairs]' \
         '--no-build-isolation[Disable isolation when building source distributions \[env: UV_NO_BUILD_ISOLATION=\]]' \
         '--no-build-isolation-package[Disable isolation when building source distributions for a specific package]' \
         '--no-build[Don'\''t build source distributions \[env: UV_NO_BUILD=\]]' \
@@ -823,12 +1122,12 @@ function _uv_tool_install {
         '--no-managed-python[Disable use of uv-managed Python versions \[env: UV_NO_MANAGED_PYTHON=\]]' \
         '--no-python-downloads[Disable automatic downloads of Python. \[env: "UV_PYTHON_DOWNLOADS=never"\]]' \
         '--color[Control the use of color in output \[possible values: auto, always, never\]]' \
-        '--native-tls[Whether to load TLS certificates from the platform'\''s native certificate store \[env: UV_NATIVE_TLS=\]]' \
+        '--native-tls[Whether to load TLS certificates from the platform'\''s native store \[env: UV_NATIVE_TLS=\]]' \
         '--offline[Disable network access \[env: UV_OFFLINE=\]]' \
         '--allow-insecure-host[Allow insecure connections to a host \[env: UV_INSECURE_HOST=\]]' \
         '--no-progress[Hide all progress outputs \[env: UV_NO_PROGRESS=\]]' \
-        '--directory[Change to the given directory prior to running the command]':file:_files \
-        '--project[Run the command within the given project directory \[env: UV_PROJECT=\]]' \
+        '--directory[Change to the given directory prior to running the command \[env: UV_WORKING_DIR=\]]':file:_files \
+        '--project[Discover a project in the given directory \[env: UV_PROJECT=\]]' \
         '--config-file[The path to a `uv.toml` file to use for configuration \[env: UV_CONFIG_FILE=\]]':file:_files \
         '--no-config[Avoid discovering configuration files (`pyproject.toml`, `uv.toml`) \[env: UV_NO_CONFIG=\]]' \
         {-h,--help}'[Display the concise help for this command]' \
@@ -839,6 +1138,7 @@ function _uv_tool_install {
 function _uv_tool_upgrade {
     _arguments \
         '--all[Upgrade all tools]' \
+        '--python-platform[The platform for which requirements should be installed \[possible values: windows, linux, macos, x86_64-pc-windows-msvc, aarch64-pc-windows-msvc, i686-pc-windows-msvc, x86_64-unknown-linux-gnu, aarch64-apple-darwin, x86_64-apple-darwin, aarch64-unknown-linux-gnu, aarch64-unknown-linux-musl, x86_64-unknown-linux-musl, riscv64-unknown-linux, x86_64-manylinux2014, x86_64-manylinux_2_17, x86_64-manylinux_2_28, x86_64-manylinux_2_31, x86_64-manylinux_2_32, x86_64-manylinux_2_33, x86_64-manylinux_2_34, x86_64-manylinux_2_35, x86_64-manylinux_2_36, x86_64-manylinux_2_37, x86_64-manylinux_2_38, x86_64-manylinux_2_39, x86_64-manylinux_2_40, aarch64-manylinux2014, aarch64-manylinux_2_17, aarch64-manylinux_2_28, aarch64-manylinux_2_31, aarch64-manylinux_2_32, aarch64-manylinux_2_33, aarch64-manylinux_2_34, aarch64-manylinux_2_35, aarch64-manylinux_2_36, aarch64-manylinux_2_37, aarch64-manylinux_2_38, aarch64-manylinux_2_39, aarch64-manylinux_2_40, aarch64-linux-android, x86_64-linux-android, wasm32-pyodide2024, arm64-apple-ios, arm64-apple-ios-simulator, x86_64-apple-ios-simulator\]]' \
         {-p,--python}'[Upgrade a tool, and specify it to use the given Python interpreter to build its environment. Use with `--all` to apply to all tools. \[env: UV_PYTHON=\]]' \
         '--managed-python[Require use of uv-managed Python versions \[env: UV_MANAGED_PYTHON=\]]' \
         '--no-managed-python[Disable use of uv-managed Python versions \[env: UV_NO_MANAGED_PYTHON=\]]' \
@@ -847,7 +1147,9 @@ function _uv_tool_upgrade {
         '--prerelease[The strategy to use when considering pre-release versions \[env: UV_PRERELEASE=\] \[possible values: disallow, allow, if-necessary, explicit, if-necessary-or-explicit\]]' \
         '--fork-strategy[The strategy to use when selecting multiple versions of a given package across Python versions and platforms \[env: UV_FORK_STRATEGY=\] \[possible values: fewest, requires-python\]]' \
         '--exclude-newer[Limit candidate packages to those that were uploaded prior to the given date \[env: UV_EXCLUDE_NEWER=\]]' \
-        '--no-sources[Ignore the `tool.uv.sources` table when resolving dependencies. Used to lock against the standards-compliant, publishable package metadata, as opposed to using any workspace, Git, URL, or local path sources]' \
+        '--exclude-newer-package[Limit candidate packages for specific packages to those that were uploaded prior to the given date]' \
+        '--no-sources[Ignore the `tool.uv.sources` table when resolving dependencies. Used to lock against the standards-compliant, publishable package metadata, as opposed to using any workspace, Git, URL, or local path sources \[env: UV_NO_SOURCES=\]]' \
+        '--no-sources-package[Don'\''t use sources from the `tool.uv.sources` table for the specified packages \[env: UV_NO_SOURCES_PACKAGE=\]]' \
         '--index[The URLs to use when resolving dependencies, in addition to the default index \[env: UV_INDEX=\]]' \
         '--default-index[The URL of the default package index (by default: <https://pypi.org/simple>) \[env: UV_DEFAULT_INDEX=\]]' \
         {-i,--index-url}'[(Deprecated: use `--default-index` instead) The URL of the Python package index (by default: <https://pypi.org/simple>) \[env: UV_INDEX_URL=\]]' \
@@ -861,6 +1163,7 @@ function _uv_tool_upgrade {
         '--link-mode[The method to use when installing packages from the global cache \[env: UV_LINK_MODE=\] \[possible values: clone, copy, hardlink, symlink\]]' \
         '--compile-bytecode[Compile Python files to bytecode after installation \[env: UV_COMPILE_BYTECODE=\]]' \
         {-C,--config-setting}'[Settings to pass to the PEP 517 build backend, specified as `KEY=VALUE` pairs]' \
+        '--config-setting-package[Settings to pass to the PEP 517 build backend for a specific package, specified as `PACKAGE:KEY=VALUE` pairs]' \
         '--no-build-isolation[Disable isolation when building source distributions \[env: UV_NO_BUILD_ISOLATION=\]]' \
         '--no-build-isolation-package[Disable isolation when building source distributions for a specific package]' \
         '--no-build[Don'\''t build source distributions \[env: UV_NO_BUILD=\]]' \
@@ -870,12 +1173,12 @@ function _uv_tool_upgrade {
         {-n,--no-cache}'[Avoid reading from or writing to the cache, instead using a temporary directory for the duration of the operation \[env: UV_NO_CACHE=\]]' \
         '--cache-dir[Path to the cache directory \[env: UV_CACHE_DIR=\]]':file:_files \
         '--color[Control the use of color in output \[possible values: auto, always, never\]]' \
-        '--native-tls[Whether to load TLS certificates from the platform'\''s native certificate store \[env: UV_NATIVE_TLS=\]]' \
+        '--native-tls[Whether to load TLS certificates from the platform'\''s native store \[env: UV_NATIVE_TLS=\]]' \
         '--offline[Disable network access \[env: UV_OFFLINE=\]]' \
         '--allow-insecure-host[Allow insecure connections to a host \[env: UV_INSECURE_HOST=\]]' \
         '--no-progress[Hide all progress outputs \[env: UV_NO_PROGRESS=\]]' \
-        '--directory[Change to the given directory prior to running the command]':file:_files \
-        '--project[Run the command within the given project directory \[env: UV_PROJECT=\]]' \
+        '--directory[Change to the given directory prior to running the command \[env: UV_WORKING_DIR=\]]':file:_files \
+        '--project[Discover a project in the given directory \[env: UV_PROJECT=\]]' \
         '--config-file[The path to a `uv.toml` file to use for configuration \[env: UV_CONFIG_FILE=\]]':file:_files \
         '--no-config[Avoid discovering configuration files (`pyproject.toml`, `uv.toml`) \[env: UV_NO_CONFIG=\]]' \
         {-h,--help}'[Display the concise help for this command]' \
@@ -888,17 +1191,19 @@ function _uv_tool_list {
         '--show-paths[Whether to display the path to each tool environment and installed executable]' \
         '--show-version-specifiers[Whether to display the version specifier(s) used to install each tool]' \
         '--show-with[Whether to display the additional requirements installed with each tool]' \
+        '--show-extras[Whether to display the extra requirements installed with each tool]' \
+        '--show-python[Whether to display the Python version associated with each tool]' \
         {-n,--no-cache}'[Avoid reading from or writing to the cache, instead using a temporary directory for the duration of the operation \[env: UV_NO_CACHE=\]]' \
         '--cache-dir[Path to the cache directory \[env: UV_CACHE_DIR=\]]':file:_files \
         '--managed-python[Require use of uv-managed Python versions \[env: UV_MANAGED_PYTHON=\]]' \
         '--no-managed-python[Disable use of uv-managed Python versions \[env: UV_NO_MANAGED_PYTHON=\]]' \
         '--color[Control the use of color in output \[possible values: auto, always, never\]]' \
-        '--native-tls[Whether to load TLS certificates from the platform'\''s native certificate store \[env: UV_NATIVE_TLS=\]]' \
+        '--native-tls[Whether to load TLS certificates from the platform'\''s native store \[env: UV_NATIVE_TLS=\]]' \
         '--offline[Disable network access \[env: UV_OFFLINE=\]]' \
         '--allow-insecure-host[Allow insecure connections to a host \[env: UV_INSECURE_HOST=\]]' \
         '--no-progress[Hide all progress outputs \[env: UV_NO_PROGRESS=\]]' \
-        '--directory[Change to the given directory prior to running the command]':file:_files \
-        '--project[Run the command within the given project directory \[env: UV_PROJECT=\]]' \
+        '--directory[Change to the given directory prior to running the command \[env: UV_WORKING_DIR=\]]':file:_files \
+        '--project[Discover a project in the given directory \[env: UV_PROJECT=\]]' \
         '--config-file[The path to a `uv.toml` file to use for configuration \[env: UV_CONFIG_FILE=\]]':file:_files \
         '--no-config[Avoid discovering configuration files (`pyproject.toml`, `uv.toml`) \[env: UV_NO_CONFIG=\]]' \
         {-h,--help}'[Display the concise help for this command]' \
@@ -915,12 +1220,12 @@ function _uv_tool_uninstall {
         '--no-managed-python[Disable use of uv-managed Python versions \[env: UV_NO_MANAGED_PYTHON=\]]' \
         '--no-python-downloads[Disable automatic downloads of Python. \[env: "UV_PYTHON_DOWNLOADS=never"\]]' \
         '--color[Control the use of color in output \[possible values: auto, always, never\]]' \
-        '--native-tls[Whether to load TLS certificates from the platform'\''s native certificate store \[env: UV_NATIVE_TLS=\]]' \
+        '--native-tls[Whether to load TLS certificates from the platform'\''s native store \[env: UV_NATIVE_TLS=\]]' \
         '--offline[Disable network access \[env: UV_OFFLINE=\]]' \
         '--allow-insecure-host[Allow insecure connections to a host \[env: UV_INSECURE_HOST=\]]' \
         '--no-progress[Hide all progress outputs \[env: UV_NO_PROGRESS=\]]' \
-        '--directory[Change to the given directory prior to running the command]':file:_files \
-        '--project[Run the command within the given project directory \[env: UV_PROJECT=\]]' \
+        '--directory[Change to the given directory prior to running the command \[env: UV_WORKING_DIR=\]]':file:_files \
+        '--project[Discover a project in the given directory \[env: UV_PROJECT=\]]' \
         '--config-file[The path to a `uv.toml` file to use for configuration \[env: UV_CONFIG_FILE=\]]':file:_files \
         '--no-config[Avoid discovering configuration files (`pyproject.toml`, `uv.toml`) \[env: UV_NO_CONFIG=\]]' \
         {-h,--help}'[Display the concise help for this command]' \
@@ -936,12 +1241,12 @@ function _uv_tool_update-shell {
         '--no-managed-python[Disable use of uv-managed Python versions \[env: UV_NO_MANAGED_PYTHON=\]]' \
         '--no-python-downloads[Disable automatic downloads of Python. \[env: "UV_PYTHON_DOWNLOADS=never"\]]' \
         '--color[Control the use of color in output \[possible values: auto, always, never\]]' \
-        '--native-tls[Whether to load TLS certificates from the platform'\''s native certificate store \[env: UV_NATIVE_TLS=\]]' \
+        '--native-tls[Whether to load TLS certificates from the platform'\''s native store \[env: UV_NATIVE_TLS=\]]' \
         '--offline[Disable network access \[env: UV_OFFLINE=\]]' \
         '--allow-insecure-host[Allow insecure connections to a host \[env: UV_INSECURE_HOST=\]]' \
         '--no-progress[Hide all progress outputs \[env: UV_NO_PROGRESS=\]]' \
-        '--directory[Change to the given directory prior to running the command]':file:_files \
-        '--project[Run the command within the given project directory \[env: UV_PROJECT=\]]' \
+        '--directory[Change to the given directory prior to running the command \[env: UV_WORKING_DIR=\]]':file:_files \
+        '--project[Discover a project in the given directory \[env: UV_PROJECT=\]]' \
         '--config-file[The path to a `uv.toml` file to use for configuration \[env: UV_CONFIG_FILE=\]]':file:_files \
         '--no-config[Avoid discovering configuration files (`pyproject.toml`, `uv.toml`) \[env: UV_NO_CONFIG=\]]' \
         {-h,--help}'[Display the concise help for this command]' \
@@ -958,12 +1263,12 @@ function _uv_tool_dir {
         '--no-managed-python[Disable use of uv-managed Python versions \[env: UV_NO_MANAGED_PYTHON=\]]' \
         '--no-python-downloads[Disable automatic downloads of Python. \[env: "UV_PYTHON_DOWNLOADS=never"\]]' \
         '--color[Control the use of color in output \[possible values: auto, always, never\]]' \
-        '--native-tls[Whether to load TLS certificates from the platform'\''s native certificate store \[env: UV_NATIVE_TLS=\]]' \
+        '--native-tls[Whether to load TLS certificates from the platform'\''s native store \[env: UV_NATIVE_TLS=\]]' \
         '--offline[Disable network access \[env: UV_OFFLINE=\]]' \
         '--allow-insecure-host[Allow insecure connections to a host \[env: UV_INSECURE_HOST=\]]' \
         '--no-progress[Hide all progress outputs \[env: UV_NO_PROGRESS=\]]' \
-        '--directory[Change to the given directory prior to running the command]':file:_files \
-        '--project[Run the command within the given project directory \[env: UV_PROJECT=\]]' \
+        '--directory[Change to the given directory prior to running the command \[env: UV_WORKING_DIR=\]]':file:_files \
+        '--project[Discover a project in the given directory \[env: UV_PROJECT=\]]' \
         '--config-file[The path to a `uv.toml` file to use for configuration \[env: UV_CONFIG_FILE=\]]':file:_files \
         '--no-config[Avoid discovering configuration files (`pyproject.toml`, `uv.toml`) \[env: UV_NO_CONFIG=\]]' \
         {-h,--help}'[Display the concise help for this command]' \
@@ -980,10 +1285,12 @@ function _uv_python {
         commands=(
             'list:List the available Python installations'
             'install:Download and install Python versions'
+            'upgrade:Upgrade installed Python versions'
             'find:Search for a Python installation'
             'pin:Pin to a specific Python version'
             'dir:Show the uv Python installation directory'
             'uninstall:Uninstall Python versions'
+            'update-shell:Ensure that the Python executable directory is on the `PATH`'
         )
         _describe 'command' commands
     }
@@ -996,12 +1303,12 @@ function _uv_python {
         '--no-managed-python[Disable use of uv-managed Python versions \[env: UV_NO_MANAGED_PYTHON=\]]' \
         '--no-python-downloads[Disable automatic downloads of Python. \[env: "UV_PYTHON_DOWNLOADS=never"\]]' \
         '--color[Control the use of color in output \[possible values: auto, always, never\]]' \
-        '--native-tls[Whether to load TLS certificates from the platform'\''s native certificate store \[env: UV_NATIVE_TLS=\]]' \
+        '--native-tls[Whether to load TLS certificates from the platform'\''s native store \[env: UV_NATIVE_TLS=\]]' \
         '--offline[Disable network access \[env: UV_OFFLINE=\]]' \
         '--allow-insecure-host[Allow insecure connections to a host \[env: UV_INSECURE_HOST=\]]' \
         '--no-progress[Hide all progress outputs \[env: UV_NO_PROGRESS=\]]' \
-        '--directory[Change to the given directory prior to running the command]':file:_files \
-        '--project[Run the command within the given project directory \[env: UV_PROJECT=\]]' \
+        '--directory[Change to the given directory prior to running the command \[env: UV_WORKING_DIR=\]]':file:_files \
+        '--project[Discover a project in the given directory \[env: UV_PROJECT=\]]' \
         '--config-file[The path to a `uv.toml` file to use for configuration \[env: UV_CONFIG_FILE=\]]':file:_files \
         '--no-config[Avoid discovering configuration files (`pyproject.toml`, `uv.toml`) \[env: UV_NO_CONFIG=\]]' \
         {-h,--help}'[Display the concise help for this command]' \
@@ -1022,6 +1329,10 @@ function _uv_python {
             _uv_python_install
             ;;
 
+        (upgrade)
+            _uv_python_upgrade
+            ;;
+
         (find)
             _uv_python_find
             ;;
@@ -1036,6 +1347,10 @@ function _uv_python {
 
         (uninstall)
             _uv_python_uninstall
+            ;;
+
+        (update-shell)
+            _uv_python_update-shell
             ;;
 
         esac
@@ -1053,19 +1368,19 @@ function _uv_python_list {
         '--only-downloads[Only show available Python downloads]' \
         '--show-urls[Show the URLs of available Python downloads]' \
         '--output-format[Select the output format \[default: text\] \[possible values: text, json\]]' \
-        '--python-downloads-json-url[URL pointing to JSON of custom Python installations \[env: UV_PYTHON_DOWNLOADS_JSON_URL=\]]' \
+        '--python-downloads-json-url[URL pointing to JSON of custom Python installations]' \
         {-n,--no-cache}'[Avoid reading from or writing to the cache, instead using a temporary directory for the duration of the operation \[env: UV_NO_CACHE=\]]' \
         '--cache-dir[Path to the cache directory \[env: UV_CACHE_DIR=\]]':file:_files \
         '--managed-python[Require use of uv-managed Python versions \[env: UV_MANAGED_PYTHON=\]]' \
         '--no-managed-python[Disable use of uv-managed Python versions \[env: UV_NO_MANAGED_PYTHON=\]]' \
         '--no-python-downloads[Disable automatic downloads of Python. \[env: "UV_PYTHON_DOWNLOADS=never"\]]' \
         '--color[Control the use of color in output \[possible values: auto, always, never\]]' \
-        '--native-tls[Whether to load TLS certificates from the platform'\''s native certificate store \[env: UV_NATIVE_TLS=\]]' \
+        '--native-tls[Whether to load TLS certificates from the platform'\''s native store \[env: UV_NATIVE_TLS=\]]' \
         '--offline[Disable network access \[env: UV_OFFLINE=\]]' \
         '--allow-insecure-host[Allow insecure connections to a host \[env: UV_INSECURE_HOST=\]]' \
         '--no-progress[Hide all progress outputs \[env: UV_NO_PROGRESS=\]]' \
-        '--directory[Change to the given directory prior to running the command]':file:_files \
-        '--project[Run the command within the given project directory \[env: UV_PROJECT=\]]' \
+        '--directory[Change to the given directory prior to running the command \[env: UV_WORKING_DIR=\]]':file:_files \
+        '--project[Discover a project in the given directory \[env: UV_PROJECT=\]]' \
         '--config-file[The path to a `uv.toml` file to use for configuration \[env: UV_CONFIG_FILE=\]]':file:_files \
         '--no-config[Avoid discovering configuration files (`pyproject.toml`, `uv.toml`) \[env: UV_NO_CONFIG=\]]' \
         {-h,--help}'[Display the concise help for this command]' \
@@ -1076,24 +1391,55 @@ function _uv_python_list {
 function _uv_python_install {
     _arguments \
         {-i,--install-dir}'[The directory to store the Python installation in \[env: UV_PYTHON_INSTALL_DIR=\]]':file:_files \
-        '--mirror[Set the URL to use as the source for downloading Python installations \[env: UV_PYTHON_INSTALL_MIRROR=\]]' \
-        '--pypy-mirror[Set the URL to use as the source for downloading PyPy installations \[env: UV_PYPY_INSTALL_MIRROR=\]]' \
-        '--python-downloads-json-url[URL pointing to JSON of custom Python installations \[env: UV_PYTHON_DOWNLOADS_JSON_URL=\]]' \
+        '--no-bin[Do not install a Python executable into the `bin` directory]' \
+        '--no-registry[Do not register the Python installation in the Windows registry]' \
+        '--mirror[Set the URL to use as the source for downloading Python installations]' \
+        '--pypy-mirror[Set the URL to use as the source for downloading PyPy installations]' \
+        '--python-downloads-json-url[URL pointing to JSON of custom Python installations]' \
         {-r,--reinstall}'[Reinstall the requested Python version, if it'\''s already installed]' \
         {-f,--force}'[Replace existing Python executables during installation]' \
+        {-U,--upgrade}'[Upgrade existing Python installations to the latest patch version]' \
         '--default[Use as the default Python version]' \
+        '--compile-bytecode[Compile Python'\''s standard library to bytecode after installation \[env: UV_COMPILE_BYTECODE=\]]' \
         {-n,--no-cache}'[Avoid reading from or writing to the cache, instead using a temporary directory for the duration of the operation \[env: UV_NO_CACHE=\]]' \
         '--cache-dir[Path to the cache directory \[env: UV_CACHE_DIR=\]]':file:_files \
         '--managed-python[Require use of uv-managed Python versions \[env: UV_MANAGED_PYTHON=\]]' \
         '--no-managed-python[Disable use of uv-managed Python versions \[env: UV_NO_MANAGED_PYTHON=\]]' \
         '--no-python-downloads[Disable automatic downloads of Python. \[env: "UV_PYTHON_DOWNLOADS=never"\]]' \
         '--color[Control the use of color in output \[possible values: auto, always, never\]]' \
-        '--native-tls[Whether to load TLS certificates from the platform'\''s native certificate store \[env: UV_NATIVE_TLS=\]]' \
+        '--native-tls[Whether to load TLS certificates from the platform'\''s native store \[env: UV_NATIVE_TLS=\]]' \
         '--offline[Disable network access \[env: UV_OFFLINE=\]]' \
         '--allow-insecure-host[Allow insecure connections to a host \[env: UV_INSECURE_HOST=\]]' \
         '--no-progress[Hide all progress outputs \[env: UV_NO_PROGRESS=\]]' \
-        '--directory[Change to the given directory prior to running the command]':file:_files \
-        '--project[Run the command within the given project directory \[env: UV_PROJECT=\]]' \
+        '--directory[Change to the given directory prior to running the command \[env: UV_WORKING_DIR=\]]':file:_files \
+        '--project[Discover a project in the given directory \[env: UV_PROJECT=\]]' \
+        '--config-file[The path to a `uv.toml` file to use for configuration \[env: UV_CONFIG_FILE=\]]':file:_files \
+        '--no-config[Avoid discovering configuration files (`pyproject.toml`, `uv.toml`) \[env: UV_NO_CONFIG=\]]' \
+        {-h,--help}'[Display the concise help for this command]' \
+        "*: :_files"
+
+}
+
+function _uv_python_upgrade {
+    _arguments \
+        {-i,--install-dir}'[The directory Python installations are stored in \[env: UV_PYTHON_INSTALL_DIR=\]]':file:_files \
+        '--mirror[Set the URL to use as the source for downloading Python installations]' \
+        '--pypy-mirror[Set the URL to use as the source for downloading PyPy installations]' \
+        {-r,--reinstall}'[Reinstall the latest Python patch, if it'\''s already installed]' \
+        '--python-downloads-json-url[URL pointing to JSON of custom Python installations]' \
+        '--compile-bytecode[Compile Python'\''s standard library to bytecode after installation \[env: UV_COMPILE_BYTECODE=\]]' \
+        {-n,--no-cache}'[Avoid reading from or writing to the cache, instead using a temporary directory for the duration of the operation \[env: UV_NO_CACHE=\]]' \
+        '--cache-dir[Path to the cache directory \[env: UV_CACHE_DIR=\]]':file:_files \
+        '--managed-python[Require use of uv-managed Python versions \[env: UV_MANAGED_PYTHON=\]]' \
+        '--no-managed-python[Disable use of uv-managed Python versions \[env: UV_NO_MANAGED_PYTHON=\]]' \
+        '--no-python-downloads[Disable automatic downloads of Python. \[env: "UV_PYTHON_DOWNLOADS=never"\]]' \
+        '--color[Control the use of color in output \[possible values: auto, always, never\]]' \
+        '--native-tls[Whether to load TLS certificates from the platform'\''s native store \[env: UV_NATIVE_TLS=\]]' \
+        '--offline[Disable network access \[env: UV_OFFLINE=\]]' \
+        '--allow-insecure-host[Allow insecure connections to a host \[env: UV_INSECURE_HOST=\]]' \
+        '--no-progress[Hide all progress outputs \[env: UV_NO_PROGRESS=\]]' \
+        '--directory[Change to the given directory prior to running the command \[env: UV_WORKING_DIR=\]]':file:_files \
+        '--project[Discover a project in the given directory \[env: UV_PROJECT=\]]' \
         '--config-file[The path to a `uv.toml` file to use for configuration \[env: UV_CONFIG_FILE=\]]':file:_files \
         '--no-config[Avoid discovering configuration files (`pyproject.toml`, `uv.toml`) \[env: UV_NO_CONFIG=\]]' \
         {-h,--help}'[Display the concise help for this command]' \
@@ -1107,18 +1453,19 @@ function _uv_python_find {
         '--system[Only find system Python interpreters \[env: UV_SYSTEM_PYTHON=\]]' \
         '--script[Find the environment for a Python script, rather than the current project]' \
         '--show-version[Show the Python version that would be used instead of the path to the interpreter]' \
+        '--python-downloads-json-url[URL pointing to JSON of custom Python installations]' \
         {-n,--no-cache}'[Avoid reading from or writing to the cache, instead using a temporary directory for the duration of the operation \[env: UV_NO_CACHE=\]]' \
         '--cache-dir[Path to the cache directory \[env: UV_CACHE_DIR=\]]':file:_files \
         '--managed-python[Require use of uv-managed Python versions \[env: UV_MANAGED_PYTHON=\]]' \
         '--no-managed-python[Disable use of uv-managed Python versions \[env: UV_NO_MANAGED_PYTHON=\]]' \
         '--no-python-downloads[Disable automatic downloads of Python. \[env: "UV_PYTHON_DOWNLOADS=never"\]]' \
         '--color[Control the use of color in output \[possible values: auto, always, never\]]' \
-        '--native-tls[Whether to load TLS certificates from the platform'\''s native certificate store \[env: UV_NATIVE_TLS=\]]' \
+        '--native-tls[Whether to load TLS certificates from the platform'\''s native store \[env: UV_NATIVE_TLS=\]]' \
         '--offline[Disable network access \[env: UV_OFFLINE=\]]' \
         '--allow-insecure-host[Allow insecure connections to a host \[env: UV_INSECURE_HOST=\]]' \
         '--no-progress[Hide all progress outputs \[env: UV_NO_PROGRESS=\]]' \
-        '--directory[Change to the given directory prior to running the command]':file:_files \
-        '--project[Run the command within the given project directory \[env: UV_PROJECT=\]]' \
+        '--directory[Change to the given directory prior to running the command \[env: UV_WORKING_DIR=\]]':file:_files \
+        '--project[Discover a project in the given directory \[env: UV_PROJECT=\]]' \
         '--config-file[The path to a `uv.toml` file to use for configuration \[env: UV_CONFIG_FILE=\]]':file:_files \
         '--no-config[Avoid discovering configuration files (`pyproject.toml`, `uv.toml`) \[env: UV_NO_CONFIG=\]]' \
         {-h,--help}'[Display the concise help for this command]' \
@@ -1131,18 +1478,19 @@ function _uv_python_pin {
         '--resolved[Write the resolved Python interpreter path instead of the request]' \
         '--no-project[Avoid validating the Python pin is compatible with the project or workspace]' \
         '--global[Update the global Python version pin]' \
+        '--rm[Remove the Python version pin]' \
         {-n,--no-cache}'[Avoid reading from or writing to the cache, instead using a temporary directory for the duration of the operation \[env: UV_NO_CACHE=\]]' \
         '--cache-dir[Path to the cache directory \[env: UV_CACHE_DIR=\]]':file:_files \
         '--managed-python[Require use of uv-managed Python versions \[env: UV_MANAGED_PYTHON=\]]' \
         '--no-managed-python[Disable use of uv-managed Python versions \[env: UV_NO_MANAGED_PYTHON=\]]' \
         '--no-python-downloads[Disable automatic downloads of Python. \[env: "UV_PYTHON_DOWNLOADS=never"\]]' \
         '--color[Control the use of color in output \[possible values: auto, always, never\]]' \
-        '--native-tls[Whether to load TLS certificates from the platform'\''s native certificate store \[env: UV_NATIVE_TLS=\]]' \
+        '--native-tls[Whether to load TLS certificates from the platform'\''s native store \[env: UV_NATIVE_TLS=\]]' \
         '--offline[Disable network access \[env: UV_OFFLINE=\]]' \
         '--allow-insecure-host[Allow insecure connections to a host \[env: UV_INSECURE_HOST=\]]' \
         '--no-progress[Hide all progress outputs \[env: UV_NO_PROGRESS=\]]' \
-        '--directory[Change to the given directory prior to running the command]':file:_files \
-        '--project[Run the command within the given project directory \[env: UV_PROJECT=\]]' \
+        '--directory[Change to the given directory prior to running the command \[env: UV_WORKING_DIR=\]]':file:_files \
+        '--project[Discover a project in the given directory \[env: UV_PROJECT=\]]' \
         '--config-file[The path to a `uv.toml` file to use for configuration \[env: UV_CONFIG_FILE=\]]':file:_files \
         '--no-config[Avoid discovering configuration files (`pyproject.toml`, `uv.toml`) \[env: UV_NO_CONFIG=\]]' \
         {-h,--help}'[Display the concise help for this command]' \
@@ -1159,12 +1507,12 @@ function _uv_python_dir {
         '--no-managed-python[Disable use of uv-managed Python versions \[env: UV_NO_MANAGED_PYTHON=\]]' \
         '--no-python-downloads[Disable automatic downloads of Python. \[env: "UV_PYTHON_DOWNLOADS=never"\]]' \
         '--color[Control the use of color in output \[possible values: auto, always, never\]]' \
-        '--native-tls[Whether to load TLS certificates from the platform'\''s native certificate store \[env: UV_NATIVE_TLS=\]]' \
+        '--native-tls[Whether to load TLS certificates from the platform'\''s native store \[env: UV_NATIVE_TLS=\]]' \
         '--offline[Disable network access \[env: UV_OFFLINE=\]]' \
         '--allow-insecure-host[Allow insecure connections to a host \[env: UV_INSECURE_HOST=\]]' \
         '--no-progress[Hide all progress outputs \[env: UV_NO_PROGRESS=\]]' \
-        '--directory[Change to the given directory prior to running the command]':file:_files \
-        '--project[Run the command within the given project directory \[env: UV_PROJECT=\]]' \
+        '--directory[Change to the given directory prior to running the command \[env: UV_WORKING_DIR=\]]':file:_files \
+        '--project[Discover a project in the given directory \[env: UV_PROJECT=\]]' \
         '--config-file[The path to a `uv.toml` file to use for configuration \[env: UV_CONFIG_FILE=\]]':file:_files \
         '--no-config[Avoid discovering configuration files (`pyproject.toml`, `uv.toml`) \[env: UV_NO_CONFIG=\]]' \
         {-h,--help}'[Display the concise help for this command]' \
@@ -1182,12 +1530,33 @@ function _uv_python_uninstall {
         '--no-managed-python[Disable use of uv-managed Python versions \[env: UV_NO_MANAGED_PYTHON=\]]' \
         '--no-python-downloads[Disable automatic downloads of Python. \[env: "UV_PYTHON_DOWNLOADS=never"\]]' \
         '--color[Control the use of color in output \[possible values: auto, always, never\]]' \
-        '--native-tls[Whether to load TLS certificates from the platform'\''s native certificate store \[env: UV_NATIVE_TLS=\]]' \
+        '--native-tls[Whether to load TLS certificates from the platform'\''s native store \[env: UV_NATIVE_TLS=\]]' \
         '--offline[Disable network access \[env: UV_OFFLINE=\]]' \
         '--allow-insecure-host[Allow insecure connections to a host \[env: UV_INSECURE_HOST=\]]' \
         '--no-progress[Hide all progress outputs \[env: UV_NO_PROGRESS=\]]' \
-        '--directory[Change to the given directory prior to running the command]':file:_files \
-        '--project[Run the command within the given project directory \[env: UV_PROJECT=\]]' \
+        '--directory[Change to the given directory prior to running the command \[env: UV_WORKING_DIR=\]]':file:_files \
+        '--project[Discover a project in the given directory \[env: UV_PROJECT=\]]' \
+        '--config-file[The path to a `uv.toml` file to use for configuration \[env: UV_CONFIG_FILE=\]]':file:_files \
+        '--no-config[Avoid discovering configuration files (`pyproject.toml`, `uv.toml`) \[env: UV_NO_CONFIG=\]]' \
+        {-h,--help}'[Display the concise help for this command]' \
+        "*: :_files"
+
+}
+
+function _uv_python_update-shell {
+    _arguments \
+        {-n,--no-cache}'[Avoid reading from or writing to the cache, instead using a temporary directory for the duration of the operation \[env: UV_NO_CACHE=\]]' \
+        '--cache-dir[Path to the cache directory \[env: UV_CACHE_DIR=\]]':file:_files \
+        '--managed-python[Require use of uv-managed Python versions \[env: UV_MANAGED_PYTHON=\]]' \
+        '--no-managed-python[Disable use of uv-managed Python versions \[env: UV_NO_MANAGED_PYTHON=\]]' \
+        '--no-python-downloads[Disable automatic downloads of Python. \[env: "UV_PYTHON_DOWNLOADS=never"\]]' \
+        '--color[Control the use of color in output \[possible values: auto, always, never\]]' \
+        '--native-tls[Whether to load TLS certificates from the platform'\''s native store \[env: UV_NATIVE_TLS=\]]' \
+        '--offline[Disable network access \[env: UV_OFFLINE=\]]' \
+        '--allow-insecure-host[Allow insecure connections to a host \[env: UV_INSECURE_HOST=\]]' \
+        '--no-progress[Hide all progress outputs \[env: UV_NO_PROGRESS=\]]' \
+        '--directory[Change to the given directory prior to running the command \[env: UV_WORKING_DIR=\]]':file:_files \
+        '--project[Discover a project in the given directory \[env: UV_PROJECT=\]]' \
         '--config-file[The path to a `uv.toml` file to use for configuration \[env: UV_CONFIG_FILE=\]]':file:_files \
         '--no-config[Avoid discovering configuration files (`pyproject.toml`, `uv.toml`) \[env: UV_NO_CONFIG=\]]' \
         {-h,--help}'[Display the concise help for this command]' \
@@ -1223,12 +1592,12 @@ function _uv_pip {
         '--no-managed-python[Disable use of uv-managed Python versions \[env: UV_NO_MANAGED_PYTHON=\]]' \
         '--no-python-downloads[Disable automatic downloads of Python. \[env: "UV_PYTHON_DOWNLOADS=never"\]]' \
         '--color[Control the use of color in output \[possible values: auto, always, never\]]' \
-        '--native-tls[Whether to load TLS certificates from the platform'\''s native certificate store \[env: UV_NATIVE_TLS=\]]' \
+        '--native-tls[Whether to load TLS certificates from the platform'\''s native store \[env: UV_NATIVE_TLS=\]]' \
         '--offline[Disable network access \[env: UV_OFFLINE=\]]' \
         '--allow-insecure-host[Allow insecure connections to a host \[env: UV_INSECURE_HOST=\]]' \
         '--no-progress[Hide all progress outputs \[env: UV_NO_PROGRESS=\]]' \
-        '--directory[Change to the given directory prior to running the command]':file:_files \
-        '--project[Run the command within the given project directory \[env: UV_PROJECT=\]]' \
+        '--directory[Change to the given directory prior to running the command \[env: UV_WORKING_DIR=\]]':file:_files \
+        '--project[Discover a project in the given directory \[env: UV_PROJECT=\]]' \
         '--config-file[The path to a `uv.toml` file to use for configuration \[env: UV_CONFIG_FILE=\]]':file:_files \
         '--no-config[Avoid discovering configuration files (`pyproject.toml`, `uv.toml`) \[env: UV_NO_CONFIG=\]]' \
         {-h,--help}'[Display the concise help for this command]' \
@@ -1287,11 +1656,12 @@ function _uv_pip_compile {
     _arguments \
         {-c,--constraints}'[Constrain versions using the given requirements files \[env: UV_CONSTRAINT=\]]' \
         '--overrides[Override versions using the given requirements files \[env: UV_OVERRIDE=\]]' \
+        '--excludes[Exclude packages from resolution using the given requirements files \[env: UV_EXCLUDE=\]]' \
         {-b,--build-constraints}'[Constrain build dependencies using the given requirements files when building source distributions \[env: UV_BUILD_CONSTRAINT=\]]' \
         '--extra[Include optional dependencies from the specified extra name; may be provided more than once]' \
         '--all-extras[Include all optional dependencies]' \
-        '--no-deps[Ignore package dependencies, instead only add those packages explicitly listed on the command line to the resulting requirements file]' \
         '--group[Install the specified dependency group from a `pyproject.toml`]' \
+        '--no-deps[Ignore package dependencies, instead only add those packages explicitly listed on the command line to the resulting requirements file]' \
         {-o,--output-file}'[Write the compiled requirements to the given `requirements.txt` or `pylock.toml` file]':file:_files \
         '--format[The format in which the resolution should be output \[possible values: requirements.txt, pylock.toml\]]' \
         '--no-strip-extras[Include extras in the output file]' \
@@ -1305,14 +1675,14 @@ function _uv_pip_compile {
         '--no-build[Don'\''t build source distributions]' \
         '--no-binary[Don'\''t install pre-built wheels]' \
         '--only-binary[Only use pre-built wheels; don'\''t build source distributions]' \
-        '--python-platform[The platform for which requirements should be resolved \[possible values: windows, linux, macos, x86_64-pc-windows-msvc, i686-pc-windows-msvc, x86_64-unknown-linux-gnu, aarch64-apple-darwin, x86_64-apple-darwin, aarch64-unknown-linux-gnu, aarch64-unknown-linux-musl, x86_64-unknown-linux-musl, x86_64-manylinux2014, x86_64-manylinux_2_17, x86_64-manylinux_2_28, x86_64-manylinux_2_31, x86_64-manylinux_2_32, x86_64-manylinux_2_33, x86_64-manylinux_2_34, x86_64-manylinux_2_35, x86_64-manylinux_2_36, x86_64-manylinux_2_37, x86_64-manylinux_2_38, x86_64-manylinux_2_39, x86_64-manylinux_2_40, aarch64-manylinux2014, aarch64-manylinux_2_17, aarch64-manylinux_2_28, aarch64-manylinux_2_31, aarch64-manylinux_2_32, aarch64-manylinux_2_33, aarch64-manylinux_2_34, aarch64-manylinux_2_35, aarch64-manylinux_2_36, aarch64-manylinux_2_37, aarch64-manylinux_2_38, aarch64-manylinux_2_39, aarch64-manylinux_2_40\]]' \
+        '--python-platform[The platform for which requirements should be resolved \[possible values: windows, linux, macos, x86_64-pc-windows-msvc, aarch64-pc-windows-msvc, i686-pc-windows-msvc, x86_64-unknown-linux-gnu, aarch64-apple-darwin, x86_64-apple-darwin, aarch64-unknown-linux-gnu, aarch64-unknown-linux-musl, x86_64-unknown-linux-musl, riscv64-unknown-linux, x86_64-manylinux2014, x86_64-manylinux_2_17, x86_64-manylinux_2_28, x86_64-manylinux_2_31, x86_64-manylinux_2_32, x86_64-manylinux_2_33, x86_64-manylinux_2_34, x86_64-manylinux_2_35, x86_64-manylinux_2_36, x86_64-manylinux_2_37, x86_64-manylinux_2_38, x86_64-manylinux_2_39, x86_64-manylinux_2_40, aarch64-manylinux2014, aarch64-manylinux_2_17, aarch64-manylinux_2_28, aarch64-manylinux_2_31, aarch64-manylinux_2_32, aarch64-manylinux_2_33, aarch64-manylinux_2_34, aarch64-manylinux_2_35, aarch64-manylinux_2_36, aarch64-manylinux_2_37, aarch64-manylinux_2_38, aarch64-manylinux_2_39, aarch64-manylinux_2_40, aarch64-linux-android, x86_64-linux-android, wasm32-pyodide2024, arm64-apple-ios, arm64-apple-ios-simulator, x86_64-apple-ios-simulator\]]' \
         '--universal[Perform a universal resolution, attempting to generate a single `requirements.txt` output file that is compatible with all operating systems, architectures, and Python implementations]' \
         '--no-emit-package[Specify a package to omit from the output resolution. Its dependencies will still be included in the resolution. Equivalent to pip-compile'\''s `--unsafe-package` option]' \
         '--emit-index-url[Include `--index-url` and `--extra-index-url` entries in the generated output file]' \
         '--emit-find-links[Include `--find-links` entries in the generated output file]' \
         '--emit-build-options[Include `--no-binary` and `--only-binary` entries in the generated output file]' \
         '--emit-index-annotation[Include comment annotations indicating the index used to resolve each package (e.g., `# from https://pypi.org/simple`)]' \
-        '--torch-backend[The backend to use when fetching packages in the PyTorch ecosystem (e.g., `cpu`, `cu126`, or `auto`) \[env: UV_TORCH_BACKEND=\] \[possible values: auto, cpu, cu128, cu126, cu125, cu124, cu123, cu122, cu121, cu120, cu118, cu117, cu116, cu115, cu114, cu113, cu112, cu111, cu110, cu102, cu101, cu100, cu92, cu91, cu90, cu80\]]' \
+        '--torch-backend[The backend to use when fetching packages in the PyTorch ecosystem (e.g., `cpu`, `cu126`, or `auto`) \[env: UV_TORCH_BACKEND=\] \[possible values: auto, cpu, cu130, cu129, cu128, cu126, cu125, cu124, cu123, cu122, cu121, cu120, cu118, cu117, cu116, cu115, cu114, cu113, cu112, cu111, cu110, cu102, cu101, cu100, cu92, cu91, cu90, cu80, rocm6.4, rocm6.3, rocm6.2.4, rocm6.2, rocm6.1, rocm6.0, rocm5.7, rocm5.6, rocm5.5, rocm5.4.2, rocm5.4, rocm5.3, rocm5.2, rocm5.1.1, rocm4.2, rocm4.1, rocm4.0.1, xpu\]]' \
         '--index[The URLs to use when resolving dependencies, in addition to the default index \[env: UV_INDEX=\]]' \
         '--default-index[The URL of the default package index (by default: <https://pypi.org/simple>) \[env: UV_DEFAULT_INDEX=\]]' \
         {-i,--index-url}'[(Deprecated: use `--default-index` instead) The URL of the Python package index (by default: <https://pypi.org/simple>) \[env: UV_INDEX_URL=\]]' \
@@ -1327,8 +1697,11 @@ function _uv_pip_compile {
         '--prerelease[The strategy to use when considering pre-release versions \[env: UV_PRERELEASE=\] \[possible values: disallow, allow, if-necessary, explicit, if-necessary-or-explicit\]]' \
         '--fork-strategy[The strategy to use when selecting multiple versions of a given package across Python versions and platforms \[env: UV_FORK_STRATEGY=\] \[possible values: fewest, requires-python\]]' \
         '--exclude-newer[Limit candidate packages to those that were uploaded prior to the given date \[env: UV_EXCLUDE_NEWER=\]]' \
-        '--no-sources[Ignore the `tool.uv.sources` table when resolving dependencies. Used to lock against the standards-compliant, publishable package metadata, as opposed to using any workspace, Git, URL, or local path sources]' \
+        '--exclude-newer-package[Limit candidate packages for specific packages to those that were uploaded prior to the given date]' \
+        '--no-sources[Ignore the `tool.uv.sources` table when resolving dependencies. Used to lock against the standards-compliant, publishable package metadata, as opposed to using any workspace, Git, URL, or local path sources \[env: UV_NO_SOURCES=\]]' \
+        '--no-sources-package[Don'\''t use sources from the `tool.uv.sources` table for the specified packages \[env: UV_NO_SOURCES_PACKAGE=\]]' \
         {-C,--config-setting}'[Settings to pass to the PEP 517 build backend, specified as `KEY=VALUE` pairs]' \
+        '--config-settings-package[Settings to pass to the PEP 517 build backend for a specific package, specified as `PACKAGE:KEY=VALUE` pairs]' \
         '--no-build-isolation[Disable isolation when building source distributions \[env: UV_NO_BUILD_ISOLATION=\]]' \
         '--no-build-isolation-package[Disable isolation when building source distributions for a specific package]' \
         '--link-mode[The method to use when installing packages from the global cache \[env: UV_LINK_MODE=\] \[possible values: clone, copy, hardlink, symlink\]]' \
@@ -1342,12 +1715,12 @@ function _uv_pip_compile {
         '--no-managed-python[Disable use of uv-managed Python versions \[env: UV_NO_MANAGED_PYTHON=\]]' \
         '--no-python-downloads[Disable automatic downloads of Python. \[env: "UV_PYTHON_DOWNLOADS=never"\]]' \
         '--color[Control the use of color in output \[possible values: auto, always, never\]]' \
-        '--native-tls[Whether to load TLS certificates from the platform'\''s native certificate store \[env: UV_NATIVE_TLS=\]]' \
+        '--native-tls[Whether to load TLS certificates from the platform'\''s native store \[env: UV_NATIVE_TLS=\]]' \
         '--offline[Disable network access \[env: UV_OFFLINE=\]]' \
         '--allow-insecure-host[Allow insecure connections to a host \[env: UV_INSECURE_HOST=\]]' \
         '--no-progress[Hide all progress outputs \[env: UV_NO_PROGRESS=\]]' \
-        '--directory[Change to the given directory prior to running the command]':file:_files \
-        '--project[Run the command within the given project directory \[env: UV_PROJECT=\]]' \
+        '--directory[Change to the given directory prior to running the command \[env: UV_WORKING_DIR=\]]':file:_files \
+        '--project[Discover a project in the given directory \[env: UV_PROJECT=\]]' \
         '--config-file[The path to a `uv.toml` file to use for configuration \[env: UV_CONFIG_FILE=\]]':file:_files \
         {-h,--help}'[Display the concise help for this command]' \
         "*: :_files"
@@ -1358,6 +1731,9 @@ function _uv_pip_sync {
     _arguments \
         {-c,--constraints}'[Constrain versions using the given requirements files \[env: UV_CONSTRAINT=\]]' \
         {-b,--build-constraints}'[Constrain build dependencies using the given requirements files when building source distributions \[env: UV_BUILD_CONSTRAINT=\]]' \
+        '--extra[Include optional dependencies from the specified extra name; may be provided more than once]' \
+        '--all-extras[Include all optional dependencies]' \
+        '--group[Install the specified dependency group from a `pylock.toml` or `pyproject.toml`]' \
         '--require-hashes[Require a matching hash for each requirement \[env: UV_REQUIRE_HASHES=\]]' \
         '--no-verify-hashes[Disable validation of hashes in the requirements file \[env: UV_NO_VERIFY_HASHES=\]]' \
         '--system[Install packages into the system Python environment \[env: UV_SYSTEM_PYTHON=\]]' \
@@ -1369,10 +1745,10 @@ function _uv_pip_sync {
         '--only-binary[Only use pre-built wheels; don'\''t build source distributions]' \
         '--allow-empty-requirements[Allow sync of empty requirements, which will clear the environment of all packages]' \
         {--no-allow-empty-requirements,--python-version}'[The minimum Python version that should be supported by the requirements (e.g., `3.7` or `3.7.9`)]' \
-        '--python-platform[The platform for which requirements should be installed \[possible values: windows, linux, macos, x86_64-pc-windows-msvc, i686-pc-windows-msvc, x86_64-unknown-linux-gnu, aarch64-apple-darwin, x86_64-apple-darwin, aarch64-unknown-linux-gnu, aarch64-unknown-linux-musl, x86_64-unknown-linux-musl, x86_64-manylinux2014, x86_64-manylinux_2_17, x86_64-manylinux_2_28, x86_64-manylinux_2_31, x86_64-manylinux_2_32, x86_64-manylinux_2_33, x86_64-manylinux_2_34, x86_64-manylinux_2_35, x86_64-manylinux_2_36, x86_64-manylinux_2_37, x86_64-manylinux_2_38, x86_64-manylinux_2_39, x86_64-manylinux_2_40, aarch64-manylinux2014, aarch64-manylinux_2_17, aarch64-manylinux_2_28, aarch64-manylinux_2_31, aarch64-manylinux_2_32, aarch64-manylinux_2_33, aarch64-manylinux_2_34, aarch64-manylinux_2_35, aarch64-manylinux_2_36, aarch64-manylinux_2_37, aarch64-manylinux_2_38, aarch64-manylinux_2_39, aarch64-manylinux_2_40\]]' \
+        '--python-platform[The platform for which requirements should be installed \[possible values: windows, linux, macos, x86_64-pc-windows-msvc, aarch64-pc-windows-msvc, i686-pc-windows-msvc, x86_64-unknown-linux-gnu, aarch64-apple-darwin, x86_64-apple-darwin, aarch64-unknown-linux-gnu, aarch64-unknown-linux-musl, x86_64-unknown-linux-musl, riscv64-unknown-linux, x86_64-manylinux2014, x86_64-manylinux_2_17, x86_64-manylinux_2_28, x86_64-manylinux_2_31, x86_64-manylinux_2_32, x86_64-manylinux_2_33, x86_64-manylinux_2_34, x86_64-manylinux_2_35, x86_64-manylinux_2_36, x86_64-manylinux_2_37, x86_64-manylinux_2_38, x86_64-manylinux_2_39, x86_64-manylinux_2_40, aarch64-manylinux2014, aarch64-manylinux_2_17, aarch64-manylinux_2_28, aarch64-manylinux_2_31, aarch64-manylinux_2_32, aarch64-manylinux_2_33, aarch64-manylinux_2_34, aarch64-manylinux_2_35, aarch64-manylinux_2_36, aarch64-manylinux_2_37, aarch64-manylinux_2_38, aarch64-manylinux_2_39, aarch64-manylinux_2_40, aarch64-linux-android, x86_64-linux-android, wasm32-pyodide2024, arm64-apple-ios, arm64-apple-ios-simulator, x86_64-apple-ios-simulator\]]' \
         '--strict[Validate the Python environment after completing the installation, to detect packages with missing dependencies or other issues]' \
         '--dry-run[Perform a dry run, i.e., don'\''t actually install anything but resolve the dependencies and print the resulting plan]' \
-        '--torch-backend[The backend to use when fetching packages in the PyTorch ecosystem (e.g., `cpu`, `cu126`, or `auto`) \[env: UV_TORCH_BACKEND=\] \[possible values: auto, cpu, cu128, cu126, cu125, cu124, cu123, cu122, cu121, cu120, cu118, cu117, cu116, cu115, cu114, cu113, cu112, cu111, cu110, cu102, cu101, cu100, cu92, cu91, cu90, cu80\]]' \
+        '--torch-backend[The backend to use when fetching packages in the PyTorch ecosystem (e.g., `cpu`, `cu126`, or `auto`) \[env: UV_TORCH_BACKEND=\] \[possible values: auto, cpu, cu130, cu129, cu128, cu126, cu125, cu124, cu123, cu122, cu121, cu120, cu118, cu117, cu116, cu115, cu114, cu113, cu112, cu111, cu110, cu102, cu101, cu100, cu92, cu91, cu90, cu80, rocm6.4, rocm6.3, rocm6.2.4, rocm6.2, rocm6.1, rocm6.0, rocm5.7, rocm5.6, rocm5.5, rocm5.4.2, rocm5.4, rocm5.3, rocm5.2, rocm5.1.1, rocm4.2, rocm4.1, rocm4.0.1, xpu\]]' \
         '--index[The URLs to use when resolving dependencies, in addition to the default index \[env: UV_INDEX=\]]' \
         '--default-index[The URL of the default package index (by default: <https://pypi.org/simple>) \[env: UV_DEFAULT_INDEX=\]]' \
         {-i,--index-url}'[(Deprecated: use `--default-index` instead) The URL of the Python package index (by default: <https://pypi.org/simple>) \[env: UV_INDEX_URL=\]]' \
@@ -1386,24 +1762,27 @@ function _uv_pip_sync {
         '--link-mode[The method to use when installing packages from the global cache \[env: UV_LINK_MODE=\] \[possible values: clone, copy, hardlink, symlink\]]' \
         '--compile-bytecode[Compile Python files to bytecode after installation \[env: UV_COMPILE_BYTECODE=\]]' \
         {-C,--config-setting}'[Settings to pass to the PEP 517 build backend, specified as `KEY=VALUE` pairs]' \
+        '--config-settings-package[Settings to pass to the PEP 517 build backend for a specific package, specified as `PACKAGE:KEY=VALUE` pairs]' \
         '--no-build-isolation[Disable isolation when building source distributions \[env: UV_NO_BUILD_ISOLATION=\]]' \
         '--exclude-newer[Limit candidate packages to those that were uploaded prior to the given date \[env: UV_EXCLUDE_NEWER=\]]' \
-        '--no-sources[Ignore the `tool.uv.sources` table when resolving dependencies. Used to lock against the standards-compliant, publishable package metadata, as opposed to using any workspace, Git, URL, or local path sources]' \
+        '--exclude-newer-package[Limit candidate packages for specific packages to those that were uploaded prior to the given date]' \
+        '--no-sources[Ignore the `tool.uv.sources` table when resolving dependencies. Used to lock against the standards-compliant, publishable package metadata, as opposed to using any workspace, Git, URL, or local path sources \[env: UV_NO_SOURCES=\]]' \
+        '--no-sources-package[Don'\''t use sources from the `tool.uv.sources` table for the specified packages \[env: UV_NO_SOURCES_PACKAGE=\]]' \
         {-n,--no-cache}'[Avoid reading from or writing to the cache, instead using a temporary directory for the duration of the operation \[env: UV_NO_CACHE=\]]' \
-        '--refresh[Refresh all cached data]' \
         '--cache-dir[Path to the cache directory \[env: UV_CACHE_DIR=\]]':file:_files \
+        '--refresh[Refresh all cached data]' \
         '--refresh-package[Refresh cached data for a specific package]' \
         {-p,--python}'[The Python interpreter into which packages should be installed. \[env: UV_PYTHON=\]]' \
         '--managed-python[Require use of uv-managed Python versions \[env: UV_MANAGED_PYTHON=\]]' \
         '--no-managed-python[Disable use of uv-managed Python versions \[env: UV_NO_MANAGED_PYTHON=\]]' \
         '--no-python-downloads[Disable automatic downloads of Python. \[env: "UV_PYTHON_DOWNLOADS=never"\]]' \
         '--color[Control the use of color in output \[possible values: auto, always, never\]]' \
-        '--native-tls[Whether to load TLS certificates from the platform'\''s native certificate store \[env: UV_NATIVE_TLS=\]]' \
+        '--native-tls[Whether to load TLS certificates from the platform'\''s native store \[env: UV_NATIVE_TLS=\]]' \
         '--offline[Disable network access \[env: UV_OFFLINE=\]]' \
         '--allow-insecure-host[Allow insecure connections to a host \[env: UV_INSECURE_HOST=\]]' \
         '--no-progress[Hide all progress outputs \[env: UV_NO_PROGRESS=\]]' \
-        '--directory[Change to the given directory prior to running the command]':file:_files \
-        '--project[Run the command within the given project directory \[env: UV_PROJECT=\]]' \
+        '--directory[Change to the given directory prior to running the command \[env: UV_WORKING_DIR=\]]':file:_files \
+        '--project[Discover a project in the given directory \[env: UV_PROJECT=\]]' \
         '--config-file[The path to a `uv.toml` file to use for configuration \[env: UV_CONFIG_FILE=\]]':file:_files \
         {-h,--help}'[Display the concise help for this command]' \
         "*: :_files"
@@ -1412,15 +1791,16 @@ function _uv_pip_sync {
 
 function _uv_pip_install {
     _arguments \
-        {-r,--requirements}'[Install all packages listed in the given `requirements.txt` or `pylock.toml` files]' \
+        {-r,--requirements}'[Install the packages listed in the given files]' \
         {-e,--editable}'[Install the editable package based on the provided local file path]' \
         {-c,--constraints}'[Constrain versions using the given requirements files \[env: UV_CONSTRAINT=\]]' \
         '--overrides[Override versions using the given requirements files \[env: UV_OVERRIDE=\]]' \
+        '--excludes[Exclude packages from resolution using the given requirements files \[env: UV_EXCLUDE=\]]' \
         {-b,--build-constraints}'[Constrain build dependencies using the given requirements files when building source distributions \[env: UV_BUILD_CONSTRAINT=\]]' \
         '--extra[Include optional dependencies from the specified extra name; may be provided more than once]' \
         '--all-extras[Include all optional dependencies]' \
+        '--group[Install the specified dependency group from a `pylock.toml` or `pyproject.toml`]' \
         '--no-deps[Ignore package dependencies, instead only installing those packages explicitly listed on the command line or in the requirements files]' \
-        '--group[Install the specified dependency group from a `pyproject.toml`]' \
         '--require-hashes[Require a matching hash for each requirement \[env: UV_REQUIRE_HASHES=\]]' \
         '--no-verify-hashes[Disable validation of hashes in the requirements file \[env: UV_NO_VERIFY_HASHES=\]]' \
         '--system[Install packages into the system Python environment \[env: UV_SYSTEM_PYTHON=\]]' \
@@ -1431,11 +1811,11 @@ function _uv_pip_install {
         '--no-binary[Don'\''t install pre-built wheels]' \
         '--only-binary[Only use pre-built wheels; don'\''t build source distributions]' \
         '--python-version[The minimum Python version that should be supported by the requirements (e.g., `3.7` or `3.7.9`)]' \
-        '--python-platform[The platform for which requirements should be installed \[possible values: windows, linux, macos, x86_64-pc-windows-msvc, i686-pc-windows-msvc, x86_64-unknown-linux-gnu, aarch64-apple-darwin, x86_64-apple-darwin, aarch64-unknown-linux-gnu, aarch64-unknown-linux-musl, x86_64-unknown-linux-musl, x86_64-manylinux2014, x86_64-manylinux_2_17, x86_64-manylinux_2_28, x86_64-manylinux_2_31, x86_64-manylinux_2_32, x86_64-manylinux_2_33, x86_64-manylinux_2_34, x86_64-manylinux_2_35, x86_64-manylinux_2_36, x86_64-manylinux_2_37, x86_64-manylinux_2_38, x86_64-manylinux_2_39, x86_64-manylinux_2_40, aarch64-manylinux2014, aarch64-manylinux_2_17, aarch64-manylinux_2_28, aarch64-manylinux_2_31, aarch64-manylinux_2_32, aarch64-manylinux_2_33, aarch64-manylinux_2_34, aarch64-manylinux_2_35, aarch64-manylinux_2_36, aarch64-manylinux_2_37, aarch64-manylinux_2_38, aarch64-manylinux_2_39, aarch64-manylinux_2_40\]]' \
+        '--python-platform[The platform for which requirements should be installed \[possible values: windows, linux, macos, x86_64-pc-windows-msvc, aarch64-pc-windows-msvc, i686-pc-windows-msvc, x86_64-unknown-linux-gnu, aarch64-apple-darwin, x86_64-apple-darwin, aarch64-unknown-linux-gnu, aarch64-unknown-linux-musl, x86_64-unknown-linux-musl, riscv64-unknown-linux, x86_64-manylinux2014, x86_64-manylinux_2_17, x86_64-manylinux_2_28, x86_64-manylinux_2_31, x86_64-manylinux_2_32, x86_64-manylinux_2_33, x86_64-manylinux_2_34, x86_64-manylinux_2_35, x86_64-manylinux_2_36, x86_64-manylinux_2_37, x86_64-manylinux_2_38, x86_64-manylinux_2_39, x86_64-manylinux_2_40, aarch64-manylinux2014, aarch64-manylinux_2_17, aarch64-manylinux_2_28, aarch64-manylinux_2_31, aarch64-manylinux_2_32, aarch64-manylinux_2_33, aarch64-manylinux_2_34, aarch64-manylinux_2_35, aarch64-manylinux_2_36, aarch64-manylinux_2_37, aarch64-manylinux_2_38, aarch64-manylinux_2_39, aarch64-manylinux_2_40, aarch64-linux-android, x86_64-linux-android, wasm32-pyodide2024, arm64-apple-ios, arm64-apple-ios-simulator, x86_64-apple-ios-simulator\]]' \
         '--exact[Perform an exact sync, removing extraneous packages]' \
         '--strict[Validate the Python environment after completing the installation, to detect packages with missing dependencies or other issues]' \
         '--dry-run[Perform a dry run, i.e., don'\''t actually install anything but resolve the dependencies and print the resulting plan]' \
-        '--torch-backend[The backend to use when fetching packages in the PyTorch ecosystem (e.g., `cpu`, `cu126`, or `auto`) \[env: UV_TORCH_BACKEND=\] \[possible values: auto, cpu, cu128, cu126, cu125, cu124, cu123, cu122, cu121, cu120, cu118, cu117, cu116, cu115, cu114, cu113, cu112, cu111, cu110, cu102, cu101, cu100, cu92, cu91, cu90, cu80\]]' \
+        '--torch-backend[The backend to use when fetching packages in the PyTorch ecosystem (e.g., `cpu`, `cu126`, or `auto`) \[env: UV_TORCH_BACKEND=\] \[possible values: auto, cpu, cu130, cu129, cu128, cu126, cu125, cu124, cu123, cu122, cu121, cu120, cu118, cu117, cu116, cu115, cu114, cu113, cu112, cu111, cu110, cu102, cu101, cu100, cu92, cu91, cu90, cu80, rocm6.4, rocm6.3, rocm6.2.4, rocm6.2, rocm6.1, rocm6.0, rocm5.7, rocm5.6, rocm5.5, rocm5.4.2, rocm5.4, rocm5.3, rocm5.2, rocm5.1.1, rocm4.2, rocm4.1, rocm4.0.1, xpu\]]' \
         '--index[The URLs to use when resolving dependencies, in addition to the default index \[env: UV_INDEX=\]]' \
         '--default-index[The URL of the default package index (by default: <https://pypi.org/simple>) \[env: UV_DEFAULT_INDEX=\]]' \
         {-i,--index-url}'[(Deprecated: use `--default-index` instead) The URL of the Python package index (by default: <https://pypi.org/simple>) \[env: UV_INDEX_URL=\]]' \
@@ -1450,12 +1830,15 @@ function _uv_pip_install {
         '--prerelease[The strategy to use when considering pre-release versions \[env: UV_PRERELEASE=\] \[possible values: disallow, allow, if-necessary, explicit, if-necessary-or-explicit\]]' \
         '--fork-strategy[The strategy to use when selecting multiple versions of a given package across Python versions and platforms \[env: UV_FORK_STRATEGY=\] \[possible values: fewest, requires-python\]]' \
         '--exclude-newer[Limit candidate packages to those that were uploaded prior to the given date \[env: UV_EXCLUDE_NEWER=\]]' \
-        '--no-sources[Ignore the `tool.uv.sources` table when resolving dependencies. Used to lock against the standards-compliant, publishable package metadata, as opposed to using any workspace, Git, URL, or local path sources]' \
+        '--exclude-newer-package[Limit candidate packages for specific packages to those that were uploaded prior to the given date]' \
+        '--no-sources[Ignore the `tool.uv.sources` table when resolving dependencies. Used to lock against the standards-compliant, publishable package metadata, as opposed to using any workspace, Git, URL, or local path sources \[env: UV_NO_SOURCES=\]]' \
+        '--no-sources-package[Don'\''t use sources from the `tool.uv.sources` table for the specified packages \[env: UV_NO_SOURCES_PACKAGE=\]]' \
         '--reinstall[Reinstall all packages, regardless of whether they'\''re already installed. Implies `--refresh`]' \
         '--reinstall-package[Reinstall a specific package, regardless of whether it'\''s already installed. Implies `--refresh-package`]' \
         '--link-mode[The method to use when installing packages from the global cache \[env: UV_LINK_MODE=\] \[possible values: clone, copy, hardlink, symlink\]]' \
         '--compile-bytecode[Compile Python files to bytecode after installation \[env: UV_COMPILE_BYTECODE=\]]' \
         {-C,--config-setting}'[Settings to pass to the PEP 517 build backend, specified as `KEY=VALUE` pairs]' \
+        '--config-settings-package[Settings to pass to the PEP 517 build backend for a specific package, specified as `PACKAGE:KEY=VALUE` pairs]' \
         '--no-build-isolation[Disable isolation when building source distributions \[env: UV_NO_BUILD_ISOLATION=\]]' \
         '--no-build-isolation-package[Disable isolation when building source distributions for a specific package]' \
         {-n,--no-cache}'[Avoid reading from or writing to the cache, instead using a temporary directory for the duration of the operation \[env: UV_NO_CACHE=\]]' \
@@ -1467,12 +1850,12 @@ function _uv_pip_install {
         '--no-managed-python[Disable use of uv-managed Python versions \[env: UV_NO_MANAGED_PYTHON=\]]' \
         '--no-python-downloads[Disable automatic downloads of Python. \[env: "UV_PYTHON_DOWNLOADS=never"\]]' \
         '--color[Control the use of color in output \[possible values: auto, always, never\]]' \
-        '--native-tls[Whether to load TLS certificates from the platform'\''s native certificate store \[env: UV_NATIVE_TLS=\]]' \
+        '--native-tls[Whether to load TLS certificates from the platform'\''s native store \[env: UV_NATIVE_TLS=\]]' \
         '--offline[Disable network access \[env: UV_OFFLINE=\]]' \
         '--allow-insecure-host[Allow insecure connections to a host \[env: UV_INSECURE_HOST=\]]' \
         '--no-progress[Hide all progress outputs \[env: UV_NO_PROGRESS=\]]' \
-        '--directory[Change to the given directory prior to running the command]':file:_files \
-        '--project[Run the command within the given project directory \[env: UV_PROJECT=\]]' \
+        '--directory[Change to the given directory prior to running the command \[env: UV_WORKING_DIR=\]]':file:_files \
+        '--project[Discover a project in the given directory \[env: UV_PROJECT=\]]' \
         '--config-file[The path to a `uv.toml` file to use for configuration \[env: UV_CONFIG_FILE=\]]':file:_files \
         '--no-config[Avoid discovering configuration files (`pyproject.toml`, `uv.toml`) \[env: UV_NO_CONFIG=\]]' \
         {-h,--help}'[Display the concise help for this command]' \
@@ -1482,7 +1865,7 @@ function _uv_pip_install {
 
 function _uv_pip_uninstall {
     _arguments \
-        {-r,--requirements}'[Uninstall all packages listed in the given requirements files]' \
+        {-r,--requirements}'[Uninstall the packages listed in the given files]' \
         '--keyring-provider[Attempt to use `keyring` for authentication for remote requirements files \[env: UV_KEYRING_PROVIDER=\] \[possible values: disabled, subprocess\]]' \
         '--system[Use the system Python to uninstall packages \[env: UV_SYSTEM_PYTHON=\]]' \
         '--break-system-packages[Allow uv to modify an `EXTERNALLY-MANAGED` Python installation \[env: UV_BREAK_SYSTEM_PACKAGES=\]]' \
@@ -1496,12 +1879,12 @@ function _uv_pip_uninstall {
         {-n,--no-cache}'[Avoid reading from or writing to the cache, instead using a temporary directory for the duration of the operation \[env: UV_NO_CACHE=\]]' \
         '--cache-dir[Path to the cache directory \[env: UV_CACHE_DIR=\]]':file:_files \
         '--color[Control the use of color in output \[possible values: auto, always, never\]]' \
-        '--native-tls[Whether to load TLS certificates from the platform'\''s native certificate store \[env: UV_NATIVE_TLS=\]]' \
+        '--native-tls[Whether to load TLS certificates from the platform'\''s native store \[env: UV_NATIVE_TLS=\]]' \
         '--offline[Disable network access \[env: UV_OFFLINE=\]]' \
         '--allow-insecure-host[Allow insecure connections to a host \[env: UV_INSECURE_HOST=\]]' \
         '--no-progress[Hide all progress outputs \[env: UV_NO_PROGRESS=\]]' \
-        '--directory[Change to the given directory prior to running the command]':file:_files \
-        '--project[Run the command within the given project directory \[env: UV_PROJECT=\]]' \
+        '--directory[Change to the given directory prior to running the command \[env: UV_WORKING_DIR=\]]':file:_files \
+        '--project[Discover a project in the given directory \[env: UV_PROJECT=\]]' \
         '--config-file[The path to a `uv.toml` file to use for configuration \[env: UV_CONFIG_FILE=\]]':file:_files \
         '--no-config[Avoid discovering configuration files (`pyproject.toml`, `uv.toml`) \[env: UV_NO_CONFIG=\]]' \
         {-h,--help}'[Display the concise help for this command]' \
@@ -1515,6 +1898,8 @@ function _uv_pip_freeze {
         '--strict[Validate the Python environment, to detect packages with missing dependencies and other issues]' \
         '--path[Restrict to the specified installation path for listing packages (can be used multiple times)]':file:_files \
         '--system[List packages in the system Python environment \[env: UV_SYSTEM_PYTHON=\]]' \
+        '--target[List packages from the specified `--target` directory]' \
+        '--prefix[List packages from the specified `--prefix` directory]' \
         {-p,--python}'[The Python interpreter for which packages should be listed. \[env: UV_PYTHON=\]]' \
         '--managed-python[Require use of uv-managed Python versions \[env: UV_MANAGED_PYTHON=\]]' \
         '--no-managed-python[Disable use of uv-managed Python versions \[env: UV_NO_MANAGED_PYTHON=\]]' \
@@ -1522,12 +1907,12 @@ function _uv_pip_freeze {
         {-n,--no-cache}'[Avoid reading from or writing to the cache, instead using a temporary directory for the duration of the operation \[env: UV_NO_CACHE=\]]' \
         '--cache-dir[Path to the cache directory \[env: UV_CACHE_DIR=\]]':file:_files \
         '--color[Control the use of color in output \[possible values: auto, always, never\]]' \
-        '--native-tls[Whether to load TLS certificates from the platform'\''s native certificate store \[env: UV_NATIVE_TLS=\]]' \
+        '--native-tls[Whether to load TLS certificates from the platform'\''s native store \[env: UV_NATIVE_TLS=\]]' \
         '--offline[Disable network access \[env: UV_OFFLINE=\]]' \
         '--allow-insecure-host[Allow insecure connections to a host \[env: UV_INSECURE_HOST=\]]' \
         '--no-progress[Hide all progress outputs \[env: UV_NO_PROGRESS=\]]' \
-        '--directory[Change to the given directory prior to running the command]':file:_files \
-        '--project[Run the command within the given project directory \[env: UV_PROJECT=\]]' \
+        '--directory[Change to the given directory prior to running the command \[env: UV_WORKING_DIR=\]]':file:_files \
+        '--project[Discover a project in the given directory \[env: UV_PROJECT=\]]' \
         '--config-file[The path to a `uv.toml` file to use for configuration \[env: UV_CONFIG_FILE=\]]':file:_files \
         '--no-config[Avoid discovering configuration files (`pyproject.toml`, `uv.toml`) \[env: UV_NO_CONFIG=\]]' \
         {-h,--help}'[Display the concise help for this command]' \
@@ -1544,6 +1929,8 @@ function _uv_pip_list {
         '--outdated[List outdated packages]' \
         '--strict[Validate the Python environment, to detect packages with missing dependencies and other issues]' \
         '--system[List packages in the system Python environment \[env: UV_SYSTEM_PYTHON=\]]' \
+        '--target[List packages from the specified `--target` directory]' \
+        '--prefix[List packages from the specified `--prefix` directory]' \
         '--index[The URLs to use when resolving dependencies, in addition to the default index \[env: UV_INDEX=\]]' \
         '--default-index[The URL of the default package index (by default: <https://pypi.org/simple>) \[env: UV_DEFAULT_INDEX=\]]' \
         {-i,--index-url}'[(Deprecated: use `--default-index` instead) The URL of the Python package index (by default: <https://pypi.org/simple>) \[env: UV_INDEX_URL=\]]' \
@@ -1560,12 +1947,12 @@ function _uv_pip_list {
         {-n,--no-cache}'[Avoid reading from or writing to the cache, instead using a temporary directory for the duration of the operation \[env: UV_NO_CACHE=\]]' \
         '--cache-dir[Path to the cache directory \[env: UV_CACHE_DIR=\]]':file:_files \
         '--color[Control the use of color in output \[possible values: auto, always, never\]]' \
-        '--native-tls[Whether to load TLS certificates from the platform'\''s native certificate store \[env: UV_NATIVE_TLS=\]]' \
+        '--native-tls[Whether to load TLS certificates from the platform'\''s native store \[env: UV_NATIVE_TLS=\]]' \
         '--offline[Disable network access \[env: UV_OFFLINE=\]]' \
         '--allow-insecure-host[Allow insecure connections to a host \[env: UV_INSECURE_HOST=\]]' \
         '--no-progress[Hide all progress outputs \[env: UV_NO_PROGRESS=\]]' \
-        '--directory[Change to the given directory prior to running the command]':file:_files \
-        '--project[Run the command within the given project directory \[env: UV_PROJECT=\]]' \
+        '--directory[Change to the given directory prior to running the command \[env: UV_WORKING_DIR=\]]':file:_files \
+        '--project[Discover a project in the given directory \[env: UV_PROJECT=\]]' \
         '--config-file[The path to a `uv.toml` file to use for configuration \[env: UV_CONFIG_FILE=\]]':file:_files \
         '--no-config[Avoid discovering configuration files (`pyproject.toml`, `uv.toml`) \[env: UV_NO_CONFIG=\]]' \
         {-h,--help}'[Display the concise help for this command]' \
@@ -1578,6 +1965,8 @@ function _uv_pip_show {
         '--strict[Validate the Python environment, to detect packages with missing dependencies and other issues]' \
         {-f,--files}'[Show the full list of installed files for each package]' \
         '--system[Show a package in the system Python environment \[env: UV_SYSTEM_PYTHON=\]]' \
+        '--target[Show a package from the specified `--target` directory]' \
+        '--prefix[Show a package from the specified `--prefix` directory]' \
         {-p,--python}'[The Python interpreter to find the package in. \[env: UV_PYTHON=\]]' \
         '--managed-python[Require use of uv-managed Python versions \[env: UV_MANAGED_PYTHON=\]]' \
         '--no-managed-python[Disable use of uv-managed Python versions \[env: UV_NO_MANAGED_PYTHON=\]]' \
@@ -1585,12 +1974,12 @@ function _uv_pip_show {
         {-n,--no-cache}'[Avoid reading from or writing to the cache, instead using a temporary directory for the duration of the operation \[env: UV_NO_CACHE=\]]' \
         '--cache-dir[Path to the cache directory \[env: UV_CACHE_DIR=\]]':file:_files \
         '--color[Control the use of color in output \[possible values: auto, always, never\]]' \
-        '--native-tls[Whether to load TLS certificates from the platform'\''s native certificate store \[env: UV_NATIVE_TLS=\]]' \
+        '--native-tls[Whether to load TLS certificates from the platform'\''s native store \[env: UV_NATIVE_TLS=\]]' \
         '--offline[Disable network access \[env: UV_OFFLINE=\]]' \
         '--allow-insecure-host[Allow insecure connections to a host \[env: UV_INSECURE_HOST=\]]' \
         '--no-progress[Hide all progress outputs \[env: UV_NO_PROGRESS=\]]' \
-        '--directory[Change to the given directory prior to running the command]':file:_files \
-        '--project[Run the command within the given project directory \[env: UV_PROJECT=\]]' \
+        '--directory[Change to the given directory prior to running the command \[env: UV_WORKING_DIR=\]]':file:_files \
+        '--project[Discover a project in the given directory \[env: UV_PROJECT=\]]' \
         '--config-file[The path to a `uv.toml` file to use for configuration \[env: UV_CONFIG_FILE=\]]':file:_files \
         '--no-config[Avoid discovering configuration files (`pyproject.toml`, `uv.toml`) \[env: UV_NO_CONFIG=\]]' \
         {-h,--help}'[Display the concise help for this command]' \
@@ -1607,6 +1996,7 @@ function _uv_pip_tree {
         '--no-dedupe[Do not de-duplicate repeated dependencies. Usually, when a package has already displayed its dependencies, further occurrences will not re-display its dependencies, and will include a (*) to indicate it has already been shown. This flag will cause those duplicates to be repeated]' \
         '--invert[Show the reverse dependencies for the given package. This flag will invert the tree and display the packages that depend on the given package]' \
         '--outdated[Show the latest available version of each package in the tree]' \
+        '--show-sizes[Show compressed wheel sizes for packages in the tree]' \
         '--strict[Validate the Python environment, to detect packages with missing dependencies and other issues]' \
         '--system[List packages in the system Python environment \[env: UV_SYSTEM_PYTHON=\]]' \
         '--index[The URLs to use when resolving dependencies, in addition to the default index \[env: UV_INDEX=\]]' \
@@ -1625,12 +2015,12 @@ function _uv_pip_tree {
         {-n,--no-cache}'[Avoid reading from or writing to the cache, instead using a temporary directory for the duration of the operation \[env: UV_NO_CACHE=\]]' \
         '--cache-dir[Path to the cache directory \[env: UV_CACHE_DIR=\]]':file:_files \
         '--color[Control the use of color in output \[possible values: auto, always, never\]]' \
-        '--native-tls[Whether to load TLS certificates from the platform'\''s native certificate store \[env: UV_NATIVE_TLS=\]]' \
+        '--native-tls[Whether to load TLS certificates from the platform'\''s native store \[env: UV_NATIVE_TLS=\]]' \
         '--offline[Disable network access \[env: UV_OFFLINE=\]]' \
         '--allow-insecure-host[Allow insecure connections to a host \[env: UV_INSECURE_HOST=\]]' \
         '--no-progress[Hide all progress outputs \[env: UV_NO_PROGRESS=\]]' \
-        '--directory[Change to the given directory prior to running the command]':file:_files \
-        '--project[Run the command within the given project directory \[env: UV_PROJECT=\]]' \
+        '--directory[Change to the given directory prior to running the command \[env: UV_WORKING_DIR=\]]':file:_files \
+        '--project[Discover a project in the given directory \[env: UV_PROJECT=\]]' \
         '--config-file[The path to a `uv.toml` file to use for configuration \[env: UV_CONFIG_FILE=\]]':file:_files \
         '--no-config[Avoid discovering configuration files (`pyproject.toml`, `uv.toml`) \[env: UV_NO_CONFIG=\]]' \
         {-h,--help}'[Display the concise help for this command]' \
@@ -1641,6 +2031,8 @@ function _uv_pip_tree {
 function _uv_pip_check {
     _arguments \
         '--system[Check packages in the system Python environment \[env: UV_SYSTEM_PYTHON=\]]' \
+        '--python-version[The Python version against which packages should be checked]' \
+        '--python-platform[The platform for which packages should be checked \[possible values: windows, linux, macos, x86_64-pc-windows-msvc, aarch64-pc-windows-msvc, i686-pc-windows-msvc, x86_64-unknown-linux-gnu, aarch64-apple-darwin, x86_64-apple-darwin, aarch64-unknown-linux-gnu, aarch64-unknown-linux-musl, x86_64-unknown-linux-musl, riscv64-unknown-linux, x86_64-manylinux2014, x86_64-manylinux_2_17, x86_64-manylinux_2_28, x86_64-manylinux_2_31, x86_64-manylinux_2_32, x86_64-manylinux_2_33, x86_64-manylinux_2_34, x86_64-manylinux_2_35, x86_64-manylinux_2_36, x86_64-manylinux_2_37, x86_64-manylinux_2_38, x86_64-manylinux_2_39, x86_64-manylinux_2_40, aarch64-manylinux2014, aarch64-manylinux_2_17, aarch64-manylinux_2_28, aarch64-manylinux_2_31, aarch64-manylinux_2_32, aarch64-manylinux_2_33, aarch64-manylinux_2_34, aarch64-manylinux_2_35, aarch64-manylinux_2_36, aarch64-manylinux_2_37, aarch64-manylinux_2_38, aarch64-manylinux_2_39, aarch64-manylinux_2_40, aarch64-linux-android, x86_64-linux-android, wasm32-pyodide2024, arm64-apple-ios, arm64-apple-ios-simulator, x86_64-apple-ios-simulator\]]' \
         {-p,--python}'[The Python interpreter for which packages should be checked. \[env: UV_PYTHON=\]]' \
         '--managed-python[Require use of uv-managed Python versions \[env: UV_MANAGED_PYTHON=\]]' \
         '--no-managed-python[Disable use of uv-managed Python versions \[env: UV_NO_MANAGED_PYTHON=\]]' \
@@ -1648,12 +2040,12 @@ function _uv_pip_check {
         {-n,--no-cache}'[Avoid reading from or writing to the cache, instead using a temporary directory for the duration of the operation \[env: UV_NO_CACHE=\]]' \
         '--cache-dir[Path to the cache directory \[env: UV_CACHE_DIR=\]]':file:_files \
         '--color[Control the use of color in output \[possible values: auto, always, never\]]' \
-        '--native-tls[Whether to load TLS certificates from the platform'\''s native certificate store \[env: UV_NATIVE_TLS=\]]' \
+        '--native-tls[Whether to load TLS certificates from the platform'\''s native store \[env: UV_NATIVE_TLS=\]]' \
         '--offline[Disable network access \[env: UV_OFFLINE=\]]' \
         '--allow-insecure-host[Allow insecure connections to a host \[env: UV_INSECURE_HOST=\]]' \
         '--no-progress[Hide all progress outputs \[env: UV_NO_PROGRESS=\]]' \
-        '--directory[Change to the given directory prior to running the command]':file:_files \
-        '--project[Run the command within the given project directory \[env: UV_PROJECT=\]]' \
+        '--directory[Change to the given directory prior to running the command \[env: UV_WORKING_DIR=\]]':file:_files \
+        '--project[Discover a project in the given directory \[env: UV_PROJECT=\]]' \
         '--config-file[The path to a `uv.toml` file to use for configuration \[env: UV_CONFIG_FILE=\]]':file:_files \
         '--no-config[Avoid discovering configuration files (`pyproject.toml`, `uv.toml`) \[env: UV_NO_CONFIG=\]]' \
         {-h,--help}'[Display the concise help for this command]' \
@@ -1665,6 +2057,7 @@ function _uv_venv {
     _arguments \
         '--no-project[Avoid discovering a project or workspace]' \
         '--seed[Install seed packages (one or more of: `pip`, `setuptools`, and `wheel`) into the virtual environment \[env: UV_VENV_SEED=\]]' \
+        {-c,--clear}'[Remove any existing files or directories at the target path \[env: UV_VENV_CLEAR=\]]' \
         '--allow-existing[Preserve any existing files or directories at the target path]' \
         '--prompt[Provide an alternative prompt prefix for the virtual environment.]' \
         '--system-site-packages[Give the virtual environment access to the system site packages directory]' \
@@ -1672,6 +2065,7 @@ function _uv_venv {
         '--index-strategy[The strategy to use when resolving against multiple index URLs \[env: UV_INDEX_STRATEGY=\] \[possible values: first-index, unsafe-first-match, unsafe-best-match\]]' \
         '--keyring-provider[Attempt to use `keyring` for authentication for index URLs \[env: UV_KEYRING_PROVIDER=\] \[possible values: disabled, subprocess\]]' \
         '--exclude-newer[Limit candidate packages to those that were uploaded prior to the given date \[env: UV_EXCLUDE_NEWER=\]]' \
+        '--exclude-newer-package[Limit candidate packages for a specific package to those that were uploaded prior to the given date]' \
         '--link-mode[The method to use when installing packages from the global cache \[env: UV_LINK_MODE=\] \[possible values: clone, copy, hardlink, symlink\]]' \
         {-p,--python}'[The Python interpreter to use for the virtual environment. \[env: UV_PYTHON=\]]' \
         '--managed-python[Require use of uv-managed Python versions \[env: UV_MANAGED_PYTHON=\]]' \
@@ -1688,12 +2082,12 @@ function _uv_venv {
         '--refresh-package[Refresh cached data for a specific package]' \
         '--cache-dir[Path to the cache directory \[env: UV_CACHE_DIR=\]]':file:_files \
         '--color[Control the use of color in output \[possible values: auto, always, never\]]' \
-        '--native-tls[Whether to load TLS certificates from the platform'\''s native certificate store \[env: UV_NATIVE_TLS=\]]' \
+        '--native-tls[Whether to load TLS certificates from the platform'\''s native store \[env: UV_NATIVE_TLS=\]]' \
         '--offline[Disable network access \[env: UV_OFFLINE=\]]' \
         '--allow-insecure-host[Allow insecure connections to a host \[env: UV_INSECURE_HOST=\]]' \
         '--no-progress[Hide all progress outputs \[env: UV_NO_PROGRESS=\]]' \
-        '--directory[Change to the given directory prior to running the command]':file:_files \
-        '--project[Run the command within the given project directory \[env: UV_PROJECT=\]]' \
+        '--directory[Change to the given directory prior to running the command \[env: UV_WORKING_DIR=\]]':file:_files \
+        '--project[Discover a project in the given directory \[env: UV_PROJECT=\]]' \
         '--config-file[The path to a `uv.toml` file to use for configuration \[env: UV_CONFIG_FILE=\]]':file:_files \
         '--no-config[Avoid discovering configuration files (`pyproject.toml`, `uv.toml`) \[env: UV_NO_CONFIG=\]]' \
         {-h,--help}'[Display the concise help for this command]' \
@@ -1710,6 +2104,8 @@ function _uv_build {
         '--wheel[Build a binary distribution ("wheel") from the given directory]' \
         '--no-build-logs[Hide logs from the build backend]' \
         '--force-pep517[Always build through PEP 517, don'\''t use the fast path for the uv build backend]' \
+        '--clear[Clear the output directory before the build, removing stale artifacts]' \
+        '--no-create-gitignore[Do not create a `.gitignore` file in the output directory]' \
         {-b,--build-constraints}'[Constrain build dependencies using the given requirements files when building distributions \[env: UV_BUILD_CONSTRAINT=\]]' \
         '--require-hashes[Require a matching hash for each requirement \[env: UV_REQUIRE_HASHES=\]]' \
         '--no-verify-hashes[Disable validation of hashes in the requirements file \[env: UV_NO_VERIFY_HASHES=\]]' \
@@ -1731,8 +2127,11 @@ function _uv_build {
         '--prerelease[The strategy to use when considering pre-release versions \[env: UV_PRERELEASE=\] \[possible values: disallow, allow, if-necessary, explicit, if-necessary-or-explicit\]]' \
         '--fork-strategy[The strategy to use when selecting multiple versions of a given package across Python versions and platforms \[env: UV_FORK_STRATEGY=\] \[possible values: fewest, requires-python\]]' \
         '--exclude-newer[Limit candidate packages to those that were uploaded prior to the given date \[env: UV_EXCLUDE_NEWER=\]]' \
-        '--no-sources[Ignore the `tool.uv.sources` table when resolving dependencies. Used to lock against the standards-compliant, publishable package metadata, as opposed to using any workspace, Git, URL, or local path sources]' \
+        '--exclude-newer-package[Limit candidate packages for specific packages to those that were uploaded prior to the given date]' \
+        '--no-sources[Ignore the `tool.uv.sources` table when resolving dependencies. Used to lock against the standards-compliant, publishable package metadata, as opposed to using any workspace, Git, URL, or local path sources \[env: UV_NO_SOURCES=\]]' \
+        '--no-sources-package[Don'\''t use sources from the `tool.uv.sources` table for the specified packages \[env: UV_NO_SOURCES_PACKAGE=\]]' \
         {-C,--config-setting}'[Settings to pass to the PEP 517 build backend, specified as `KEY=VALUE` pairs]' \
+        '--config-settings-package[Settings to pass to the PEP 517 build backend for a specific package, specified as `PACKAGE:KEY=VALUE` pairs]' \
         '--no-build-isolation[Disable isolation when building source distributions \[env: UV_NO_BUILD_ISOLATION=\]]' \
         '--no-build-isolation-package[Disable isolation when building source distributions for a specific package]' \
         '--no-build[Don'\''t build source distributions \[env: UV_NO_BUILD=\]]' \
@@ -1745,12 +2144,12 @@ function _uv_build {
         '--refresh[Refresh all cached data]' \
         '--refresh-package[Refresh cached data for a specific package]' \
         '--color[Control the use of color in output \[possible values: auto, always, never\]]' \
-        '--native-tls[Whether to load TLS certificates from the platform'\''s native certificate store \[env: UV_NATIVE_TLS=\]]' \
+        '--native-tls[Whether to load TLS certificates from the platform'\''s native store \[env: UV_NATIVE_TLS=\]]' \
         '--offline[Disable network access \[env: UV_OFFLINE=\]]' \
         '--allow-insecure-host[Allow insecure connections to a host \[env: UV_INSECURE_HOST=\]]' \
         '--no-progress[Hide all progress outputs \[env: UV_NO_PROGRESS=\]]' \
-        '--directory[Change to the given directory prior to running the command]':file:_files \
-        '--project[Run the command within the given project directory \[env: UV_PROJECT=\]]' \
+        '--directory[Change to the given directory prior to running the command \[env: UV_WORKING_DIR=\]]':file:_files \
+        '--project[Discover a project in the given directory \[env: UV_PROJECT=\]]' \
         '--config-file[The path to a `uv.toml` file to use for configuration \[env: UV_CONFIG_FILE=\]]':file:_files \
         '--no-config[Avoid discovering configuration files (`pyproject.toml`, `uv.toml`) \[env: UV_NO_CONFIG=\]]' \
         {-h,--help}'[Display the concise help for this command]' \
@@ -1764,22 +2163,24 @@ function _uv_publish {
         {-u,--username}'[The username for the upload \[env: UV_PUBLISH_USERNAME=\]]' \
         {-p,--password}'[The password for the upload \[env: UV_PUBLISH_PASSWORD=\]]' \
         {-t,--token}'[The token for the upload \[env: UV_PUBLISH_TOKEN=\]]' \
-        '--trusted-publishing[Configure using trusted publishing through GitHub Actions \[possible values: automatic, always, never\]]' \
+        '--trusted-publishing[Configure trusted publishing \[possible values: automatic, always, never\]]' \
         '--keyring-provider[Attempt to use `keyring` for authentication for remote requirements files \[env: UV_KEYRING_PROVIDER=\] \[possible values: disabled, subprocess\]]' \
         '--publish-url[The URL of the upload endpoint (not the index URL) \[env: UV_PUBLISH_URL=\]]' \
         '--check-url[Check an index URL for existing files to skip duplicate uploads \[env: UV_PUBLISH_CHECK_URL=\]]' \
+        '--dry-run[Perform a dry run without uploading files]' \
+        '--no-attestations[Do not upload attestations for the published files \[env: UV_PUBLISH_NO_ATTESTATIONS=\]]' \
         {-n,--no-cache}'[Avoid reading from or writing to the cache, instead using a temporary directory for the duration of the operation \[env: UV_NO_CACHE=\]]' \
         '--cache-dir[Path to the cache directory \[env: UV_CACHE_DIR=\]]':file:_files \
         '--managed-python[Require use of uv-managed Python versions \[env: UV_MANAGED_PYTHON=\]]' \
         '--no-managed-python[Disable use of uv-managed Python versions \[env: UV_NO_MANAGED_PYTHON=\]]' \
         '--no-python-downloads[Disable automatic downloads of Python. \[env: "UV_PYTHON_DOWNLOADS=never"\]]' \
         '--color[Control the use of color in output \[possible values: auto, always, never\]]' \
-        '--native-tls[Whether to load TLS certificates from the platform'\''s native certificate store \[env: UV_NATIVE_TLS=\]]' \
+        '--native-tls[Whether to load TLS certificates from the platform'\''s native store \[env: UV_NATIVE_TLS=\]]' \
         '--offline[Disable network access \[env: UV_OFFLINE=\]]' \
         '--allow-insecure-host[Allow insecure connections to a host \[env: UV_INSECURE_HOST=\]]' \
         '--no-progress[Hide all progress outputs \[env: UV_NO_PROGRESS=\]]' \
-        '--directory[Change to the given directory prior to running the command]':file:_files \
-        '--project[Run the command within the given project directory \[env: UV_PROJECT=\]]' \
+        '--directory[Change to the given directory prior to running the command \[env: UV_WORKING_DIR=\]]':file:_files \
+        '--project[Discover a project in the given directory \[env: UV_PROJECT=\]]' \
         '--config-file[The path to a `uv.toml` file to use for configuration \[env: UV_CONFIG_FILE=\]]':file:_files \
         '--no-config[Avoid discovering configuration files (`pyproject.toml`, `uv.toml`) \[env: UV_NO_CONFIG=\]]' \
         {-h,--help}'[Display the concise help for this command]' \
@@ -1797,6 +2198,7 @@ function _uv_cache {
             'clean:Clear the cache, removing all entries or those linked to specific packages'
             'prune:Prune all unreachable objects from the cache'
             'dir:Show the cache directory'
+            'size:Show the cache size'
         )
         _describe 'command' commands
     }
@@ -1809,12 +2211,12 @@ function _uv_cache {
         '--no-managed-python[Disable use of uv-managed Python versions \[env: UV_NO_MANAGED_PYTHON=\]]' \
         '--no-python-downloads[Disable automatic downloads of Python. \[env: "UV_PYTHON_DOWNLOADS=never"\]]' \
         '--color[Control the use of color in output \[possible values: auto, always, never\]]' \
-        '--native-tls[Whether to load TLS certificates from the platform'\''s native certificate store \[env: UV_NATIVE_TLS=\]]' \
+        '--native-tls[Whether to load TLS certificates from the platform'\''s native store \[env: UV_NATIVE_TLS=\]]' \
         '--offline[Disable network access \[env: UV_OFFLINE=\]]' \
         '--allow-insecure-host[Allow insecure connections to a host \[env: UV_INSECURE_HOST=\]]' \
         '--no-progress[Hide all progress outputs \[env: UV_NO_PROGRESS=\]]' \
-        '--directory[Change to the given directory prior to running the command]':file:_files \
-        '--project[Run the command within the given project directory \[env: UV_PROJECT=\]]' \
+        '--directory[Change to the given directory prior to running the command \[env: UV_WORKING_DIR=\]]':file:_files \
+        '--project[Discover a project in the given directory \[env: UV_PROJECT=\]]' \
         '--config-file[The path to a `uv.toml` file to use for configuration \[env: UV_CONFIG_FILE=\]]':file:_files \
         '--no-config[Avoid discovering configuration files (`pyproject.toml`, `uv.toml`) \[env: UV_NO_CONFIG=\]]' \
         {-h,--help}'[Display the concise help for this command]' \
@@ -1839,6 +2241,10 @@ function _uv_cache {
             _uv_cache_dir
             ;;
 
+        (size)
+            _uv_cache_size
+            ;;
+
         esac
         ;;
      esac
@@ -1847,18 +2253,19 @@ function _uv_cache {
 
 function _uv_cache_clean {
     _arguments \
+        '--force[Force removal of the cache, ignoring in-use checks]' \
         {-n,--no-cache}'[Avoid reading from or writing to the cache, instead using a temporary directory for the duration of the operation \[env: UV_NO_CACHE=\]]' \
         '--cache-dir[Path to the cache directory \[env: UV_CACHE_DIR=\]]':file:_files \
         '--managed-python[Require use of uv-managed Python versions \[env: UV_MANAGED_PYTHON=\]]' \
         '--no-managed-python[Disable use of uv-managed Python versions \[env: UV_NO_MANAGED_PYTHON=\]]' \
         '--no-python-downloads[Disable automatic downloads of Python. \[env: "UV_PYTHON_DOWNLOADS=never"\]]' \
         '--color[Control the use of color in output \[possible values: auto, always, never\]]' \
-        '--native-tls[Whether to load TLS certificates from the platform'\''s native certificate store \[env: UV_NATIVE_TLS=\]]' \
+        '--native-tls[Whether to load TLS certificates from the platform'\''s native store \[env: UV_NATIVE_TLS=\]]' \
         '--offline[Disable network access \[env: UV_OFFLINE=\]]' \
         '--allow-insecure-host[Allow insecure connections to a host \[env: UV_INSECURE_HOST=\]]' \
         '--no-progress[Hide all progress outputs \[env: UV_NO_PROGRESS=\]]' \
-        '--directory[Change to the given directory prior to running the command]':file:_files \
-        '--project[Run the command within the given project directory \[env: UV_PROJECT=\]]' \
+        '--directory[Change to the given directory prior to running the command \[env: UV_WORKING_DIR=\]]':file:_files \
+        '--project[Discover a project in the given directory \[env: UV_PROJECT=\]]' \
         '--config-file[The path to a `uv.toml` file to use for configuration \[env: UV_CONFIG_FILE=\]]':file:_files \
         '--no-config[Avoid discovering configuration files (`pyproject.toml`, `uv.toml`) \[env: UV_NO_CONFIG=\]]' \
         {-h,--help}'[Display the concise help for this command]' \
@@ -1869,18 +2276,19 @@ function _uv_cache_clean {
 function _uv_cache_prune {
     _arguments \
         '--ci[Optimize the cache for persistence in a continuous integration environment, like GitHub Actions]' \
+        '--force[Force removal of the cache, ignoring in-use checks]' \
         {-n,--no-cache}'[Avoid reading from or writing to the cache, instead using a temporary directory for the duration of the operation \[env: UV_NO_CACHE=\]]' \
         '--cache-dir[Path to the cache directory \[env: UV_CACHE_DIR=\]]':file:_files \
         '--managed-python[Require use of uv-managed Python versions \[env: UV_MANAGED_PYTHON=\]]' \
         '--no-managed-python[Disable use of uv-managed Python versions \[env: UV_NO_MANAGED_PYTHON=\]]' \
         '--no-python-downloads[Disable automatic downloads of Python. \[env: "UV_PYTHON_DOWNLOADS=never"\]]' \
         '--color[Control the use of color in output \[possible values: auto, always, never\]]' \
-        '--native-tls[Whether to load TLS certificates from the platform'\''s native certificate store \[env: UV_NATIVE_TLS=\]]' \
+        '--native-tls[Whether to load TLS certificates from the platform'\''s native store \[env: UV_NATIVE_TLS=\]]' \
         '--offline[Disable network access \[env: UV_OFFLINE=\]]' \
         '--allow-insecure-host[Allow insecure connections to a host \[env: UV_INSECURE_HOST=\]]' \
         '--no-progress[Hide all progress outputs \[env: UV_NO_PROGRESS=\]]' \
-        '--directory[Change to the given directory prior to running the command]':file:_files \
-        '--project[Run the command within the given project directory \[env: UV_PROJECT=\]]' \
+        '--directory[Change to the given directory prior to running the command \[env: UV_WORKING_DIR=\]]':file:_files \
+        '--project[Discover a project in the given directory \[env: UV_PROJECT=\]]' \
         '--config-file[The path to a `uv.toml` file to use for configuration \[env: UV_CONFIG_FILE=\]]':file:_files \
         '--no-config[Avoid discovering configuration files (`pyproject.toml`, `uv.toml`) \[env: UV_NO_CONFIG=\]]' \
         {-h,--help}'[Display the concise help for this command]' \
@@ -1896,12 +2304,34 @@ function _uv_cache_dir {
         '--no-managed-python[Disable use of uv-managed Python versions \[env: UV_NO_MANAGED_PYTHON=\]]' \
         '--no-python-downloads[Disable automatic downloads of Python. \[env: "UV_PYTHON_DOWNLOADS=never"\]]' \
         '--color[Control the use of color in output \[possible values: auto, always, never\]]' \
-        '--native-tls[Whether to load TLS certificates from the platform'\''s native certificate store \[env: UV_NATIVE_TLS=\]]' \
+        '--native-tls[Whether to load TLS certificates from the platform'\''s native store \[env: UV_NATIVE_TLS=\]]' \
         '--offline[Disable network access \[env: UV_OFFLINE=\]]' \
         '--allow-insecure-host[Allow insecure connections to a host \[env: UV_INSECURE_HOST=\]]' \
         '--no-progress[Hide all progress outputs \[env: UV_NO_PROGRESS=\]]' \
-        '--directory[Change to the given directory prior to running the command]':file:_files \
-        '--project[Run the command within the given project directory \[env: UV_PROJECT=\]]' \
+        '--directory[Change to the given directory prior to running the command \[env: UV_WORKING_DIR=\]]':file:_files \
+        '--project[Discover a project in the given directory \[env: UV_PROJECT=\]]' \
+        '--config-file[The path to a `uv.toml` file to use for configuration \[env: UV_CONFIG_FILE=\]]':file:_files \
+        '--no-config[Avoid discovering configuration files (`pyproject.toml`, `uv.toml`) \[env: UV_NO_CONFIG=\]]' \
+        {-h,--help}'[Display the concise help for this command]' \
+        "*: :_files"
+
+}
+
+function _uv_cache_size {
+    _arguments \
+        {-H,--human}'[Display the cache size in human-readable format (e.g., `1.2 GiB` instead of raw bytes)]' \
+        {-n,--no-cache}'[Avoid reading from or writing to the cache, instead using a temporary directory for the duration of the operation \[env: UV_NO_CACHE=\]]' \
+        '--cache-dir[Path to the cache directory \[env: UV_CACHE_DIR=\]]':file:_files \
+        '--managed-python[Require use of uv-managed Python versions \[env: UV_MANAGED_PYTHON=\]]' \
+        '--no-managed-python[Disable use of uv-managed Python versions \[env: UV_NO_MANAGED_PYTHON=\]]' \
+        '--no-python-downloads[Disable automatic downloads of Python. \[env: "UV_PYTHON_DOWNLOADS=never"\]]' \
+        '--color[Control the use of color in output \[possible values: auto, always, never\]]' \
+        '--native-tls[Whether to load TLS certificates from the platform'\''s native store \[env: UV_NATIVE_TLS=\]]' \
+        '--offline[Disable network access \[env: UV_OFFLINE=\]]' \
+        '--allow-insecure-host[Allow insecure connections to a host \[env: UV_INSECURE_HOST=\]]' \
+        '--no-progress[Hide all progress outputs \[env: UV_NO_PROGRESS=\]]' \
+        '--directory[Change to the given directory prior to running the command \[env: UV_WORKING_DIR=\]]':file:_files \
+        '--project[Discover a project in the given directory \[env: UV_PROJECT=\]]' \
         '--config-file[The path to a `uv.toml` file to use for configuration \[env: UV_CONFIG_FILE=\]]':file:_files \
         '--no-config[Avoid discovering configuration files (`pyproject.toml`, `uv.toml`) \[env: UV_NO_CONFIG=\]]' \
         {-h,--help}'[Display the concise help for this command]' \
@@ -1930,12 +2360,12 @@ function _uv_self {
         '--no-managed-python[Disable use of uv-managed Python versions \[env: UV_NO_MANAGED_PYTHON=\]]' \
         '--no-python-downloads[Disable automatic downloads of Python. \[env: "UV_PYTHON_DOWNLOADS=never"\]]' \
         '--color[Control the use of color in output \[possible values: auto, always, never\]]' \
-        '--native-tls[Whether to load TLS certificates from the platform'\''s native certificate store \[env: UV_NATIVE_TLS=\]]' \
+        '--native-tls[Whether to load TLS certificates from the platform'\''s native store \[env: UV_NATIVE_TLS=\]]' \
         '--offline[Disable network access \[env: UV_OFFLINE=\]]' \
         '--allow-insecure-host[Allow insecure connections to a host \[env: UV_INSECURE_HOST=\]]' \
         '--no-progress[Hide all progress outputs \[env: UV_NO_PROGRESS=\]]' \
-        '--directory[Change to the given directory prior to running the command]':file:_files \
-        '--project[Run the command within the given project directory \[env: UV_PROJECT=\]]' \
+        '--directory[Change to the given directory prior to running the command \[env: UV_WORKING_DIR=\]]':file:_files \
+        '--project[Discover a project in the given directory \[env: UV_PROJECT=\]]' \
         '--config-file[The path to a `uv.toml` file to use for configuration \[env: UV_CONFIG_FILE=\]]':file:_files \
         '--no-config[Avoid discovering configuration files (`pyproject.toml`, `uv.toml`) \[env: UV_NO_CONFIG=\]]' \
         {-h,--help}'[Display the concise help for this command]' \
@@ -1972,12 +2402,12 @@ function _uv_self_update {
         '--no-managed-python[Disable use of uv-managed Python versions \[env: UV_NO_MANAGED_PYTHON=\]]' \
         '--no-python-downloads[Disable automatic downloads of Python. \[env: "UV_PYTHON_DOWNLOADS=never"\]]' \
         '--color[Control the use of color in output \[possible values: auto, always, never\]]' \
-        '--native-tls[Whether to load TLS certificates from the platform'\''s native certificate store \[env: UV_NATIVE_TLS=\]]' \
+        '--native-tls[Whether to load TLS certificates from the platform'\''s native store \[env: UV_NATIVE_TLS=\]]' \
         '--offline[Disable network access \[env: UV_OFFLINE=\]]' \
         '--allow-insecure-host[Allow insecure connections to a host \[env: UV_INSECURE_HOST=\]]' \
         '--no-progress[Hide all progress outputs \[env: UV_NO_PROGRESS=\]]' \
-        '--directory[Change to the given directory prior to running the command]':file:_files \
-        '--project[Run the command within the given project directory \[env: UV_PROJECT=\]]' \
+        '--directory[Change to the given directory prior to running the command \[env: UV_WORKING_DIR=\]]':file:_files \
+        '--project[Discover a project in the given directory \[env: UV_PROJECT=\]]' \
         '--config-file[The path to a `uv.toml` file to use for configuration \[env: UV_CONFIG_FILE=\]]':file:_files \
         '--no-config[Avoid discovering configuration files (`pyproject.toml`, `uv.toml`) \[env: UV_NO_CONFIG=\]]' \
         {-h,--help}'[Display the concise help for this command]' \
@@ -1995,37 +2425,12 @@ function _uv_self_version {
         '--no-managed-python[Disable use of uv-managed Python versions \[env: UV_NO_MANAGED_PYTHON=\]]' \
         '--no-python-downloads[Disable automatic downloads of Python. \[env: "UV_PYTHON_DOWNLOADS=never"\]]' \
         '--color[Control the use of color in output \[possible values: auto, always, never\]]' \
-        '--native-tls[Whether to load TLS certificates from the platform'\''s native certificate store \[env: UV_NATIVE_TLS=\]]' \
+        '--native-tls[Whether to load TLS certificates from the platform'\''s native store \[env: UV_NATIVE_TLS=\]]' \
         '--offline[Disable network access \[env: UV_OFFLINE=\]]' \
         '--allow-insecure-host[Allow insecure connections to a host \[env: UV_INSECURE_HOST=\]]' \
         '--no-progress[Hide all progress outputs \[env: UV_NO_PROGRESS=\]]' \
-        '--directory[Change to the given directory prior to running the command]':file:_files \
-        '--project[Run the command within the given project directory \[env: UV_PROJECT=\]]' \
-        '--config-file[The path to a `uv.toml` file to use for configuration \[env: UV_CONFIG_FILE=\]]':file:_files \
-        '--no-config[Avoid discovering configuration files (`pyproject.toml`, `uv.toml`) \[env: UV_NO_CONFIG=\]]' \
-        {-h,--help}'[Display the concise help for this command]' \
-        "*: :_files"
-
-}
-
-function _uv_version {
-    _arguments \
-        '--bump[Update the project version using the given semantics \[possible values: major, minor, patch\]]' \
-        '--dry-run[Don'\''t write a new version to the `pyproject.toml`]' \
-        '--short[Only show the version]' \
-        '--output-format[\[default: text\] \[possible values: text, json\]]' \
-        {-n,--no-cache}'[Avoid reading from or writing to the cache, instead using a temporary directory for the duration of the operation \[env: UV_NO_CACHE=\]]' \
-        '--cache-dir[Path to the cache directory \[env: UV_CACHE_DIR=\]]':file:_files \
-        '--managed-python[Require use of uv-managed Python versions \[env: UV_MANAGED_PYTHON=\]]' \
-        '--no-managed-python[Disable use of uv-managed Python versions \[env: UV_NO_MANAGED_PYTHON=\]]' \
-        '--no-python-downloads[Disable automatic downloads of Python. \[env: "UV_PYTHON_DOWNLOADS=never"\]]' \
-        '--color[Control the use of color in output \[possible values: auto, always, never\]]' \
-        '--native-tls[Whether to load TLS certificates from the platform'\''s native certificate store \[env: UV_NATIVE_TLS=\]]' \
-        '--offline[Disable network access \[env: UV_OFFLINE=\]]' \
-        '--allow-insecure-host[Allow insecure connections to a host \[env: UV_INSECURE_HOST=\]]' \
-        '--no-progress[Hide all progress outputs \[env: UV_NO_PROGRESS=\]]' \
-        '--directory[Change to the given directory prior to running the command]':file:_files \
-        '--project[Run the command within the given project directory \[env: UV_PROJECT=\]]' \
+        '--directory[Change to the given directory prior to running the command \[env: UV_WORKING_DIR=\]]':file:_files \
+        '--project[Discover a project in the given directory \[env: UV_PROJECT=\]]' \
         '--config-file[The path to a `uv.toml` file to use for configuration \[env: UV_CONFIG_FILE=\]]':file:_files \
         '--no-config[Avoid discovering configuration files (`pyproject.toml`, `uv.toml`) \[env: UV_NO_CONFIG=\]]' \
         {-h,--help}'[Display the concise help for this command]' \
