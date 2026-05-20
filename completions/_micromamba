@@ -34,7 +34,7 @@ function _micromamba {
 
     _arguments -C \
         {-h,--help}'[Print this help message and exit]' \
-        '--rc-file[Paths to the configuration files to use]' \
+        '--rc-file[Paths to the configuration files to use]':file:_files \
         '--no-rc[Disable the use of configuration files]' \
         '--no-env[Disable the use of environment variables]' \
         {-v,--verbose}'[Set verbosity (higher verbosity with multiple -v, e.g. -vvv)]' \
@@ -46,9 +46,9 @@ function _micromamba {
         '--dry-run[Only display what would have been done]' \
         '--download-only[Only download and extract packages, do not link them into environment.]' \
         '--experimental[Enable experimental features]' \
-        {-r,--root-prefix}'[Path to the root prefix]' \
-        {-p,--prefix}'[Path to the target prefix]' \
-        '--relocate-prefix[Path to the relocation prefix]' \
+        {-r,--root-prefix}'[Path to the root prefix]':file:_files \
+        {-p,--prefix}'[Path to the target prefix]':file:_files \
+        '--relocate-prefix[Path to the relocation prefix]':file:_files \
         {-n,--name}'[Name of the target prefix]' \
         ': :->cmd' \
         '*:: :->subcmd'
@@ -159,9 +159,9 @@ function _micromamba_shell {
 
     _arguments -C \
         {-h,--help}'[Print this help message and exit]' \
-        {-p,--prefix}'[Path to the target prefix]' \
+        {-p,--prefix}'[Path to the target prefix]':file:_files \
         {-n,--name}'[Name of the target prefix]' \
-        '--rc-file[Paths to the configuration files to use]' \
+        '--rc-file[Paths to the configuration files to use]':file:_files \
         '--no-rc[Disable the use of configuration files]' \
         '--no-env[Disable the use of environment variables]' \
         {-v,--verbose}'[Set verbosity (higher verbosity with multiple -v, e.g. -vvv)]' \
@@ -223,9 +223,7 @@ function _micromamba_shell {
 function _micromamba_shell_init {
     _arguments \
         {-h,--help}'[Print this help message and exit]' \
-        {-s,--shell}'[A shell type]' \
-        {-r,--root-prefix}'[Path to the root prefix]' \
-        '--rc-file[Paths to the configuration files to use]' \
+        '--rc-file[Paths to the configuration files to use]':file:_files \
         '--no-rc[Disable the use of configuration files]' \
         '--no-env[Disable the use of environment variables]' \
         {-v,--verbose}'[Set verbosity (higher verbosity with multiple -v, e.g. -vvv)]' \
@@ -244,9 +242,7 @@ function _micromamba_shell_init {
 function _micromamba_shell_deinit {
     _arguments \
         {-h,--help}'[Print this help message and exit]' \
-        {-s,--shell}'[A shell type]' \
-        {-r,--root-prefix}'[Path to the root prefix]' \
-        '--rc-file[Paths to the configuration files to use]' \
+        '--rc-file[Paths to the configuration files to use]':file:_files \
         '--no-rc[Disable the use of configuration files]' \
         '--no-env[Disable the use of environment variables]' \
         {-v,--verbose}'[Set verbosity (higher verbosity with multiple -v, e.g. -vvv)]' \
@@ -265,7 +261,7 @@ function _micromamba_shell_deinit {
 function _micromamba_shell_reinit {
     _arguments \
         {-h,--help}'[Print this help message and exit]' \
-        '--rc-file[Paths to the configuration files to use]' \
+        '--rc-file[Paths to the configuration files to use]':file:_files \
         '--no-rc[Disable the use of configuration files]' \
         '--no-env[Disable the use of environment variables]' \
         {-v,--verbose}'[Set verbosity (higher verbosity with multiple -v, e.g. -vvv)]' \
@@ -284,9 +280,7 @@ function _micromamba_shell_reinit {
 function _micromamba_shell_hook {
     _arguments \
         {-h,--help}'[Print this help message and exit]' \
-        {-s,--shell}'[A shell type]' \
-        {-r,--root-prefix}'[Path to the root prefix]' \
-        '--rc-file[Paths to the configuration files to use]' \
+        '--rc-file[Paths to the configuration files to use]':file:_files \
         '--no-rc[Disable the use of configuration files]' \
         '--no-env[Disable the use of environment variables]' \
         {-v,--verbose}'[Set verbosity (higher verbosity with multiple -v, e.g. -vvv)]' \
@@ -306,10 +300,10 @@ function _micromamba_shell_activate {
     _arguments \
         {-h,--help}'[Print this help message and exit]' \
         {-s,--shell}'[A shell type]' \
-        {-p,--prefix}'[Path to the target prefix]' \
+        {-p,--prefix}'[Path to the target prefix]':file:_files \
         {-n,--name}'[Name of the target prefix]' \
         '--stack[Stack the environment being activated]' \
-        '--rc-file[Paths to the configuration files to use]' \
+        '--rc-file[Paths to the configuration files to use]':file:_files \
         '--no-rc[Disable the use of configuration files]' \
         '--no-env[Disable the use of environment variables]' \
         {-v,--verbose}'[Set verbosity (higher verbosity with multiple -v, e.g. -vvv)]' \
@@ -329,7 +323,7 @@ function _micromamba_shell_reactivate {
     _arguments \
         {-h,--help}'[Print this help message and exit]' \
         {-s,--shell}'[A shell type]' \
-        '--rc-file[Paths to the configuration files to use]' \
+        '--rc-file[Paths to the configuration files to use]':file:_files \
         '--no-rc[Disable the use of configuration files]' \
         '--no-env[Disable the use of environment variables]' \
         {-v,--verbose}'[Set verbosity (higher verbosity with multiple -v, e.g. -vvv)]' \
@@ -349,7 +343,7 @@ function _micromamba_shell_deactivate {
     _arguments \
         {-h,--help}'[Print this help message and exit]' \
         {-s,--shell}'[A shell type]' \
-        '--rc-file[Paths to the configuration files to use]' \
+        '--rc-file[Paths to the configuration files to use]':file:_files \
         '--no-rc[Disable the use of configuration files]' \
         '--no-env[Disable the use of environment variables]' \
         {-v,--verbose}'[Set verbosity (higher verbosity with multiple -v, e.g. -vvv)]' \
@@ -368,7 +362,7 @@ function _micromamba_shell_deactivate {
 function _micromamba_shell_enable_long_path_support {
     _arguments \
         {-h,--help}'[Print this help message and exit]' \
-        '--rc-file[Paths to the configuration files to use]' \
+        '--rc-file[Paths to the configuration files to use]':file:_files \
         '--no-rc[Disable the use of configuration files]' \
         '--no-env[Disable the use of environment variables]' \
         {-v,--verbose}'[Set verbosity (higher verbosity with multiple -v, e.g. -vvv)]' \
@@ -393,7 +387,7 @@ function _micromamba_create {
         '--channel-alias[The prepended url location to associate with channel names]' \
         '--strict-channel-priority[Enable strict channel priority]' \
         '--no-channel-priority[Disable channel priority]' \
-        {-f,--file}'[File (yaml, explicit or plain)]' \
+        {-f,--file}'[File (yaml, explicit or plain)]':file:_files \
         {--no-pin,--pin}'[Ignore pinned packages]' \
         {--no-py-pin,--py-pin}'[Do not automatically pin Python]' \
         {--pyc,--no-pyc}'[Defines if PYC files will be compiled or not]' \
@@ -413,7 +407,7 @@ function _micromamba_create {
         '--no-deps[Do not install dependencies. This WILL lead to broken environments and inconsistent behavior. Use at your own risk]' \
         '--only-deps[Only install dependencies]' \
         '--category[Categories of package to install from environment lockfile]' \
-        '--rc-file[Paths to the configuration files to use]' \
+        '--rc-file[Paths to the configuration files to use]':file:_files \
         '--no-rc[Disable the use of configuration files]' \
         '--no-env[Disable the use of environment variables]' \
         {-v,--verbose}'[Set verbosity (higher verbosity with multiple -v, e.g. -vvv)]' \
@@ -425,13 +419,13 @@ function _micromamba_create {
         '--dry-run[Only display what would have been done]' \
         '--download-only[Only download and extract packages, do not link them into environment.]' \
         '--experimental[Enable experimental features]' \
-        {-r,--root-prefix}'[Path to the root prefix]' \
-        {-p,--prefix}'[Path to the target prefix]' \
-        '--relocate-prefix[Path to the relocation prefix]' \
+        {-r,--root-prefix}'[Path to the root prefix]':file:_files \
+        {-p,--prefix}'[Path to the target prefix]':file:_files \
+        '--relocate-prefix[Path to the relocation prefix]':file:_files \
         {-n,--name}'[Name of the target prefix]' \
-        '--ssl-verify[Verify SSL certificates for HTTPS requests]' \
+        '--ssl-verify[Verify SSL certificates for HTTPS requests]':file:_files \
         '--ssl-no-revoke[SSL certificate revocation checks]' \
-        '--cacert-path[Path (file or directory) SSL certificate(s)]' \
+        '--cacert-path[Path (file or directory) SSL certificate(s)]':file:_files \
         '--repodata-ttl[Repodata time-to-live]' \
         '--retry-clean-cache[If solve fails, try to fetch updated repodata]' \
         "*: :_files"
@@ -447,7 +441,7 @@ function _micromamba_install {
         '--channel-alias[The prepended url location to associate with channel names]' \
         '--strict-channel-priority[Enable strict channel priority]' \
         '--no-channel-priority[Disable channel priority]' \
-        {-f,--file}'[File (yaml, explicit or plain)]' \
+        {-f,--file}'[File (yaml, explicit or plain)]':file:_files \
         {--no-pin,--pin}'[Ignore pinned packages]' \
         {--no-py-pin,--py-pin}'[Do not automatically pin Python]' \
         {--pyc,--no-pyc}'[Defines if PYC files will be compiled or not]' \
@@ -469,7 +463,7 @@ function _micromamba_install {
         '--category[Categories of package to install from environment lockfile]' \
         '--freeze-installed[Freeze already installed dependencies]' \
         '--force-reinstall[Force reinstall of package]' \
-        '--rc-file[Paths to the configuration files to use]' \
+        '--rc-file[Paths to the configuration files to use]':file:_files \
         '--no-rc[Disable the use of configuration files]' \
         '--no-env[Disable the use of environment variables]' \
         {-v,--verbose}'[Set verbosity (higher verbosity with multiple -v, e.g. -vvv)]' \
@@ -481,13 +475,13 @@ function _micromamba_install {
         '--dry-run[Only display what would have been done]' \
         '--download-only[Only download and extract packages, do not link them into environment.]' \
         '--experimental[Enable experimental features]' \
-        {-r,--root-prefix}'[Path to the root prefix]' \
-        {-p,--prefix}'[Path to the target prefix]' \
-        '--relocate-prefix[Path to the relocation prefix]' \
+        {-r,--root-prefix}'[Path to the root prefix]':file:_files \
+        {-p,--prefix}'[Path to the target prefix]':file:_files \
+        '--relocate-prefix[Path to the relocation prefix]':file:_files \
         {-n,--name}'[Name of the target prefix]' \
-        '--ssl-verify[Verify SSL certificates for HTTPS requests]' \
+        '--ssl-verify[Verify SSL certificates for HTTPS requests]':file:_files \
         '--ssl-no-revoke[SSL certificate revocation checks]' \
-        '--cacert-path[Path (file or directory) SSL certificate(s)]' \
+        '--cacert-path[Path (file or directory) SSL certificate(s)]':file:_files \
         '--repodata-ttl[Repodata time-to-live]' \
         '--retry-clean-cache[If solve fails, try to fetch updated repodata]' \
         "*: :_files"
@@ -503,7 +497,7 @@ function _micromamba_update {
         '--channel-alias[The prepended url location to associate with channel names]' \
         '--strict-channel-priority[Enable strict channel priority]' \
         '--no-channel-priority[Disable channel priority]' \
-        {-f,--file}'[File (yaml, explicit or plain)]' \
+        {-f,--file}'[File (yaml, explicit or plain)]':file:_files \
         {--no-pin,--pin}'[Ignore pinned packages]' \
         {--no-py-pin,--py-pin}'[Do not automatically pin Python]' \
         {--pyc,--no-pyc}'[Defines if PYC files will be compiled or not]' \
@@ -525,7 +519,7 @@ function _micromamba_update {
         '--category[Categories of package to install from environment lockfile]' \
         {--prune-deps,--no-prune-deps}'[Prune dependencies (default)]' \
         {-a,--all}'[Update all packages in the environment]' \
-        '--rc-file[Paths to the configuration files to use]' \
+        '--rc-file[Paths to the configuration files to use]':file:_files \
         '--no-rc[Disable the use of configuration files]' \
         '--no-env[Disable the use of environment variables]' \
         {-v,--verbose}'[Set verbosity (higher verbosity with multiple -v, e.g. -vvv)]' \
@@ -537,13 +531,13 @@ function _micromamba_update {
         '--dry-run[Only display what would have been done]' \
         '--download-only[Only download and extract packages, do not link them into environment.]' \
         '--experimental[Enable experimental features]' \
-        {-r,--root-prefix}'[Path to the root prefix]' \
-        {-p,--prefix}'[Path to the target prefix]' \
-        '--relocate-prefix[Path to the relocation prefix]' \
+        {-r,--root-prefix}'[Path to the root prefix]':file:_files \
+        {-p,--prefix}'[Path to the target prefix]':file:_files \
+        '--relocate-prefix[Path to the relocation prefix]':file:_files \
         {-n,--name}'[Name of the target prefix]' \
-        '--ssl-verify[Verify SSL certificates for HTTPS requests]' \
+        '--ssl-verify[Verify SSL certificates for HTTPS requests]':file:_files \
         '--ssl-no-revoke[SSL certificate revocation checks]' \
-        '--cacert-path[Path (file or directory) SSL certificate(s)]' \
+        '--cacert-path[Path (file or directory) SSL certificate(s)]':file:_files \
         '--repodata-ttl[Repodata time-to-live]' \
         '--retry-clean-cache[If solve fails, try to fetch updated repodata]' \
         "*: :_files"
@@ -559,7 +553,7 @@ function _micromamba_self-update {
         '--channel-alias[The prepended url location to associate with channel names]' \
         '--strict-channel-priority[Enable strict channel priority]' \
         '--no-channel-priority[Disable channel priority]' \
-        {-f,--file}'[File (yaml, explicit or plain)]' \
+        {-f,--file}'[File (yaml, explicit or plain)]':file:_files \
         {--no-pin,--pin}'[Ignore pinned packages]' \
         {--no-py-pin,--py-pin}'[Do not automatically pin Python]' \
         {--pyc,--no-pyc}'[Defines if PYC files will be compiled or not]' \
@@ -580,7 +574,7 @@ function _micromamba_self-update {
         '--only-deps[Only install dependencies]' \
         '--category[Categories of package to install from environment lockfile]' \
         '--version[Install specific micromamba version]' \
-        '--rc-file[Paths to the configuration files to use]' \
+        '--rc-file[Paths to the configuration files to use]':file:_files \
         '--no-rc[Disable the use of configuration files]' \
         '--no-env[Disable the use of environment variables]' \
         {-v,--verbose}'[Set verbosity (higher verbosity with multiple -v, e.g. -vvv)]' \
@@ -592,13 +586,13 @@ function _micromamba_self-update {
         '--dry-run[Only display what would have been done]' \
         '--download-only[Only download and extract packages, do not link them into environment.]' \
         '--experimental[Enable experimental features]' \
-        {-r,--root-prefix}'[Path to the root prefix]' \
-        {-p,--prefix}'[Path to the target prefix]' \
-        '--relocate-prefix[Path to the relocation prefix]' \
+        {-r,--root-prefix}'[Path to the root prefix]':file:_files \
+        {-p,--prefix}'[Path to the target prefix]':file:_files \
+        '--relocate-prefix[Path to the relocation prefix]':file:_files \
         {-n,--name}'[Name of the target prefix]' \
-        '--ssl-verify[Verify SSL certificates for HTTPS requests]' \
+        '--ssl-verify[Verify SSL certificates for HTTPS requests]':file:_files \
         '--ssl-no-revoke[SSL certificate revocation checks]' \
-        '--cacert-path[Path (file or directory) SSL certificate(s)]' \
+        '--cacert-path[Path (file or directory) SSL certificate(s)]':file:_files \
         '--repodata-ttl[Repodata time-to-live]' \
         '--retry-clean-cache[If solve fails, try to fetch updated repodata]' \
         "*: :_files"
@@ -654,7 +648,7 @@ function _micromamba_repoquery_search {
         {-h,--help}'[Print this help message and exit]' \
         {-c,--channel}'[Define the list of channels]' \
         '--override-channels[Override channels]' \
-        '--channel-priority[in {disabled->0,flexible->1,strict->2} OR {0,1,2} Define the channel priority ('\''strict'\'' or '\''disabled'\'')]' \
+        '--channel-priority[Define the channel priority ('\''strict'\'' or '\''disabled'\'')]' \
         '--channel-alias[The prepended url location to associate with channel names]' \
         '--strict-channel-priority[Enable strict channel priority]' \
         '--no-channel-priority[Disable channel priority]' \
@@ -662,8 +656,8 @@ function _micromamba_repoquery_search {
         '--recursive[Show dependencies recursively, i.e. transitive dependencies (only for `depends`)]' \
         '--pretty[Pretty print result (only for search)]' \
         '--platform[The platform description]' \
-        '--local[Use installed prefix instead of remote repositories.]' \
-        '--rc-file[Paths to the configuration files to use]' \
+        '--local[Use installed prefix instead of remote repositories]' \
+        '--rc-file[Paths to the configuration files to use]':file:_files \
         '--no-rc[Disable the use of configuration files]' \
         '--no-env[Disable the use of environment variables]' \
         {-v,--verbose}'[Set verbosity (higher verbosity with multiple -v, e.g. -vvv)]' \
@@ -675,13 +669,13 @@ function _micromamba_repoquery_search {
         '--dry-run[Only display what would have been done]' \
         '--download-only[Only download and extract packages, do not link them into environment.]' \
         '--experimental[Enable experimental features]' \
-        {-r,--root-prefix}'[Path to the root prefix]' \
-        {-p,--prefix}'[Path to the target prefix]' \
-        '--relocate-prefix[Path to the relocation prefix]' \
+        {-r,--root-prefix}'[Path to the root prefix]':file:_files \
+        {-p,--prefix}'[Path to the target prefix]':file:_files \
+        '--relocate-prefix[Path to the relocation prefix]':file:_files \
         {-n,--name}'[Name of the target prefix]' \
-        '--ssl-verify[Verify SSL certificates for HTTPS requests]' \
+        '--ssl-verify[Verify SSL certificates for HTTPS requests]':file:_files \
         '--ssl-no-revoke[SSL certificate revocation checks]' \
-        '--cacert-path[Path (file or directory) SSL certificate(s)]' \
+        '--cacert-path[Path (file or directory) SSL certificate(s)]':file:_files \
         '--repodata-ttl[Repodata time-to-live]' \
         '--retry-clean-cache[If solve fails, try to fetch updated repodata]' \
         "*: :_files"
@@ -693,7 +687,7 @@ function _micromamba_repoquery_whoneeds {
         {-h,--help}'[Print this help message and exit]' \
         {-c,--channel}'[Define the list of channels]' \
         '--override-channels[Override channels]' \
-        '--channel-priority[in {disabled->0,flexible->1,strict->2} OR {0,1,2} Define the channel priority ('\''strict'\'' or '\''disabled'\'')]' \
+        '--channel-priority[Define the channel priority ('\''strict'\'' or '\''disabled'\'')]' \
         '--channel-alias[The prepended url location to associate with channel names]' \
         '--strict-channel-priority[Enable strict channel priority]' \
         '--no-channel-priority[Disable channel priority]' \
@@ -701,8 +695,8 @@ function _micromamba_repoquery_whoneeds {
         '--recursive[Show dependencies recursively, i.e. transitive dependencies (only for `depends`)]' \
         '--pretty[Pretty print result (only for search)]' \
         '--platform[The platform description]' \
-        '--remote[Use installed prefix instead of remote repositories.]' \
-        '--rc-file[Paths to the configuration files to use]' \
+        '--remote[Use remote repositories]' \
+        '--rc-file[Paths to the configuration files to use]':file:_files \
         '--no-rc[Disable the use of configuration files]' \
         '--no-env[Disable the use of environment variables]' \
         {-v,--verbose}'[Set verbosity (higher verbosity with multiple -v, e.g. -vvv)]' \
@@ -714,13 +708,13 @@ function _micromamba_repoquery_whoneeds {
         '--dry-run[Only display what would have been done]' \
         '--download-only[Only download and extract packages, do not link them into environment.]' \
         '--experimental[Enable experimental features]' \
-        {-r,--root-prefix}'[Path to the root prefix]' \
-        {-p,--prefix}'[Path to the target prefix]' \
-        '--relocate-prefix[Path to the relocation prefix]' \
+        {-r,--root-prefix}'[Path to the root prefix]':file:_files \
+        {-p,--prefix}'[Path to the target prefix]':file:_files \
+        '--relocate-prefix[Path to the relocation prefix]':file:_files \
         {-n,--name}'[Name of the target prefix]' \
-        '--ssl-verify[Verify SSL certificates for HTTPS requests]' \
+        '--ssl-verify[Verify SSL certificates for HTTPS requests]':file:_files \
         '--ssl-no-revoke[SSL certificate revocation checks]' \
-        '--cacert-path[Path (file or directory) SSL certificate(s)]' \
+        '--cacert-path[Path (file or directory) SSL certificate(s)]':file:_files \
         '--repodata-ttl[Repodata time-to-live]' \
         '--retry-clean-cache[If solve fails, try to fetch updated repodata]' \
         "*: :_files"
@@ -732,7 +726,7 @@ function _micromamba_repoquery_depends {
         {-h,--help}'[Print this help message and exit]' \
         {-c,--channel}'[Define the list of channels]' \
         '--override-channels[Override channels]' \
-        '--channel-priority[in {disabled->0,flexible->1,strict->2} OR {0,1,2} Define the channel priority ('\''strict'\'' or '\''disabled'\'')]' \
+        '--channel-priority[Define the channel priority ('\''strict'\'' or '\''disabled'\'')]' \
         '--channel-alias[The prepended url location to associate with channel names]' \
         '--strict-channel-priority[Enable strict channel priority]' \
         '--no-channel-priority[Disable channel priority]' \
@@ -740,8 +734,8 @@ function _micromamba_repoquery_depends {
         '--recursive[Show dependencies recursively, i.e. transitive dependencies (only for `depends`)]' \
         '--pretty[Pretty print result (only for search)]' \
         '--platform[The platform description]' \
-        '--remote[Use installed prefix instead of remote repositories.]' \
-        '--rc-file[Paths to the configuration files to use]' \
+        '--remote[Use remote repositories]' \
+        '--rc-file[Paths to the configuration files to use]':file:_files \
         '--no-rc[Disable the use of configuration files]' \
         '--no-env[Disable the use of environment variables]' \
         {-v,--verbose}'[Set verbosity (higher verbosity with multiple -v, e.g. -vvv)]' \
@@ -753,13 +747,13 @@ function _micromamba_repoquery_depends {
         '--dry-run[Only display what would have been done]' \
         '--download-only[Only download and extract packages, do not link them into environment.]' \
         '--experimental[Enable experimental features]' \
-        {-r,--root-prefix}'[Path to the root prefix]' \
-        {-p,--prefix}'[Path to the target prefix]' \
-        '--relocate-prefix[Path to the relocation prefix]' \
+        {-r,--root-prefix}'[Path to the root prefix]':file:_files \
+        {-p,--prefix}'[Path to the target prefix]':file:_files \
+        '--relocate-prefix[Path to the relocation prefix]':file:_files \
         {-n,--name}'[Name of the target prefix]' \
-        '--ssl-verify[Verify SSL certificates for HTTPS requests]' \
+        '--ssl-verify[Verify SSL certificates for HTTPS requests]':file:_files \
         '--ssl-no-revoke[SSL certificate revocation checks]' \
-        '--cacert-path[Path (file or directory) SSL certificate(s)]' \
+        '--cacert-path[Path (file or directory) SSL certificate(s)]':file:_files \
         '--repodata-ttl[Repodata time-to-live]' \
         '--retry-clean-cache[If solve fails, try to fetch updated repodata]' \
         "*: :_files"
@@ -770,7 +764,14 @@ function _micromamba_list {
     _arguments \
         {-h,--help}'[Print this help message and exit]' \
         {-f,--full-name}'[Only search for full names, i.e., ^<regex>$.]' \
-        '--rc-file[Paths to the configuration files to use]' \
+        '--no-pip[Do not include pip-only installed packages.]' \
+        '--reverse[List installed packages in reverse order.]' \
+        '--explicit[List explicitly all installed packages with URL. Ignored if --revisions is also provided.]' \
+        '--md5[Add MD5 hashsum when using --explicit]' \
+        {-c,--canonical}'[Output canonical names of packages only. Ignored if --revisions or --explicit is also provided.]' \
+        {-e,--export}'[Output explicit, machine-readable requirement strings instead of human-readable lists of packages. Ignored if --revisions, --explicit or --canonical is also provided.]' \
+        '--revisions[List the revision history.]' \
+        '--rc-file[Paths to the configuration files to use]':file:_files \
         '--no-rc[Disable the use of configuration files]' \
         '--no-env[Disable the use of environment variables]' \
         {-v,--verbose}'[Set verbosity (higher verbosity with multiple -v, e.g. -vvv)]' \
@@ -782,9 +783,9 @@ function _micromamba_list {
         '--dry-run[Only display what would have been done]' \
         '--download-only[Only download and extract packages, do not link them into environment.]' \
         '--experimental[Enable experimental features]' \
-        {-r,--root-prefix}'[Path to the root prefix]' \
-        {-p,--prefix}'[Path to the target prefix]' \
-        '--relocate-prefix[Path to the relocation prefix]' \
+        {-r,--root-prefix}'[Path to the root prefix]':file:_files \
+        {-p,--prefix}'[Path to the target prefix]':file:_files \
+        '--relocate-prefix[Path to the relocation prefix]':file:_files \
         {-n,--name}'[Name of the target prefix]' \
         "*: :_files"
 
@@ -793,7 +794,7 @@ function _micromamba_list {
 function _micromamba_package {
     _arguments \
         {-h,--help}'[Print this help message and exit]' \
-        '--rc-file[Paths to the configuration files to use]' \
+        '--rc-file[Paths to the configuration files to use]':file:_files \
         '--no-rc[Disable the use of configuration files]' \
         '--no-env[Disable the use of environment variables]' \
         {-v,--verbose}'[Set verbosity (higher verbosity with multiple -v, e.g. -vvv)]' \
@@ -819,7 +820,7 @@ function _micromamba_clean {
         {-l,--locks}'[Remove lock files from caches]' \
         '--trash[Remove *.mamba_trash files from all environments]' \
         {-f,--force-pkgs-dirs}'[Remove *all* writable package caches. This option is not included with the --all flags.]' \
-        '--rc-file[Paths to the configuration files to use]' \
+        '--rc-file[Paths to the configuration files to use]':file:_files \
         '--no-rc[Disable the use of configuration files]' \
         '--no-env[Disable the use of environment variables]' \
         {-v,--verbose}'[Set verbosity (higher verbosity with multiple -v, e.g. -vvv)]' \
@@ -858,7 +859,7 @@ function _micromamba_config {
 
     _arguments -C \
         {-h,--help}'[Print this help message and exit]' \
-        '--rc-file[Paths to the configuration files to use]' \
+        '--rc-file[Paths to the configuration files to use]':file:_files \
         '--no-rc[Disable the use of configuration files]' \
         '--no-env[Disable the use of environment variables]' \
         {-v,--verbose}'[Set verbosity (higher verbosity with multiple -v, e.g. -vvv)]' \
@@ -870,9 +871,9 @@ function _micromamba_config {
         '--dry-run[Only display what would have been done]' \
         '--download-only[Only download and extract packages, do not link them into environment.]' \
         '--experimental[Enable experimental features]' \
-        {-r,--root-prefix}'[Path to the root prefix]' \
-        {-p,--prefix}'[Path to the target prefix]' \
-        '--relocate-prefix[Path to the relocation prefix]' \
+        {-r,--root-prefix}'[Path to the root prefix]':file:_files \
+        {-p,--prefix}'[Path to the target prefix]':file:_files \
+        '--relocate-prefix[Path to the relocation prefix]':file:_files \
         {-n,--name}'[Name of the target prefix]' \
         ': :->cmd' \
         '*:: :->subcmd'
@@ -933,7 +934,7 @@ function _micromamba_config_list {
         {-s,--sources}'[Display all configs sources]' \
         {-a,--all}'[Display all rc configurable configs]' \
         {-d,--descriptions}'[Display configs descriptions]' \
-        '--rc-file[Paths to the configuration files to use]' \
+        '--rc-file[Paths to the configuration files to use]':file:_files \
         '--no-rc[Disable the use of configuration files]' \
         '--no-env[Disable the use of environment variables]' \
         {-v,--verbose}'[Set verbosity (higher verbosity with multiple -v, e.g. -vvv)]' \
@@ -945,9 +946,9 @@ function _micromamba_config_list {
         '--dry-run[Only display what would have been done]' \
         '--download-only[Only download and extract packages, do not link them into environment.]' \
         '--experimental[Enable experimental features]' \
-        {-r,--root-prefix}'[Path to the root prefix]' \
-        {-p,--prefix}'[Path to the target prefix]' \
-        '--relocate-prefix[Path to the relocation prefix]' \
+        {-r,--root-prefix}'[Path to the root prefix]':file:_files \
+        {-p,--prefix}'[Path to the target prefix]':file:_files \
+        '--relocate-prefix[Path to the relocation prefix]':file:_files \
         {-n,--name}'[Name of the target prefix]' \
         "*: :_files"
 
@@ -956,7 +957,7 @@ function _micromamba_config_list {
 function _micromamba_config_sources {
     _arguments \
         {-h,--help}'[Print this help message and exit]' \
-        '--rc-file[Paths to the configuration files to use]' \
+        '--rc-file[Paths to the configuration files to use]':file:_files \
         '--no-rc[Disable the use of configuration files]' \
         '--no-env[Disable the use of environment variables]' \
         {-v,--verbose}'[Set verbosity (higher verbosity with multiple -v, e.g. -vvv)]' \
@@ -968,9 +969,9 @@ function _micromamba_config_sources {
         '--dry-run[Only display what would have been done]' \
         '--download-only[Only download and extract packages, do not link them into environment.]' \
         '--experimental[Enable experimental features]' \
-        {-r,--root-prefix}'[Path to the root prefix]' \
-        {-p,--prefix}'[Path to the target prefix]' \
-        '--relocate-prefix[Path to the relocation prefix]' \
+        {-r,--root-prefix}'[Path to the root prefix]':file:_files \
+        {-p,--prefix}'[Path to the target prefix]':file:_files \
+        '--relocate-prefix[Path to the relocation prefix]':file:_files \
         {-n,--name}'[Name of the target prefix]' \
         "*: :_files"
 
@@ -985,88 +986,22 @@ function _micromamba_config_describe {
 
 }
 
-
 function _micromamba_config_prepend {
-    local line state
-
-    function _commands {
-        local -a commands
-        commands=(
-            'specs:\[TEXT,TEXT\] ... REQUIRED'
-        )
-        _describe 'command' commands
-    }
- 
-
-    _arguments -C \
+    _arguments \
         {-h,--help}'[Print this help message and exit]' \
         '--system[Set configuration on system'\''s rc file]':file:_files \
         '--env[Set configuration on env'\''s rc file]':file:_files \
         '--file[Set configuration on specified file]' \
-        ': :->cmd' \
-        '*:: :->subcmd'
-
-    case $state in
-    (cmd)
-        _commands
-        ;;
-    (subcmd)
-        case $line[1] in
-        (specs)
-            _micromamba_config_prepend_specs
-            ;;
-
-        esac
-        ;;
-     esac
-
-}
-
-function _micromamba_config_prepend_specs {
-    _arguments \
         "*: :_files"
 
 }
 
-
 function _micromamba_config_append {
-    local line state
-
-    function _commands {
-        local -a commands
-        commands=(
-            'specs:\[TEXT,TEXT\] ... REQUIRED'
-        )
-        _describe 'command' commands
-    }
- 
-
-    _arguments -C \
+    _arguments \
         {-h,--help}'[Print this help message and exit]' \
         '--system[Set configuration on system'\''s rc file]':file:_files \
         '--env[Set configuration on env'\''s rc file]':file:_files \
         '--file[Set configuration on specified file]' \
-        ': :->cmd' \
-        '*:: :->subcmd'
-
-    case $state in
-    (cmd)
-        _commands
-        ;;
-    (subcmd)
-        case $line[1] in
-        (specs)
-            _micromamba_config_append_specs
-            ;;
-
-        esac
-        ;;
-     esac
-
-}
-
-function _micromamba_config_append_specs {
-    _arguments \
         "*: :_files"
 
 }
@@ -1114,8 +1049,10 @@ function _micromamba_config_get {
 function _micromamba_info {
     _arguments \
         {-h,--help}'[Print this help message and exit]' \
-        '--licenses[Print licenses]' \
-        '--rc-file[Paths to the configuration files to use]' \
+        '--licenses[Print licenses.]' \
+        '--base[Display base environment path.]' \
+        {-e,--envs}'[List known environments.]' \
+        '--rc-file[Paths to the configuration files to use]':file:_files \
         '--no-rc[Disable the use of configuration files]' \
         '--no-env[Disable the use of environment variables]' \
         {-v,--verbose}'[Set verbosity (higher verbosity with multiple -v, e.g. -vvv)]' \
@@ -1127,9 +1064,9 @@ function _micromamba_info {
         '--dry-run[Only display what would have been done]' \
         '--download-only[Only download and extract packages, do not link them into environment.]' \
         '--experimental[Enable experimental features]' \
-        {-r,--root-prefix}'[Path to the root prefix]' \
-        {-p,--prefix}'[Path to the target prefix]' \
-        '--relocate-prefix[Path to the relocation prefix]' \
+        {-r,--root-prefix}'[Path to the root prefix]':file:_files \
+        {-p,--prefix}'[Path to the target prefix]':file:_files \
+        '--relocate-prefix[Path to the relocation prefix]':file:_files \
         {-n,--name}'[Name of the target prefix]' \
         "*: :_files"
 
@@ -1138,7 +1075,7 @@ function _micromamba_info {
 function _micromamba_constructor {
     _arguments \
         {-h,--help}'[Print this help message and exit]' \
-        {-p,--prefix}'[Extract the conda pkgs in <prefix>/pkgs]' \
+        {-p,--prefix}'[Extract the conda pkgs in <prefix>/pkgs]':file:_files \
         '--extract-conda-pkgs[Extract the conda pkgs in <prefix>/pkgs]' \
         '--extract-tarball[Extract given tarball into prefix]' \
         "*: :_files"
@@ -1164,7 +1101,7 @@ function _micromamba_env {
 
     _arguments -C \
         {-h,--help}'[Print this help message and exit]' \
-        '--rc-file[Paths to the configuration files to use]' \
+        '--rc-file[Paths to the configuration files to use]':file:_files \
         '--no-rc[Disable the use of configuration files]' \
         '--no-env[Disable the use of environment variables]' \
         {-v,--verbose}'[Set verbosity (higher verbosity with multiple -v, e.g. -vvv)]' \
@@ -1176,9 +1113,9 @@ function _micromamba_env {
         '--dry-run[Only display what would have been done]' \
         '--download-only[Only download and extract packages, do not link them into environment.]' \
         '--experimental[Enable experimental features]' \
-        {-r,--root-prefix}'[Path to the root prefix]' \
-        {-p,--prefix}'[Path to the target prefix]' \
-        '--relocate-prefix[Path to the relocation prefix]' \
+        {-r,--root-prefix}'[Path to the root prefix]':file:_files \
+        {-p,--prefix}'[Path to the target prefix]':file:_files \
+        '--relocate-prefix[Path to the relocation prefix]':file:_files \
         {-n,--name}'[Name of the target prefix]' \
         ': :->cmd' \
         '*:: :->subcmd'
@@ -1218,7 +1155,7 @@ function _micromamba_env {
 function _micromamba_env_list {
     _arguments \
         {-h,--help}'[Print this help message and exit]' \
-        '--rc-file[Paths to the configuration files to use]' \
+        '--rc-file[Paths to the configuration files to use]':file:_files \
         '--no-rc[Disable the use of configuration files]' \
         '--no-env[Disable the use of environment variables]' \
         {-v,--verbose}'[Set verbosity (higher verbosity with multiple -v, e.g. -vvv)]' \
@@ -1230,9 +1167,9 @@ function _micromamba_env_list {
         '--dry-run[Only display what would have been done]' \
         '--download-only[Only download and extract packages, do not link them into environment.]' \
         '--experimental[Enable experimental features]' \
-        {-r,--root-prefix}'[Path to the root prefix]' \
-        {-p,--prefix}'[Path to the target prefix]' \
-        '--relocate-prefix[Path to the relocation prefix]' \
+        {-r,--root-prefix}'[Path to the root prefix]':file:_files \
+        {-p,--prefix}'[Path to the target prefix]':file:_files \
+        '--relocate-prefix[Path to the relocation prefix]':file:_files \
         {-n,--name}'[Name of the target prefix]' \
         "*: :_files"
 
@@ -1247,7 +1184,7 @@ function _micromamba_env_create {
         '--channel-alias[The prepended url location to associate with channel names]' \
         '--strict-channel-priority[Enable strict channel priority]' \
         '--no-channel-priority[Disable channel priority]' \
-        {-f,--file}'[File (yaml, explicit or plain)]' \
+        {-f,--file}'[File (yaml, explicit or plain)]':file:_files \
         {--no-pin,--pin}'[Ignore pinned packages]' \
         {--no-py-pin,--py-pin}'[Do not automatically pin Python]' \
         {--pyc,--no-pyc}'[Defines if PYC files will be compiled or not]' \
@@ -1267,7 +1204,7 @@ function _micromamba_env_create {
         '--no-deps[Do not install dependencies. This WILL lead to broken environments and inconsistent behavior. Use at your own risk]' \
         '--only-deps[Only install dependencies]' \
         '--category[Categories of package to install from environment lockfile]' \
-        '--rc-file[Paths to the configuration files to use]' \
+        '--rc-file[Paths to the configuration files to use]':file:_files \
         '--no-rc[Disable the use of configuration files]' \
         '--no-env[Disable the use of environment variables]' \
         {-v,--verbose}'[Set verbosity (higher verbosity with multiple -v, e.g. -vvv)]' \
@@ -1279,13 +1216,13 @@ function _micromamba_env_create {
         '--dry-run[Only display what would have been done]' \
         '--download-only[Only download and extract packages, do not link them into environment.]' \
         '--experimental[Enable experimental features]' \
-        {-r,--root-prefix}'[Path to the root prefix]' \
-        {-p,--prefix}'[Path to the target prefix]' \
-        '--relocate-prefix[Path to the relocation prefix]' \
+        {-r,--root-prefix}'[Path to the root prefix]':file:_files \
+        {-p,--prefix}'[Path to the target prefix]':file:_files \
+        '--relocate-prefix[Path to the relocation prefix]':file:_files \
         {-n,--name}'[Name of the target prefix]' \
-        '--ssl-verify[Verify SSL certificates for HTTPS requests]' \
+        '--ssl-verify[Verify SSL certificates for HTTPS requests]':file:_files \
         '--ssl-no-revoke[SSL certificate revocation checks]' \
-        '--cacert-path[Path (file or directory) SSL certificate(s)]' \
+        '--cacert-path[Path (file or directory) SSL certificate(s)]':file:_files \
         '--repodata-ttl[Repodata time-to-live]' \
         '--retry-clean-cache[If solve fails, try to fetch updated repodata]' \
         "*: :_files"
@@ -1300,7 +1237,7 @@ function _micromamba_env_export {
         {--no-build,--no-builds,--build}'[Disable the build string in spec]' \
         '--channel-subdir[Enable channel/subdir in spec]' \
         '--from-history[Build environment spec from explicit specs in history]' \
-        '--rc-file[Paths to the configuration files to use]' \
+        '--rc-file[Paths to the configuration files to use]':file:_files \
         '--no-rc[Disable the use of configuration files]' \
         '--no-env[Disable the use of environment variables]' \
         {-v,--verbose}'[Set verbosity (higher verbosity with multiple -v, e.g. -vvv)]' \
@@ -1312,9 +1249,9 @@ function _micromamba_env_export {
         '--dry-run[Only display what would have been done]' \
         '--download-only[Only download and extract packages, do not link them into environment.]' \
         '--experimental[Enable experimental features]' \
-        {-r,--root-prefix}'[Path to the root prefix]' \
-        {-p,--prefix}'[Path to the target prefix]' \
-        '--relocate-prefix[Path to the relocation prefix]' \
+        {-r,--root-prefix}'[Path to the root prefix]':file:_files \
+        {-p,--prefix}'[Path to the target prefix]':file:_files \
+        '--relocate-prefix[Path to the relocation prefix]':file:_files \
         {-n,--name}'[Name of the target prefix]' \
         "*: :_files"
 
@@ -1323,7 +1260,7 @@ function _micromamba_env_export {
 function _micromamba_env_remove {
     _arguments \
         {-h,--help}'[Print this help message and exit]' \
-        '--rc-file[Paths to the configuration files to use]' \
+        '--rc-file[Paths to the configuration files to use]':file:_files \
         '--no-rc[Disable the use of configuration files]' \
         '--no-env[Disable the use of environment variables]' \
         {-v,--verbose}'[Set verbosity (higher verbosity with multiple -v, e.g. -vvv)]' \
@@ -1335,9 +1272,9 @@ function _micromamba_env_remove {
         '--dry-run[Only display what would have been done]' \
         '--download-only[Only download and extract packages, do not link them into environment.]' \
         '--experimental[Enable experimental features]' \
-        {-r,--root-prefix}'[Path to the root prefix]' \
-        {-p,--prefix}'[Path to the target prefix]' \
-        '--relocate-prefix[Path to the relocation prefix]' \
+        {-r,--root-prefix}'[Path to the root prefix]':file:_files \
+        {-p,--prefix}'[Path to the target prefix]':file:_files \
+        '--relocate-prefix[Path to the relocation prefix]':file:_files \
         {-n,--name}'[Name of the target prefix]' \
         "*: :_files"
 
@@ -1346,9 +1283,9 @@ function _micromamba_env_remove {
 function _micromamba_env_update {
     _arguments \
         {-h,--help}'[Print this help message and exit]' \
-        {-f,--file}'[File (yaml, explicit or plain)]' \
+        {-f,--file}'[File (yaml, explicit or plain)]':file:_files \
         '--prune[Remove installed packages not specified in the command and in environment file]' \
-        '--rc-file[Paths to the configuration files to use]' \
+        '--rc-file[Paths to the configuration files to use]':file:_files \
         '--no-rc[Disable the use of configuration files]' \
         '--no-env[Disable the use of environment variables]' \
         {-v,--verbose}'[Set verbosity (higher verbosity with multiple -v, e.g. -vvv)]' \
@@ -1360,9 +1297,9 @@ function _micromamba_env_update {
         '--dry-run[Only display what would have been done]' \
         '--download-only[Only download and extract packages, do not link them into environment.]' \
         '--experimental[Enable experimental features]' \
-        {-r,--root-prefix}'[Path to the root prefix]' \
-        {-p,--prefix}'[Path to the target prefix]' \
-        '--relocate-prefix[Path to the relocation prefix]' \
+        {-r,--root-prefix}'[Path to the root prefix]':file:_files \
+        {-p,--prefix}'[Path to the target prefix]':file:_files \
+        '--relocate-prefix[Path to the relocation prefix]':file:_files \
         {-n,--name}'[Name of the target prefix]' \
         "*: :_files"
 
@@ -1380,14 +1317,14 @@ function _micromamba_run {
     _arguments \
         {-h,--help}'[Print this help message and exit]' \
         {-a,--attach}'[Attach to stdin, stdout and/or stderr. -a "" for disabling stream redirection]' \
-        '--cwd[Current working directory for command to run in. Defaults to cwd]' \
+        '--cwd[Current working directory for command to run in. Defaults to cwd]':file:_files \
         {-d,--detach}'[Detach process from terminal]' \
         '--clean-env[Start with a clean environment]' \
         {-e,--env}'[Add env vars with -e ENVVAR or -e ENVVAR=VALUE]' \
         '--label[Specifies the name of the process. If not set, a unique name will be generated derived from the executable name if possible.]' \
-        {-r,--root-prefix}'[Path to the root prefix]' \
-        {-p,--prefix}'[Path to the target prefix]' \
-        '--relocate-prefix[Path to the relocation prefix]' \
+        {-r,--root-prefix}'[Path to the root prefix]':file:_files \
+        {-p,--prefix}'[Path to the target prefix]':file:_files \
+        '--relocate-prefix[Path to the relocation prefix]':file:_files \
         {-n,--name}'[Name of the target prefix]' \
         "*: :_files"
 
@@ -1474,8 +1411,8 @@ function _micromamba_search {
         '--recursive[Show dependencies recursively, i.e. transitive dependencies (only for `depends`)]' \
         '--pretty[Pretty print result (only for search)]' \
         '--platform[The platform description]' \
-        '--local[Use installed prefix instead of remote repositories.]' \
-        '--rc-file[Paths to the configuration files to use]' \
+        '--local[Use installed prefix instead of remote repositories]' \
+        '--rc-file[Paths to the configuration files to use]':file:_files \
         '--no-rc[Disable the use of configuration files]' \
         '--no-env[Disable the use of environment variables]' \
         {-v,--verbose}'[Set verbosity (higher verbosity with multiple -v, e.g. -vvv)]' \
@@ -1487,13 +1424,13 @@ function _micromamba_search {
         '--dry-run[Only display what would have been done]' \
         '--download-only[Only download and extract packages, do not link them into environment.]' \
         '--experimental[Enable experimental features]' \
-        {-r,--root-prefix}'[Path to the root prefix]' \
-        {-p,--prefix}'[Path to the target prefix]' \
-        '--relocate-prefix[Path to the relocation prefix]' \
+        {-r,--root-prefix}'[Path to the root prefix]':file:_files \
+        {-p,--prefix}'[Path to the target prefix]':file:_files \
+        '--relocate-prefix[Path to the relocation prefix]':file:_files \
         {-n,--name}'[Name of the target prefix]' \
-        '--ssl-verify[Verify SSL certificates for HTTPS requests]' \
+        '--ssl-verify[Verify SSL certificates for HTTPS requests]':file:_files \
         '--ssl-no-revoke[SSL certificate revocation checks]' \
-        '--cacert-path[Path (file or directory) SSL certificate(s)]' \
+        '--cacert-path[Path (file or directory) SSL certificate(s)]':file:_files \
         '--repodata-ttl[Repodata time-to-live]' \
         '--retry-clean-cache[If solve fails, try to fetch updated repodata]' \
         "*: :_files"
