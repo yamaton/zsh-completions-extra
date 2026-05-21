@@ -20,6 +20,7 @@ function _uv {
             'export:Export the project'\''s lockfile to an alternate format'
             'tree:Display the project'\''s dependency tree'
             'format:Format Python code in the project'
+            'audit:Audit the project'\''s dependencies'
             'tool:Run and install commands provided by Python packages'
             'python:Manage Python versions and installations'
             'pip:Manage Python packages with a pip-compatible interface'
@@ -41,7 +42,7 @@ function _uv {
         '--no-managed-python[Disable use of uv-managed Python versions \[env: UV_NO_MANAGED_PYTHON=\]]' \
         '--no-python-downloads[Disable automatic downloads of Python. \[env: "UV_PYTHON_DOWNLOADS=never"\]]' \
         '--color[Control the use of color in output \[possible values: auto, always, never\]]' \
-        '--native-tls[Whether to load TLS certificates from the platform'\''s native store \[env: UV_NATIVE_TLS=\]]' \
+        '--system-certs[Whether to load TLS certificates from the platform'\''s native certificate store \[env: UV_SYSTEM_CERTS=\]]' \
         '--offline[Disable network access \[env: UV_OFFLINE=\]]' \
         '--allow-insecure-host[Allow insecure connections to a host \[env: UV_INSECURE_HOST=\]]' \
         '--no-progress[Hide all progress outputs \[env: UV_NO_PROGRESS=\]]' \
@@ -102,6 +103,10 @@ function _uv {
 
         (format)
             _uv_format
+            ;;
+
+        (audit)
+            _uv_audit
             ;;
 
         (tool)
@@ -169,7 +174,7 @@ function _uv_auth {
         '--no-managed-python[Disable use of uv-managed Python versions \[env: UV_NO_MANAGED_PYTHON=\]]' \
         '--no-python-downloads[Disable automatic downloads of Python. \[env: "UV_PYTHON_DOWNLOADS=never"\]]' \
         '--color[Control the use of color in output \[possible values: auto, always, never\]]' \
-        '--native-tls[Whether to load TLS certificates from the platform'\''s native store \[env: UV_NATIVE_TLS=\]]' \
+        '--system-certs[Whether to load TLS certificates from the platform'\''s native certificate store \[env: UV_SYSTEM_CERTS=\]]' \
         '--offline[Disable network access \[env: UV_OFFLINE=\]]' \
         '--allow-insecure-host[Allow insecure connections to a host \[env: UV_INSECURE_HOST=\]]' \
         '--no-progress[Hide all progress outputs \[env: UV_NO_PROGRESS=\]]' \
@@ -221,7 +226,7 @@ function _uv_auth_login {
         '--no-managed-python[Disable use of uv-managed Python versions \[env: UV_NO_MANAGED_PYTHON=\]]' \
         '--no-python-downloads[Disable automatic downloads of Python. \[env: "UV_PYTHON_DOWNLOADS=never"\]]' \
         '--color[Control the use of color in output \[possible values: auto, always, never\]]' \
-        '--native-tls[Whether to load TLS certificates from the platform'\''s native store \[env: UV_NATIVE_TLS=\]]' \
+        '--system-certs[Whether to load TLS certificates from the platform'\''s native certificate store \[env: UV_SYSTEM_CERTS=\]]' \
         '--offline[Disable network access \[env: UV_OFFLINE=\]]' \
         '--allow-insecure-host[Allow insecure connections to a host \[env: UV_INSECURE_HOST=\]]' \
         '--no-progress[Hide all progress outputs \[env: UV_NO_PROGRESS=\]]' \
@@ -244,7 +249,7 @@ function _uv_auth_logout {
         '--no-managed-python[Disable use of uv-managed Python versions \[env: UV_NO_MANAGED_PYTHON=\]]' \
         '--no-python-downloads[Disable automatic downloads of Python. \[env: "UV_PYTHON_DOWNLOADS=never"\]]' \
         '--color[Control the use of color in output \[possible values: auto, always, never\]]' \
-        '--native-tls[Whether to load TLS certificates from the platform'\''s native store \[env: UV_NATIVE_TLS=\]]' \
+        '--system-certs[Whether to load TLS certificates from the platform'\''s native certificate store \[env: UV_SYSTEM_CERTS=\]]' \
         '--offline[Disable network access \[env: UV_OFFLINE=\]]' \
         '--allow-insecure-host[Allow insecure connections to a host \[env: UV_INSECURE_HOST=\]]' \
         '--no-progress[Hide all progress outputs \[env: UV_NO_PROGRESS=\]]' \
@@ -267,7 +272,7 @@ function _uv_auth_token {
         '--no-managed-python[Disable use of uv-managed Python versions \[env: UV_NO_MANAGED_PYTHON=\]]' \
         '--no-python-downloads[Disable automatic downloads of Python. \[env: "UV_PYTHON_DOWNLOADS=never"\]]' \
         '--color[Control the use of color in output \[possible values: auto, always, never\]]' \
-        '--native-tls[Whether to load TLS certificates from the platform'\''s native store \[env: UV_NATIVE_TLS=\]]' \
+        '--system-certs[Whether to load TLS certificates from the platform'\''s native certificate store \[env: UV_SYSTEM_CERTS=\]]' \
         '--offline[Disable network access \[env: UV_OFFLINE=\]]' \
         '--allow-insecure-host[Allow insecure connections to a host \[env: UV_INSECURE_HOST=\]]' \
         '--no-progress[Hide all progress outputs \[env: UV_NO_PROGRESS=\]]' \
@@ -288,7 +293,7 @@ function _uv_auth_dir {
         '--no-managed-python[Disable use of uv-managed Python versions \[env: UV_NO_MANAGED_PYTHON=\]]' \
         '--no-python-downloads[Disable automatic downloads of Python. \[env: "UV_PYTHON_DOWNLOADS=never"\]]' \
         '--color[Control the use of color in output \[possible values: auto, always, never\]]' \
-        '--native-tls[Whether to load TLS certificates from the platform'\''s native store \[env: UV_NATIVE_TLS=\]]' \
+        '--system-certs[Whether to load TLS certificates from the platform'\''s native certificate store \[env: UV_SYSTEM_CERTS=\]]' \
         '--offline[Disable network access \[env: UV_OFFLINE=\]]' \
         '--allow-insecure-host[Allow insecure connections to a host \[env: UV_INSECURE_HOST=\]]' \
         '--no-progress[Hide all progress outputs \[env: UV_NO_PROGRESS=\]]' \
@@ -330,18 +335,19 @@ function _uv_run {
         '--gui-script[Run the given path as a Python GUI script]' \
         '--all-packages[Run the command with all workspace members installed]' \
         '--package[Run the command in a specific package in the workspace]' \
-        '--no-project[Avoid discovering the project or workspace]' \
+        '--no-project[Avoid discovering the project or workspace \[env: UV_NO_PROJECT=\]]' \
         '--python-platform[The platform for which requirements should be installed \[possible values: windows, linux, macos, x86_64-pc-windows-msvc, aarch64-pc-windows-msvc, i686-pc-windows-msvc, x86_64-unknown-linux-gnu, aarch64-apple-darwin, x86_64-apple-darwin, aarch64-unknown-linux-gnu, aarch64-unknown-linux-musl, x86_64-unknown-linux-musl, riscv64-unknown-linux, x86_64-manylinux2014, x86_64-manylinux_2_17, x86_64-manylinux_2_28, x86_64-manylinux_2_31, x86_64-manylinux_2_32, x86_64-manylinux_2_33, x86_64-manylinux_2_34, x86_64-manylinux_2_35, x86_64-manylinux_2_36, x86_64-manylinux_2_37, x86_64-manylinux_2_38, x86_64-manylinux_2_39, x86_64-manylinux_2_40, aarch64-manylinux2014, aarch64-manylinux_2_17, aarch64-manylinux_2_28, aarch64-manylinux_2_31, aarch64-manylinux_2_32, aarch64-manylinux_2_33, aarch64-manylinux_2_34, aarch64-manylinux_2_35, aarch64-manylinux_2_36, aarch64-manylinux_2_37, aarch64-manylinux_2_38, aarch64-manylinux_2_39, aarch64-manylinux_2_40, aarch64-linux-android, x86_64-linux-android, wasm32-pyodide2024, arm64-apple-ios, arm64-apple-ios-simulator, x86_64-apple-ios-simulator\]]' \
-        '--index[The URLs to use when resolving dependencies, in addition to the default index \[env: UV_INDEX=\]]' \
-        '--default-index[The URL of the default package index (by default: <https://pypi.org/simple>) \[env: UV_DEFAULT_INDEX=\]]' \
-        {-i,--index-url}'[(Deprecated: use `--default-index` instead) The URL of the Python package index (by default: <https://pypi.org/simple>) \[env: UV_INDEX_URL=\]]' \
-        '--extra-index-url[(Deprecated: use `--index` instead) Extra URLs of package indexes to use, in addition to `--index-url` \[env: UV_EXTRA_INDEX_URL=\]]' \
-        {-f,--find-links}'[Locations to search for candidate distributions, in addition to those found in the registry indexes \[env: UV_FIND_LINKS=\]]' \
+        '--index[The URLs to use when resolving dependencies, in addition to the default index \[env: UV_INDEX\]]' \
+        '--default-index[The URL of the default package index (by default: <https://pypi.org/simple>) \[env: UV_DEFAULT_INDEX\]]' \
+        {-i,--index-url}'[(Deprecated: use `--default-index` instead) The URL of the Python package index (by default: <https://pypi.org/simple>) \[env: UV_INDEX_URL\]]' \
+        '--extra-index-url[(Deprecated: use `--index` instead) Extra URLs of package indexes to use, in addition to `--index-url` \[env: UV_EXTRA_INDEX_URL\]]' \
+        {-f,--find-links}'[Locations to search for candidate distributions, in addition to those found in the registry indexes \[env: UV_FIND_LINKS\]]' \
         '--no-index[Ignore the registry index (e.g., PyPI), instead relying on direct URL dependencies and those provided via `--find-links`]' \
         '--index-strategy[The strategy to use when resolving against multiple index URLs \[env: UV_INDEX_STRATEGY=\] \[possible values: first-index, unsafe-first-match, unsafe-best-match\]]' \
         '--keyring-provider[Attempt to use `keyring` for authentication for index URLs \[env: UV_KEYRING_PROVIDER=\] \[possible values: disabled, subprocess\]]' \
         {-U,--upgrade}'[Allow package upgrades, ignoring pinned versions in any existing output file. Implies `--refresh`]' \
         {-P,--upgrade-package}'[Allow upgrades for a specific package, ignoring pinned versions in any existing output file. Implies `--refresh-package`]' \
+        '--upgrade-group[Allow upgrades for all packages in a dependency group, ignoring pinned versions in any existing output file]' \
         '--resolution[The strategy to use when selecting between the different compatible versions for a given package requirement \[env: UV_RESOLUTION=\] \[possible values: highest, lowest, lowest-direct\]]' \
         '--prerelease[The strategy to use when considering pre-release versions \[env: UV_PRERELEASE=\] \[possible values: disallow, allow, if-necessary, explicit, if-necessary-or-explicit\]]' \
         '--fork-strategy[The strategy to use when selecting multiple versions of a given package across Python versions and platforms \[env: UV_FORK_STRATEGY=\] \[possible values: fewest, requires-python\]]' \
@@ -370,7 +376,7 @@ function _uv_run {
         '--no-managed-python[Disable use of uv-managed Python versions \[env: UV_NO_MANAGED_PYTHON=\]]' \
         '--no-python-downloads[Disable automatic downloads of Python. \[env: "UV_PYTHON_DOWNLOADS=never"\]]' \
         '--color[Control the use of color in output \[possible values: auto, always, never\]]' \
-        '--native-tls[Whether to load TLS certificates from the platform'\''s native store \[env: UV_NATIVE_TLS=\]]' \
+        '--system-certs[Whether to load TLS certificates from the platform'\''s native certificate store \[env: UV_SYSTEM_CERTS=\]]' \
         '--offline[Disable network access \[env: UV_OFFLINE=\]]' \
         '--allow-insecure-host[Allow insecure connections to a host \[env: UV_INSECURE_HOST=\]]' \
         '--no-progress[Hide all progress outputs \[env: UV_NO_PROGRESS=\]]' \
@@ -407,7 +413,7 @@ function _uv_init {
         {-n,--no-cache}'[Avoid reading from or writing to the cache, instead using a temporary directory for the duration of the operation \[env: UV_NO_CACHE=\]]' \
         '--cache-dir[Path to the cache directory \[env: UV_CACHE_DIR=\]]':file:_files \
         '--color[Control the use of color in output \[possible values: auto, always, never\]]' \
-        '--native-tls[Whether to load TLS certificates from the platform'\''s native store \[env: UV_NATIVE_TLS=\]]' \
+        '--system-certs[Whether to load TLS certificates from the platform'\''s native certificate store \[env: UV_SYSTEM_CERTS=\]]' \
         '--offline[Disable network access \[env: UV_OFFLINE=\]]' \
         '--allow-insecure-host[Allow insecure connections to a host \[env: UV_INSECURE_HOST=\]]' \
         '--no-progress[Hide all progress outputs \[env: UV_NO_PROGRESS=\]]' \
@@ -448,16 +454,17 @@ function _uv_add {
         '--no-install-workspace[Do not install any workspace members, including the current project]' \
         '--no-install-local[Do not install local path dependencies]' \
         '--no-install-package[Do not install the given package(s)]' \
-        '--index[The URLs to use when resolving dependencies, in addition to the default index \[env: UV_INDEX=\]]' \
-        '--default-index[The URL of the default package index (by default: <https://pypi.org/simple>) \[env: UV_DEFAULT_INDEX=\]]' \
-        {-i,--index-url}'[(Deprecated: use `--default-index` instead) The URL of the Python package index (by default: <https://pypi.org/simple>) \[env: UV_INDEX_URL=\]]' \
-        '--extra-index-url[(Deprecated: use `--index` instead) Extra URLs of package indexes to use, in addition to `--index-url` \[env: UV_EXTRA_INDEX_URL=\]]' \
-        {-f,--find-links}'[Locations to search for candidate distributions, in addition to those found in the registry indexes \[env: UV_FIND_LINKS=\]]' \
+        '--index[The URLs to use when resolving dependencies, in addition to the default index \[env: UV_INDEX\]]' \
+        '--default-index[The URL of the default package index (by default: <https://pypi.org/simple>) \[env: UV_DEFAULT_INDEX\]]' \
+        {-i,--index-url}'[(Deprecated: use `--default-index` instead) The URL of the Python package index (by default: <https://pypi.org/simple>) \[env: UV_INDEX_URL\]]' \
+        '--extra-index-url[(Deprecated: use `--index` instead) Extra URLs of package indexes to use, in addition to `--index-url` \[env: UV_EXTRA_INDEX_URL\]]' \
+        {-f,--find-links}'[Locations to search for candidate distributions, in addition to those found in the registry indexes \[env: UV_FIND_LINKS\]]' \
         '--no-index[Ignore the registry index (e.g., PyPI), instead relying on direct URL dependencies and those provided via `--find-links`]' \
         '--index-strategy[The strategy to use when resolving against multiple index URLs \[env: UV_INDEX_STRATEGY=\] \[possible values: first-index, unsafe-first-match, unsafe-best-match\]]' \
         '--keyring-provider[Attempt to use `keyring` for authentication for index URLs \[env: UV_KEYRING_PROVIDER=\] \[possible values: disabled, subprocess\]]' \
         {-U,--upgrade}'[Allow package upgrades, ignoring pinned versions in any existing output file. Implies `--refresh`]' \
         {-P,--upgrade-package}'[Allow upgrades for a specific package, ignoring pinned versions in any existing output file. Implies `--refresh-package`]' \
+        '--upgrade-group[Allow upgrades for all packages in a dependency group, ignoring pinned versions in any existing output file]' \
         '--resolution[The strategy to use when selecting between the different compatible versions for a given package requirement \[env: UV_RESOLUTION=\] \[possible values: highest, lowest, lowest-direct\]]' \
         '--prerelease[The strategy to use when considering pre-release versions \[env: UV_PRERELEASE=\] \[possible values: disallow, allow, if-necessary, explicit, if-necessary-or-explicit\]]' \
         '--fork-strategy[The strategy to use when selecting multiple versions of a given package across Python versions and platforms \[env: UV_FORK_STRATEGY=\] \[possible values: fewest, requires-python\]]' \
@@ -486,7 +493,7 @@ function _uv_add {
         '--no-managed-python[Disable use of uv-managed Python versions \[env: UV_NO_MANAGED_PYTHON=\]]' \
         '--no-python-downloads[Disable automatic downloads of Python. \[env: "UV_PYTHON_DOWNLOADS=never"\]]' \
         '--color[Control the use of color in output \[possible values: auto, always, never\]]' \
-        '--native-tls[Whether to load TLS certificates from the platform'\''s native store \[env: UV_NATIVE_TLS=\]]' \
+        '--system-certs[Whether to load TLS certificates from the platform'\''s native certificate store \[env: UV_SYSTEM_CERTS=\]]' \
         '--offline[Disable network access \[env: UV_OFFLINE=\]]' \
         '--allow-insecure-host[Allow insecure connections to a host \[env: UV_INSECURE_HOST=\]]' \
         '--no-progress[Hide all progress outputs \[env: UV_NO_PROGRESS=\]]' \
@@ -510,16 +517,17 @@ function _uv_remove {
         '--frozen[Remove dependencies without re-locking the project \[env: UV_FROZEN=\]]' \
         '--package[Remove the dependencies from a specific package in the workspace]' \
         '--script[Remove the dependency from the specified Python script, rather than from a project]' \
-        '--index[The URLs to use when resolving dependencies, in addition to the default index \[env: UV_INDEX=\]]' \
-        '--default-index[The URL of the default package index (by default: <https://pypi.org/simple>) \[env: UV_DEFAULT_INDEX=\]]' \
-        {-i,--index-url}'[(Deprecated: use `--default-index` instead) The URL of the Python package index (by default: <https://pypi.org/simple>) \[env: UV_INDEX_URL=\]]' \
-        '--extra-index-url[(Deprecated: use `--index` instead) Extra URLs of package indexes to use, in addition to `--index-url` \[env: UV_EXTRA_INDEX_URL=\]]' \
-        {-f,--find-links}'[Locations to search for candidate distributions, in addition to those found in the registry indexes \[env: UV_FIND_LINKS=\]]' \
+        '--index[The URLs to use when resolving dependencies, in addition to the default index \[env: UV_INDEX\]]' \
+        '--default-index[The URL of the default package index (by default: <https://pypi.org/simple>) \[env: UV_DEFAULT_INDEX\]]' \
+        {-i,--index-url}'[(Deprecated: use `--default-index` instead) The URL of the Python package index (by default: <https://pypi.org/simple>) \[env: UV_INDEX_URL\]]' \
+        '--extra-index-url[(Deprecated: use `--index` instead) Extra URLs of package indexes to use, in addition to `--index-url` \[env: UV_EXTRA_INDEX_URL\]]' \
+        {-f,--find-links}'[Locations to search for candidate distributions, in addition to those found in the registry indexes \[env: UV_FIND_LINKS\]]' \
         '--no-index[Ignore the registry index (e.g., PyPI), instead relying on direct URL dependencies and those provided via `--find-links`]' \
         '--index-strategy[The strategy to use when resolving against multiple index URLs \[env: UV_INDEX_STRATEGY=\] \[possible values: first-index, unsafe-first-match, unsafe-best-match\]]' \
         '--keyring-provider[Attempt to use `keyring` for authentication for index URLs \[env: UV_KEYRING_PROVIDER=\] \[possible values: disabled, subprocess\]]' \
         {-U,--upgrade}'[Allow package upgrades, ignoring pinned versions in any existing output file. Implies `--refresh`]' \
         {-P,--upgrade-package}'[Allow upgrades for a specific package, ignoring pinned versions in any existing output file. Implies `--refresh-package`]' \
+        '--upgrade-group[Allow upgrades for all packages in a dependency group, ignoring pinned versions in any existing output file]' \
         '--resolution[The strategy to use when selecting between the different compatible versions for a given package requirement \[env: UV_RESOLUTION=\] \[possible values: highest, lowest, lowest-direct\]]' \
         '--prerelease[The strategy to use when considering pre-release versions \[env: UV_PRERELEASE=\] \[possible values: disallow, allow, if-necessary, explicit, if-necessary-or-explicit\]]' \
         '--fork-strategy[The strategy to use when selecting multiple versions of a given package across Python versions and platforms \[env: UV_FORK_STRATEGY=\] \[possible values: fewest, requires-python\]]' \
@@ -548,7 +556,7 @@ function _uv_remove {
         '--no-managed-python[Disable use of uv-managed Python versions \[env: UV_NO_MANAGED_PYTHON=\]]' \
         '--no-python-downloads[Disable automatic downloads of Python. \[env: "UV_PYTHON_DOWNLOADS=never"\]]' \
         '--color[Control the use of color in output \[possible values: auto, always, never\]]' \
-        '--native-tls[Whether to load TLS certificates from the platform'\''s native store \[env: UV_NATIVE_TLS=\]]' \
+        '--system-certs[Whether to load TLS certificates from the platform'\''s native certificate store \[env: UV_SYSTEM_CERTS=\]]' \
         '--offline[Disable network access \[env: UV_OFFLINE=\]]' \
         '--allow-insecure-host[Allow insecure connections to a host \[env: UV_INSECURE_HOST=\]]' \
         '--no-progress[Hide all progress outputs \[env: UV_NO_PROGRESS=\]]' \
@@ -572,16 +580,17 @@ function _uv_version {
         '--locked[Assert that the `uv.lock` will remain unchanged \[env: UV_LOCKED=\]]' \
         '--frozen[Update the version without re-locking the project \[env: UV_FROZEN=\]]' \
         '--package[Update the version of a specific package in the workspace]' \
-        '--index[The URLs to use when resolving dependencies, in addition to the default index \[env: UV_INDEX=\]]' \
-        '--default-index[The URL of the default package index (by default: <https://pypi.org/simple>) \[env: UV_DEFAULT_INDEX=\]]' \
-        {-i,--index-url}'[(Deprecated: use `--default-index` instead) The URL of the Python package index (by default: <https://pypi.org/simple>) \[env: UV_INDEX_URL=\]]' \
-        '--extra-index-url[(Deprecated: use `--index` instead) Extra URLs of package indexes to use, in addition to `--index-url` \[env: UV_EXTRA_INDEX_URL=\]]' \
-        {-f,--find-links}'[Locations to search for candidate distributions, in addition to those found in the registry indexes \[env: UV_FIND_LINKS=\]]' \
+        '--index[The URLs to use when resolving dependencies, in addition to the default index \[env: UV_INDEX\]]' \
+        '--default-index[The URL of the default package index (by default: <https://pypi.org/simple>) \[env: UV_DEFAULT_INDEX\]]' \
+        {-i,--index-url}'[(Deprecated: use `--default-index` instead) The URL of the Python package index (by default: <https://pypi.org/simple>) \[env: UV_INDEX_URL\]]' \
+        '--extra-index-url[(Deprecated: use `--index` instead) Extra URLs of package indexes to use, in addition to `--index-url` \[env: UV_EXTRA_INDEX_URL\]]' \
+        {-f,--find-links}'[Locations to search for candidate distributions, in addition to those found in the registry indexes \[env: UV_FIND_LINKS\]]' \
         '--no-index[Ignore the registry index (e.g., PyPI), instead relying on direct URL dependencies and those provided via `--find-links`]' \
         '--index-strategy[The strategy to use when resolving against multiple index URLs \[env: UV_INDEX_STRATEGY=\] \[possible values: first-index, unsafe-first-match, unsafe-best-match\]]' \
         '--keyring-provider[Attempt to use `keyring` for authentication for index URLs \[env: UV_KEYRING_PROVIDER=\] \[possible values: disabled, subprocess\]]' \
         {-U,--upgrade}'[Allow package upgrades, ignoring pinned versions in any existing output file. Implies `--refresh`]' \
         {-P,--upgrade-package}'[Allow upgrades for a specific package, ignoring pinned versions in any existing output file. Implies `--refresh-package`]' \
+        '--upgrade-group[Allow upgrades for all packages in a dependency group, ignoring pinned versions in any existing output file]' \
         '--resolution[The strategy to use when selecting between the different compatible versions for a given package requirement \[env: UV_RESOLUTION=\] \[possible values: highest, lowest, lowest-direct\]]' \
         '--prerelease[The strategy to use when considering pre-release versions \[env: UV_PRERELEASE=\] \[possible values: disallow, allow, if-necessary, explicit, if-necessary-or-explicit\]]' \
         '--fork-strategy[The strategy to use when selecting multiple versions of a given package across Python versions and platforms \[env: UV_FORK_STRATEGY=\] \[possible values: fewest, requires-python\]]' \
@@ -610,7 +619,7 @@ function _uv_version {
         '--no-managed-python[Disable use of uv-managed Python versions \[env: UV_NO_MANAGED_PYTHON=\]]' \
         '--no-python-downloads[Disable automatic downloads of Python. \[env: "UV_PYTHON_DOWNLOADS=never"\]]' \
         '--color[Control the use of color in output \[possible values: auto, always, never\]]' \
-        '--native-tls[Whether to load TLS certificates from the platform'\''s native store \[env: UV_NATIVE_TLS=\]]' \
+        '--system-certs[Whether to load TLS certificates from the platform'\''s native certificate store \[env: UV_SYSTEM_CERTS=\]]' \
         '--offline[Disable network access \[env: UV_OFFLINE=\]]' \
         '--allow-insecure-host[Allow insecure connections to a host \[env: UV_INSECURE_HOST=\]]' \
         '--no-progress[Hide all progress outputs \[env: UV_NO_PROGRESS=\]]' \
@@ -651,16 +660,17 @@ function _uv_sync {
         '--script[Sync the environment for a Python script, rather than the current project]' \
         '--python-platform[The platform for which requirements should be installed \[possible values: windows, linux, macos, x86_64-pc-windows-msvc, aarch64-pc-windows-msvc, i686-pc-windows-msvc, x86_64-unknown-linux-gnu, aarch64-apple-darwin, x86_64-apple-darwin, aarch64-unknown-linux-gnu, aarch64-unknown-linux-musl, x86_64-unknown-linux-musl, riscv64-unknown-linux, x86_64-manylinux2014, x86_64-manylinux_2_17, x86_64-manylinux_2_28, x86_64-manylinux_2_31, x86_64-manylinux_2_32, x86_64-manylinux_2_33, x86_64-manylinux_2_34, x86_64-manylinux_2_35, x86_64-manylinux_2_36, x86_64-manylinux_2_37, x86_64-manylinux_2_38, x86_64-manylinux_2_39, x86_64-manylinux_2_40, aarch64-manylinux2014, aarch64-manylinux_2_17, aarch64-manylinux_2_28, aarch64-manylinux_2_31, aarch64-manylinux_2_32, aarch64-manylinux_2_33, aarch64-manylinux_2_34, aarch64-manylinux_2_35, aarch64-manylinux_2_36, aarch64-manylinux_2_37, aarch64-manylinux_2_38, aarch64-manylinux_2_39, aarch64-manylinux_2_40, aarch64-linux-android, x86_64-linux-android, wasm32-pyodide2024, arm64-apple-ios, arm64-apple-ios-simulator, x86_64-apple-ios-simulator\]]' \
         '--check[Check if the Python environment is synchronized with the project]' \
-        '--index[The URLs to use when resolving dependencies, in addition to the default index \[env: UV_INDEX=\]]' \
-        '--default-index[The URL of the default package index (by default: <https://pypi.org/simple>) \[env: UV_DEFAULT_INDEX=\]]' \
-        {-i,--index-url}'[(Deprecated: use `--default-index` instead) The URL of the Python package index (by default: <https://pypi.org/simple>) \[env: UV_INDEX_URL=\]]' \
-        '--extra-index-url[(Deprecated: use `--index` instead) Extra URLs of package indexes to use, in addition to `--index-url` \[env: UV_EXTRA_INDEX_URL=\]]' \
-        {-f,--find-links}'[Locations to search for candidate distributions, in addition to those found in the registry indexes \[env: UV_FIND_LINKS=\]]' \
+        '--index[The URLs to use when resolving dependencies, in addition to the default index \[env: UV_INDEX\]]' \
+        '--default-index[The URL of the default package index (by default: <https://pypi.org/simple>) \[env: UV_DEFAULT_INDEX\]]' \
+        {-i,--index-url}'[(Deprecated: use `--default-index` instead) The URL of the Python package index (by default: <https://pypi.org/simple>) \[env: UV_INDEX_URL\]]' \
+        '--extra-index-url[(Deprecated: use `--index` instead) Extra URLs of package indexes to use, in addition to `--index-url` \[env: UV_EXTRA_INDEX_URL\]]' \
+        {-f,--find-links}'[Locations to search for candidate distributions, in addition to those found in the registry indexes \[env: UV_FIND_LINKS\]]' \
         '--no-index[Ignore the registry index (e.g., PyPI), instead relying on direct URL dependencies and those provided via `--find-links`]' \
         '--index-strategy[The strategy to use when resolving against multiple index URLs \[env: UV_INDEX_STRATEGY=\] \[possible values: first-index, unsafe-first-match, unsafe-best-match\]]' \
         '--keyring-provider[Attempt to use `keyring` for authentication for index URLs \[env: UV_KEYRING_PROVIDER=\] \[possible values: disabled, subprocess\]]' \
         {-U,--upgrade}'[Allow package upgrades, ignoring pinned versions in any existing output file. Implies `--refresh`]' \
         {-P,--upgrade-package}'[Allow upgrades for a specific package, ignoring pinned versions in any existing output file. Implies `--refresh-package`]' \
+        '--upgrade-group[Allow upgrades for all packages in a dependency group, ignoring pinned versions in any existing output file]' \
         '--resolution[The strategy to use when selecting between the different compatible versions for a given package requirement \[env: UV_RESOLUTION=\] \[possible values: highest, lowest, lowest-direct\]]' \
         '--prerelease[The strategy to use when considering pre-release versions \[env: UV_PRERELEASE=\] \[possible values: disallow, allow, if-necessary, explicit, if-necessary-or-explicit\]]' \
         '--fork-strategy[The strategy to use when selecting multiple versions of a given package across Python versions and platforms \[env: UV_FORK_STRATEGY=\] \[possible values: fewest, requires-python\]]' \
@@ -689,7 +699,7 @@ function _uv_sync {
         '--no-managed-python[Disable use of uv-managed Python versions \[env: UV_NO_MANAGED_PYTHON=\]]' \
         '--no-python-downloads[Disable automatic downloads of Python. \[env: "UV_PYTHON_DOWNLOADS=never"\]]' \
         '--color[Control the use of color in output \[possible values: auto, always, never\]]' \
-        '--native-tls[Whether to load TLS certificates from the platform'\''s native store \[env: UV_NATIVE_TLS=\]]' \
+        '--system-certs[Whether to load TLS certificates from the platform'\''s native certificate store \[env: UV_SYSTEM_CERTS=\]]' \
         '--offline[Disable network access \[env: UV_OFFLINE=\]]' \
         '--allow-insecure-host[Allow insecure connections to a host \[env: UV_INSECURE_HOST=\]]' \
         '--no-progress[Hide all progress outputs \[env: UV_NO_PROGRESS=\]]' \
@@ -708,16 +718,17 @@ function _uv_lock {
         '--check-exists[Assert that a `uv.lock` exists without checking if it is up-to-date \[env: UV_FROZEN=\]]' \
         '--dry-run[Perform a dry run, without writing the lockfile]' \
         '--script[Lock the specified Python script, rather than the current project]' \
-        '--index[The URLs to use when resolving dependencies, in addition to the default index \[env: UV_INDEX=\]]' \
-        '--default-index[The URL of the default package index (by default: <https://pypi.org/simple>) \[env: UV_DEFAULT_INDEX=\]]' \
-        {-i,--index-url}'[(Deprecated: use `--default-index` instead) The URL of the Python package index (by default: <https://pypi.org/simple>) \[env: UV_INDEX_URL=\]]' \
-        '--extra-index-url[(Deprecated: use `--index` instead) Extra URLs of package indexes to use, in addition to `--index-url` \[env: UV_EXTRA_INDEX_URL=\]]' \
-        {-f,--find-links}'[Locations to search for candidate distributions, in addition to those found in the registry indexes \[env: UV_FIND_LINKS=\]]' \
+        '--index[The URLs to use when resolving dependencies, in addition to the default index \[env: UV_INDEX\]]' \
+        '--default-index[The URL of the default package index (by default: <https://pypi.org/simple>) \[env: UV_DEFAULT_INDEX\]]' \
+        {-i,--index-url}'[(Deprecated: use `--default-index` instead) The URL of the Python package index (by default: <https://pypi.org/simple>) \[env: UV_INDEX_URL\]]' \
+        '--extra-index-url[(Deprecated: use `--index` instead) Extra URLs of package indexes to use, in addition to `--index-url` \[env: UV_EXTRA_INDEX_URL\]]' \
+        {-f,--find-links}'[Locations to search for candidate distributions, in addition to those found in the registry indexes \[env: UV_FIND_LINKS\]]' \
         '--no-index[Ignore the registry index (e.g., PyPI), instead relying on direct URL dependencies and those provided via `--find-links`]' \
         '--index-strategy[The strategy to use when resolving against multiple index URLs \[env: UV_INDEX_STRATEGY=\] \[possible values: first-index, unsafe-first-match, unsafe-best-match\]]' \
         '--keyring-provider[Attempt to use `keyring` for authentication for index URLs \[env: UV_KEYRING_PROVIDER=\] \[possible values: disabled, subprocess\]]' \
         {-U,--upgrade}'[Allow package upgrades, ignoring pinned versions in any existing output file. Implies `--refresh`]' \
         {-P,--upgrade-package}'[Allow upgrades for a specific package, ignoring pinned versions in any existing output file. Implies `--refresh-package`]' \
+        '--upgrade-group[Allow upgrades for all packages in a dependency group, ignoring pinned versions in any existing output file]' \
         '--resolution[The strategy to use when selecting between the different compatible versions for a given package requirement \[env: UV_RESOLUTION=\] \[possible values: highest, lowest, lowest-direct\]]' \
         '--prerelease[The strategy to use when considering pre-release versions \[env: UV_PRERELEASE=\] \[possible values: disallow, allow, if-necessary, explicit, if-necessary-or-explicit\]]' \
         '--fork-strategy[The strategy to use when selecting multiple versions of a given package across Python versions and platforms \[env: UV_FORK_STRATEGY=\] \[possible values: fewest, requires-python\]]' \
@@ -743,7 +754,7 @@ function _uv_lock {
         '--no-managed-python[Disable use of uv-managed Python versions \[env: UV_NO_MANAGED_PYTHON=\]]' \
         '--no-python-downloads[Disable automatic downloads of Python. \[env: "UV_PYTHON_DOWNLOADS=never"\]]' \
         '--color[Control the use of color in output \[possible values: auto, always, never\]]' \
-        '--native-tls[Whether to load TLS certificates from the platform'\''s native store \[env: UV_NATIVE_TLS=\]]' \
+        '--system-certs[Whether to load TLS certificates from the platform'\''s native certificate store \[env: UV_SYSTEM_CERTS=\]]' \
         '--offline[Disable network access \[env: UV_OFFLINE=\]]' \
         '--allow-insecure-host[Allow insecure connections to a host \[env: UV_INSECURE_HOST=\]]' \
         '--no-progress[Hide all progress outputs \[env: UV_NO_PROGRESS=\]]' \
@@ -784,16 +795,17 @@ function _uv_export {
         '--locked[Assert that the `uv.lock` will remain unchanged \[env: UV_LOCKED=\]]' \
         '--frozen[Do not update the `uv.lock` before exporting \[env: UV_FROZEN=\]]' \
         '--script[Export the dependencies for the specified PEP 723 Python script, rather than the current project]' \
-        '--index[The URLs to use when resolving dependencies, in addition to the default index \[env: UV_INDEX=\]]' \
-        '--default-index[The URL of the default package index (by default: <https://pypi.org/simple>) \[env: UV_DEFAULT_INDEX=\]]' \
-        {-i,--index-url}'[(Deprecated: use `--default-index` instead) The URL of the Python package index (by default: <https://pypi.org/simple>) \[env: UV_INDEX_URL=\]]' \
-        '--extra-index-url[(Deprecated: use `--index` instead) Extra URLs of package indexes to use, in addition to `--index-url` \[env: UV_EXTRA_INDEX_URL=\]]' \
-        {-f,--find-links}'[Locations to search for candidate distributions, in addition to those found in the registry indexes \[env: UV_FIND_LINKS=\]]' \
+        '--index[The URLs to use when resolving dependencies, in addition to the default index \[env: UV_INDEX\]]' \
+        '--default-index[The URL of the default package index (by default: <https://pypi.org/simple>) \[env: UV_DEFAULT_INDEX\]]' \
+        {-i,--index-url}'[(Deprecated: use `--default-index` instead) The URL of the Python package index (by default: <https://pypi.org/simple>) \[env: UV_INDEX_URL\]]' \
+        '--extra-index-url[(Deprecated: use `--index` instead) Extra URLs of package indexes to use, in addition to `--index-url` \[env: UV_EXTRA_INDEX_URL\]]' \
+        {-f,--find-links}'[Locations to search for candidate distributions, in addition to those found in the registry indexes \[env: UV_FIND_LINKS\]]' \
         '--no-index[Ignore the registry index (e.g., PyPI), instead relying on direct URL dependencies and those provided via `--find-links`]' \
         '--index-strategy[The strategy to use when resolving against multiple index URLs \[env: UV_INDEX_STRATEGY=\] \[possible values: first-index, unsafe-first-match, unsafe-best-match\]]' \
         '--keyring-provider[Attempt to use `keyring` for authentication for index URLs \[env: UV_KEYRING_PROVIDER=\] \[possible values: disabled, subprocess\]]' \
         {-U,--upgrade}'[Allow package upgrades, ignoring pinned versions in any existing output file. Implies `--refresh`]' \
         {-P,--upgrade-package}'[Allow upgrades for a specific package, ignoring pinned versions in any existing output file. Implies `--refresh-package`]' \
+        '--upgrade-group[Allow upgrades for all packages in a dependency group, ignoring pinned versions in any existing output file]' \
         '--resolution[The strategy to use when selecting between the different compatible versions for a given package requirement \[env: UV_RESOLUTION=\] \[possible values: highest, lowest, lowest-direct\]]' \
         '--prerelease[The strategy to use when considering pre-release versions \[env: UV_PRERELEASE=\] \[possible values: disallow, allow, if-necessary, explicit, if-necessary-or-explicit\]]' \
         '--fork-strategy[The strategy to use when selecting multiple versions of a given package across Python versions and platforms \[env: UV_FORK_STRATEGY=\] \[possible values: fewest, requires-python\]]' \
@@ -819,7 +831,7 @@ function _uv_export {
         '--no-managed-python[Disable use of uv-managed Python versions \[env: UV_NO_MANAGED_PYTHON=\]]' \
         '--no-python-downloads[Disable automatic downloads of Python. \[env: "UV_PYTHON_DOWNLOADS=never"\]]' \
         '--color[Control the use of color in output \[possible values: auto, always, never\]]' \
-        '--native-tls[Whether to load TLS certificates from the platform'\''s native store \[env: UV_NATIVE_TLS=\]]' \
+        '--system-certs[Whether to load TLS certificates from the platform'\''s native certificate store \[env: UV_SYSTEM_CERTS=\]]' \
         '--offline[Disable network access \[env: UV_OFFLINE=\]]' \
         '--allow-insecure-host[Allow insecure connections to a host \[env: UV_INSECURE_HOST=\]]' \
         '--no-progress[Hide all progress outputs \[env: UV_NO_PROGRESS=\]]' \
@@ -862,16 +874,17 @@ function _uv_tree {
         '--config-settings-package[Settings to pass to the PEP 517 build backend for a specific package, specified as `PACKAGE:KEY=VALUE` pairs]' \
         '--no-build-isolation[Disable isolation when building source distributions \[env: UV_NO_BUILD_ISOLATION=\]]' \
         '--no-build-isolation-package[Disable isolation when building source distributions for a specific package]' \
-        '--index[The URLs to use when resolving dependencies, in addition to the default index \[env: UV_INDEX=\]]' \
-        '--default-index[The URL of the default package index (by default: <https://pypi.org/simple>) \[env: UV_DEFAULT_INDEX=\]]' \
-        {-i,--index-url}'[(Deprecated: use `--default-index` instead) The URL of the Python package index (by default: <https://pypi.org/simple>) \[env: UV_INDEX_URL=\]]' \
-        '--extra-index-url[(Deprecated: use `--index` instead) Extra URLs of package indexes to use, in addition to `--index-url` \[env: UV_EXTRA_INDEX_URL=\]]' \
-        {-f,--find-links}'[Locations to search for candidate distributions, in addition to those found in the registry indexes \[env: UV_FIND_LINKS=\]]' \
+        '--index[The URLs to use when resolving dependencies, in addition to the default index \[env: UV_INDEX\]]' \
+        '--default-index[The URL of the default package index (by default: <https://pypi.org/simple>) \[env: UV_DEFAULT_INDEX\]]' \
+        {-i,--index-url}'[(Deprecated: use `--default-index` instead) The URL of the Python package index (by default: <https://pypi.org/simple>) \[env: UV_INDEX_URL\]]' \
+        '--extra-index-url[(Deprecated: use `--index` instead) Extra URLs of package indexes to use, in addition to `--index-url` \[env: UV_EXTRA_INDEX_URL\]]' \
+        {-f,--find-links}'[Locations to search for candidate distributions, in addition to those found in the registry indexes \[env: UV_FIND_LINKS\]]' \
         '--no-index[Ignore the registry index (e.g., PyPI), instead relying on direct URL dependencies and those provided via `--find-links`]' \
         '--index-strategy[The strategy to use when resolving against multiple index URLs \[env: UV_INDEX_STRATEGY=\] \[possible values: first-index, unsafe-first-match, unsafe-best-match\]]' \
         '--keyring-provider[Attempt to use `keyring` for authentication for index URLs \[env: UV_KEYRING_PROVIDER=\] \[possible values: disabled, subprocess\]]' \
         {-U,--upgrade}'[Allow package upgrades, ignoring pinned versions in any existing output file. Implies `--refresh`]' \
         {-P,--upgrade-package}'[Allow upgrades for a specific package, ignoring pinned versions in any existing output file. Implies `--refresh-package`]' \
+        '--upgrade-group[Allow upgrades for all packages in a dependency group, ignoring pinned versions in any existing output file]' \
         '--resolution[The strategy to use when selecting between the different compatible versions for a given package requirement \[env: UV_RESOLUTION=\] \[possible values: highest, lowest, lowest-direct\]]' \
         '--prerelease[The strategy to use when considering pre-release versions \[env: UV_PRERELEASE=\] \[possible values: disallow, allow, if-necessary, explicit, if-necessary-or-explicit\]]' \
         '--fork-strategy[The strategy to use when selecting multiple versions of a given package across Python versions and platforms \[env: UV_FORK_STRATEGY=\] \[possible values: fewest, requires-python\]]' \
@@ -887,7 +900,7 @@ function _uv_tree {
         {-n,--no-cache}'[Avoid reading from or writing to the cache, instead using a temporary directory for the duration of the operation \[env: UV_NO_CACHE=\]]' \
         '--cache-dir[Path to the cache directory \[env: UV_CACHE_DIR=\]]':file:_files \
         '--color[Control the use of color in output \[possible values: auto, always, never\]]' \
-        '--native-tls[Whether to load TLS certificates from the platform'\''s native store \[env: UV_NATIVE_TLS=\]]' \
+        '--system-certs[Whether to load TLS certificates from the platform'\''s native certificate store \[env: UV_SYSTEM_CERTS=\]]' \
         '--offline[Disable network access \[env: UV_OFFLINE=\]]' \
         '--allow-insecure-host[Allow insecure connections to a host \[env: UV_INSECURE_HOST=\]]' \
         '--no-progress[Hide all progress outputs \[env: UV_NO_PROGRESS=\]]' \
@@ -905,14 +918,79 @@ function _uv_format {
         '--check[Check if files are formatted without applying changes]' \
         '--diff[Show a diff of formatting changes without applying them]' \
         '--version[The version of Ruff to use for formatting]' \
-        '--no-project[Avoid discovering a project or workspace]' \
+        '--exclude-newer[Limit candidate Ruff versions to those released prior to the given date \[env: UV_EXCLUDE_NEWER=\]]' \
+        '--no-project[Avoid discovering a project or workspace \[env: UV_NO_PROJECT=\]]' \
         {-n,--no-cache}'[Avoid reading from or writing to the cache, instead using a temporary directory for the duration of the operation \[env: UV_NO_CACHE=\]]' \
         '--cache-dir[Path to the cache directory \[env: UV_CACHE_DIR=\]]':file:_files \
         '--managed-python[Require use of uv-managed Python versions \[env: UV_MANAGED_PYTHON=\]]' \
         '--no-managed-python[Disable use of uv-managed Python versions \[env: UV_NO_MANAGED_PYTHON=\]]' \
         '--no-python-downloads[Disable automatic downloads of Python. \[env: "UV_PYTHON_DOWNLOADS=never"\]]' \
         '--color[Control the use of color in output \[possible values: auto, always, never\]]' \
-        '--native-tls[Whether to load TLS certificates from the platform'\''s native store \[env: UV_NATIVE_TLS=\]]' \
+        '--system-certs[Whether to load TLS certificates from the platform'\''s native certificate store \[env: UV_SYSTEM_CERTS=\]]' \
+        '--offline[Disable network access \[env: UV_OFFLINE=\]]' \
+        '--allow-insecure-host[Allow insecure connections to a host \[env: UV_INSECURE_HOST=\]]' \
+        '--no-progress[Hide all progress outputs \[env: UV_NO_PROGRESS=\]]' \
+        '--directory[Change to the given directory prior to running the command \[env: UV_WORKING_DIR=\]]':file:_files \
+        '--project[Discover a project in the given directory \[env: UV_PROJECT=\]]' \
+        '--config-file[The path to a `uv.toml` file to use for configuration \[env: UV_CONFIG_FILE=\]]':file:_files \
+        '--no-config[Avoid discovering configuration files (`pyproject.toml`, `uv.toml`) \[env: UV_NO_CONFIG=\]]' \
+        {-h,--help}'[Display the concise help for this command]' \
+        "*: :_files"
+
+}
+
+function _uv_audit {
+    _arguments \
+        '--no-extra[Don'\''t audit the specified optional dependencies]' \
+        '--no-dev[Don'\''t audit the development dependency group \[env: UV_NO_DEV=\]]' \
+        '--no-group[Don'\''t audit the specified dependency group \[env: UV_NO_GROUP=\]]' \
+        '--no-default-groups[Don'\''t audit the default dependency groups \[env: UV_NO_DEFAULT_GROUPS=\]]' \
+        '--only-group[Only audit dependencies from the specified dependency group]' \
+        '--only-dev[Only audit the development dependency group]' \
+        '--locked[Assert that the `uv.lock` will remain unchanged \[env: UV_LOCKED=\]]' \
+        '--frozen[Audit the requirements without locking the project \[env: UV_FROZEN=\]]' \
+        '--output-format[Select the output format \[default: text\] \[possible values: text, json\]]' \
+        '--script[Audit the specified PEP 723 Python script, rather than the current project]' \
+        '--python-version[The Python version to use when auditing]' \
+        '--python-platform[The platform to use when auditing \[possible values: windows, linux, macos, x86_64-pc-windows-msvc, aarch64-pc-windows-msvc, i686-pc-windows-msvc, x86_64-unknown-linux-gnu, aarch64-apple-darwin, x86_64-apple-darwin, aarch64-unknown-linux-gnu, aarch64-unknown-linux-musl, x86_64-unknown-linux-musl, riscv64-unknown-linux, x86_64-manylinux2014, x86_64-manylinux_2_17, x86_64-manylinux_2_28, x86_64-manylinux_2_31, x86_64-manylinux_2_32, x86_64-manylinux_2_33, x86_64-manylinux_2_34, x86_64-manylinux_2_35, x86_64-manylinux_2_36, x86_64-manylinux_2_37, x86_64-manylinux_2_38, x86_64-manylinux_2_39, x86_64-manylinux_2_40, aarch64-manylinux2014, aarch64-manylinux_2_17, aarch64-manylinux_2_28, aarch64-manylinux_2_31, aarch64-manylinux_2_32, aarch64-manylinux_2_33, aarch64-manylinux_2_34, aarch64-manylinux_2_35, aarch64-manylinux_2_36, aarch64-manylinux_2_37, aarch64-manylinux_2_38, aarch64-manylinux_2_39, aarch64-manylinux_2_40, aarch64-linux-android, x86_64-linux-android, wasm32-pyodide2024, arm64-apple-ios, arm64-apple-ios-simulator, x86_64-apple-ios-simulator\]]' \
+        '--ignore[Ignore a vulnerability by ID]' \
+        '--ignore-until-fixed[Ignore a vulnerability by ID, but only while no fix is available]' \
+        '--service-format[The service format to use for vulnerability lookups \[default: osv\] \[possible values: osv\]]' \
+        '--service-url[The URL to vulnerability service API endpoint]' \
+        '--no-build[Don'\''t build source distributions \[env: UV_NO_BUILD=\]]' \
+        '--no-build-package[Don'\''t build source distributions for a specific package \[env: UV_NO_BUILD_PACKAGE=\]]' \
+        '--no-binary[Don'\''t install pre-built wheels \[env: UV_NO_BINARY=\]]' \
+        '--no-binary-package[Don'\''t install pre-built wheels for a specific package \[env: UV_NO_BINARY_PACKAGE=\]]' \
+        {-C,--config-setting}'[Settings to pass to the PEP 517 build backend, specified as `KEY=VALUE` pairs]' \
+        '--config-settings-package[Settings to pass to the PEP 517 build backend for a specific package, specified as `PACKAGE:KEY=VALUE` pairs]' \
+        '--no-build-isolation[Disable isolation when building source distributions \[env: UV_NO_BUILD_ISOLATION=\]]' \
+        '--no-build-isolation-package[Disable isolation when building source distributions for a specific package]' \
+        '--index[The URLs to use when resolving dependencies, in addition to the default index \[env: UV_INDEX\]]' \
+        '--default-index[The URL of the default package index (by default: <https://pypi.org/simple>) \[env: UV_DEFAULT_INDEX\]]' \
+        {-i,--index-url}'[(Deprecated: use `--default-index` instead) The URL of the Python package index (by default: <https://pypi.org/simple>) \[env: UV_INDEX_URL\]]' \
+        '--extra-index-url[(Deprecated: use `--index` instead) Extra URLs of package indexes to use, in addition to `--index-url` \[env: UV_EXTRA_INDEX_URL\]]' \
+        {-f,--find-links}'[Locations to search for candidate distributions, in addition to those found in the registry indexes \[env: UV_FIND_LINKS\]]' \
+        '--no-index[Ignore the registry index (e.g., PyPI), instead relying on direct URL dependencies and those provided via `--find-links`]' \
+        '--index-strategy[The strategy to use when resolving against multiple index URLs \[env: UV_INDEX_STRATEGY=\] \[possible values: first-index, unsafe-first-match, unsafe-best-match\]]' \
+        '--keyring-provider[Attempt to use `keyring` for authentication for index URLs \[env: UV_KEYRING_PROVIDER=\] \[possible values: disabled, subprocess\]]' \
+        {-U,--upgrade}'[Allow package upgrades, ignoring pinned versions in any existing output file. Implies `--refresh`]' \
+        {-P,--upgrade-package}'[Allow upgrades for a specific package, ignoring pinned versions in any existing output file. Implies `--refresh-package`]' \
+        '--upgrade-group[Allow upgrades for all packages in a dependency group, ignoring pinned versions in any existing output file]' \
+        '--resolution[The strategy to use when selecting between the different compatible versions for a given package requirement \[env: UV_RESOLUTION=\] \[possible values: highest, lowest, lowest-direct\]]' \
+        '--prerelease[The strategy to use when considering pre-release versions \[env: UV_PRERELEASE=\] \[possible values: disallow, allow, if-necessary, explicit, if-necessary-or-explicit\]]' \
+        '--fork-strategy[The strategy to use when selecting multiple versions of a given package across Python versions and platforms \[env: UV_FORK_STRATEGY=\] \[possible values: fewest, requires-python\]]' \
+        '--exclude-newer[Limit candidate packages to those that were uploaded prior to the given date \[env: UV_EXCLUDE_NEWER=\]]' \
+        '--exclude-newer-package[Limit candidate packages for specific packages to those that were uploaded prior to the given date]' \
+        '--no-sources[Ignore the `tool.uv.sources` table when resolving dependencies. Used to lock against the standards-compliant, publishable package metadata, as opposed to using any workspace, Git, URL, or local path sources \[env: UV_NO_SOURCES=\]]' \
+        '--no-sources-package[Don'\''t use sources from the `tool.uv.sources` table for the specified packages \[env: UV_NO_SOURCES_PACKAGE=\]]' \
+        '--link-mode[The method to use when installing packages from the global cache \[env: UV_LINK_MODE=\] \[possible values: clone, copy, hardlink, symlink\]]' \
+        {-n,--no-cache}'[Avoid reading from or writing to the cache, instead using a temporary directory for the duration of the operation \[env: UV_NO_CACHE=\]]' \
+        '--cache-dir[Path to the cache directory \[env: UV_CACHE_DIR=\]]':file:_files \
+        '--managed-python[Require use of uv-managed Python versions \[env: UV_MANAGED_PYTHON=\]]' \
+        '--no-managed-python[Disable use of uv-managed Python versions \[env: UV_NO_MANAGED_PYTHON=\]]' \
+        '--no-python-downloads[Disable automatic downloads of Python. \[env: "UV_PYTHON_DOWNLOADS=never"\]]' \
+        '--color[Control the use of color in output \[possible values: auto, always, never\]]' \
+        '--system-certs[Whether to load TLS certificates from the platform'\''s native certificate store \[env: UV_SYSTEM_CERTS=\]]' \
         '--offline[Disable network access \[env: UV_OFFLINE=\]]' \
         '--allow-insecure-host[Allow insecure connections to a host \[env: UV_INSECURE_HOST=\]]' \
         '--no-progress[Hide all progress outputs \[env: UV_NO_PROGRESS=\]]' \
@@ -951,7 +1029,7 @@ function _uv_tool {
         '--no-managed-python[Disable use of uv-managed Python versions \[env: UV_NO_MANAGED_PYTHON=\]]' \
         '--no-python-downloads[Disable automatic downloads of Python. \[env: "UV_PYTHON_DOWNLOADS=never"\]]' \
         '--color[Control the use of color in output \[possible values: auto, always, never\]]' \
-        '--native-tls[Whether to load TLS certificates from the platform'\''s native store \[env: UV_NATIVE_TLS=\]]' \
+        '--system-certs[Whether to load TLS certificates from the platform'\''s native certificate store \[env: UV_SYSTEM_CERTS=\]]' \
         '--offline[Disable network access \[env: UV_OFFLINE=\]]' \
         '--allow-insecure-host[Allow insecure connections to a host \[env: UV_INSECURE_HOST=\]]' \
         '--no-progress[Hide all progress outputs \[env: UV_NO_PROGRESS=\]]' \
@@ -1017,17 +1095,18 @@ function _uv_tool_run {
         '--no-env-file[Avoid reading environment variables from a `.env` file \[env: UV_NO_ENV_FILE=\]]' \
         '--lfs[Whether to use Git LFS when adding a dependency from Git]' \
         '--python-platform[The platform for which requirements should be installed \[possible values: windows, linux, macos, x86_64-pc-windows-msvc, aarch64-pc-windows-msvc, i686-pc-windows-msvc, x86_64-unknown-linux-gnu, aarch64-apple-darwin, x86_64-apple-darwin, aarch64-unknown-linux-gnu, aarch64-unknown-linux-musl, x86_64-unknown-linux-musl, riscv64-unknown-linux, x86_64-manylinux2014, x86_64-manylinux_2_17, x86_64-manylinux_2_28, x86_64-manylinux_2_31, x86_64-manylinux_2_32, x86_64-manylinux_2_33, x86_64-manylinux_2_34, x86_64-manylinux_2_35, x86_64-manylinux_2_36, x86_64-manylinux_2_37, x86_64-manylinux_2_38, x86_64-manylinux_2_39, x86_64-manylinux_2_40, aarch64-manylinux2014, aarch64-manylinux_2_17, aarch64-manylinux_2_28, aarch64-manylinux_2_31, aarch64-manylinux_2_32, aarch64-manylinux_2_33, aarch64-manylinux_2_34, aarch64-manylinux_2_35, aarch64-manylinux_2_36, aarch64-manylinux_2_37, aarch64-manylinux_2_38, aarch64-manylinux_2_39, aarch64-manylinux_2_40, aarch64-linux-android, x86_64-linux-android, wasm32-pyodide2024, arm64-apple-ios, arm64-apple-ios-simulator, x86_64-apple-ios-simulator\]]' \
-        '--torch-backend[The backend to use when fetching packages in the PyTorch ecosystem (e.g., `cpu`, `cu126`, or `auto`) \[env: UV_TORCH_BACKEND=\] \[possible values: auto, cpu, cu130, cu129, cu128, cu126, cu125, cu124, cu123, cu122, cu121, cu120, cu118, cu117, cu116, cu115, cu114, cu113, cu112, cu111, cu110, cu102, cu101, cu100, cu92, cu91, cu90, cu80, rocm6.4, rocm6.3, rocm6.2.4, rocm6.2, rocm6.1, rocm6.0, rocm5.7, rocm5.6, rocm5.5, rocm5.4.2, rocm5.4, rocm5.3, rocm5.2, rocm5.1.1, rocm4.2, rocm4.1, rocm4.0.1, xpu\]]' \
-        '--index[The URLs to use when resolving dependencies, in addition to the default index \[env: UV_INDEX=\]]' \
-        '--default-index[The URL of the default package index (by default: <https://pypi.org/simple>) \[env: UV_DEFAULT_INDEX=\]]' \
-        {-i,--index-url}'[(Deprecated: use `--default-index` instead) The URL of the Python package index (by default: <https://pypi.org/simple>) \[env: UV_INDEX_URL=\]]' \
-        '--extra-index-url[(Deprecated: use `--index` instead) Extra URLs of package indexes to use, in addition to `--index-url` \[env: UV_EXTRA_INDEX_URL=\]]' \
-        {-f,--find-links}'[Locations to search for candidate distributions, in addition to those found in the registry indexes \[env: UV_FIND_LINKS=\]]' \
+        '--torch-backend[The backend to use when fetching packages in the PyTorch ecosystem (e.g., `cpu`, `cu126`, or `auto`) \[env: UV_TORCH_BACKEND=\] \[possible values: auto, cpu, cu130, cu129, cu128, cu126, cu125, cu124, cu123, cu122, cu121, cu120, cu118, cu117, cu116, cu115, cu114, cu113, cu112, cu111, cu110, cu102, cu101, cu100, cu92, cu91, cu90, cu80, rocm7.2, rocm7.1, rocm7.0, rocm6.4, rocm6.3, rocm6.2.4, rocm6.2, rocm6.1, rocm6.0, rocm5.7, rocm5.6, rocm5.5, rocm5.4.2, rocm5.4, rocm5.3, rocm5.2, rocm5.1.1, rocm4.2, rocm4.1, rocm4.0.1, xpu\]]' \
+        '--index[The URLs to use when resolving dependencies, in addition to the default index \[env: UV_INDEX\]]' \
+        '--default-index[The URL of the default package index (by default: <https://pypi.org/simple>) \[env: UV_DEFAULT_INDEX\]]' \
+        {-i,--index-url}'[(Deprecated: use `--default-index` instead) The URL of the Python package index (by default: <https://pypi.org/simple>) \[env: UV_INDEX_URL\]]' \
+        '--extra-index-url[(Deprecated: use `--index` instead) Extra URLs of package indexes to use, in addition to `--index-url` \[env: UV_EXTRA_INDEX_URL\]]' \
+        {-f,--find-links}'[Locations to search for candidate distributions, in addition to those found in the registry indexes \[env: UV_FIND_LINKS\]]' \
         '--no-index[Ignore the registry index (e.g., PyPI), instead relying on direct URL dependencies and those provided via `--find-links`]' \
         '--index-strategy[The strategy to use when resolving against multiple index URLs \[env: UV_INDEX_STRATEGY=\] \[possible values: first-index, unsafe-first-match, unsafe-best-match\]]' \
         '--keyring-provider[Attempt to use `keyring` for authentication for index URLs \[env: UV_KEYRING_PROVIDER=\] \[possible values: disabled, subprocess\]]' \
         {-U,--upgrade}'[Allow package upgrades, ignoring pinned versions in any existing output file. Implies `--refresh`]' \
         {-P,--upgrade-package}'[Allow upgrades for a specific package, ignoring pinned versions in any existing output file. Implies `--refresh-package`]' \
+        '--upgrade-group[Allow upgrades for all packages in a dependency group, ignoring pinned versions in any existing output file]' \
         '--resolution[The strategy to use when selecting between the different compatible versions for a given package requirement \[env: UV_RESOLUTION=\] \[possible values: highest, lowest, lowest-direct\]]' \
         '--prerelease[The strategy to use when considering pre-release versions \[env: UV_PRERELEASE=\] \[possible values: disallow, allow, if-necessary, explicit, if-necessary-or-explicit\]]' \
         '--fork-strategy[The strategy to use when selecting multiple versions of a given package across Python versions and platforms \[env: UV_FORK_STRATEGY=\] \[possible values: fewest, requires-python\]]' \
@@ -1056,7 +1135,7 @@ function _uv_tool_run {
         '--no-managed-python[Disable use of uv-managed Python versions \[env: UV_NO_MANAGED_PYTHON=\]]' \
         '--no-python-downloads[Disable automatic downloads of Python. \[env: "UV_PYTHON_DOWNLOADS=never"\]]' \
         '--color[Control the use of color in output \[possible values: auto, always, never\]]' \
-        '--native-tls[Whether to load TLS certificates from the platform'\''s native store \[env: UV_NATIVE_TLS=\]]' \
+        '--system-certs[Whether to load TLS certificates from the platform'\''s native certificate store \[env: UV_SYSTEM_CERTS=\]]' \
         '--offline[Disable network access \[env: UV_OFFLINE=\]]' \
         '--allow-insecure-host[Allow insecure connections to a host \[env: UV_INSECURE_HOST=\]]' \
         '--no-progress[Hide all progress outputs \[env: UV_NO_PROGRESS=\]]' \
@@ -1083,17 +1162,18 @@ function _uv_tool_install {
         '--force[Force installation of the tool]' \
         '--lfs[Whether to use Git LFS when adding a dependency from Git]' \
         '--python-platform[The platform for which requirements should be installed \[possible values: windows, linux, macos, x86_64-pc-windows-msvc, aarch64-pc-windows-msvc, i686-pc-windows-msvc, x86_64-unknown-linux-gnu, aarch64-apple-darwin, x86_64-apple-darwin, aarch64-unknown-linux-gnu, aarch64-unknown-linux-musl, x86_64-unknown-linux-musl, riscv64-unknown-linux, x86_64-manylinux2014, x86_64-manylinux_2_17, x86_64-manylinux_2_28, x86_64-manylinux_2_31, x86_64-manylinux_2_32, x86_64-manylinux_2_33, x86_64-manylinux_2_34, x86_64-manylinux_2_35, x86_64-manylinux_2_36, x86_64-manylinux_2_37, x86_64-manylinux_2_38, x86_64-manylinux_2_39, x86_64-manylinux_2_40, aarch64-manylinux2014, aarch64-manylinux_2_17, aarch64-manylinux_2_28, aarch64-manylinux_2_31, aarch64-manylinux_2_32, aarch64-manylinux_2_33, aarch64-manylinux_2_34, aarch64-manylinux_2_35, aarch64-manylinux_2_36, aarch64-manylinux_2_37, aarch64-manylinux_2_38, aarch64-manylinux_2_39, aarch64-manylinux_2_40, aarch64-linux-android, x86_64-linux-android, wasm32-pyodide2024, arm64-apple-ios, arm64-apple-ios-simulator, x86_64-apple-ios-simulator\]]' \
-        '--torch-backend[The backend to use when fetching packages in the PyTorch ecosystem (e.g., `cpu`, `cu126`, or `auto`) \[env: UV_TORCH_BACKEND=\] \[possible values: auto, cpu, cu130, cu129, cu128, cu126, cu125, cu124, cu123, cu122, cu121, cu120, cu118, cu117, cu116, cu115, cu114, cu113, cu112, cu111, cu110, cu102, cu101, cu100, cu92, cu91, cu90, cu80, rocm6.4, rocm6.3, rocm6.2.4, rocm6.2, rocm6.1, rocm6.0, rocm5.7, rocm5.6, rocm5.5, rocm5.4.2, rocm5.4, rocm5.3, rocm5.2, rocm5.1.1, rocm4.2, rocm4.1, rocm4.0.1, xpu\]]' \
-        '--index[The URLs to use when resolving dependencies, in addition to the default index \[env: UV_INDEX=\]]' \
-        '--default-index[The URL of the default package index (by default: <https://pypi.org/simple>) \[env: UV_DEFAULT_INDEX=\]]' \
-        {-i,--index-url}'[(Deprecated: use `--default-index` instead) The URL of the Python package index (by default: <https://pypi.org/simple>) \[env: UV_INDEX_URL=\]]' \
-        '--extra-index-url[(Deprecated: use `--index` instead) Extra URLs of package indexes to use, in addition to `--index-url` \[env: UV_EXTRA_INDEX_URL=\]]' \
-        {-f,--find-links}'[Locations to search for candidate distributions, in addition to those found in the registry indexes \[env: UV_FIND_LINKS=\]]' \
+        '--torch-backend[The backend to use when fetching packages in the PyTorch ecosystem (e.g., `cpu`, `cu126`, or `auto`) \[env: UV_TORCH_BACKEND=\] \[possible values: auto, cpu, cu130, cu129, cu128, cu126, cu125, cu124, cu123, cu122, cu121, cu120, cu118, cu117, cu116, cu115, cu114, cu113, cu112, cu111, cu110, cu102, cu101, cu100, cu92, cu91, cu90, cu80, rocm7.2, rocm7.1, rocm7.0, rocm6.4, rocm6.3, rocm6.2.4, rocm6.2, rocm6.1, rocm6.0, rocm5.7, rocm5.6, rocm5.5, rocm5.4.2, rocm5.4, rocm5.3, rocm5.2, rocm5.1.1, rocm4.2, rocm4.1, rocm4.0.1, xpu\]]' \
+        '--index[The URLs to use when resolving dependencies, in addition to the default index \[env: UV_INDEX\]]' \
+        '--default-index[The URL of the default package index (by default: <https://pypi.org/simple>) \[env: UV_DEFAULT_INDEX\]]' \
+        {-i,--index-url}'[(Deprecated: use `--default-index` instead) The URL of the Python package index (by default: <https://pypi.org/simple>) \[env: UV_INDEX_URL\]]' \
+        '--extra-index-url[(Deprecated: use `--index` instead) Extra URLs of package indexes to use, in addition to `--index-url` \[env: UV_EXTRA_INDEX_URL\]]' \
+        {-f,--find-links}'[Locations to search for candidate distributions, in addition to those found in the registry indexes \[env: UV_FIND_LINKS\]]' \
         '--no-index[Ignore the registry index (e.g., PyPI), instead relying on direct URL dependencies and those provided via `--find-links`]' \
         '--index-strategy[The strategy to use when resolving against multiple index URLs \[env: UV_INDEX_STRATEGY=\] \[possible values: first-index, unsafe-first-match, unsafe-best-match\]]' \
         '--keyring-provider[Attempt to use `keyring` for authentication for index URLs \[env: UV_KEYRING_PROVIDER=\] \[possible values: disabled, subprocess\]]' \
         {-U,--upgrade}'[Allow package upgrades, ignoring pinned versions in any existing output file. Implies `--refresh`]' \
         {-P,--upgrade-package}'[Allow upgrades for a specific package, ignoring pinned versions in any existing output file. Implies `--refresh-package`]' \
+        '--upgrade-group[Allow upgrades for all packages in a dependency group, ignoring pinned versions in any existing output file]' \
         '--resolution[The strategy to use when selecting between the different compatible versions for a given package requirement \[env: UV_RESOLUTION=\] \[possible values: highest, lowest, lowest-direct\]]' \
         '--prerelease[The strategy to use when considering pre-release versions \[env: UV_PRERELEASE=\] \[possible values: disallow, allow, if-necessary, explicit, if-necessary-or-explicit\]]' \
         '--fork-strategy[The strategy to use when selecting multiple versions of a given package across Python versions and platforms \[env: UV_FORK_STRATEGY=\] \[possible values: fewest, requires-python\]]' \
@@ -1122,7 +1202,7 @@ function _uv_tool_install {
         '--no-managed-python[Disable use of uv-managed Python versions \[env: UV_NO_MANAGED_PYTHON=\]]' \
         '--no-python-downloads[Disable automatic downloads of Python. \[env: "UV_PYTHON_DOWNLOADS=never"\]]' \
         '--color[Control the use of color in output \[possible values: auto, always, never\]]' \
-        '--native-tls[Whether to load TLS certificates from the platform'\''s native store \[env: UV_NATIVE_TLS=\]]' \
+        '--system-certs[Whether to load TLS certificates from the platform'\''s native certificate store \[env: UV_SYSTEM_CERTS=\]]' \
         '--offline[Disable network access \[env: UV_OFFLINE=\]]' \
         '--allow-insecure-host[Allow insecure connections to a host \[env: UV_INSECURE_HOST=\]]' \
         '--no-progress[Hide all progress outputs \[env: UV_NO_PROGRESS=\]]' \
@@ -1150,11 +1230,11 @@ function _uv_tool_upgrade {
         '--exclude-newer-package[Limit candidate packages for specific packages to those that were uploaded prior to the given date]' \
         '--no-sources[Ignore the `tool.uv.sources` table when resolving dependencies. Used to lock against the standards-compliant, publishable package metadata, as opposed to using any workspace, Git, URL, or local path sources \[env: UV_NO_SOURCES=\]]' \
         '--no-sources-package[Don'\''t use sources from the `tool.uv.sources` table for the specified packages \[env: UV_NO_SOURCES_PACKAGE=\]]' \
-        '--index[The URLs to use when resolving dependencies, in addition to the default index \[env: UV_INDEX=\]]' \
-        '--default-index[The URL of the default package index (by default: <https://pypi.org/simple>) \[env: UV_DEFAULT_INDEX=\]]' \
-        {-i,--index-url}'[(Deprecated: use `--default-index` instead) The URL of the Python package index (by default: <https://pypi.org/simple>) \[env: UV_INDEX_URL=\]]' \
-        '--extra-index-url[(Deprecated: use `--index` instead) Extra URLs of package indexes to use, in addition to `--index-url` \[env: UV_EXTRA_INDEX_URL=\]]' \
-        {-f,--find-links}'[Locations to search for candidate distributions, in addition to those found in the registry indexes \[env: UV_FIND_LINKS=\]]' \
+        '--index[The URLs to use when resolving dependencies, in addition to the default index \[env: UV_INDEX\]]' \
+        '--default-index[The URL of the default package index (by default: <https://pypi.org/simple>) \[env: UV_DEFAULT_INDEX\]]' \
+        {-i,--index-url}'[(Deprecated: use `--default-index` instead) The URL of the Python package index (by default: <https://pypi.org/simple>) \[env: UV_INDEX_URL\]]' \
+        '--extra-index-url[(Deprecated: use `--index` instead) Extra URLs of package indexes to use, in addition to `--index-url` \[env: UV_EXTRA_INDEX_URL\]]' \
+        {-f,--find-links}'[Locations to search for candidate distributions, in addition to those found in the registry indexes \[env: UV_FIND_LINKS\]]' \
         '--no-index[Ignore the registry index (e.g., PyPI), instead relying on direct URL dependencies and those provided via `--find-links`]' \
         '--index-strategy[The strategy to use when resolving against multiple index URLs \[env: UV_INDEX_STRATEGY=\] \[possible values: first-index, unsafe-first-match, unsafe-best-match\]]' \
         '--keyring-provider[Attempt to use `keyring` for authentication for index URLs \[env: UV_KEYRING_PROVIDER=\] \[possible values: disabled, subprocess\]]' \
@@ -1173,7 +1253,7 @@ function _uv_tool_upgrade {
         {-n,--no-cache}'[Avoid reading from or writing to the cache, instead using a temporary directory for the duration of the operation \[env: UV_NO_CACHE=\]]' \
         '--cache-dir[Path to the cache directory \[env: UV_CACHE_DIR=\]]':file:_files \
         '--color[Control the use of color in output \[possible values: auto, always, never\]]' \
-        '--native-tls[Whether to load TLS certificates from the platform'\''s native store \[env: UV_NATIVE_TLS=\]]' \
+        '--system-certs[Whether to load TLS certificates from the platform'\''s native certificate store \[env: UV_SYSTEM_CERTS=\]]' \
         '--offline[Disable network access \[env: UV_OFFLINE=\]]' \
         '--allow-insecure-host[Allow insecure connections to a host \[env: UV_INSECURE_HOST=\]]' \
         '--no-progress[Hide all progress outputs \[env: UV_NO_PROGRESS=\]]' \
@@ -1193,12 +1273,14 @@ function _uv_tool_list {
         '--show-with[Whether to display the additional requirements installed with each tool]' \
         '--show-extras[Whether to display the extra requirements installed with each tool]' \
         '--show-python[Whether to display the Python version associated with each tool]' \
+        '--outdated[List outdated tools]' \
+        '--exclude-newer[Limit candidate packages to those that were uploaded prior to the given date \[env: UV_EXCLUDE_NEWER=\]]' \
         {-n,--no-cache}'[Avoid reading from or writing to the cache, instead using a temporary directory for the duration of the operation \[env: UV_NO_CACHE=\]]' \
         '--cache-dir[Path to the cache directory \[env: UV_CACHE_DIR=\]]':file:_files \
         '--managed-python[Require use of uv-managed Python versions \[env: UV_MANAGED_PYTHON=\]]' \
         '--no-managed-python[Disable use of uv-managed Python versions \[env: UV_NO_MANAGED_PYTHON=\]]' \
         '--color[Control the use of color in output \[possible values: auto, always, never\]]' \
-        '--native-tls[Whether to load TLS certificates from the platform'\''s native store \[env: UV_NATIVE_TLS=\]]' \
+        '--system-certs[Whether to load TLS certificates from the platform'\''s native certificate store \[env: UV_SYSTEM_CERTS=\]]' \
         '--offline[Disable network access \[env: UV_OFFLINE=\]]' \
         '--allow-insecure-host[Allow insecure connections to a host \[env: UV_INSECURE_HOST=\]]' \
         '--no-progress[Hide all progress outputs \[env: UV_NO_PROGRESS=\]]' \
@@ -1220,7 +1302,7 @@ function _uv_tool_uninstall {
         '--no-managed-python[Disable use of uv-managed Python versions \[env: UV_NO_MANAGED_PYTHON=\]]' \
         '--no-python-downloads[Disable automatic downloads of Python. \[env: "UV_PYTHON_DOWNLOADS=never"\]]' \
         '--color[Control the use of color in output \[possible values: auto, always, never\]]' \
-        '--native-tls[Whether to load TLS certificates from the platform'\''s native store \[env: UV_NATIVE_TLS=\]]' \
+        '--system-certs[Whether to load TLS certificates from the platform'\''s native certificate store \[env: UV_SYSTEM_CERTS=\]]' \
         '--offline[Disable network access \[env: UV_OFFLINE=\]]' \
         '--allow-insecure-host[Allow insecure connections to a host \[env: UV_INSECURE_HOST=\]]' \
         '--no-progress[Hide all progress outputs \[env: UV_NO_PROGRESS=\]]' \
@@ -1241,7 +1323,7 @@ function _uv_tool_update-shell {
         '--no-managed-python[Disable use of uv-managed Python versions \[env: UV_NO_MANAGED_PYTHON=\]]' \
         '--no-python-downloads[Disable automatic downloads of Python. \[env: "UV_PYTHON_DOWNLOADS=never"\]]' \
         '--color[Control the use of color in output \[possible values: auto, always, never\]]' \
-        '--native-tls[Whether to load TLS certificates from the platform'\''s native store \[env: UV_NATIVE_TLS=\]]' \
+        '--system-certs[Whether to load TLS certificates from the platform'\''s native certificate store \[env: UV_SYSTEM_CERTS=\]]' \
         '--offline[Disable network access \[env: UV_OFFLINE=\]]' \
         '--allow-insecure-host[Allow insecure connections to a host \[env: UV_INSECURE_HOST=\]]' \
         '--no-progress[Hide all progress outputs \[env: UV_NO_PROGRESS=\]]' \
@@ -1263,7 +1345,7 @@ function _uv_tool_dir {
         '--no-managed-python[Disable use of uv-managed Python versions \[env: UV_NO_MANAGED_PYTHON=\]]' \
         '--no-python-downloads[Disable automatic downloads of Python. \[env: "UV_PYTHON_DOWNLOADS=never"\]]' \
         '--color[Control the use of color in output \[possible values: auto, always, never\]]' \
-        '--native-tls[Whether to load TLS certificates from the platform'\''s native store \[env: UV_NATIVE_TLS=\]]' \
+        '--system-certs[Whether to load TLS certificates from the platform'\''s native certificate store \[env: UV_SYSTEM_CERTS=\]]' \
         '--offline[Disable network access \[env: UV_OFFLINE=\]]' \
         '--allow-insecure-host[Allow insecure connections to a host \[env: UV_INSECURE_HOST=\]]' \
         '--no-progress[Hide all progress outputs \[env: UV_NO_PROGRESS=\]]' \
@@ -1303,7 +1385,7 @@ function _uv_python {
         '--no-managed-python[Disable use of uv-managed Python versions \[env: UV_NO_MANAGED_PYTHON=\]]' \
         '--no-python-downloads[Disable automatic downloads of Python. \[env: "UV_PYTHON_DOWNLOADS=never"\]]' \
         '--color[Control the use of color in output \[possible values: auto, always, never\]]' \
-        '--native-tls[Whether to load TLS certificates from the platform'\''s native store \[env: UV_NATIVE_TLS=\]]' \
+        '--system-certs[Whether to load TLS certificates from the platform'\''s native certificate store \[env: UV_SYSTEM_CERTS=\]]' \
         '--offline[Disable network access \[env: UV_OFFLINE=\]]' \
         '--allow-insecure-host[Allow insecure connections to a host \[env: UV_INSECURE_HOST=\]]' \
         '--no-progress[Hide all progress outputs \[env: UV_NO_PROGRESS=\]]' \
@@ -1375,7 +1457,7 @@ function _uv_python_list {
         '--no-managed-python[Disable use of uv-managed Python versions \[env: UV_NO_MANAGED_PYTHON=\]]' \
         '--no-python-downloads[Disable automatic downloads of Python. \[env: "UV_PYTHON_DOWNLOADS=never"\]]' \
         '--color[Control the use of color in output \[possible values: auto, always, never\]]' \
-        '--native-tls[Whether to load TLS certificates from the platform'\''s native store \[env: UV_NATIVE_TLS=\]]' \
+        '--system-certs[Whether to load TLS certificates from the platform'\''s native certificate store \[env: UV_SYSTEM_CERTS=\]]' \
         '--offline[Disable network access \[env: UV_OFFLINE=\]]' \
         '--allow-insecure-host[Allow insecure connections to a host \[env: UV_INSECURE_HOST=\]]' \
         '--no-progress[Hide all progress outputs \[env: UV_NO_PROGRESS=\]]' \
@@ -1407,7 +1489,7 @@ function _uv_python_install {
         '--no-managed-python[Disable use of uv-managed Python versions \[env: UV_NO_MANAGED_PYTHON=\]]' \
         '--no-python-downloads[Disable automatic downloads of Python. \[env: "UV_PYTHON_DOWNLOADS=never"\]]' \
         '--color[Control the use of color in output \[possible values: auto, always, never\]]' \
-        '--native-tls[Whether to load TLS certificates from the platform'\''s native store \[env: UV_NATIVE_TLS=\]]' \
+        '--system-certs[Whether to load TLS certificates from the platform'\''s native certificate store \[env: UV_SYSTEM_CERTS=\]]' \
         '--offline[Disable network access \[env: UV_OFFLINE=\]]' \
         '--allow-insecure-host[Allow insecure connections to a host \[env: UV_INSECURE_HOST=\]]' \
         '--no-progress[Hide all progress outputs \[env: UV_NO_PROGRESS=\]]' \
@@ -1434,7 +1516,7 @@ function _uv_python_upgrade {
         '--no-managed-python[Disable use of uv-managed Python versions \[env: UV_NO_MANAGED_PYTHON=\]]' \
         '--no-python-downloads[Disable automatic downloads of Python. \[env: "UV_PYTHON_DOWNLOADS=never"\]]' \
         '--color[Control the use of color in output \[possible values: auto, always, never\]]' \
-        '--native-tls[Whether to load TLS certificates from the platform'\''s native store \[env: UV_NATIVE_TLS=\]]' \
+        '--system-certs[Whether to load TLS certificates from the platform'\''s native certificate store \[env: UV_SYSTEM_CERTS=\]]' \
         '--offline[Disable network access \[env: UV_OFFLINE=\]]' \
         '--allow-insecure-host[Allow insecure connections to a host \[env: UV_INSECURE_HOST=\]]' \
         '--no-progress[Hide all progress outputs \[env: UV_NO_PROGRESS=\]]' \
@@ -1449,10 +1531,11 @@ function _uv_python_upgrade {
 
 function _uv_python_find {
     _arguments \
-        '--no-project[Avoid discovering a project or workspace]' \
+        '--no-project[Avoid discovering a project or workspace \[env: UV_NO_PROJECT=\]]' \
         '--system[Only find system Python interpreters \[env: UV_SYSTEM_PYTHON=\]]' \
         '--script[Find the environment for a Python script, rather than the current project]' \
         '--show-version[Show the Python version that would be used instead of the path to the interpreter]' \
+        '--resolve-links[Resolve symlinks in the output path]' \
         '--python-downloads-json-url[URL pointing to JSON of custom Python installations]' \
         {-n,--no-cache}'[Avoid reading from or writing to the cache, instead using a temporary directory for the duration of the operation \[env: UV_NO_CACHE=\]]' \
         '--cache-dir[Path to the cache directory \[env: UV_CACHE_DIR=\]]':file:_files \
@@ -1460,7 +1543,7 @@ function _uv_python_find {
         '--no-managed-python[Disable use of uv-managed Python versions \[env: UV_NO_MANAGED_PYTHON=\]]' \
         '--no-python-downloads[Disable automatic downloads of Python. \[env: "UV_PYTHON_DOWNLOADS=never"\]]' \
         '--color[Control the use of color in output \[possible values: auto, always, never\]]' \
-        '--native-tls[Whether to load TLS certificates from the platform'\''s native store \[env: UV_NATIVE_TLS=\]]' \
+        '--system-certs[Whether to load TLS certificates from the platform'\''s native certificate store \[env: UV_SYSTEM_CERTS=\]]' \
         '--offline[Disable network access \[env: UV_OFFLINE=\]]' \
         '--allow-insecure-host[Allow insecure connections to a host \[env: UV_INSECURE_HOST=\]]' \
         '--no-progress[Hide all progress outputs \[env: UV_NO_PROGRESS=\]]' \
@@ -1476,16 +1559,17 @@ function _uv_python_find {
 function _uv_python_pin {
     _arguments \
         '--resolved[Write the resolved Python interpreter path instead of the request]' \
-        '--no-project[Avoid validating the Python pin is compatible with the project or workspace]' \
+        '--no-project[Avoid validating the Python pin is compatible with the project or workspace \[env: UV_NO_PROJECT=\]]' \
         '--global[Update the global Python version pin]' \
         '--rm[Remove the Python version pin]' \
+        '--python-downloads-json-url[URL pointing to JSON of custom Python installations]' \
         {-n,--no-cache}'[Avoid reading from or writing to the cache, instead using a temporary directory for the duration of the operation \[env: UV_NO_CACHE=\]]' \
         '--cache-dir[Path to the cache directory \[env: UV_CACHE_DIR=\]]':file:_files \
         '--managed-python[Require use of uv-managed Python versions \[env: UV_MANAGED_PYTHON=\]]' \
         '--no-managed-python[Disable use of uv-managed Python versions \[env: UV_NO_MANAGED_PYTHON=\]]' \
         '--no-python-downloads[Disable automatic downloads of Python. \[env: "UV_PYTHON_DOWNLOADS=never"\]]' \
         '--color[Control the use of color in output \[possible values: auto, always, never\]]' \
-        '--native-tls[Whether to load TLS certificates from the platform'\''s native store \[env: UV_NATIVE_TLS=\]]' \
+        '--system-certs[Whether to load TLS certificates from the platform'\''s native certificate store \[env: UV_SYSTEM_CERTS=\]]' \
         '--offline[Disable network access \[env: UV_OFFLINE=\]]' \
         '--allow-insecure-host[Allow insecure connections to a host \[env: UV_INSECURE_HOST=\]]' \
         '--no-progress[Hide all progress outputs \[env: UV_NO_PROGRESS=\]]' \
@@ -1507,7 +1591,7 @@ function _uv_python_dir {
         '--no-managed-python[Disable use of uv-managed Python versions \[env: UV_NO_MANAGED_PYTHON=\]]' \
         '--no-python-downloads[Disable automatic downloads of Python. \[env: "UV_PYTHON_DOWNLOADS=never"\]]' \
         '--color[Control the use of color in output \[possible values: auto, always, never\]]' \
-        '--native-tls[Whether to load TLS certificates from the platform'\''s native store \[env: UV_NATIVE_TLS=\]]' \
+        '--system-certs[Whether to load TLS certificates from the platform'\''s native certificate store \[env: UV_SYSTEM_CERTS=\]]' \
         '--offline[Disable network access \[env: UV_OFFLINE=\]]' \
         '--allow-insecure-host[Allow insecure connections to a host \[env: UV_INSECURE_HOST=\]]' \
         '--no-progress[Hide all progress outputs \[env: UV_NO_PROGRESS=\]]' \
@@ -1530,7 +1614,7 @@ function _uv_python_uninstall {
         '--no-managed-python[Disable use of uv-managed Python versions \[env: UV_NO_MANAGED_PYTHON=\]]' \
         '--no-python-downloads[Disable automatic downloads of Python. \[env: "UV_PYTHON_DOWNLOADS=never"\]]' \
         '--color[Control the use of color in output \[possible values: auto, always, never\]]' \
-        '--native-tls[Whether to load TLS certificates from the platform'\''s native store \[env: UV_NATIVE_TLS=\]]' \
+        '--system-certs[Whether to load TLS certificates from the platform'\''s native certificate store \[env: UV_SYSTEM_CERTS=\]]' \
         '--offline[Disable network access \[env: UV_OFFLINE=\]]' \
         '--allow-insecure-host[Allow insecure connections to a host \[env: UV_INSECURE_HOST=\]]' \
         '--no-progress[Hide all progress outputs \[env: UV_NO_PROGRESS=\]]' \
@@ -1551,7 +1635,7 @@ function _uv_python_update-shell {
         '--no-managed-python[Disable use of uv-managed Python versions \[env: UV_NO_MANAGED_PYTHON=\]]' \
         '--no-python-downloads[Disable automatic downloads of Python. \[env: "UV_PYTHON_DOWNLOADS=never"\]]' \
         '--color[Control the use of color in output \[possible values: auto, always, never\]]' \
-        '--native-tls[Whether to load TLS certificates from the platform'\''s native store \[env: UV_NATIVE_TLS=\]]' \
+        '--system-certs[Whether to load TLS certificates from the platform'\''s native certificate store \[env: UV_SYSTEM_CERTS=\]]' \
         '--offline[Disable network access \[env: UV_OFFLINE=\]]' \
         '--allow-insecure-host[Allow insecure connections to a host \[env: UV_INSECURE_HOST=\]]' \
         '--no-progress[Hide all progress outputs \[env: UV_NO_PROGRESS=\]]' \
@@ -1592,7 +1676,7 @@ function _uv_pip {
         '--no-managed-python[Disable use of uv-managed Python versions \[env: UV_NO_MANAGED_PYTHON=\]]' \
         '--no-python-downloads[Disable automatic downloads of Python. \[env: "UV_PYTHON_DOWNLOADS=never"\]]' \
         '--color[Control the use of color in output \[possible values: auto, always, never\]]' \
-        '--native-tls[Whether to load TLS certificates from the platform'\''s native store \[env: UV_NATIVE_TLS=\]]' \
+        '--system-certs[Whether to load TLS certificates from the platform'\''s native certificate store \[env: UV_SYSTEM_CERTS=\]]' \
         '--offline[Disable network access \[env: UV_OFFLINE=\]]' \
         '--allow-insecure-host[Allow insecure connections to a host \[env: UV_INSECURE_HOST=\]]' \
         '--no-progress[Hide all progress outputs \[env: UV_NO_PROGRESS=\]]' \
@@ -1682,17 +1766,18 @@ function _uv_pip_compile {
         '--emit-find-links[Include `--find-links` entries in the generated output file]' \
         '--emit-build-options[Include `--no-binary` and `--only-binary` entries in the generated output file]' \
         '--emit-index-annotation[Include comment annotations indicating the index used to resolve each package (e.g., `# from https://pypi.org/simple`)]' \
-        '--torch-backend[The backend to use when fetching packages in the PyTorch ecosystem (e.g., `cpu`, `cu126`, or `auto`) \[env: UV_TORCH_BACKEND=\] \[possible values: auto, cpu, cu130, cu129, cu128, cu126, cu125, cu124, cu123, cu122, cu121, cu120, cu118, cu117, cu116, cu115, cu114, cu113, cu112, cu111, cu110, cu102, cu101, cu100, cu92, cu91, cu90, cu80, rocm6.4, rocm6.3, rocm6.2.4, rocm6.2, rocm6.1, rocm6.0, rocm5.7, rocm5.6, rocm5.5, rocm5.4.2, rocm5.4, rocm5.3, rocm5.2, rocm5.1.1, rocm4.2, rocm4.1, rocm4.0.1, xpu\]]' \
-        '--index[The URLs to use when resolving dependencies, in addition to the default index \[env: UV_INDEX=\]]' \
-        '--default-index[The URL of the default package index (by default: <https://pypi.org/simple>) \[env: UV_DEFAULT_INDEX=\]]' \
-        {-i,--index-url}'[(Deprecated: use `--default-index` instead) The URL of the Python package index (by default: <https://pypi.org/simple>) \[env: UV_INDEX_URL=\]]' \
-        '--extra-index-url[(Deprecated: use `--index` instead) Extra URLs of package indexes to use, in addition to `--index-url` \[env: UV_EXTRA_INDEX_URL=\]]' \
-        {-f,--find-links}'[Locations to search for candidate distributions, in addition to those found in the registry indexes \[env: UV_FIND_LINKS=\]]' \
+        '--torch-backend[The backend to use when fetching packages in the PyTorch ecosystem (e.g., `cpu`, `cu126`, or `auto`) \[env: UV_TORCH_BACKEND=\] \[possible values: auto, cpu, cu130, cu129, cu128, cu126, cu125, cu124, cu123, cu122, cu121, cu120, cu118, cu117, cu116, cu115, cu114, cu113, cu112, cu111, cu110, cu102, cu101, cu100, cu92, cu91, cu90, cu80, rocm7.2, rocm7.1, rocm7.0, rocm6.4, rocm6.3, rocm6.2.4, rocm6.2, rocm6.1, rocm6.0, rocm5.7, rocm5.6, rocm5.5, rocm5.4.2, rocm5.4, rocm5.3, rocm5.2, rocm5.1.1, rocm4.2, rocm4.1, rocm4.0.1, xpu\]]' \
+        '--index[The URLs to use when resolving dependencies, in addition to the default index \[env: UV_INDEX\]]' \
+        '--default-index[The URL of the default package index (by default: <https://pypi.org/simple>) \[env: UV_DEFAULT_INDEX\]]' \
+        {-i,--index-url}'[(Deprecated: use `--default-index` instead) The URL of the Python package index (by default: <https://pypi.org/simple>) \[env: UV_INDEX_URL\]]' \
+        '--extra-index-url[(Deprecated: use `--index` instead) Extra URLs of package indexes to use, in addition to `--index-url` \[env: UV_EXTRA_INDEX_URL\]]' \
+        {-f,--find-links}'[Locations to search for candidate distributions, in addition to those found in the registry indexes \[env: UV_FIND_LINKS\]]' \
         '--no-index[Ignore the registry index (e.g., PyPI), instead relying on direct URL dependencies and those provided via `--find-links`]' \
         '--index-strategy[The strategy to use when resolving against multiple index URLs \[env: UV_INDEX_STRATEGY=\] \[possible values: first-index, unsafe-first-match, unsafe-best-match\]]' \
         '--keyring-provider[Attempt to use `keyring` for authentication for index URLs \[env: UV_KEYRING_PROVIDER=\] \[possible values: disabled, subprocess\]]' \
         {-U,--upgrade}'[Allow package upgrades, ignoring pinned versions in any existing output file. Implies `--refresh`]' \
         {-P,--upgrade-package}'[Allow upgrades for a specific package, ignoring pinned versions in any existing output file. Implies `--refresh-package`]' \
+        '--upgrade-group[Allow upgrades for all packages in a dependency group, ignoring pinned versions in any existing output file]' \
         '--resolution[The strategy to use when selecting between the different compatible versions for a given package requirement \[env: UV_RESOLUTION=\] \[possible values: highest, lowest, lowest-direct\]]' \
         '--prerelease[The strategy to use when considering pre-release versions \[env: UV_PRERELEASE=\] \[possible values: disallow, allow, if-necessary, explicit, if-necessary-or-explicit\]]' \
         '--fork-strategy[The strategy to use when selecting multiple versions of a given package across Python versions and platforms \[env: UV_FORK_STRATEGY=\] \[possible values: fewest, requires-python\]]' \
@@ -1715,7 +1800,7 @@ function _uv_pip_compile {
         '--no-managed-python[Disable use of uv-managed Python versions \[env: UV_NO_MANAGED_PYTHON=\]]' \
         '--no-python-downloads[Disable automatic downloads of Python. \[env: "UV_PYTHON_DOWNLOADS=never"\]]' \
         '--color[Control the use of color in output \[possible values: auto, always, never\]]' \
-        '--native-tls[Whether to load TLS certificates from the platform'\''s native store \[env: UV_NATIVE_TLS=\]]' \
+        '--system-certs[Whether to load TLS certificates from the platform'\''s native certificate store \[env: UV_SYSTEM_CERTS=\]]' \
         '--offline[Disable network access \[env: UV_OFFLINE=\]]' \
         '--allow-insecure-host[Allow insecure connections to a host \[env: UV_INSECURE_HOST=\]]' \
         '--no-progress[Hide all progress outputs \[env: UV_NO_PROGRESS=\]]' \
@@ -1738,7 +1823,7 @@ function _uv_pip_sync {
         '--no-verify-hashes[Disable validation of hashes in the requirements file \[env: UV_NO_VERIFY_HASHES=\]]' \
         '--system[Install packages into the system Python environment \[env: UV_SYSTEM_PYTHON=\]]' \
         '--break-system-packages[Allow uv to modify an `EXTERNALLY-MANAGED` Python installation \[env: UV_BREAK_SYSTEM_PACKAGES=\]]' \
-        {--no-break-system-packages,--target}'[Install packages into the specified directory, rather than into the virtual or system Python environment. The packages will be installed at the top-level of the directory]' \
+        {--no-break-system-packages,-t,--target}'[Install packages into the specified directory, rather than into the virtual or system Python environment. The packages will be installed at the top-level of the directory]' \
         '--prefix[Install packages into `lib`, `bin`, and other top-level folders under the specified directory, as if a virtual environment were present at that location]' \
         '--no-build[Don'\''t build source distributions]' \
         '--no-binary[Don'\''t install pre-built wheels]' \
@@ -1748,12 +1833,12 @@ function _uv_pip_sync {
         '--python-platform[The platform for which requirements should be installed \[possible values: windows, linux, macos, x86_64-pc-windows-msvc, aarch64-pc-windows-msvc, i686-pc-windows-msvc, x86_64-unknown-linux-gnu, aarch64-apple-darwin, x86_64-apple-darwin, aarch64-unknown-linux-gnu, aarch64-unknown-linux-musl, x86_64-unknown-linux-musl, riscv64-unknown-linux, x86_64-manylinux2014, x86_64-manylinux_2_17, x86_64-manylinux_2_28, x86_64-manylinux_2_31, x86_64-manylinux_2_32, x86_64-manylinux_2_33, x86_64-manylinux_2_34, x86_64-manylinux_2_35, x86_64-manylinux_2_36, x86_64-manylinux_2_37, x86_64-manylinux_2_38, x86_64-manylinux_2_39, x86_64-manylinux_2_40, aarch64-manylinux2014, aarch64-manylinux_2_17, aarch64-manylinux_2_28, aarch64-manylinux_2_31, aarch64-manylinux_2_32, aarch64-manylinux_2_33, aarch64-manylinux_2_34, aarch64-manylinux_2_35, aarch64-manylinux_2_36, aarch64-manylinux_2_37, aarch64-manylinux_2_38, aarch64-manylinux_2_39, aarch64-manylinux_2_40, aarch64-linux-android, x86_64-linux-android, wasm32-pyodide2024, arm64-apple-ios, arm64-apple-ios-simulator, x86_64-apple-ios-simulator\]]' \
         '--strict[Validate the Python environment after completing the installation, to detect packages with missing dependencies or other issues]' \
         '--dry-run[Perform a dry run, i.e., don'\''t actually install anything but resolve the dependencies and print the resulting plan]' \
-        '--torch-backend[The backend to use when fetching packages in the PyTorch ecosystem (e.g., `cpu`, `cu126`, or `auto`) \[env: UV_TORCH_BACKEND=\] \[possible values: auto, cpu, cu130, cu129, cu128, cu126, cu125, cu124, cu123, cu122, cu121, cu120, cu118, cu117, cu116, cu115, cu114, cu113, cu112, cu111, cu110, cu102, cu101, cu100, cu92, cu91, cu90, cu80, rocm6.4, rocm6.3, rocm6.2.4, rocm6.2, rocm6.1, rocm6.0, rocm5.7, rocm5.6, rocm5.5, rocm5.4.2, rocm5.4, rocm5.3, rocm5.2, rocm5.1.1, rocm4.2, rocm4.1, rocm4.0.1, xpu\]]' \
-        '--index[The URLs to use when resolving dependencies, in addition to the default index \[env: UV_INDEX=\]]' \
-        '--default-index[The URL of the default package index (by default: <https://pypi.org/simple>) \[env: UV_DEFAULT_INDEX=\]]' \
-        {-i,--index-url}'[(Deprecated: use `--default-index` instead) The URL of the Python package index (by default: <https://pypi.org/simple>) \[env: UV_INDEX_URL=\]]' \
-        '--extra-index-url[(Deprecated: use `--index` instead) Extra URLs of package indexes to use, in addition to `--index-url` \[env: UV_EXTRA_INDEX_URL=\]]' \
-        {-f,--find-links}'[Locations to search for candidate distributions, in addition to those found in the registry indexes \[env: UV_FIND_LINKS=\]]' \
+        '--torch-backend[The backend to use when fetching packages in the PyTorch ecosystem (e.g., `cpu`, `cu126`, or `auto`) \[env: UV_TORCH_BACKEND=\] \[possible values: auto, cpu, cu130, cu129, cu128, cu126, cu125, cu124, cu123, cu122, cu121, cu120, cu118, cu117, cu116, cu115, cu114, cu113, cu112, cu111, cu110, cu102, cu101, cu100, cu92, cu91, cu90, cu80, rocm7.2, rocm7.1, rocm7.0, rocm6.4, rocm6.3, rocm6.2.4, rocm6.2, rocm6.1, rocm6.0, rocm5.7, rocm5.6, rocm5.5, rocm5.4.2, rocm5.4, rocm5.3, rocm5.2, rocm5.1.1, rocm4.2, rocm4.1, rocm4.0.1, xpu\]]' \
+        '--index[The URLs to use when resolving dependencies, in addition to the default index \[env: UV_INDEX\]]' \
+        '--default-index[The URL of the default package index (by default: <https://pypi.org/simple>) \[env: UV_DEFAULT_INDEX\]]' \
+        {-i,--index-url}'[(Deprecated: use `--default-index` instead) The URL of the Python package index (by default: <https://pypi.org/simple>) \[env: UV_INDEX_URL\]]' \
+        '--extra-index-url[(Deprecated: use `--index` instead) Extra URLs of package indexes to use, in addition to `--index-url` \[env: UV_EXTRA_INDEX_URL\]]' \
+        {-f,--find-links}'[Locations to search for candidate distributions, in addition to those found in the registry indexes \[env: UV_FIND_LINKS\]]' \
         '--no-index[Ignore the registry index (e.g., PyPI), instead relying on direct URL dependencies and those provided via `--find-links`]' \
         '--index-strategy[The strategy to use when resolving against multiple index URLs \[env: UV_INDEX_STRATEGY=\] \[possible values: first-index, unsafe-first-match, unsafe-best-match\]]' \
         '--keyring-provider[Attempt to use `keyring` for authentication for index URLs \[env: UV_KEYRING_PROVIDER=\] \[possible values: disabled, subprocess\]]' \
@@ -1777,7 +1862,7 @@ function _uv_pip_sync {
         '--no-managed-python[Disable use of uv-managed Python versions \[env: UV_NO_MANAGED_PYTHON=\]]' \
         '--no-python-downloads[Disable automatic downloads of Python. \[env: "UV_PYTHON_DOWNLOADS=never"\]]' \
         '--color[Control the use of color in output \[possible values: auto, always, never\]]' \
-        '--native-tls[Whether to load TLS certificates from the platform'\''s native store \[env: UV_NATIVE_TLS=\]]' \
+        '--system-certs[Whether to load TLS certificates from the platform'\''s native certificate store \[env: UV_SYSTEM_CERTS=\]]' \
         '--offline[Disable network access \[env: UV_OFFLINE=\]]' \
         '--allow-insecure-host[Allow insecure connections to a host \[env: UV_INSECURE_HOST=\]]' \
         '--no-progress[Hide all progress outputs \[env: UV_NO_PROGRESS=\]]' \
@@ -1793,6 +1878,7 @@ function _uv_pip_install {
     _arguments \
         {-r,--requirements}'[Install the packages listed in the given files]' \
         {-e,--editable}'[Install the editable package based on the provided local file path]' \
+        '--no-editable[Install any editable dependencies as non-editable \[env: UV_NO_EDITABLE=\]]' \
         {-c,--constraints}'[Constrain versions using the given requirements files \[env: UV_CONSTRAINT=\]]' \
         '--overrides[Override versions using the given requirements files \[env: UV_OVERRIDE=\]]' \
         '--excludes[Exclude packages from resolution using the given requirements files \[env: UV_EXCLUDE=\]]' \
@@ -1805,7 +1891,7 @@ function _uv_pip_install {
         '--no-verify-hashes[Disable validation of hashes in the requirements file \[env: UV_NO_VERIFY_HASHES=\]]' \
         '--system[Install packages into the system Python environment \[env: UV_SYSTEM_PYTHON=\]]' \
         '--break-system-packages[Allow uv to modify an `EXTERNALLY-MANAGED` Python installation \[env: UV_BREAK_SYSTEM_PACKAGES=\]]' \
-        {--no-break-system-packages,--target}'[Install packages into the specified directory, rather than into the virtual or system Python environment. The packages will be installed at the top-level of the directory]' \
+        {--no-break-system-packages,-t,--target}'[Install packages into the specified directory, rather than into the virtual or system Python environment. The packages will be installed at the top-level of the directory]' \
         '--prefix[Install packages into `lib`, `bin`, and other top-level folders under the specified directory, as if a virtual environment were present at that location]' \
         '--no-build[Don'\''t build source distributions]' \
         '--no-binary[Don'\''t install pre-built wheels]' \
@@ -1815,17 +1901,18 @@ function _uv_pip_install {
         '--exact[Perform an exact sync, removing extraneous packages]' \
         '--strict[Validate the Python environment after completing the installation, to detect packages with missing dependencies or other issues]' \
         '--dry-run[Perform a dry run, i.e., don'\''t actually install anything but resolve the dependencies and print the resulting plan]' \
-        '--torch-backend[The backend to use when fetching packages in the PyTorch ecosystem (e.g., `cpu`, `cu126`, or `auto`) \[env: UV_TORCH_BACKEND=\] \[possible values: auto, cpu, cu130, cu129, cu128, cu126, cu125, cu124, cu123, cu122, cu121, cu120, cu118, cu117, cu116, cu115, cu114, cu113, cu112, cu111, cu110, cu102, cu101, cu100, cu92, cu91, cu90, cu80, rocm6.4, rocm6.3, rocm6.2.4, rocm6.2, rocm6.1, rocm6.0, rocm5.7, rocm5.6, rocm5.5, rocm5.4.2, rocm5.4, rocm5.3, rocm5.2, rocm5.1.1, rocm4.2, rocm4.1, rocm4.0.1, xpu\]]' \
-        '--index[The URLs to use when resolving dependencies, in addition to the default index \[env: UV_INDEX=\]]' \
-        '--default-index[The URL of the default package index (by default: <https://pypi.org/simple>) \[env: UV_DEFAULT_INDEX=\]]' \
-        {-i,--index-url}'[(Deprecated: use `--default-index` instead) The URL of the Python package index (by default: <https://pypi.org/simple>) \[env: UV_INDEX_URL=\]]' \
-        '--extra-index-url[(Deprecated: use `--index` instead) Extra URLs of package indexes to use, in addition to `--index-url` \[env: UV_EXTRA_INDEX_URL=\]]' \
-        {-f,--find-links}'[Locations to search for candidate distributions, in addition to those found in the registry indexes \[env: UV_FIND_LINKS=\]]' \
+        '--torch-backend[The backend to use when fetching packages in the PyTorch ecosystem (e.g., `cpu`, `cu126`, or `auto`) \[env: UV_TORCH_BACKEND=\] \[possible values: auto, cpu, cu130, cu129, cu128, cu126, cu125, cu124, cu123, cu122, cu121, cu120, cu118, cu117, cu116, cu115, cu114, cu113, cu112, cu111, cu110, cu102, cu101, cu100, cu92, cu91, cu90, cu80, rocm7.2, rocm7.1, rocm7.0, rocm6.4, rocm6.3, rocm6.2.4, rocm6.2, rocm6.1, rocm6.0, rocm5.7, rocm5.6, rocm5.5, rocm5.4.2, rocm5.4, rocm5.3, rocm5.2, rocm5.1.1, rocm4.2, rocm4.1, rocm4.0.1, xpu\]]' \
+        '--index[The URLs to use when resolving dependencies, in addition to the default index \[env: UV_INDEX\]]' \
+        '--default-index[The URL of the default package index (by default: <https://pypi.org/simple>) \[env: UV_DEFAULT_INDEX\]]' \
+        {-i,--index-url}'[(Deprecated: use `--default-index` instead) The URL of the Python package index (by default: <https://pypi.org/simple>) \[env: UV_INDEX_URL\]]' \
+        '--extra-index-url[(Deprecated: use `--index` instead) Extra URLs of package indexes to use, in addition to `--index-url` \[env: UV_EXTRA_INDEX_URL\]]' \
+        {-f,--find-links}'[Locations to search for candidate distributions, in addition to those found in the registry indexes \[env: UV_FIND_LINKS\]]' \
         '--no-index[Ignore the registry index (e.g., PyPI), instead relying on direct URL dependencies and those provided via `--find-links`]' \
         '--index-strategy[The strategy to use when resolving against multiple index URLs \[env: UV_INDEX_STRATEGY=\] \[possible values: first-index, unsafe-first-match, unsafe-best-match\]]' \
         '--keyring-provider[Attempt to use `keyring` for authentication for index URLs \[env: UV_KEYRING_PROVIDER=\] \[possible values: disabled, subprocess\]]' \
         {-U,--upgrade}'[Allow package upgrades, ignoring pinned versions in any existing output file. Implies `--refresh`]' \
         {-P,--upgrade-package}'[Allow upgrades for a specific package, ignoring pinned versions in any existing output file. Implies `--refresh-package`]' \
+        '--upgrade-group[Allow upgrades for all packages in a dependency group, ignoring pinned versions in any existing output file]' \
         '--resolution[The strategy to use when selecting between the different compatible versions for a given package requirement \[env: UV_RESOLUTION=\] \[possible values: highest, lowest, lowest-direct\]]' \
         '--prerelease[The strategy to use when considering pre-release versions \[env: UV_PRERELEASE=\] \[possible values: disallow, allow, if-necessary, explicit, if-necessary-or-explicit\]]' \
         '--fork-strategy[The strategy to use when selecting multiple versions of a given package across Python versions and platforms \[env: UV_FORK_STRATEGY=\] \[possible values: fewest, requires-python\]]' \
@@ -1850,7 +1937,7 @@ function _uv_pip_install {
         '--no-managed-python[Disable use of uv-managed Python versions \[env: UV_NO_MANAGED_PYTHON=\]]' \
         '--no-python-downloads[Disable automatic downloads of Python. \[env: "UV_PYTHON_DOWNLOADS=never"\]]' \
         '--color[Control the use of color in output \[possible values: auto, always, never\]]' \
-        '--native-tls[Whether to load TLS certificates from the platform'\''s native store \[env: UV_NATIVE_TLS=\]]' \
+        '--system-certs[Whether to load TLS certificates from the platform'\''s native certificate store \[env: UV_SYSTEM_CERTS=\]]' \
         '--offline[Disable network access \[env: UV_OFFLINE=\]]' \
         '--allow-insecure-host[Allow insecure connections to a host \[env: UV_INSECURE_HOST=\]]' \
         '--no-progress[Hide all progress outputs \[env: UV_NO_PROGRESS=\]]' \
@@ -1869,7 +1956,7 @@ function _uv_pip_uninstall {
         '--keyring-provider[Attempt to use `keyring` for authentication for remote requirements files \[env: UV_KEYRING_PROVIDER=\] \[possible values: disabled, subprocess\]]' \
         '--system[Use the system Python to uninstall packages \[env: UV_SYSTEM_PYTHON=\]]' \
         '--break-system-packages[Allow uv to modify an `EXTERNALLY-MANAGED` Python installation \[env: UV_BREAK_SYSTEM_PACKAGES=\]]' \
-        {--no-break-system-packages,--target}'[Uninstall packages from the specified `--target` directory]' \
+        {--no-break-system-packages,-t,--target}'[Uninstall packages from the specified `--target` directory]' \
         '--prefix[Uninstall packages from the specified `--prefix` directory]' \
         '--dry-run[Perform a dry run, i.e., don'\''t actually uninstall anything but print the resulting plan]' \
         {-p,--python}'[The Python interpreter from which packages should be uninstalled. \[env: UV_PYTHON=\]]' \
@@ -1879,7 +1966,7 @@ function _uv_pip_uninstall {
         {-n,--no-cache}'[Avoid reading from or writing to the cache, instead using a temporary directory for the duration of the operation \[env: UV_NO_CACHE=\]]' \
         '--cache-dir[Path to the cache directory \[env: UV_CACHE_DIR=\]]':file:_files \
         '--color[Control the use of color in output \[possible values: auto, always, never\]]' \
-        '--native-tls[Whether to load TLS certificates from the platform'\''s native store \[env: UV_NATIVE_TLS=\]]' \
+        '--system-certs[Whether to load TLS certificates from the platform'\''s native certificate store \[env: UV_SYSTEM_CERTS=\]]' \
         '--offline[Disable network access \[env: UV_OFFLINE=\]]' \
         '--allow-insecure-host[Allow insecure connections to a host \[env: UV_INSECURE_HOST=\]]' \
         '--no-progress[Hide all progress outputs \[env: UV_NO_PROGRESS=\]]' \
@@ -1895,10 +1982,11 @@ function _uv_pip_uninstall {
 function _uv_pip_freeze {
     _arguments \
         '--exclude-editable[Exclude any editable packages from output]' \
+        '--exclude[Exclude the specified package(s) from the output]' \
         '--strict[Validate the Python environment, to detect packages with missing dependencies and other issues]' \
         '--path[Restrict to the specified installation path for listing packages (can be used multiple times)]':file:_files \
         '--system[List packages in the system Python environment \[env: UV_SYSTEM_PYTHON=\]]' \
-        '--target[List packages from the specified `--target` directory]' \
+        {-t,--target}'[List packages from the specified `--target` directory]' \
         '--prefix[List packages from the specified `--prefix` directory]' \
         {-p,--python}'[The Python interpreter for which packages should be listed. \[env: UV_PYTHON=\]]' \
         '--managed-python[Require use of uv-managed Python versions \[env: UV_MANAGED_PYTHON=\]]' \
@@ -1907,7 +1995,7 @@ function _uv_pip_freeze {
         {-n,--no-cache}'[Avoid reading from or writing to the cache, instead using a temporary directory for the duration of the operation \[env: UV_NO_CACHE=\]]' \
         '--cache-dir[Path to the cache directory \[env: UV_CACHE_DIR=\]]':file:_files \
         '--color[Control the use of color in output \[possible values: auto, always, never\]]' \
-        '--native-tls[Whether to load TLS certificates from the platform'\''s native store \[env: UV_NATIVE_TLS=\]]' \
+        '--system-certs[Whether to load TLS certificates from the platform'\''s native certificate store \[env: UV_SYSTEM_CERTS=\]]' \
         '--offline[Disable network access \[env: UV_OFFLINE=\]]' \
         '--allow-insecure-host[Allow insecure connections to a host \[env: UV_INSECURE_HOST=\]]' \
         '--no-progress[Hide all progress outputs \[env: UV_NO_PROGRESS=\]]' \
@@ -1929,13 +2017,13 @@ function _uv_pip_list {
         '--outdated[List outdated packages]' \
         '--strict[Validate the Python environment, to detect packages with missing dependencies and other issues]' \
         '--system[List packages in the system Python environment \[env: UV_SYSTEM_PYTHON=\]]' \
-        '--target[List packages from the specified `--target` directory]' \
+        {-t,--target}'[List packages from the specified `--target` directory]' \
         '--prefix[List packages from the specified `--prefix` directory]' \
-        '--index[The URLs to use when resolving dependencies, in addition to the default index \[env: UV_INDEX=\]]' \
-        '--default-index[The URL of the default package index (by default: <https://pypi.org/simple>) \[env: UV_DEFAULT_INDEX=\]]' \
-        {-i,--index-url}'[(Deprecated: use `--default-index` instead) The URL of the Python package index (by default: <https://pypi.org/simple>) \[env: UV_INDEX_URL=\]]' \
-        '--extra-index-url[(Deprecated: use `--index` instead) Extra URLs of package indexes to use, in addition to `--index-url` \[env: UV_EXTRA_INDEX_URL=\]]' \
-        {-f,--find-links}'[Locations to search for candidate distributions, in addition to those found in the registry indexes \[env: UV_FIND_LINKS=\]]' \
+        '--index[The URLs to use when resolving dependencies, in addition to the default index \[env: UV_INDEX\]]' \
+        '--default-index[The URL of the default package index (by default: <https://pypi.org/simple>) \[env: UV_DEFAULT_INDEX\]]' \
+        {-i,--index-url}'[(Deprecated: use `--default-index` instead) The URL of the Python package index (by default: <https://pypi.org/simple>) \[env: UV_INDEX_URL\]]' \
+        '--extra-index-url[(Deprecated: use `--index` instead) Extra URLs of package indexes to use, in addition to `--index-url` \[env: UV_EXTRA_INDEX_URL\]]' \
+        {-f,--find-links}'[Locations to search for candidate distributions, in addition to those found in the registry indexes \[env: UV_FIND_LINKS\]]' \
         '--no-index[Ignore the registry index (e.g., PyPI), instead relying on direct URL dependencies and those provided via `--find-links`]' \
         '--index-strategy[The strategy to use when resolving against multiple index URLs \[env: UV_INDEX_STRATEGY=\] \[possible values: first-index, unsafe-first-match, unsafe-best-match\]]' \
         '--keyring-provider[Attempt to use `keyring` for authentication for index URLs \[env: UV_KEYRING_PROVIDER=\] \[possible values: disabled, subprocess\]]' \
@@ -1947,7 +2035,7 @@ function _uv_pip_list {
         {-n,--no-cache}'[Avoid reading from or writing to the cache, instead using a temporary directory for the duration of the operation \[env: UV_NO_CACHE=\]]' \
         '--cache-dir[Path to the cache directory \[env: UV_CACHE_DIR=\]]':file:_files \
         '--color[Control the use of color in output \[possible values: auto, always, never\]]' \
-        '--native-tls[Whether to load TLS certificates from the platform'\''s native store \[env: UV_NATIVE_TLS=\]]' \
+        '--system-certs[Whether to load TLS certificates from the platform'\''s native certificate store \[env: UV_SYSTEM_CERTS=\]]' \
         '--offline[Disable network access \[env: UV_OFFLINE=\]]' \
         '--allow-insecure-host[Allow insecure connections to a host \[env: UV_INSECURE_HOST=\]]' \
         '--no-progress[Hide all progress outputs \[env: UV_NO_PROGRESS=\]]' \
@@ -1965,7 +2053,7 @@ function _uv_pip_show {
         '--strict[Validate the Python environment, to detect packages with missing dependencies and other issues]' \
         {-f,--files}'[Show the full list of installed files for each package]' \
         '--system[Show a package in the system Python environment \[env: UV_SYSTEM_PYTHON=\]]' \
-        '--target[Show a package from the specified `--target` directory]' \
+        {-t,--target}'[Show a package from the specified `--target` directory]' \
         '--prefix[Show a package from the specified `--prefix` directory]' \
         {-p,--python}'[The Python interpreter to find the package in. \[env: UV_PYTHON=\]]' \
         '--managed-python[Require use of uv-managed Python versions \[env: UV_MANAGED_PYTHON=\]]' \
@@ -1974,7 +2062,7 @@ function _uv_pip_show {
         {-n,--no-cache}'[Avoid reading from or writing to the cache, instead using a temporary directory for the duration of the operation \[env: UV_NO_CACHE=\]]' \
         '--cache-dir[Path to the cache directory \[env: UV_CACHE_DIR=\]]':file:_files \
         '--color[Control the use of color in output \[possible values: auto, always, never\]]' \
-        '--native-tls[Whether to load TLS certificates from the platform'\''s native store \[env: UV_NATIVE_TLS=\]]' \
+        '--system-certs[Whether to load TLS certificates from the platform'\''s native certificate store \[env: UV_SYSTEM_CERTS=\]]' \
         '--offline[Disable network access \[env: UV_OFFLINE=\]]' \
         '--allow-insecure-host[Allow insecure connections to a host \[env: UV_INSECURE_HOST=\]]' \
         '--no-progress[Hide all progress outputs \[env: UV_NO_PROGRESS=\]]' \
@@ -1999,11 +2087,11 @@ function _uv_pip_tree {
         '--show-sizes[Show compressed wheel sizes for packages in the tree]' \
         '--strict[Validate the Python environment, to detect packages with missing dependencies and other issues]' \
         '--system[List packages in the system Python environment \[env: UV_SYSTEM_PYTHON=\]]' \
-        '--index[The URLs to use when resolving dependencies, in addition to the default index \[env: UV_INDEX=\]]' \
-        '--default-index[The URL of the default package index (by default: <https://pypi.org/simple>) \[env: UV_DEFAULT_INDEX=\]]' \
-        {-i,--index-url}'[(Deprecated: use `--default-index` instead) The URL of the Python package index (by default: <https://pypi.org/simple>) \[env: UV_INDEX_URL=\]]' \
-        '--extra-index-url[(Deprecated: use `--index` instead) Extra URLs of package indexes to use, in addition to `--index-url` \[env: UV_EXTRA_INDEX_URL=\]]' \
-        {-f,--find-links}'[Locations to search for candidate distributions, in addition to those found in the registry indexes \[env: UV_FIND_LINKS=\]]' \
+        '--index[The URLs to use when resolving dependencies, in addition to the default index \[env: UV_INDEX\]]' \
+        '--default-index[The URL of the default package index (by default: <https://pypi.org/simple>) \[env: UV_DEFAULT_INDEX\]]' \
+        {-i,--index-url}'[(Deprecated: use `--default-index` instead) The URL of the Python package index (by default: <https://pypi.org/simple>) \[env: UV_INDEX_URL\]]' \
+        '--extra-index-url[(Deprecated: use `--index` instead) Extra URLs of package indexes to use, in addition to `--index-url` \[env: UV_EXTRA_INDEX_URL\]]' \
+        {-f,--find-links}'[Locations to search for candidate distributions, in addition to those found in the registry indexes \[env: UV_FIND_LINKS\]]' \
         '--no-index[Ignore the registry index (e.g., PyPI), instead relying on direct URL dependencies and those provided via `--find-links`]' \
         '--index-strategy[The strategy to use when resolving against multiple index URLs \[env: UV_INDEX_STRATEGY=\] \[possible values: first-index, unsafe-first-match, unsafe-best-match\]]' \
         '--keyring-provider[Attempt to use `keyring` for authentication for index URLs \[env: UV_KEYRING_PROVIDER=\] \[possible values: disabled, subprocess\]]' \
@@ -2015,7 +2103,7 @@ function _uv_pip_tree {
         {-n,--no-cache}'[Avoid reading from or writing to the cache, instead using a temporary directory for the duration of the operation \[env: UV_NO_CACHE=\]]' \
         '--cache-dir[Path to the cache directory \[env: UV_CACHE_DIR=\]]':file:_files \
         '--color[Control the use of color in output \[possible values: auto, always, never\]]' \
-        '--native-tls[Whether to load TLS certificates from the platform'\''s native store \[env: UV_NATIVE_TLS=\]]' \
+        '--system-certs[Whether to load TLS certificates from the platform'\''s native certificate store \[env: UV_SYSTEM_CERTS=\]]' \
         '--offline[Disable network access \[env: UV_OFFLINE=\]]' \
         '--allow-insecure-host[Allow insecure connections to a host \[env: UV_INSECURE_HOST=\]]' \
         '--no-progress[Hide all progress outputs \[env: UV_NO_PROGRESS=\]]' \
@@ -2040,7 +2128,7 @@ function _uv_pip_check {
         {-n,--no-cache}'[Avoid reading from or writing to the cache, instead using a temporary directory for the duration of the operation \[env: UV_NO_CACHE=\]]' \
         '--cache-dir[Path to the cache directory \[env: UV_CACHE_DIR=\]]':file:_files \
         '--color[Control the use of color in output \[possible values: auto, always, never\]]' \
-        '--native-tls[Whether to load TLS certificates from the platform'\''s native store \[env: UV_NATIVE_TLS=\]]' \
+        '--system-certs[Whether to load TLS certificates from the platform'\''s native certificate store \[env: UV_SYSTEM_CERTS=\]]' \
         '--offline[Disable network access \[env: UV_OFFLINE=\]]' \
         '--allow-insecure-host[Allow insecure connections to a host \[env: UV_INSECURE_HOST=\]]' \
         '--no-progress[Hide all progress outputs \[env: UV_NO_PROGRESS=\]]' \
@@ -2055,13 +2143,13 @@ function _uv_pip_check {
 
 function _uv_venv {
     _arguments \
-        '--no-project[Avoid discovering a project or workspace]' \
+        '--no-project[Avoid discovering a project or workspace \[env: UV_NO_PROJECT=\]]' \
         '--seed[Install seed packages (one or more of: `pip`, `setuptools`, and `wheel`) into the virtual environment \[env: UV_VENV_SEED=\]]' \
         {-c,--clear}'[Remove any existing files or directories at the target path \[env: UV_VENV_CLEAR=\]]' \
         '--allow-existing[Preserve any existing files or directories at the target path]' \
         '--prompt[Provide an alternative prompt prefix for the virtual environment.]' \
         '--system-site-packages[Give the virtual environment access to the system site packages directory]' \
-        '--relocatable[Make the virtual environment relocatable]' \
+        '--relocatable[Make the virtual environment relocatable \[env: UV_VENV_RELOCATABLE=\]]' \
         '--index-strategy[The strategy to use when resolving against multiple index URLs \[env: UV_INDEX_STRATEGY=\] \[possible values: first-index, unsafe-first-match, unsafe-best-match\]]' \
         '--keyring-provider[Attempt to use `keyring` for authentication for index URLs \[env: UV_KEYRING_PROVIDER=\] \[possible values: disabled, subprocess\]]' \
         '--exclude-newer[Limit candidate packages to those that were uploaded prior to the given date \[env: UV_EXCLUDE_NEWER=\]]' \
@@ -2071,18 +2159,18 @@ function _uv_venv {
         '--managed-python[Require use of uv-managed Python versions \[env: UV_MANAGED_PYTHON=\]]' \
         '--no-managed-python[Disable use of uv-managed Python versions \[env: UV_NO_MANAGED_PYTHON=\]]' \
         '--no-python-downloads[Disable automatic downloads of Python. \[env: "UV_PYTHON_DOWNLOADS=never"\]]' \
-        '--index[The URLs to use when resolving dependencies, in addition to the default index \[env: UV_INDEX=\]]' \
-        '--default-index[The URL of the default package index (by default: <https://pypi.org/simple>) \[env: UV_DEFAULT_INDEX=\]]' \
-        {-i,--index-url}'[(Deprecated: use `--default-index` instead) The URL of the Python package index (by default: <https://pypi.org/simple>) \[env: UV_INDEX_URL=\]]' \
-        '--extra-index-url[(Deprecated: use `--index` instead) Extra URLs of package indexes to use, in addition to `--index-url` \[env: UV_EXTRA_INDEX_URL=\]]' \
-        {-f,--find-links}'[Locations to search for candidate distributions, in addition to those found in the registry indexes \[env: UV_FIND_LINKS=\]]' \
+        '--index[The URLs to use when resolving dependencies, in addition to the default index \[env: UV_INDEX\]]' \
+        '--default-index[The URL of the default package index (by default: <https://pypi.org/simple>) \[env: UV_DEFAULT_INDEX\]]' \
+        {-i,--index-url}'[(Deprecated: use `--default-index` instead) The URL of the Python package index (by default: <https://pypi.org/simple>) \[env: UV_INDEX_URL\]]' \
+        '--extra-index-url[(Deprecated: use `--index` instead) Extra URLs of package indexes to use, in addition to `--index-url` \[env: UV_EXTRA_INDEX_URL\]]' \
+        {-f,--find-links}'[Locations to search for candidate distributions, in addition to those found in the registry indexes \[env: UV_FIND_LINKS\]]' \
         '--no-index[Ignore the registry index (e.g., PyPI), instead relying on direct URL dependencies and those provided via `--find-links`]' \
         '--refresh[Refresh all cached data]' \
         {-n,--no-cache}'[Avoid reading from or writing to the cache, instead using a temporary directory for the duration of the operation \[env: UV_NO_CACHE=\]]' \
         '--refresh-package[Refresh cached data for a specific package]' \
         '--cache-dir[Path to the cache directory \[env: UV_CACHE_DIR=\]]':file:_files \
         '--color[Control the use of color in output \[possible values: auto, always, never\]]' \
-        '--native-tls[Whether to load TLS certificates from the platform'\''s native store \[env: UV_NATIVE_TLS=\]]' \
+        '--system-certs[Whether to load TLS certificates from the platform'\''s native certificate store \[env: UV_SYSTEM_CERTS=\]]' \
         '--offline[Disable network access \[env: UV_OFFLINE=\]]' \
         '--allow-insecure-host[Allow insecure connections to a host \[env: UV_INSECURE_HOST=\]]' \
         '--no-progress[Hide all progress outputs \[env: UV_NO_PROGRESS=\]]' \
@@ -2113,16 +2201,17 @@ function _uv_build {
         '--managed-python[Require use of uv-managed Python versions \[env: UV_MANAGED_PYTHON=\]]' \
         '--no-managed-python[Disable use of uv-managed Python versions \[env: UV_NO_MANAGED_PYTHON=\]]' \
         '--no-python-downloads[Disable automatic downloads of Python. \[env: "UV_PYTHON_DOWNLOADS=never"\]]' \
-        '--index[The URLs to use when resolving dependencies, in addition to the default index \[env: UV_INDEX=\]]' \
-        '--default-index[The URL of the default package index (by default: <https://pypi.org/simple>) \[env: UV_DEFAULT_INDEX=\]]' \
-        {-i,--index-url}'[(Deprecated: use `--default-index` instead) The URL of the Python package index (by default: <https://pypi.org/simple>) \[env: UV_INDEX_URL=\]]' \
-        '--extra-index-url[(Deprecated: use `--index` instead) Extra URLs of package indexes to use, in addition to `--index-url` \[env: UV_EXTRA_INDEX_URL=\]]' \
-        {-f,--find-links}'[Locations to search for candidate distributions, in addition to those found in the registry indexes \[env: UV_FIND_LINKS=\]]' \
+        '--index[The URLs to use when resolving dependencies, in addition to the default index \[env: UV_INDEX\]]' \
+        '--default-index[The URL of the default package index (by default: <https://pypi.org/simple>) \[env: UV_DEFAULT_INDEX\]]' \
+        {-i,--index-url}'[(Deprecated: use `--default-index` instead) The URL of the Python package index (by default: <https://pypi.org/simple>) \[env: UV_INDEX_URL\]]' \
+        '--extra-index-url[(Deprecated: use `--index` instead) Extra URLs of package indexes to use, in addition to `--index-url` \[env: UV_EXTRA_INDEX_URL\]]' \
+        {-f,--find-links}'[Locations to search for candidate distributions, in addition to those found in the registry indexes \[env: UV_FIND_LINKS\]]' \
         '--no-index[Ignore the registry index (e.g., PyPI), instead relying on direct URL dependencies and those provided via `--find-links`]' \
         '--index-strategy[The strategy to use when resolving against multiple index URLs \[env: UV_INDEX_STRATEGY=\] \[possible values: first-index, unsafe-first-match, unsafe-best-match\]]' \
         '--keyring-provider[Attempt to use `keyring` for authentication for index URLs \[env: UV_KEYRING_PROVIDER=\] \[possible values: disabled, subprocess\]]' \
         {-U,--upgrade}'[Allow package upgrades, ignoring pinned versions in any existing output file. Implies `--refresh`]' \
         {-P,--upgrade-package}'[Allow upgrades for a specific package, ignoring pinned versions in any existing output file. Implies `--refresh-package`]' \
+        '--upgrade-group[Allow upgrades for all packages in a dependency group, ignoring pinned versions in any existing output file]' \
         '--resolution[The strategy to use when selecting between the different compatible versions for a given package requirement \[env: UV_RESOLUTION=\] \[possible values: highest, lowest, lowest-direct\]]' \
         '--prerelease[The strategy to use when considering pre-release versions \[env: UV_PRERELEASE=\] \[possible values: disallow, allow, if-necessary, explicit, if-necessary-or-explicit\]]' \
         '--fork-strategy[The strategy to use when selecting multiple versions of a given package across Python versions and platforms \[env: UV_FORK_STRATEGY=\] \[possible values: fewest, requires-python\]]' \
@@ -2144,7 +2233,7 @@ function _uv_build {
         '--refresh[Refresh all cached data]' \
         '--refresh-package[Refresh cached data for a specific package]' \
         '--color[Control the use of color in output \[possible values: auto, always, never\]]' \
-        '--native-tls[Whether to load TLS certificates from the platform'\''s native store \[env: UV_NATIVE_TLS=\]]' \
+        '--system-certs[Whether to load TLS certificates from the platform'\''s native certificate store \[env: UV_SYSTEM_CERTS=\]]' \
         '--offline[Disable network access \[env: UV_OFFLINE=\]]' \
         '--allow-insecure-host[Allow insecure connections to a host \[env: UV_INSECURE_HOST=\]]' \
         '--no-progress[Hide all progress outputs \[env: UV_NO_PROGRESS=\]]' \
@@ -2160,13 +2249,13 @@ function _uv_build {
 function _uv_publish {
     _arguments \
         '--index[The name of an index in the configuration to use for publishing. \[env: UV_PUBLISH_INDEX=\]]' \
-        {-u,--username}'[The username for the upload \[env: UV_PUBLISH_USERNAME=\]]' \
-        {-p,--password}'[The password for the upload \[env: UV_PUBLISH_PASSWORD=\]]' \
-        {-t,--token}'[The token for the upload \[env: UV_PUBLISH_TOKEN=\]]' \
+        {-u,--username}'[The username for the upload \[env: UV_PUBLISH_USERNAME\]]' \
+        {-p,--password}'[The password for the upload \[env: UV_PUBLISH_PASSWORD\]]' \
+        {-t,--token}'[The token for the upload \[env: UV_PUBLISH_TOKEN\]]' \
         '--trusted-publishing[Configure trusted publishing \[possible values: automatic, always, never\]]' \
         '--keyring-provider[Attempt to use `keyring` for authentication for remote requirements files \[env: UV_KEYRING_PROVIDER=\] \[possible values: disabled, subprocess\]]' \
-        '--publish-url[The URL of the upload endpoint (not the index URL) \[env: UV_PUBLISH_URL=\]]' \
-        '--check-url[Check an index URL for existing files to skip duplicate uploads \[env: UV_PUBLISH_CHECK_URL=\]]' \
+        '--publish-url[The URL of the upload endpoint (not the index URL) \[env: UV_PUBLISH_URL\]]' \
+        '--check-url[Check an index URL for existing files to skip duplicate uploads \[env: UV_PUBLISH_CHECK_URL\]]' \
         '--dry-run[Perform a dry run without uploading files]' \
         '--no-attestations[Do not upload attestations for the published files \[env: UV_PUBLISH_NO_ATTESTATIONS=\]]' \
         {-n,--no-cache}'[Avoid reading from or writing to the cache, instead using a temporary directory for the duration of the operation \[env: UV_NO_CACHE=\]]' \
@@ -2175,7 +2264,7 @@ function _uv_publish {
         '--no-managed-python[Disable use of uv-managed Python versions \[env: UV_NO_MANAGED_PYTHON=\]]' \
         '--no-python-downloads[Disable automatic downloads of Python. \[env: "UV_PYTHON_DOWNLOADS=never"\]]' \
         '--color[Control the use of color in output \[possible values: auto, always, never\]]' \
-        '--native-tls[Whether to load TLS certificates from the platform'\''s native store \[env: UV_NATIVE_TLS=\]]' \
+        '--system-certs[Whether to load TLS certificates from the platform'\''s native certificate store \[env: UV_SYSTEM_CERTS=\]]' \
         '--offline[Disable network access \[env: UV_OFFLINE=\]]' \
         '--allow-insecure-host[Allow insecure connections to a host \[env: UV_INSECURE_HOST=\]]' \
         '--no-progress[Hide all progress outputs \[env: UV_NO_PROGRESS=\]]' \
@@ -2211,7 +2300,7 @@ function _uv_cache {
         '--no-managed-python[Disable use of uv-managed Python versions \[env: UV_NO_MANAGED_PYTHON=\]]' \
         '--no-python-downloads[Disable automatic downloads of Python. \[env: "UV_PYTHON_DOWNLOADS=never"\]]' \
         '--color[Control the use of color in output \[possible values: auto, always, never\]]' \
-        '--native-tls[Whether to load TLS certificates from the platform'\''s native store \[env: UV_NATIVE_TLS=\]]' \
+        '--system-certs[Whether to load TLS certificates from the platform'\''s native certificate store \[env: UV_SYSTEM_CERTS=\]]' \
         '--offline[Disable network access \[env: UV_OFFLINE=\]]' \
         '--allow-insecure-host[Allow insecure connections to a host \[env: UV_INSECURE_HOST=\]]' \
         '--no-progress[Hide all progress outputs \[env: UV_NO_PROGRESS=\]]' \
@@ -2260,7 +2349,7 @@ function _uv_cache_clean {
         '--no-managed-python[Disable use of uv-managed Python versions \[env: UV_NO_MANAGED_PYTHON=\]]' \
         '--no-python-downloads[Disable automatic downloads of Python. \[env: "UV_PYTHON_DOWNLOADS=never"\]]' \
         '--color[Control the use of color in output \[possible values: auto, always, never\]]' \
-        '--native-tls[Whether to load TLS certificates from the platform'\''s native store \[env: UV_NATIVE_TLS=\]]' \
+        '--system-certs[Whether to load TLS certificates from the platform'\''s native certificate store \[env: UV_SYSTEM_CERTS=\]]' \
         '--offline[Disable network access \[env: UV_OFFLINE=\]]' \
         '--allow-insecure-host[Allow insecure connections to a host \[env: UV_INSECURE_HOST=\]]' \
         '--no-progress[Hide all progress outputs \[env: UV_NO_PROGRESS=\]]' \
@@ -2283,7 +2372,7 @@ function _uv_cache_prune {
         '--no-managed-python[Disable use of uv-managed Python versions \[env: UV_NO_MANAGED_PYTHON=\]]' \
         '--no-python-downloads[Disable automatic downloads of Python. \[env: "UV_PYTHON_DOWNLOADS=never"\]]' \
         '--color[Control the use of color in output \[possible values: auto, always, never\]]' \
-        '--native-tls[Whether to load TLS certificates from the platform'\''s native store \[env: UV_NATIVE_TLS=\]]' \
+        '--system-certs[Whether to load TLS certificates from the platform'\''s native certificate store \[env: UV_SYSTEM_CERTS=\]]' \
         '--offline[Disable network access \[env: UV_OFFLINE=\]]' \
         '--allow-insecure-host[Allow insecure connections to a host \[env: UV_INSECURE_HOST=\]]' \
         '--no-progress[Hide all progress outputs \[env: UV_NO_PROGRESS=\]]' \
@@ -2304,7 +2393,7 @@ function _uv_cache_dir {
         '--no-managed-python[Disable use of uv-managed Python versions \[env: UV_NO_MANAGED_PYTHON=\]]' \
         '--no-python-downloads[Disable automatic downloads of Python. \[env: "UV_PYTHON_DOWNLOADS=never"\]]' \
         '--color[Control the use of color in output \[possible values: auto, always, never\]]' \
-        '--native-tls[Whether to load TLS certificates from the platform'\''s native store \[env: UV_NATIVE_TLS=\]]' \
+        '--system-certs[Whether to load TLS certificates from the platform'\''s native certificate store \[env: UV_SYSTEM_CERTS=\]]' \
         '--offline[Disable network access \[env: UV_OFFLINE=\]]' \
         '--allow-insecure-host[Allow insecure connections to a host \[env: UV_INSECURE_HOST=\]]' \
         '--no-progress[Hide all progress outputs \[env: UV_NO_PROGRESS=\]]' \
@@ -2326,7 +2415,7 @@ function _uv_cache_size {
         '--no-managed-python[Disable use of uv-managed Python versions \[env: UV_NO_MANAGED_PYTHON=\]]' \
         '--no-python-downloads[Disable automatic downloads of Python. \[env: "UV_PYTHON_DOWNLOADS=never"\]]' \
         '--color[Control the use of color in output \[possible values: auto, always, never\]]' \
-        '--native-tls[Whether to load TLS certificates from the platform'\''s native store \[env: UV_NATIVE_TLS=\]]' \
+        '--system-certs[Whether to load TLS certificates from the platform'\''s native certificate store \[env: UV_SYSTEM_CERTS=\]]' \
         '--offline[Disable network access \[env: UV_OFFLINE=\]]' \
         '--allow-insecure-host[Allow insecure connections to a host \[env: UV_INSECURE_HOST=\]]' \
         '--no-progress[Hide all progress outputs \[env: UV_NO_PROGRESS=\]]' \
@@ -2360,7 +2449,7 @@ function _uv_self {
         '--no-managed-python[Disable use of uv-managed Python versions \[env: UV_NO_MANAGED_PYTHON=\]]' \
         '--no-python-downloads[Disable automatic downloads of Python. \[env: "UV_PYTHON_DOWNLOADS=never"\]]' \
         '--color[Control the use of color in output \[possible values: auto, always, never\]]' \
-        '--native-tls[Whether to load TLS certificates from the platform'\''s native store \[env: UV_NATIVE_TLS=\]]' \
+        '--system-certs[Whether to load TLS certificates from the platform'\''s native certificate store \[env: UV_SYSTEM_CERTS=\]]' \
         '--offline[Disable network access \[env: UV_OFFLINE=\]]' \
         '--allow-insecure-host[Allow insecure connections to a host \[env: UV_INSECURE_HOST=\]]' \
         '--no-progress[Hide all progress outputs \[env: UV_NO_PROGRESS=\]]' \
@@ -2402,7 +2491,7 @@ function _uv_self_update {
         '--no-managed-python[Disable use of uv-managed Python versions \[env: UV_NO_MANAGED_PYTHON=\]]' \
         '--no-python-downloads[Disable automatic downloads of Python. \[env: "UV_PYTHON_DOWNLOADS=never"\]]' \
         '--color[Control the use of color in output \[possible values: auto, always, never\]]' \
-        '--native-tls[Whether to load TLS certificates from the platform'\''s native store \[env: UV_NATIVE_TLS=\]]' \
+        '--system-certs[Whether to load TLS certificates from the platform'\''s native certificate store \[env: UV_SYSTEM_CERTS=\]]' \
         '--offline[Disable network access \[env: UV_OFFLINE=\]]' \
         '--allow-insecure-host[Allow insecure connections to a host \[env: UV_INSECURE_HOST=\]]' \
         '--no-progress[Hide all progress outputs \[env: UV_NO_PROGRESS=\]]' \
@@ -2425,7 +2514,7 @@ function _uv_self_version {
         '--no-managed-python[Disable use of uv-managed Python versions \[env: UV_NO_MANAGED_PYTHON=\]]' \
         '--no-python-downloads[Disable automatic downloads of Python. \[env: "UV_PYTHON_DOWNLOADS=never"\]]' \
         '--color[Control the use of color in output \[possible values: auto, always, never\]]' \
-        '--native-tls[Whether to load TLS certificates from the platform'\''s native store \[env: UV_NATIVE_TLS=\]]' \
+        '--system-certs[Whether to load TLS certificates from the platform'\''s native certificate store \[env: UV_SYSTEM_CERTS=\]]' \
         '--offline[Disable network access \[env: UV_OFFLINE=\]]' \
         '--allow-insecure-host[Allow insecure connections to a host \[env: UV_INSECURE_HOST=\]]' \
         '--no-progress[Hide all progress outputs \[env: UV_NO_PROGRESS=\]]' \

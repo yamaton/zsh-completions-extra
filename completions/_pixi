@@ -1,0 +1,2945 @@
+#compdef pixi
+
+# Auto-generated with h2o
+
+
+function _pixi {
+    local line state
+
+    function _commands {
+        local -a commands
+        commands=(
+            'add:Adds dependencies to the workspace \[aliases: a\]'
+            'auth:Login to prefix.dev or anaconda.org servers to access private channels'
+            'build:Build a conda package from a Pixi package.'
+            'clean:Cleanup the environments'
+            'completion:Generates a completion script for a shell'
+            'config:Configuration management'
+            'exec:Run a command and install it in a temporary environment \[aliases: x\]'
+            'global:Subcommand for global package management actions \[aliases: g\]'
+            'info:Information about the system, workspace and environments for the current machine'
+            'init:Creates a new workspace'
+            'import:Imports a file into an environment in an existing workspace.'
+            'install:Install an environment, both updating the lockfile and installing the environment \[aliases: i\]'
+            'list:List the packages of the current workspace \[aliases: ls\]'
+            'lock:Solve environment and update the lock file without installing the environments'
+            'reinstall:Re-install an environment, both updating the lockfile and re-installing the environment'
+            'publish:Build a conda package and publish it to a channel.'
+            'remove:Removes dependencies from the workspace \[aliases: rm\]'
+            'run:Runs task in the pixi environment \[aliases: r\]'
+            'search:Search a conda package'
+            'self-update:Update pixi to the latest version or a specific version'
+            'shell:Start a shell in a pixi environment, run `exit` to leave the shell \[aliases: s\]'
+            'shell-hook:Print the pixi environment activation script'
+            'task:Interact with tasks in the workspace'
+            'tree:Show a tree of workspace dependencies \[aliases: t\]'
+            'update:The `update` command checks if there are newer versions of the dependencies and updates the `pixi.lock` file and environments accordingly'
+            'upgrade:Checks if there are newer versions of the dependencies and upgrades them in the lockfile and manifest file'
+            'upload:Upload conda packages to various channels'
+            'workspace:Modify the workspace configuration file through the command line'
+            'help:Print this message or the help of the given subcommand(s)'
+        )
+        _describe 'command' commands
+    }
+ 
+
+    _arguments -C \
+        {-V,--version}'[Print version]' \
+        {-h,--help}'[Display help information]' \
+        '--color[Whether the log needs to be colored \[env: PIXI_COLOR=\] \[default: auto\] \[possible values: always, never, auto\]]' \
+        '--no-progress[Hide all progress bars, always turned on if stderr is not a terminal \[env: PIXI_NO_PROGRESS=\]]' \
+        '--list[List all installed commands (built-in and extensions)]' \
+        ': :->cmd' \
+        '*:: :->subcmd'
+
+    case $state in
+    (cmd)
+        _commands
+        ;;
+    (subcmd)
+        case $line[1] in
+        (add)
+            _pixi_add
+            ;;
+
+        (auth)
+            _pixi_auth
+            ;;
+
+        (build)
+            _pixi_build
+            ;;
+
+        (clean)
+            _pixi_clean
+            ;;
+
+        (completion)
+            _pixi_completion
+            ;;
+
+        (config)
+            _pixi_config
+            ;;
+
+        (exec)
+            _pixi_exec
+            ;;
+
+        (global)
+            _pixi_global
+            ;;
+
+        (info)
+            _pixi_info
+            ;;
+
+        (init)
+            _pixi_init
+            ;;
+
+        (import)
+            _pixi_import
+            ;;
+
+        (install)
+            _pixi_install
+            ;;
+
+        (list)
+            _pixi_list
+            ;;
+
+        (lock)
+            _pixi_lock
+            ;;
+
+        (reinstall)
+            _pixi_reinstall
+            ;;
+
+        (publish)
+            _pixi_publish
+            ;;
+
+        (remove)
+            _pixi_remove
+            ;;
+
+        (run)
+            _pixi_run
+            ;;
+
+        (search)
+            _pixi_search
+            ;;
+
+        (self-update)
+            _pixi_self-update
+            ;;
+
+        (shell)
+            _pixi_shell
+            ;;
+
+        (shell-hook)
+            _pixi_shell-hook
+            ;;
+
+        (task)
+            _pixi_task
+            ;;
+
+        (tree)
+            _pixi_tree
+            ;;
+
+        (update)
+            _pixi_update
+            ;;
+
+        (upgrade)
+            _pixi_upgrade
+            ;;
+
+        (upload)
+            _pixi_upload
+            ;;
+
+        (workspace)
+            _pixi_workspace
+            ;;
+
+        (help)
+            _pixi_help
+            ;;
+
+        esac
+        ;;
+     esac
+
+}
+
+function _pixi_add {
+    _arguments \
+        '--pypi[The specified dependencies are pypi dependencies. Conflicts with `host` and `build`]' \
+        {-p,--platform}'[The platform for which the dependency should be modified]' \
+        {-f,--feature}'[The feature for which the dependency should be modified]' \
+        '--editable[Whether the pypi requirement should be editable]' \
+        {-m,--manifest-path}'[The path to `pixi.toml`, `pyproject.toml`, or the workspace directory]':file:_files \
+        {-w,--workspace}'[Name of the workspace]' \
+        {-h,--help}'[Display help information]' \
+        '--color[Whether the log needs to be colored]' \
+        '--no-progress[Hide all progress bars, always turned on if stderr is not a terminal]' \
+        {-g,--git}'[The git url to use when adding a git dependency]' \
+        '--branch[The git branch]' \
+        '--tag[The git tag]' \
+        '--rev[The git revision]' \
+        {-s,--subdir}'[The subdirectory of the git repository to use]':file:_files \
+        '--no-install[Don'\''t modify the environment, only modify the lock-file]' \
+        '--frozen[Install the environment as defined in the lockfile, doesn'\''t update lockfile if it isn'\''t up-to-date with the manifest file]' \
+        '--locked[Check if lockfile is up-to-date before installing the environment, aborts when lockfile isn'\''t up-to-date with the manifest file]' \
+        '--auth-file[Path to the file containing the authentication token]':file:_files \
+        '--concurrent-downloads[Max concurrent network requests, default is `50`]' \
+        '--concurrent-solves[Max concurrent solves, default is the number of CPUs]' \
+        '--pinning-strategy[Set pinning strategy]' \
+        '--pypi-keyring-provider[Specifies whether to use the keyring to look up credentials for PyPI]' \
+        '--run-post-link-scripts[Run post-link scripts (insecure)]' \
+        '--no-symbolic-links[Disallow symbolic links during package installation]' \
+        '--no-hard-links[Disallow hard links during package installation]' \
+        '--no-ref-links[Disallow ref links (copy-on-write) during package installation]' \
+        '--tls-no-verify[Do not verify the TLS certificate of the server]' \
+        '--tls-root-certs[Which TLS root certificates to use: '\''webpki'\'' (bundled Mozilla roots), '\''native'\'' (system store), or '\''all'\'' (both)]' \
+        '--use-environment-activation-cache[Use environment activation cache (experimental)]' \
+        "*: :_files"
+
+}
+
+
+function _pixi_auth {
+    local line state
+
+    function _commands {
+        local -a commands
+        commands=(
+            'login:Store authentication information for a given host'
+            'logout:Remove authentication information for a given host'
+            'help:Print this message or the help of the given subcommand(s)'
+        )
+        _describe 'command' commands
+    }
+ 
+
+    _arguments -C \
+        {-h,--help}'[Display help information]' \
+        '--color[Whether the log needs to be colored \[env: PIXI_COLOR=\] \[default: auto\] \[possible values: always, never, auto\]]' \
+        '--no-progress[Hide all progress bars, always turned on if stderr is not a terminal \[env: PIXI_NO_PROGRESS=\]]' \
+        ': :->cmd' \
+        '*:: :->subcmd'
+
+    case $state in
+    (cmd)
+        _commands
+        ;;
+    (subcmd)
+        case $line[1] in
+        (login)
+            _pixi_auth_login
+            ;;
+
+        (logout)
+            _pixi_auth_logout
+            ;;
+
+        (help)
+            _pixi_auth_help
+            ;;
+
+        esac
+        ;;
+     esac
+
+}
+
+function _pixi_auth_login {
+    _arguments \
+        '--token[The token to use (for authentication with prefix.dev)]' \
+        '--username[The username to use (for basic HTTP authentication)]' \
+        '--password[The password to use (for basic HTTP authentication)]' \
+        '--conda-token[The token to use on anaconda.org / quetz authentication]' \
+        '--s3-access-key-id[The S3 access key ID]' \
+        '--s3-secret-access-key[The S3 secret access key]' \
+        '--s3-session-token[The S3 session token]' \
+        '--oauth[Use OAuth/OIDC authentication]' \
+        '--oauth-issuer-url[OIDC issuer URL (defaults to <https://{host>})]' \
+        '--oauth-client-id[OAuth client ID (defaults to "rattler")]' \
+        '--oauth-client-secret[OAuth client secret (for confidential clients)]' \
+        '--oauth-flow[OAuth flow: auto (default), auth-code, device-code \[possible values: auto, auth-code, device-code\]]' \
+        '--oauth-scope[Additional OAuth scopes to request (repeatable)]' \
+        {-h,--help}'[Display help information]' \
+        '--color[Whether the log needs to be colored \[env: PIXI_COLOR=\] \[default: auto\] \[possible values: always, never, auto\]]' \
+        '--no-progress[Hide all progress bars, always turned on if stderr is not a terminal \[env: PIXI_NO_PROGRESS=\]]' \
+        "*: :_files"
+
+}
+
+function _pixi_auth_logout {
+    _arguments \
+        {-h,--help}'[Display help information]' \
+        '--color[Whether the log needs to be colored \[env: PIXI_COLOR=\] \[default: auto\] \[possible values: always, never, auto\]]' \
+        '--no-progress[Hide all progress bars, always turned on if stderr is not a terminal \[env: PIXI_NO_PROGRESS=\]]' \
+        "*: :_files"
+
+}
+
+function _pixi_auth_help {
+    _arguments \
+        "*: :_files"
+
+}
+
+function _pixi_build {
+    _arguments \
+        {-t,--target-platform}'[The target platform to build for (defaults to the current platform)]' \
+        '--build-platform[The build platform to use for building (defaults to the current platform)]' \
+        {-o,--output-dir}'[The output directory to place the built artifacts]':file:_files \
+        {-b,--build-dir}'[The directory to use for incremental builds artifacts]':file:_files \
+        {-c,--clean}'[Whether to clean the build directory before building]' \
+        '--path[The path to a directory containing a package manifest, or to a specific manifest file.]':file:_files \
+        '--auth-file[Path to the file containing the authentication token]':file:_files \
+        '--concurrent-downloads[Max concurrent network requests, default is `50`]' \
+        '--concurrent-solves[Max concurrent solves, default is the number of CPUs]' \
+        '--pinning-strategy[Set pinning strategy]' \
+        '--pypi-keyring-provider[Specifies whether to use the keyring to look up credentials for PyPI]' \
+        '--run-post-link-scripts[Run post-link scripts (insecure)]' \
+        '--no-symbolic-links[Disallow symbolic links during package installation]' \
+        '--no-hard-links[Disallow hard links during package installation]' \
+        '--no-ref-links[Disallow ref links (copy-on-write) during package installation]' \
+        '--tls-no-verify[Do not verify the TLS certificate of the server]' \
+        '--tls-root-certs[Which TLS root certificates to use: '\''webpki'\'' (bundled Mozilla roots), '\''native'\'' (system store), or '\''all'\'' (both)]' \
+        '--use-environment-activation-cache[Use environment activation cache (experimental)]' \
+        '--no-install[Don'\''t modify the environment, only modify the lock-file]' \
+        '--frozen[Install the environment as defined in the lockfile, doesn'\''t update lockfile if it isn'\''t up-to-date with the manifest file]' \
+        '--locked[Check if lockfile is up-to-date before installing the environment, aborts when lockfile isn'\''t up-to-date with the manifest file]' \
+        '--as-is[Shorthand for the combination of --no-install and --frozen]' \
+        {-h,--help}'[Display help information]' \
+        '--color[Whether the log needs to be colored]' \
+        '--no-progress[Hide all progress bars, always turned on if stderr is not a terminal]' \
+        "*: :_files"
+
+}
+
+
+function _pixi_clean {
+    local line state
+
+    function _commands {
+        local -a commands
+        commands=(
+            'cache:Clean the cache of your system which are touched by pixi'
+            'help:Print this message or the help of the given subcommand(s)'
+        )
+        _describe 'command' commands
+    }
+ 
+
+    _arguments -C \
+        {-e,--environment}'[The environment directory to remove]' \
+        '--activation-cache[Only remove the activation cache]' \
+        '--build[Only remove the pixi-build cache]' \
+        '--workspaces-registry[Only remove disassociated workspace registries]' \
+        {-m,--manifest-path}'[The path to `pixi.toml`, `pyproject.toml`, or the workspace directory]':file:_files \
+        {-w,--workspace}'[Name of the workspace]' \
+        {-h,--help}'[Display help information]' \
+        '--color[Whether the log needs to be colored]' \
+        '--no-progress[Hide all progress bars, always turned on if stderr is not a terminal]' \
+        ': :->cmd' \
+        '*:: :->subcmd'
+
+    case $state in
+    (cmd)
+        _commands
+        ;;
+    (subcmd)
+        case $line[1] in
+        (cache)
+            _pixi_clean_cache
+            ;;
+
+        (help)
+            _pixi_clean_help
+            ;;
+
+        esac
+        ;;
+     esac
+
+}
+
+function _pixi_clean_cache {
+    _arguments \
+        '--pypi[Clean only the pypi related cache]' \
+        '--conda[Clean only the conda related cache]' \
+        '--mapping[Clean only the mapping cache]' \
+        '--exec[Clean only `exec` cache]' \
+        '--repodata[Clean only the repodata cache]' \
+        '--build-backends[Clean only the build backends environments cache]' \
+        '--build[Clean only the build related cache]' \
+        {-y,--yes}'[Answer yes to all questions]' \
+        {-m,--manifest-path}'[The path to `pixi.toml`, `pyproject.toml`, or the workspace directory]':file:_files \
+        {-w,--workspace}'[Name of the workspace]' \
+        {-h,--help}'[Display help information]' \
+        '--color[Whether the log needs to be colored]' \
+        '--no-progress[Hide all progress bars, always turned on if stderr is not a terminal]' \
+        "*: :_files"
+
+}
+
+function _pixi_clean_help {
+    _arguments \
+        "*: :_files"
+
+}
+
+function _pixi_completion {
+    _arguments \
+        '-[Bourne Again SHell (bash)]' \
+        '-[Elvish shell]' \
+        '-[Friendly Interactive SHell (fish)]' \
+        {-h,--help}'[Display help information]' \
+        '--color[Whether the log needs to be colored]' \
+        '--no-progress[Hide all progress bars, always turned on if stderr is not a terminal]' \
+        "*: :_files"
+
+}
+
+
+function _pixi_config {
+    local line state
+
+    function _commands {
+        local -a commands
+        commands=(
+            'edit:Edit the configuration file'
+            'list:List configuration values \[aliases: ls\]'
+            'prepend:Prepend a value to a list configuration key'
+            'append:Append a value to a list configuration key'
+            'set:Set a configuration value'
+            'unset:Unset a configuration value'
+            'help:Print this message or the help of the given subcommand(s)'
+        )
+        _describe 'command' commands
+    }
+ 
+
+    _arguments -C \
+        {-h,--help}'[Display help information]' \
+        '--color[Whether the log needs to be colored \[env: PIXI_COLOR=\] \[default: auto\] \[possible values: always, never, auto\]]' \
+        '--no-progress[Hide all progress bars, always turned on if stderr is not a terminal \[env: PIXI_NO_PROGRESS=\]]' \
+        ': :->cmd' \
+        '*:: :->subcmd'
+
+    case $state in
+    (cmd)
+        _commands
+        ;;
+    (subcmd)
+        case $line[1] in
+        (edit)
+            _pixi_config_edit
+            ;;
+
+        (list)
+            _pixi_config_list
+            ;;
+
+        (prepend)
+            _pixi_config_prepend
+            ;;
+
+        (append)
+            _pixi_config_append
+            ;;
+
+        (set)
+            _pixi_config_set
+            ;;
+
+        (unset)
+            _pixi_config_unset
+            ;;
+
+        (help)
+            _pixi_config_help
+            ;;
+
+        esac
+        ;;
+     esac
+
+}
+
+function _pixi_config_edit {
+    _arguments \
+        {-l,--local}'[Operation on project-local configuration]' \
+        {-g,--global}'[Operation on global configuration]' \
+        {-s,--system}'[Operation on system configuration]' \
+        {-m,--manifest-path}'[The path to `pixi.toml`, `pyproject.toml`, or the workspace directory]':file:_files \
+        {-w,--workspace}'[Name of the workspace]' \
+        {-h,--help}'[Display help information]' \
+        '--color[Whether the log needs to be colored \[env: PIXI_COLOR=\] \[default: auto\] \[possible values: always, never, auto\]]' \
+        '--no-progress[Hide all progress bars, always turned on if stderr is not a terminal \[env: PIXI_NO_PROGRESS=\]]' \
+        "*: :_files"
+
+}
+
+function _pixi_config_list {
+    _arguments \
+        '--json[Output in JSON format]' \
+        {-l,--local}'[Operation on project-local configuration]' \
+        {-g,--global}'[Operation on global configuration]' \
+        {-s,--system}'[Operation on system configuration]' \
+        {-m,--manifest-path}'[The path to `pixi.toml`, `pyproject.toml`, or the workspace directory]':file:_files \
+        {-w,--workspace}'[Name of the workspace]' \
+        {-h,--help}'[Display help information]' \
+        '--color[Whether the log needs to be colored]' \
+        '--no-progress[Hide all progress bars, always turned on if stderr is not a terminal]' \
+        "*: :_files"
+
+}
+
+function _pixi_config_prepend {
+    _arguments \
+        {-l,--local}'[Operation on project-local configuration]' \
+        {-g,--global}'[Operation on global configuration]' \
+        {-s,--system}'[Operation on system configuration]' \
+        {-m,--manifest-path}'[The path to `pixi.toml`, `pyproject.toml`, or the workspace directory]':file:_files \
+        {-w,--workspace}'[Name of the workspace]' \
+        {-h,--help}'[Display help information]' \
+        '--color[Whether the log needs to be colored]' \
+        '--no-progress[Hide all progress bars, always turned on if stderr is not a terminal]' \
+        "*: :_files"
+
+}
+
+function _pixi_config_append {
+    _arguments \
+        {-l,--local}'[Operation on project-local configuration]' \
+        {-g,--global}'[Operation on global configuration]' \
+        {-s,--system}'[Operation on system configuration]' \
+        {-m,--manifest-path}'[The path to `pixi.toml`, `pyproject.toml`, or the workspace directory]':file:_files \
+        {-w,--workspace}'[Name of the workspace]' \
+        {-h,--help}'[Display help information]' \
+        '--color[Whether the log needs to be colored]' \
+        '--no-progress[Hide all progress bars, always turned on if stderr is not a terminal]' \
+        "*: :_files"
+
+}
+
+function _pixi_config_set {
+    _arguments \
+        {-l,--local}'[Operation on project-local configuration]' \
+        {-g,--global}'[Operation on global configuration]' \
+        {-s,--system}'[Operation on system configuration]' \
+        {-m,--manifest-path}'[The path to `pixi.toml`, `pyproject.toml`, or the workspace directory]':file:_files \
+        {-w,--workspace}'[Name of the workspace]' \
+        {-h,--help}'[Display help information]' \
+        '--color[Whether the log needs to be colored]' \
+        '--no-progress[Hide all progress bars, always turned on if stderr is not a terminal]' \
+        "*: :_files"
+
+}
+
+function _pixi_config_unset {
+    _arguments \
+        {-l,--local}'[Operation on project-local configuration]' \
+        {-g,--global}'[Operation on global configuration]' \
+        {-s,--system}'[Operation on system configuration]' \
+        {-m,--manifest-path}'[The path to `pixi.toml`, `pyproject.toml`, or the workspace directory]':file:_files \
+        {-w,--workspace}'[Name of the workspace]' \
+        {-h,--help}'[Display help information]' \
+        '--color[Whether the log needs to be colored]' \
+        '--no-progress[Hide all progress bars, always turned on if stderr is not a terminal]' \
+        "*: :_files"
+
+}
+
+function _pixi_config_help {
+    _arguments \
+        "*: :_files"
+
+}
+
+function _pixi_exec {
+    _arguments \
+        {-s,--spec}'[Matchspecs of package to install. If this is not provided, the package is guessed from the command]' \
+        {-w,--with}'[Matchspecs of package to install, while also guessing a package from the command]' \
+        {-c,--channel}'[The channels to consider as a name or a url. Multiple channels can be specified by using this field multiple times.]' \
+        {-p,--platform}'[The platform to create the environment for]' \
+        '--force-reinstall[If specified a new environment is always created even if one already exists]' \
+        '--list[Before executing the command, list packages in the environment Specify `--list=some_regex` to filter the shown packages]' \
+        '--no-modify-ps1[Disable modification of the PS1 prompt to indicate the temporary environment]' \
+        '--auth-file[Path to the file containing the authentication token]':file:_files \
+        '--concurrent-downloads[Max concurrent network requests, default is `50`]' \
+        '--concurrent-solves[Max concurrent solves, default is the number of CPUs]' \
+        '--pinning-strategy[Set pinning strategy]' \
+        '--pypi-keyring-provider[Specifies whether to use the keyring to look up credentials for PyPI]' \
+        '--run-post-link-scripts[Run post-link scripts (insecure)]' \
+        '--no-symbolic-links[Disallow symbolic links during package installation]' \
+        '--no-hard-links[Disallow hard links during package installation]' \
+        '--no-ref-links[Disallow ref links (copy-on-write) during package installation]' \
+        '--tls-no-verify[Do not verify the TLS certificate of the server]' \
+        '--tls-root-certs[Which TLS root certificates to use: '\''webpki'\'' (bundled Mozilla roots), '\''native'\'' (system store), or '\''all'\'' (both)]' \
+        '--use-environment-activation-cache[Use environment activation cache (experimental)]' \
+        {-h,--help}'[Display help information]' \
+        '--color[Whether the log needs to be colored]' \
+        '--no-progress[Hide all progress bars, always turned on if stderr is not a terminal]' \
+        "*: :_files"
+
+}
+
+
+function _pixi_global {
+    local line state
+
+    function _commands {
+        local -a commands
+        commands=(
+            'add:Adds dependencies to an environment \[aliases: a\]'
+            'edit:Edit the global manifest file'
+            'install:Installs the defined packages in a globally accessible location and exposes their command line applications. \[aliases: i\]'
+            'uninstall:Uninstalls environments from the global environment.'
+            'remove:Removes dependencies from an environment \[aliases: rm\]'
+            'list:Lists global environments with their dependencies and exposed commands. Can also display all packages within a specific global environment when using the --environment flag. \[aliases: ls\]'
+            'sync:Sync global manifest with installed environments \[aliases: s\]'
+            'expose:Interact with the exposure of binaries in the global environment \[aliases: e\]'
+            'shortcut:Interact with the shortcuts on your machine'
+            'update:Updates environments in the global environment'
+            'tree:Show a tree of dependencies for a specific global environment \[aliases: t\]'
+            'help:Print this message or the help of the given subcommand(s)'
+        )
+        _describe 'command' commands
+    }
+ 
+
+    _arguments -C \
+        {-h,--help}'[Display help information]' \
+        '--color[Whether the log needs to be colored]' \
+        '--no-progress[Hide all progress bars, always turned on if stderr is not a terminal]' \
+        ': :->cmd' \
+        '*:: :->subcmd'
+
+    case $state in
+    (cmd)
+        _commands
+        ;;
+    (subcmd)
+        case $line[1] in
+        (add)
+            _pixi_global_add
+            ;;
+
+        (edit)
+            _pixi_global_edit
+            ;;
+
+        (install)
+            _pixi_global_install
+            ;;
+
+        (uninstall)
+            _pixi_global_uninstall
+            ;;
+
+        (remove)
+            _pixi_global_remove
+            ;;
+
+        (list)
+            _pixi_global_list
+            ;;
+
+        (sync)
+            _pixi_global_sync
+            ;;
+
+        (expose)
+            _pixi_global_expose
+            ;;
+
+        (shortcut)
+            _pixi_global_shortcut
+            ;;
+
+        (update)
+            _pixi_global_update
+            ;;
+
+        (tree)
+            _pixi_global_tree
+            ;;
+
+        (help)
+            _pixi_global_help
+            ;;
+
+        esac
+        ;;
+     esac
+
+}
+
+function _pixi_global_add {
+    _arguments \
+        '--path[The path to the local package]':file:_files \
+        {-e,--environment}'[Specifies the environment that the dependencies need to be added to]' \
+        '--expose[Add one or more mapping which describe which executables are exposed. The syntax is `exposed_name=executable_name`, so for example `python3.10=python`. Alternatively, you can input only an executable_name and `executable_name=executable_name` is assumed]' \
+        '--git[The git url, e.g. `https://github.com/user/repo.git`]' \
+        '--branch[The git branch]' \
+        '--tag[The git tag]' \
+        '--rev[The git revision]' \
+        '--subdir[The subdirectory within the git repository]':file:_files \
+        '--auth-file[Path to the file containing the authentication token]':file:_files \
+        '--concurrent-downloads[Max concurrent network requests, default is `50`]' \
+        '--concurrent-solves[Max concurrent solves, default is the number of CPUs]' \
+        '--pinning-strategy[Set pinning strategy]' \
+        '--pypi-keyring-provider[Specifies whether to use the keyring to look up credentials for PyPI]' \
+        '--run-post-link-scripts[Run post-link scripts (insecure)]' \
+        '--no-symbolic-links[Disallow symbolic links during package installation]' \
+        '--no-hard-links[Disallow hard links during package installation]' \
+        '--no-ref-links[Disallow ref links (copy-on-write) during package installation]' \
+        '--tls-no-verify[Do not verify the TLS certificate of the server]' \
+        '--tls-root-certs[Which TLS root certificates to use: '\''webpki'\'' (bundled Mozilla roots), '\''native'\'' (system store), or '\''all'\'' (both)]' \
+        '--use-environment-activation-cache[Use environment activation cache (experimental)]' \
+        {-h,--help}'[Display help information]' \
+        '--color[Whether the log needs to be colored]' \
+        '--no-progress[Hide all progress bars, always turned on if stderr is not a terminal]' \
+        "*: :_files"
+
+}
+
+function _pixi_global_edit {
+    _arguments \
+        {-h,--help}'[Display help information]' \
+        '--color[Whether the log needs to be colored]' \
+        '--no-progress[Hide all progress bars, always turned on if stderr is not a terminal]' \
+        "*: :_files"
+
+}
+
+function _pixi_global_install {
+    _arguments \
+        '--path[The path to the local package]':file:_files \
+        {-c,--channel}'[The channels to consider as a name or a url. Multiple channels can be specified by using this field multiple times.]' \
+        {-p,--platform}'[The platform to install the packages for.]' \
+        {-e,--environment}'[Ensures that all packages will be installed in the same environment]' \
+        '--expose[Add one or more mapping which describe which executables are exposed. The syntax is `exposed_name=executable_name`, so for example `python3.10=python`. Alternatively, you can input only an executable_name and `executable_name=executable_name` is assumed]' \
+        '--with[Add additional dependencies to the environment. Their executables will not be exposed]' \
+        '--force-reinstall[Specifies that the environment should be reinstalled]' \
+        '--no-shortcuts[Specifies that no shortcuts should be created for the installed packages]' \
+        '--git[The git url, e.g. `https://github.com/user/repo.git`]' \
+        '--branch[The git branch]' \
+        '--tag[The git tag]' \
+        '--rev[The git revision]' \
+        '--subdir[The subdirectory within the git repository]':file:_files \
+        '--auth-file[Path to the file containing the authentication token]':file:_files \
+        '--concurrent-downloads[Max concurrent network requests, default is `50`]' \
+        '--concurrent-solves[Max concurrent solves, default is the number of CPUs]' \
+        '--pinning-strategy[Set pinning strategy]' \
+        '--pypi-keyring-provider[Specifies whether to use the keyring to look up credentials for PyPI]' \
+        '--run-post-link-scripts[Run post-link scripts (insecure)]' \
+        '--no-symbolic-links[Disallow symbolic links during package installation]' \
+        '--no-hard-links[Disallow hard links during package installation]' \
+        '--no-ref-links[Disallow ref links (copy-on-write) during package installation]' \
+        '--tls-no-verify[Do not verify the TLS certificate of the server]' \
+        '--tls-root-certs[Which TLS root certificates to use: '\''webpki'\'' (bundled Mozilla roots), '\''native'\'' (system store), or '\''all'\'' (both)]' \
+        '--use-environment-activation-cache[Use environment activation cache (experimental)]' \
+        {-h,--help}'[Display help information]' \
+        '--color[Whether the log needs to be colored]' \
+        '--no-progress[Hide all progress bars, always turned on if stderr is not a terminal]' \
+        "*: :_files"
+
+}
+
+function _pixi_global_uninstall {
+    _arguments \
+        '--auth-file[Path to the file containing the authentication token]':file:_files \
+        '--concurrent-downloads[Max concurrent network requests, default is `50`]' \
+        '--concurrent-solves[Max concurrent solves, default is the number of CPUs]' \
+        '--pinning-strategy[Set pinning strategy]' \
+        '--pypi-keyring-provider[Specifies whether to use the keyring to look up credentials for PyPI]' \
+        '--run-post-link-scripts[Run post-link scripts (insecure)]' \
+        '--no-symbolic-links[Disallow symbolic links during package installation]' \
+        '--no-hard-links[Disallow hard links during package installation]' \
+        '--no-ref-links[Disallow ref links (copy-on-write) during package installation]' \
+        '--tls-no-verify[Do not verify the TLS certificate of the server]' \
+        '--tls-root-certs[Which TLS root certificates to use: '\''webpki'\'' (bundled Mozilla roots), '\''native'\'' (system store), or '\''all'\'' (both)]' \
+        '--use-environment-activation-cache[Use environment activation cache (experimental)]' \
+        {-h,--help}'[Display help information]' \
+        '--color[Whether the log needs to be colored]' \
+        '--no-progress[Hide all progress bars, always turned on if stderr is not a terminal]' \
+        "*: :_files"
+
+}
+
+function _pixi_global_remove {
+    _arguments \
+        {-e,--environment}'[Specifies the environment that the dependencies need to be removed from]' \
+        '--auth-file[Path to the file containing the authentication token]':file:_files \
+        '--concurrent-downloads[Max concurrent network requests, default is `50`]' \
+        '--concurrent-solves[Max concurrent solves, default is the number of CPUs]' \
+        '--pinning-strategy[Set pinning strategy]' \
+        '--pypi-keyring-provider[Specifies whether to use the keyring to look up credentials for PyPI]' \
+        '--run-post-link-scripts[Run post-link scripts (insecure)]' \
+        '--no-symbolic-links[Disallow symbolic links during package installation]' \
+        '--no-hard-links[Disallow hard links during package installation]' \
+        '--no-ref-links[Disallow ref links (copy-on-write) during package installation]' \
+        '--tls-no-verify[Do not verify the TLS certificate of the server]' \
+        '--tls-root-certs[Which TLS root certificates to use: '\''webpki'\'' (bundled Mozilla roots), '\''native'\'' (system store), or '\''all'\'' (both)]' \
+        '--use-environment-activation-cache[Use environment activation cache (experimental)]' \
+        {-h,--help}'[Display help information]' \
+        '--color[Whether the log needs to be colored]' \
+        '--no-progress[Hide all progress bars, always turned on if stderr is not a terminal]' \
+        "*: :_files"
+
+}
+
+function _pixi_global_list {
+    _arguments \
+        {-e,--environment}'[Allows listing all the packages installed in a specific environment, with an output similar to `pixi list`]' \
+        '--sort-by[Sorting strategy for the package table of an environment]' \
+        '--json[Whether to output in JSON format]' \
+        '--auth-file[Path to the file containing the authentication token]':file:_files \
+        '--concurrent-downloads[Max concurrent network requests, default is `50`]' \
+        '--concurrent-solves[Max concurrent solves, default is the number of CPUs]' \
+        '--pinning-strategy[Set pinning strategy]' \
+        '--pypi-keyring-provider[Specifies whether to use the keyring to look up credentials for PyPI]' \
+        '--run-post-link-scripts[Run post-link scripts (insecure)]' \
+        '--no-symbolic-links[Disallow symbolic links during package installation]' \
+        '--no-hard-links[Disallow hard links during package installation]' \
+        '--no-ref-links[Disallow ref links (copy-on-write) during package installation]' \
+        '--tls-no-verify[Do not verify the TLS certificate of the server]' \
+        '--tls-root-certs[Which TLS root certificates to use: '\''webpki'\'' (bundled Mozilla roots), '\''native'\'' (system store), or '\''all'\'' (both)]' \
+        '--use-environment-activation-cache[Use environment activation cache (experimental)]' \
+        {-h,--help}'[Display help information]' \
+        '--color[Whether the log needs to be colored]' \
+        '--no-progress[Hide all progress bars, always turned on if stderr is not a terminal]' \
+        "*: :_files"
+
+}
+
+function _pixi_global_sync {
+    _arguments \
+        '--auth-file[Path to the file containing the authentication token]':file:_files \
+        '--concurrent-downloads[Max concurrent network requests, default is `50`]' \
+        '--concurrent-solves[Max concurrent solves, default is the number of CPUs]' \
+        '--pinning-strategy[Set pinning strategy]' \
+        '--pypi-keyring-provider[Specifies whether to use the keyring to look up credentials for PyPI]' \
+        '--run-post-link-scripts[Run post-link scripts (insecure)]' \
+        '--no-symbolic-links[Disallow symbolic links during package installation]' \
+        '--no-hard-links[Disallow hard links during package installation]' \
+        '--no-ref-links[Disallow ref links (copy-on-write) during package installation]' \
+        '--tls-no-verify[Do not verify the TLS certificate of the server]' \
+        '--tls-root-certs[Which TLS root certificates to use: '\''webpki'\'' (bundled Mozilla roots), '\''native'\'' (system store), or '\''all'\'' (both)]' \
+        '--use-environment-activation-cache[Use environment activation cache (experimental)]' \
+        {-h,--help}'[Display help information]' \
+        '--color[Whether the log needs to be colored]' \
+        '--no-progress[Hide all progress bars, always turned on if stderr is not a terminal]' \
+        "*: :_files"
+
+}
+
+
+function _pixi_global_expose {
+    local line state
+
+    function _commands {
+        local -a commands
+        commands=(
+            'add:Add exposed binaries from an environment to your global environment'
+            'remove:Remove exposed binaries from the global environment'
+            'help:Print this message or the help of the given subcommand(s)'
+        )
+        _describe 'command' commands
+    }
+ 
+
+    _arguments -C \
+        {-h,--help}'[Display help information]' \
+        '--color[Whether the log needs to be colored]' \
+        '--no-progress[Hide all progress bars, always turned on if stderr is not a terminal]' \
+        ': :->cmd' \
+        '*:: :->subcmd'
+
+    case $state in
+    (cmd)
+        _commands
+        ;;
+    (subcmd)
+        case $line[1] in
+        (add)
+            _pixi_global_expose_add
+            ;;
+
+        (remove)
+            _pixi_global_expose_remove
+            ;;
+
+        (help)
+            _pixi_global_expose_help
+            ;;
+
+        esac
+        ;;
+     esac
+
+}
+
+function _pixi_global_expose_add {
+    _arguments \
+        {-e,--environment}'[The environment to which the binaries should be exposed]' \
+        '--auth-file[Path to the file containing the authentication token]':file:_files \
+        '--concurrent-downloads[Max concurrent network requests, default is `50`]' \
+        '--concurrent-solves[Max concurrent solves, default is the number of CPUs]' \
+        '--pinning-strategy[Set pinning strategy]' \
+        '--pypi-keyring-provider[Specifies whether to use the keyring to look up credentials for PyPI]' \
+        '--run-post-link-scripts[Run post-link scripts (insecure)]' \
+        '--no-symbolic-links[Disallow symbolic links during package installation]' \
+        '--no-hard-links[Disallow hard links during package installation]' \
+        '--no-ref-links[Disallow ref links (copy-on-write) during package installation]' \
+        '--tls-no-verify[Do not verify the TLS certificate of the server]' \
+        '--tls-root-certs[Which TLS root certificates to use: '\''webpki'\'' (bundled Mozilla roots), '\''native'\'' (system store), or '\''all'\'' (both)]' \
+        '--use-environment-activation-cache[Use environment activation cache (experimental)]' \
+        {-h,--help}'[Display help information]' \
+        '--color[Whether the log needs to be colored]' \
+        '--no-progress[Hide all progress bars, always turned on if stderr is not a terminal]' \
+        "*: :_files"
+
+}
+
+function _pixi_global_expose_remove {
+    _arguments \
+        '--auth-file[Path to the file containing the authentication token]':file:_files \
+        '--concurrent-downloads[Max concurrent network requests, default is `50`]' \
+        '--concurrent-solves[Max concurrent solves, default is the number of CPUs]' \
+        '--pinning-strategy[Set pinning strategy]' \
+        '--pypi-keyring-provider[Specifies whether to use the keyring to look up credentials for PyPI]' \
+        '--run-post-link-scripts[Run post-link scripts (insecure)]' \
+        '--no-symbolic-links[Disallow symbolic links during package installation]' \
+        '--no-hard-links[Disallow hard links during package installation]' \
+        '--no-ref-links[Disallow ref links (copy-on-write) during package installation]' \
+        '--tls-no-verify[Do not verify the TLS certificate of the server]' \
+        '--tls-root-certs[Which TLS root certificates to use: '\''webpki'\'' (bundled Mozilla roots), '\''native'\'' (system store), or '\''all'\'' (both)]' \
+        '--use-environment-activation-cache[Use environment activation cache (experimental)]' \
+        {-h,--help}'[Display help information]' \
+        '--color[Whether the log needs to be colored]' \
+        '--no-progress[Hide all progress bars, always turned on if stderr is not a terminal]' \
+        "*: :_files"
+
+}
+
+function _pixi_global_expose_help {
+    _arguments \
+        "*: :_files"
+
+}
+
+
+function _pixi_global_shortcut {
+    local line state
+
+    function _commands {
+        local -a commands
+        commands=(
+            'add:Add a shortcut from an environment to your machine.'
+            'remove:Remove shortcuts from your machine'
+            'help:Print this message or the help of the given subcommand(s)'
+        )
+        _describe 'command' commands
+    }
+ 
+
+    _arguments -C \
+        {-h,--help}'[Display help information]' \
+        '--color[Whether the log needs to be colored \[env: PIXI_COLOR=\] \[default: auto\] \[possible values: always, never, auto\]]' \
+        '--no-progress[Hide all progress bars, always turned on if stderr is not a terminal \[env: PIXI_NO_PROGRESS=\]]' \
+        ': :->cmd' \
+        '*:: :->subcmd'
+
+    case $state in
+    (cmd)
+        _commands
+        ;;
+    (subcmd)
+        case $line[1] in
+        (add)
+            _pixi_global_shortcut_add
+            ;;
+
+        (remove)
+            _pixi_global_shortcut_remove
+            ;;
+
+        (help)
+            _pixi_global_shortcut_help
+            ;;
+
+        esac
+        ;;
+     esac
+
+}
+
+function _pixi_global_shortcut_add {
+    _arguments \
+        {-e,--environment}'[The environment from which the shortcut should be added]' \
+        '--auth-file[Path to the file containing the authentication token]':file:_files \
+        '--concurrent-downloads[Max concurrent network requests, default is `50`]' \
+        '--concurrent-solves[Max concurrent solves, default is the number of CPUs]' \
+        '--pinning-strategy[Set pinning strategy]' \
+        '--pypi-keyring-provider[Specifies whether to use the keyring to look up credentials for PyPI]' \
+        '--run-post-link-scripts[Run post-link scripts (insecure)]' \
+        '--no-symbolic-links[Disallow symbolic links during package installation]' \
+        '--no-hard-links[Disallow hard links during package installation]' \
+        '--no-ref-links[Disallow ref links (copy-on-write) during package installation]' \
+        '--tls-no-verify[Do not verify the TLS certificate of the server]' \
+        '--tls-root-certs[Which TLS root certificates to use: '\''webpki'\'' (bundled Mozilla roots), '\''native'\'' (system store), or '\''all'\'' (both)]' \
+        '--use-environment-activation-cache[Use environment activation cache (experimental)]' \
+        {-h,--help}'[Display help information]' \
+        '--color[Whether the log needs to be colored]' \
+        '--no-progress[Hide all progress bars, always turned on if stderr is not a terminal]' \
+        "*: :_files"
+
+}
+
+function _pixi_global_shortcut_remove {
+    _arguments \
+        '--auth-file[Path to the file containing the authentication token]':file:_files \
+        '--concurrent-downloads[Max concurrent network requests, default is `50`]' \
+        '--concurrent-solves[Max concurrent solves, default is the number of CPUs]' \
+        '--pinning-strategy[Set pinning strategy]' \
+        '--pypi-keyring-provider[Specifies whether to use the keyring to look up credentials for PyPI]' \
+        '--run-post-link-scripts[Run post-link scripts (insecure)]' \
+        '--no-symbolic-links[Disallow symbolic links during package installation]' \
+        '--no-hard-links[Disallow hard links during package installation]' \
+        '--no-ref-links[Disallow ref links (copy-on-write) during package installation]' \
+        '--tls-no-verify[Do not verify the TLS certificate of the server]' \
+        '--tls-root-certs[Which TLS root certificates to use: '\''webpki'\'' (bundled Mozilla roots), '\''native'\'' (system store), or '\''all'\'' (both)]' \
+        '--use-environment-activation-cache[Use environment activation cache (experimental)]' \
+        {-h,--help}'[Display help information]' \
+        '--color[Whether the log needs to be colored]' \
+        '--no-progress[Hide all progress bars, always turned on if stderr is not a terminal]' \
+        "*: :_files"
+
+}
+
+function _pixi_global_shortcut_help {
+    _arguments \
+        "*: :_files"
+
+}
+
+function _pixi_global_update {
+    _arguments \
+        '--auth-file[Path to the file containing the authentication token]':file:_files \
+        '--concurrent-downloads[Max concurrent network requests, default is `50`]' \
+        '--concurrent-solves[Max concurrent solves, default is the number of CPUs]' \
+        '--pinning-strategy[Set pinning strategy]' \
+        '--pypi-keyring-provider[Specifies whether to use the keyring to look up credentials for PyPI]' \
+        '--run-post-link-scripts[Run post-link scripts (insecure)]' \
+        '--no-symbolic-links[Disallow symbolic links during package installation]' \
+        '--no-hard-links[Disallow hard links during package installation]' \
+        '--no-ref-links[Disallow ref links (copy-on-write) during package installation]' \
+        '--tls-no-verify[Do not verify the TLS certificate of the server]' \
+        '--tls-root-certs[Which TLS root certificates to use: '\''webpki'\'' (bundled Mozilla roots), '\''native'\'' (system store), or '\''all'\'' (both)]' \
+        '--use-environment-activation-cache[Use environment activation cache (experimental)]' \
+        {-h,--help}'[Display help information]' \
+        '--color[Whether the log needs to be colored]' \
+        '--no-progress[Hide all progress bars, always turned on if stderr is not a terminal]' \
+        "*: :_files"
+
+}
+
+function _pixi_global_tree {
+    _arguments \
+        {-e,--environment}'[The environment to list packages for]' \
+        {-i,--invert}'[Invert tree and show what depends on a given package in the regex argument]' \
+        {-h,--help}'[Display help information]' \
+        '--color[Whether the log needs to be colored]' \
+        '--no-progress[Hide all progress bars, always turned on if stderr is not a terminal]' \
+        "*: :_files"
+
+}
+
+function _pixi_global_help {
+    _arguments \
+        "*: :_files"
+
+}
+
+function _pixi_info {
+    _arguments \
+        '--extended[Show cache and environment size]' \
+        '--json[Whether to show the output as JSON or not]' \
+        {-m,--manifest-path}'[The path to `pixi.toml`, `pyproject.toml`, or the workspace directory]':file:_files \
+        {-w,--workspace}'[Name of the workspace]' \
+        {-h,--help}'[Display help information]' \
+        '--color[Whether the log needs to be colored \[env: PIXI_COLOR=\] \[default: auto\] \[possible values: always, never, auto\]]' \
+        '--no-progress[Hide all progress bars, always turned on if stderr is not a terminal \[env: PIXI_NO_PROGRESS=\]]' \
+        "*: :_files"
+
+}
+
+function _pixi_init {
+    _arguments \
+        {-c,--channel}'[Channel to use in the workspace]' \
+        {-p,--platform}'[Platforms that the workspace supports]' \
+        {-i,--import}'[Environment.yml file to bootstrap the workspace]':file:_files \
+        '--format[The manifest format to create]' \
+        {-s,--scm}'[Source Control Management used for this workspace]' \
+        '--conda-pypi-map[Set a mapping between conda channels and pypi channels]' \
+        {-h,--help}'[Display help information]' \
+        '--color[Whether the log needs to be colored]' \
+        '--no-progress[Hide all progress bars, always turned on if stderr is not a terminal]' \
+        "*: :_files"
+
+}
+
+function _pixi_import {
+    _arguments \
+        '--format[Which format to interpret the file as]' \
+        {-p,--platform}'[The platforms for the imported environment]' \
+        {-e,--environment}'[A name for the created environment]' \
+        {-f,--feature}'[A name for the created feature]' \
+        {-m,--manifest-path}'[The path to `pixi.toml`, `pyproject.toml`, or the workspace directory]':file:_files \
+        {-w,--workspace}'[Name of the workspace]' \
+        {-h,--help}'[Display help information]' \
+        '--color[Whether the log needs to be colored]' \
+        '--no-progress[Hide all progress bars, always turned on if stderr is not a terminal]' \
+        '--auth-file[Path to the file containing the authentication token]':file:_files \
+        '--concurrent-downloads[Max concurrent network requests, default is `50`]' \
+        '--concurrent-solves[Max concurrent solves, default is the number of CPUs]' \
+        '--pinning-strategy[Set pinning strategy]' \
+        '--pypi-keyring-provider[Specifies whether to use the keyring to look up credentials for PyPI]' \
+        '--run-post-link-scripts[Run post-link scripts (insecure)]' \
+        '--no-symbolic-links[Disallow symbolic links during package installation]' \
+        '--no-hard-links[Disallow hard links during package installation]' \
+        '--no-ref-links[Disallow ref links (copy-on-write) during package installation]' \
+        '--tls-no-verify[Do not verify the TLS certificate of the server]' \
+        '--tls-root-certs[Which TLS root certificates to use: '\''webpki'\'' (bundled Mozilla roots), '\''native'\'' (system store), or '\''all'\'' (both)]' \
+        '--use-environment-activation-cache[Use environment activation cache (experimental)]' \
+        "*: :_files"
+
+}
+
+function _pixi_install {
+    _arguments \
+        {-e,--environment}'[The environment to install]' \
+        {-a,--all}'[Install all environments]' \
+        '--skip[Skip installation of specific packages present in the lockfile. This uses a soft exclusion: the package will be skipped but its dependencies are installed]' \
+        '--skip-with-deps[Skip a package and its entire dependency subtree. This performs a hard exclusion: the package and its dependencies are not installed unless reachable from another non-skipped root]' \
+        '--only[Install and build only these package(s) and their dependencies. Can be passed multiple times]' \
+        {-m,--manifest-path}'[The path to `pixi.toml`, `pyproject.toml`, or the workspace directory]':file:_files \
+        {-w,--workspace}'[Name of the workspace]' \
+        {-h,--help}'[Display help information]' \
+        '--color[Whether the log needs to be colored]' \
+        '--no-progress[Hide all progress bars, always turned on if stderr is not a terminal]' \
+        '--frozen[Install the environment as defined in the lockfile, doesn'\''t update lockfile if it isn'\''t up-to-date with the manifest file]' \
+        '--locked[Check if lockfile is up-to-date before installing the environment, aborts when lockfile isn'\''t up-to-date with the manifest file]' \
+        '--auth-file[Path to the file containing the authentication token]':file:_files \
+        '--concurrent-downloads[Max concurrent network requests, default is `50`]' \
+        '--concurrent-solves[Max concurrent solves, default is the number of CPUs]' \
+        '--pinning-strategy[Set pinning strategy]' \
+        '--pypi-keyring-provider[Specifies whether to use the keyring to look up credentials for PyPI]' \
+        '--run-post-link-scripts[Run post-link scripts (insecure)]' \
+        '--no-symbolic-links[Disallow symbolic links during package installation]' \
+        '--no-hard-links[Disallow hard links during package installation]' \
+        '--no-ref-links[Disallow ref links (copy-on-write) during package installation]' \
+        '--tls-no-verify[Do not verify the TLS certificate of the server]' \
+        '--tls-root-certs[Which TLS root certificates to use: '\''webpki'\'' (bundled Mozilla roots), '\''native'\'' (system store), or '\''all'\'' (both)]' \
+        '--use-environment-activation-cache[Use environment activation cache (experimental)]' \
+        "*: :_files"
+
+}
+
+function _pixi_list {
+    _arguments \
+        '--platform[The platform to list packages for. Defaults to the current platform]' \
+        '--json[Whether to output in json format]' \
+        '--sort-by[Sorting strategy]' \
+        '--fields[Select which fields to display and in what order (comma-separated)]' \
+        {-e,--environment}'[The environment to list packages for. Defaults to the default environment]' \
+        {-x,--explicit}'[Only list packages that are explicitly defined in the workspace]' \
+        {-m,--manifest-path}'[The path to `pixi.toml`, `pyproject.toml`, or the workspace directory]':file:_files \
+        {-w,--workspace}'[Name of the workspace]' \
+        {-h,--help}'[Display help information]' \
+        '--color[Whether the log needs to be colored]' \
+        '--no-progress[Hide all progress bars, always turned on if stderr is not a terminal]' \
+        '--frozen[Install the environment as defined in the lockfile, doesn'\''t update lockfile if it isn'\''t up-to-date with the manifest file]' \
+        '--locked[Check if lockfile is up-to-date before installing the environment, aborts when lockfile isn'\''t up-to-date with the manifest file]' \
+        '--no-install[Don'\''t modify the environment, only modify the lock-file]' \
+        "*: :_files"
+
+}
+
+function _pixi_lock {
+    _arguments \
+        '--json[Output the changes in JSON format]' \
+        '--check[Check if any changes have been made to the lock file. If yes, exit with a non-zero code]' \
+        '--dry-run[Compute the lock file without writing to disk. Implies --no-install]' \
+        {-m,--manifest-path}'[The path to `pixi.toml`, `pyproject.toml`, or the workspace directory]':file:_files \
+        {-w,--workspace}'[Name of the workspace]' \
+        {-h,--help}'[Display help information]' \
+        '--color[Whether the log needs to be colored \[env: PIXI_COLOR=\] \[default: auto\] \[possible values: always, never, auto\]]' \
+        '--no-progress[Hide all progress bars, always turned on if stderr is not a terminal \[env: PIXI_NO_PROGRESS=\]]' \
+        '--no-install[Don'\''t modify the environment, only modify the lock-file \[env: PIXI_NO_INSTALL=\]]' \
+        "*: :_files"
+
+}
+
+function _pixi_reinstall {
+    _arguments \
+        {-e,--environment}'[The environment to install]' \
+        {-a,--all}'[Install all environments]' \
+        {-m,--manifest-path}'[The path to `pixi.toml`, `pyproject.toml`, or the workspace directory]':file:_files \
+        {-w,--workspace}'[Name of the workspace]' \
+        {-h,--help}'[Display help information]' \
+        '--color[Whether the log needs to be colored]' \
+        '--no-progress[Hide all progress bars, always turned on if stderr is not a terminal]' \
+        '--frozen[Install the environment as defined in the lockfile, doesn'\''t update lockfile if it isn'\''t up-to-date with the manifest file]' \
+        '--locked[Check if lockfile is up-to-date before installing the environment, aborts when lockfile isn'\''t up-to-date with the manifest file]' \
+        '--auth-file[Path to the file containing the authentication token]':file:_files \
+        '--concurrent-downloads[Max concurrent network requests, default is `50`]' \
+        '--concurrent-solves[Max concurrent solves, default is the number of CPUs]' \
+        '--pinning-strategy[Set pinning strategy]' \
+        '--pypi-keyring-provider[Specifies whether to use the keyring to look up credentials for PyPI]' \
+        '--run-post-link-scripts[Run post-link scripts (insecure)]' \
+        '--no-symbolic-links[Disallow symbolic links during package installation]' \
+        '--no-hard-links[Disallow hard links during package installation]' \
+        '--no-ref-links[Disallow ref links (copy-on-write) during package installation]' \
+        '--tls-no-verify[Do not verify the TLS certificate of the server]' \
+        '--tls-root-certs[Which TLS root certificates to use: '\''webpki'\'' (bundled Mozilla roots), '\''native'\'' (system store), or '\''all'\'' (both)]' \
+        '--use-environment-activation-cache[Use environment activation cache (experimental)]' \
+        "*: :_files"
+
+}
+
+function _pixi_publish {
+    _arguments \
+        {-t,--target-platform}'[The target platform to build for (defaults to the current platform)]' \
+        '--build-platform[The build platform to use for building (defaults to the current platform)]' \
+        '--build-string-prefix[An optional prefix prepended to the auto-generated build string]' \
+        '--build-number[An optional override for the package'\''s build number]' \
+        {-b,--build-dir}'[The directory to use for incremental builds artifacts]':file:_files \
+        {-c,--clean}'[Whether to clean the build directory before building]' \
+        '--path[The path to a directory containing a package manifest, or to a specific manifest file.]':file:_files \
+        '--target-channel[The target channel URL to publish packages to.]' \
+        '--target-dir[The target local directory to copy packages into (no channel indexing).]':file:_files \
+        '--force[Force overwrite existing packages]' \
+        '--skip-existing[Skip uploading packages that already exist on the target channel. This is enabled by default. Use `--no-skip-existing` to disable]' \
+        '--generate-attestation[Generate sigstore attestation (prefix.dev only)]' \
+        '--auth-file[Path to the file containing the authentication token]':file:_files \
+        '--concurrent-downloads[Max concurrent network requests, default is `50`]' \
+        '--concurrent-solves[Max concurrent solves, default is the number of CPUs]' \
+        '--pinning-strategy[Set pinning strategy]' \
+        '--pypi-keyring-provider[Specifies whether to use the keyring to look up credentials for PyPI]' \
+        '--run-post-link-scripts[Run post-link scripts (insecure)]' \
+        '--no-symbolic-links[Disallow symbolic links during package installation]' \
+        '--no-hard-links[Disallow hard links during package installation]' \
+        '--no-ref-links[Disallow ref links (copy-on-write) during package installation]' \
+        '--tls-no-verify[Do not verify the TLS certificate of the server]' \
+        '--tls-root-certs[Which TLS root certificates to use: '\''webpki'\'' (bundled Mozilla roots), '\''native'\'' (system store), or '\''all'\'' (both)]' \
+        '--use-environment-activation-cache[Use environment activation cache (experimental)]' \
+        {-h,--help}'[Display help information]' \
+        '--color[Whether the log needs to be colored]' \
+        '--no-progress[Hide all progress bars, always turned on if stderr is not a terminal]' \
+        "*: :_files"
+
+}
+
+function _pixi_remove {
+    _arguments \
+        '--pypi[The specified dependencies are pypi dependencies. Conflicts with `host` and `build`]' \
+        {-p,--platform}'[The platform for which the dependency should be modified]' \
+        {-f,--feature}'[The feature for which the dependency should be modified]' \
+        {-m,--manifest-path}'[The path to `pixi.toml`, `pyproject.toml`, or the workspace directory]':file:_files \
+        {-w,--workspace}'[Name of the workspace]' \
+        {-h,--help}'[Display help information]' \
+        '--color[Whether the log needs to be colored]' \
+        '--no-progress[Hide all progress bars, always turned on if stderr is not a terminal]' \
+        {-g,--git}'[The git url to use when adding a git dependency]' \
+        '--branch[The git branch]' \
+        '--tag[The git tag]' \
+        '--rev[The git revision]' \
+        {-s,--subdir}'[The subdirectory of the git repository to use]':file:_files \
+        '--no-install[Don'\''t modify the environment, only modify the lock-file]' \
+        '--frozen[Install the environment as defined in the lockfile, doesn'\''t update lockfile if it isn'\''t up-to-date with the manifest file]' \
+        '--locked[Check if lockfile is up-to-date before installing the environment, aborts when lockfile isn'\''t up-to-date with the manifest file]' \
+        '--auth-file[Path to the file containing the authentication token]':file:_files \
+        '--concurrent-downloads[Max concurrent network requests, default is `50`]' \
+        '--concurrent-solves[Max concurrent solves, default is the number of CPUs]' \
+        '--pinning-strategy[Set pinning strategy]' \
+        '--pypi-keyring-provider[Specifies whether to use the keyring to look up credentials for PyPI]' \
+        '--run-post-link-scripts[Run post-link scripts (insecure)]' \
+        '--no-symbolic-links[Disallow symbolic links during package installation]' \
+        '--no-hard-links[Disallow hard links during package installation]' \
+        '--no-ref-links[Disallow ref links (copy-on-write) during package installation]' \
+        '--tls-no-verify[Do not verify the TLS certificate of the server]' \
+        '--tls-root-certs[Which TLS root certificates to use: '\''webpki'\'' (bundled Mozilla roots), '\''native'\'' (system store), or '\''all'\'' (both)]' \
+        '--use-environment-activation-cache[Use environment activation cache (experimental)]' \
+        "*: :_files"
+
+}
+
+function _pixi_run {
+    _arguments \
+        {-x,--executable}'[Execute the command as an executable without resolving Pixi tasks.]' \
+        {-e,--environment}'[The environment to run the task in]' \
+        '--clean-env[Use a clean environment to run the task]' \
+        '--skip-deps[Don'\''t run the dependencies of the task ('\''depends-on'\'' field in the task definition)]' \
+        '--templated[Enable template rendering for the command arguments.]' \
+        {-n,--dry-run}'[Run the task in dry-run mode (only print the command that would run)]' \
+        {-m,--manifest-path}'[The path to `pixi.toml`, `pyproject.toml`, or the workspace directory]':file:_files \
+        {-w,--workspace}'[Name of the workspace]' \
+        '--color[Whether the log needs to be colored]' \
+        '--no-progress[Hide all progress bars, always turned on if stderr is not a terminal]' \
+        '--no-install[Don'\''t modify the environment, only modify the lock-file]' \
+        '--frozen[Install the environment as defined in the lockfile, doesn'\''t update lockfile if it isn'\''t up-to-date with the manifest file]' \
+        '--locked[Check if lockfile is up-to-date before installing the environment, aborts when lockfile isn'\''t up-to-date with the manifest file]' \
+        '--as-is[Shorthand for the combination of --no-install and --frozen]' \
+        '--auth-file[Path to the file containing the authentication token]':file:_files \
+        '--concurrent-downloads[Max concurrent network requests, default is `50`]' \
+        '--concurrent-solves[Max concurrent solves, default is the number of CPUs]' \
+        '--pinning-strategy[Set pinning strategy]' \
+        '--pypi-keyring-provider[Specifies whether to use the keyring to look up credentials for PyPI]' \
+        '--run-post-link-scripts[Run post-link scripts (insecure)]' \
+        '--no-symbolic-links[Disallow symbolic links during package installation]' \
+        '--no-hard-links[Disallow hard links during package installation]' \
+        '--no-ref-links[Disallow ref links (copy-on-write) during package installation]' \
+        '--tls-no-verify[Do not verify the TLS certificate of the server]' \
+        '--tls-root-certs[Which TLS root certificates to use: '\''webpki'\'' (bundled Mozilla roots), '\''native'\'' (system store), or '\''all'\'' (both)]' \
+        '--use-environment-activation-cache[Use environment activation cache (experimental)]' \
+        '--force-activate[Do not use the environment activation cache. (default: true except in experimental mode)]' \
+        '--no-completions[Do not source the autocompletion scripts from the environment]' \
+        "*: :_files"
+
+}
+
+function _pixi_search {
+    _arguments \
+        {-c,--channel}'[The channels to consider as a name or a url. Multiple channels can be specified by using this field multiple times.]' \
+        {-p,--platform}'[The platform(s) to search for. By default, searches all platforms from the manifest (or all known platforms if no manifest is found)]' \
+        {-l,--limit}'[Limit the number of versions shown per package, -1 for no limit]' \
+        {-n,--limit-packages}'[Limit the number of packages shown, -1 for no limit]' \
+        '--json[Output in JSON format]' \
+        {-m,--manifest-path}'[The path to `pixi.toml`, `pyproject.toml`, or the workspace directory]':file:_files \
+        {-w,--workspace}'[Name of the workspace]' \
+        {-h,--help}'[Display help information]' \
+        '--color[Whether the log needs to be colored]' \
+        '--no-progress[Hide all progress bars, always turned on if stderr is not a terminal]' \
+        "*: :_files"
+
+}
+
+function _pixi_self-update {
+    _arguments \
+        '--version[The desired version (to downgrade or upgrade to)]' \
+        '--dry-run[Only show release notes, do not modify the binary]' \
+        '--force[Force download the desired version when not exactly same with the current. If no desired version, always replace with the latest version]' \
+        '--no-release-note[Skip printing the release notes]' \
+        {-h,--help}'[Display help information]' \
+        '--color[Whether the log needs to be colored \[env: PIXI_COLOR=\] \[default: auto\] \[possible values: always, never, auto\]]' \
+        '--no-progress[Hide all progress bars, always turned on if stderr is not a terminal \[env: PIXI_NO_PROGRESS=\]]' \
+        "*: :_files"
+
+}
+
+function _pixi_shell {
+    _arguments \
+        {-e,--environment}'[The environment to activate in the shell]' \
+        {-m,--manifest-path}'[The path to `pixi.toml`, `pyproject.toml`, or the workspace directory]':file:_files \
+        {-w,--workspace}'[Name of the workspace]' \
+        {-h,--help}'[Display help information]' \
+        '--color[Whether the log needs to be colored]' \
+        '--no-progress[Hide all progress bars, always turned on if stderr is not a terminal]' \
+        '--no-install[Don'\''t modify the environment, only modify the lock-file]' \
+        '--frozen[Install the environment as defined in the lockfile, doesn'\''t update lockfile if it isn'\''t up-to-date with the manifest file]' \
+        '--locked[Check if lockfile is up-to-date before installing the environment, aborts when lockfile isn'\''t up-to-date with the manifest file]' \
+        '--as-is[Shorthand for the combination of --no-install and --frozen]' \
+        '--auth-file[Path to the file containing the authentication token]':file:_files \
+        '--concurrent-downloads[Max concurrent network requests, default is `50`]' \
+        '--concurrent-solves[Max concurrent solves, default is the number of CPUs]' \
+        '--pinning-strategy[Set pinning strategy]' \
+        '--pypi-keyring-provider[Specifies whether to use the keyring to look up credentials for PyPI]' \
+        '--run-post-link-scripts[Run post-link scripts (insecure)]' \
+        '--no-symbolic-links[Disallow symbolic links during package installation]' \
+        '--no-hard-links[Disallow hard links during package installation]' \
+        '--no-ref-links[Disallow ref links (copy-on-write) during package installation]' \
+        '--tls-no-verify[Do not verify the TLS certificate of the server]' \
+        '--tls-root-certs[Which TLS root certificates to use: '\''webpki'\'' (bundled Mozilla roots), '\''native'\'' (system store), or '\''all'\'' (both)]' \
+        '--use-environment-activation-cache[Use environment activation cache (experimental)]' \
+        '--change-ps1[Do not change the PS1 variable when starting a prompt]' \
+        '--force-activate[Do not use the environment activation cache. (default: true except in experimental mode)]' \
+        '--no-completions[Do not source the autocompletion scripts from the environment]' \
+        "*: :_files"
+
+}
+
+function _pixi_shell-hook {
+    _arguments \
+        {-s,--shell}'[Sets the shell, options: \[`bash`, `zsh`, `xonsh`, `cmd`, `powershell`, `fish`, `nushell`\]]' \
+        {-e,--environment}'[The environment to activate in the script]' \
+        '--json[Emit the environment variables set by running the activation as JSON]' \
+        {-m,--manifest-path}'[The path to `pixi.toml`, `pyproject.toml`, or the workspace directory]':file:_files \
+        {-w,--workspace}'[Name of the workspace]' \
+        {-h,--help}'[Display help information]' \
+        '--color[Whether the log needs to be colored]' \
+        '--no-progress[Hide all progress bars, always turned on if stderr is not a terminal]' \
+        '--no-install[Don'\''t modify the environment, only modify the lock-file]' \
+        '--frozen[Install the environment as defined in the lockfile, doesn'\''t update lockfile if it isn'\''t up-to-date with the manifest file]' \
+        '--locked[Check if lockfile is up-to-date before installing the environment, aborts when lockfile isn'\''t up-to-date with the manifest file]' \
+        '--as-is[Shorthand for the combination of --no-install and --frozen]' \
+        '--auth-file[Path to the file containing the authentication token]':file:_files \
+        '--concurrent-downloads[Max concurrent network requests, default is `50`]' \
+        '--concurrent-solves[Max concurrent solves, default is the number of CPUs]' \
+        '--pinning-strategy[Set pinning strategy]' \
+        '--pypi-keyring-provider[Specifies whether to use the keyring to look up credentials for PyPI]' \
+        '--run-post-link-scripts[Run post-link scripts (insecure)]' \
+        '--no-symbolic-links[Disallow symbolic links during package installation]' \
+        '--no-hard-links[Disallow hard links during package installation]' \
+        '--no-ref-links[Disallow ref links (copy-on-write) during package installation]' \
+        '--tls-no-verify[Do not verify the TLS certificate of the server]' \
+        '--tls-root-certs[Which TLS root certificates to use: '\''webpki'\'' (bundled Mozilla roots), '\''native'\'' (system store), or '\''all'\'' (both)]' \
+        '--use-environment-activation-cache[Use environment activation cache (experimental)]' \
+        '--force-activate[Do not use the environment activation cache. (default: true except in experimental mode)]' \
+        '--no-completions[Do not source the autocompletion scripts from the environment]' \
+        '--change-ps1[Do not change the PS1 variable when starting a prompt]' \
+        "*: :_files"
+
+}
+
+
+function _pixi_task {
+    local line state
+
+    function _commands {
+        local -a commands
+        commands=(
+            'add:Add a command to the workspace \[aliases: a\]'
+            'remove:Remove a command from the workspace \[aliases: rm\]'
+            'alias:Alias another specific command'
+            'list:List all tasks in the workspace \[aliases: ls\]'
+            'help:Print this message or the help of the given subcommand(s)'
+        )
+        _describe 'command' commands
+    }
+ 
+
+    _arguments -C \
+        {-m,--manifest-path}'[The path to `pixi.toml`, `pyproject.toml`, or the workspace directory]':file:_files \
+        {-w,--workspace}'[Name of the workspace]' \
+        {-h,--help}'[Display help information]' \
+        '--color[Whether the log needs to be colored \[env: PIXI_COLOR=\] \[default: auto\] \[possible values: always, never, auto\]]' \
+        '--no-progress[Hide all progress bars, always turned on if stderr is not a terminal \[env: PIXI_NO_PROGRESS=\]]' \
+        ': :->cmd' \
+        '*:: :->subcmd'
+
+    case $state in
+    (cmd)
+        _commands
+        ;;
+    (subcmd)
+        case $line[1] in
+        (add)
+            _pixi_task_add
+            ;;
+
+        (remove)
+            _pixi_task_remove
+            ;;
+
+        (alias)
+            _pixi_task_alias
+            ;;
+
+        (list)
+            _pixi_task_list
+            ;;
+
+        (help)
+            _pixi_task_help
+            ;;
+
+        esac
+        ;;
+     esac
+
+}
+
+function _pixi_task_add {
+    _arguments \
+        '--depends-on[Depends on these other commands]' \
+        {-p,--platform}'[The platform for which the task should be added]' \
+        {-f,--feature}'[The feature for which the task should be added]' \
+        '--cwd[The working directory relative to the root of the workspace]' \
+        '--env[The environment variable to set, use --env key=value multiple times for more than one variable]' \
+        '--default-environment[Add a default environment for the task]' \
+        '--description[A description of the task to be added]' \
+        '--clean-env[Isolate the task from the shell environment, and only use the pixi environment to run the task]' \
+        '--arg[The arguments to pass to the task]' \
+        {-m,--manifest-path}'[The path to `pixi.toml`, `pyproject.toml`, or the workspace directory]':file:_files \
+        {-w,--workspace}'[Name of the workspace]' \
+        {-h,--help}'[Display help information]' \
+        '--color[Whether the log needs to be colored \[env: PIXI_COLOR=\] \[default: auto\] \[possible values: always, never, auto\]]' \
+        '--no-progress[Hide all progress bars, always turned on if stderr is not a terminal \[env: PIXI_NO_PROGRESS=\]]' \
+        "*: :_files"
+
+}
+
+function _pixi_task_remove {
+    _arguments \
+        {-p,--platform}'[The platform for which the task should be removed]' \
+        {-f,--feature}'[The feature for which the task should be removed]' \
+        {-m,--manifest-path}'[The path to `pixi.toml`, `pyproject.toml`, or the workspace directory]':file:_files \
+        {-w,--workspace}'[Name of the workspace]' \
+        {-h,--help}'[Display help information]' \
+        '--color[Whether the log needs to be colored \[env: PIXI_COLOR=\] \[default: auto\] \[possible values: always, never, auto\]]' \
+        '--no-progress[Hide all progress bars, always turned on if stderr is not a terminal \[env: PIXI_NO_PROGRESS=\]]' \
+        "*: :_files"
+
+}
+
+function _pixi_task_alias {
+    _arguments \
+        {-p,--platform}'[The platform for which the alias should be added]' \
+        '--description[The description of the alias task]' \
+        {-m,--manifest-path}'[The path to `pixi.toml`, `pyproject.toml`, or the workspace directory]':file:_files \
+        {-w,--workspace}'[Name of the workspace]' \
+        {-h,--help}'[Display help information]' \
+        '--color[Whether the log needs to be colored \[env: PIXI_COLOR=\] \[default: auto\] \[possible values: always, never, auto\]]' \
+        '--no-progress[Hide all progress bars, always turned on if stderr is not a terminal \[env: PIXI_NO_PROGRESS=\]]' \
+        "*: :_files"
+
+}
+
+function _pixi_task_list {
+    _arguments \
+        {-s,--summary}'[Tasks available for this machine per environment]' \
+        {-e,--environment}'[The environment the list should be generated for. If not specified, the default environment is used]' \
+        '--json[List as json instead of a tree If not specified, the default environment is used]' \
+        {-m,--manifest-path}'[The path to `pixi.toml`, `pyproject.toml`, or the workspace directory]':file:_files \
+        {-w,--workspace}'[Name of the workspace]' \
+        {-h,--help}'[Display help information]' \
+        '--color[Whether the log needs to be colored \[env: PIXI_COLOR=\] \[default: auto\] \[possible values: always, never, auto\]]' \
+        '--no-progress[Hide all progress bars, always turned on if stderr is not a terminal \[env: PIXI_NO_PROGRESS=\]]' \
+        "*: :_files"
+
+}
+
+function _pixi_task_help {
+    _arguments \
+        "*: :_files"
+
+}
+
+function _pixi_tree {
+    _arguments \
+        {-p,--platform}'[The platform to list packages for. Defaults to the current platform]' \
+        {-e,--environment}'[The environment to list packages for. Defaults to the default environment]' \
+        {-i,--invert}'[Invert tree and show what depends on given package in the regex argument]' \
+        {-m,--manifest-path}'[The path to `pixi.toml`, `pyproject.toml`, or the workspace directory]':file:_files \
+        {-w,--workspace}'[Name of the workspace]' \
+        {-h,--help}'[Display help information]' \
+        '--color[Whether the log needs to be colored]' \
+        '--no-progress[Hide all progress bars, always turned on if stderr is not a terminal]' \
+        '--frozen[Install the environment as defined in the lockfile, doesn'\''t update lockfile if it isn'\''t up-to-date with the manifest file]' \
+        '--locked[Check if lockfile is up-to-date before installing the environment, aborts when lockfile isn'\''t up-to-date with the manifest file]' \
+        '--no-install[Don'\''t modify the environment, only modify the lock-file]' \
+        "*: :_files"
+
+}
+
+function _pixi_update {
+    _arguments \
+        '--no-install[Don'\''t install the (solve) environments needed for pypi-dependencies solving]' \
+        {-n,--dry-run}'[Don'\''t actually write the lockfile or update any environment]' \
+        {-e,--environment}'[The environments to update. If none is specified, all environments are updated]' \
+        {-p,--platform}'[The platforms to update. If none is specified, all platforms are updated]' \
+        '--json[Output the changes in JSON format]' \
+        '--auth-file[Path to the file containing the authentication token]':file:_files \
+        '--concurrent-downloads[Max concurrent network requests, default is `50`]' \
+        '--concurrent-solves[Max concurrent solves, default is the number of CPUs]' \
+        '--pinning-strategy[Set pinning strategy]' \
+        '--pypi-keyring-provider[Specifies whether to use the keyring to look up credentials for PyPI]' \
+        '--run-post-link-scripts[Run post-link scripts (insecure)]' \
+        '--no-symbolic-links[Disallow symbolic links during package installation]' \
+        '--no-hard-links[Disallow hard links during package installation]' \
+        '--no-ref-links[Disallow ref links (copy-on-write) during package installation]' \
+        '--tls-no-verify[Do not verify the TLS certificate of the server]' \
+        '--tls-root-certs[Which TLS root certificates to use: '\''webpki'\'' (bundled Mozilla roots), '\''native'\'' (system store), or '\''all'\'' (both)]' \
+        '--use-environment-activation-cache[Use environment activation cache (experimental)]' \
+        {-m,--manifest-path}'[The path to `pixi.toml`, `pyproject.toml`, or the workspace directory]':file:_files \
+        {-w,--workspace}'[Name of the workspace]' \
+        {-h,--help}'[Display help information]' \
+        '--color[Whether the log needs to be colored]' \
+        '--no-progress[Hide all progress bars, always turned on if stderr is not a terminal]' \
+        "*: :_files"
+
+}
+
+function _pixi_upgrade {
+    _arguments \
+        {-f,--feature}'[The feature to update]' \
+        '--exclude[The packages which should be excluded]' \
+        '--json[Output the changes in JSON format]' \
+        {-n,--dry-run}'[Only show the changes that would be made, without actually updating the manifest, lock file, or environment]' \
+        {-m,--manifest-path}'[The path to `pixi.toml`, `pyproject.toml`, or the workspace directory]':file:_files \
+        {-w,--workspace}'[Name of the workspace]' \
+        {-h,--help}'[Display help information]' \
+        '--color[Whether the log needs to be colored]' \
+        '--no-progress[Hide all progress bars, always turned on if stderr is not a terminal]' \
+        '--no-install[Don'\''t modify the environment, only modify the lock-file]' \
+        '--frozen[Install the environment as defined in the lockfile, doesn'\''t update lockfile if it isn'\''t up-to-date with the manifest file]' \
+        '--locked[Check if lockfile is up-to-date before installing the environment, aborts when lockfile isn'\''t up-to-date with the manifest file]' \
+        '--auth-file[Path to the file containing the authentication token]':file:_files \
+        '--concurrent-downloads[Max concurrent network requests, default is `50`]' \
+        '--concurrent-solves[Max concurrent solves, default is the number of CPUs]' \
+        '--pinning-strategy[Set pinning strategy]' \
+        '--pypi-keyring-provider[Specifies whether to use the keyring to look up credentials for PyPI]' \
+        '--run-post-link-scripts[Run post-link scripts (insecure)]' \
+        '--no-symbolic-links[Disallow symbolic links during package installation]' \
+        '--no-hard-links[Disallow hard links during package installation]' \
+        '--no-ref-links[Disallow ref links (copy-on-write) during package installation]' \
+        '--tls-no-verify[Do not verify the TLS certificate of the server]' \
+        '--tls-root-certs[Which TLS root certificates to use: '\''webpki'\'' (bundled Mozilla roots), '\''native'\'' (system store), or '\''all'\'' (both)]' \
+        '--use-environment-activation-cache[Use environment activation cache (experimental)]' \
+        "*: :_files"
+
+}
+
+
+function _pixi_upload {
+    local line state
+
+    function _commands {
+        local -a commands
+        commands=(
+            'quetz:Upload to a Quetz server. Authentication is used from the keychain / auth-file'
+            'artifactory:Options for uploading to a Artifactory channel. Authentication is used from the keychain / auth-file'
+            'prefix:Options for uploading to a prefix.dev server. Authentication is used from the keychain / auth-file'
+            'anaconda:Options for uploading to a Anaconda.org server'
+            'cloudsmith:Options for uploading to a Cloudsmith repository. Authentication is used from the keychain / auth-file'
+            's3:Options for uploading to S3'
+            'help:Print this message or the help of the given subcommand(s)'
+        )
+        _describe 'command' commands
+    }
+ 
+
+    _arguments -C \
+        '--allow-insecure-host[List of hosts for which SSL certificate verification should be skipped]' \
+        {-h,--help}'[Display help information]' \
+        '--color[Whether the log needs to be colored]' \
+        '--no-progress[Hide all progress bars, always turned on if stderr is not a terminal]' \
+        ': :->cmd' \
+        '*:: :->subcmd'
+
+    case $state in
+    (cmd)
+        _commands
+        ;;
+    (subcmd)
+        case $line[1] in
+        (quetz)
+            _pixi_upload_quetz
+            ;;
+
+        (artifactory)
+            _pixi_upload_artifactory
+            ;;
+
+        (prefix)
+            _pixi_upload_prefix
+            ;;
+
+        (anaconda)
+            _pixi_upload_anaconda
+            ;;
+
+        (cloudsmith)
+            _pixi_upload_cloudsmith
+            ;;
+
+        (s3)
+            _pixi_upload_s3
+            ;;
+
+        (help)
+            _pixi_upload_help
+            ;;
+
+        esac
+        ;;
+     esac
+
+}
+
+function _pixi_upload_quetz {
+    _arguments \
+        {-u,--url}'[The URL to your Quetz server \[env: QUETZ_SERVER_URL=\]]' \
+        {-c,--channel}'[The URL to your channel \[env: QUETZ_CHANNEL=\]]' \
+        {-a,--api-key}'[The Quetz API key, if none is provided, the token is read from the keychain / auth-file \[env: QUETZ_API_KEY=\]]' \
+        {-h,--help}'[Display help information]' \
+        '--color[Whether the log needs to be colored \[env: PIXI_COLOR=\] \[default: auto\] \[possible values: always, never, auto\]]' \
+        '--no-progress[Hide all progress bars, always turned on if stderr is not a terminal \[env: PIXI_NO_PROGRESS=\]]' \
+        "*: :_files"
+
+}
+
+function _pixi_upload_artifactory {
+    _arguments \
+        {-u,--url}'[The URL to your Artifactory server \[env: ARTIFACTORY_SERVER_URL=\]]' \
+        {-c,--channel}'[The URL to your channel \[env: ARTIFACTORY_CHANNEL=\]]' \
+        {-t,--token}'[Your Artifactory token \[env: ARTIFACTORY_TOKEN=\]]' \
+        {-h,--help}'[Display help information]' \
+        '--color[Whether the log needs to be colored \[env: PIXI_COLOR=\] \[default: auto\] \[possible values: always, never, auto\]]' \
+        '--no-progress[Hide all progress bars, always turned on if stderr is not a terminal \[env: PIXI_NO_PROGRESS=\]]' \
+        "*: :_files"
+
+}
+
+function _pixi_upload_prefix {
+    _arguments \
+        {-u,--url}'[The URL to the prefix.dev server (only necessary for self-hosted instances) \[env: PREFIX_SERVER_URL=\] \[default: https://prefix.dev\]]' \
+        {-c,--channel}'[The channel to upload the package to \[env: PREFIX_CHANNEL=\]]' \
+        {-a,--api-key}'[The prefix.dev API key, if none is provided, the token is read from the keychain / auth-file \[env: PREFIX_API_KEY=\]]' \
+        '--attestation[Upload an attestation file alongside the package. Note: if you add an attestation, you can _only_ upload a single package. Mutually exclusive with --generate-attestation]' \
+        '--generate-attestation[Automatically generate attestation using cosign in CI. Mutually exclusive with --attestation]' \
+        '--store-github-attestation[Also store the generated attestation to GitHub'\''s attestation API. Requires `GITHUB_TOKEN` environment variable and only works in GitHub Actions. The attestation will be associated with the current repository]' \
+        {-s,--skip-existing}'[Skip upload if package already exists]' \
+        '--force[Force overwrite existing packages]' \
+        {-h,--help}'[Display help information]' \
+        '--color[Whether the log needs to be colored \[env: PIXI_COLOR=\] \[default: auto\] \[possible values: always, never, auto\]]' \
+        '--no-progress[Hide all progress bars, always turned on if stderr is not a terminal \[env: PIXI_NO_PROGRESS=\]]' \
+        "*: :_files"
+
+}
+
+function _pixi_upload_anaconda {
+    _arguments \
+        {-o,--owner}'[The owner of the distribution (e.g. conda-forge or your username) \[env: ANACONDA_OWNER=\]]' \
+        {-c,--channel}'[The channel / label to upload the package to (e.g. main / rc) \[env: ANACONDA_CHANNEL=\]]' \
+        {-a,--api-key}'[The Anaconda API key, if none is provided, the token is read from the keychain / auth-file \[env: ANACONDA_API_KEY=\]]' \
+        {-u,--url}'[The URL to the Anaconda server \[env: ANACONDA_SERVER_URL=\]]' \
+        {-f,--force}'[Replace files on conflict \[env: ANACONDA_FORCE=\]]' \
+        {-h,--help}'[Display help information]' \
+        '--color[Whether the log needs to be colored \[env: PIXI_COLOR=\] \[default: auto\] \[possible values: always, never, auto\]]' \
+        '--no-progress[Hide all progress bars, always turned on if stderr is not a terminal \[env: PIXI_NO_PROGRESS=\]]' \
+        "*: :_files"
+
+}
+
+function _pixi_upload_cloudsmith {
+    _arguments \
+        {-o,--owner}'[The owner (namespace) of the Cloudsmith repository \[env: CLOUDSMITH_OWNER=\]]' \
+        {-r,--repo}'[The Cloudsmith repository name \[env: CLOUDSMITH_REPO=\]]' \
+        {-a,--api-key}'[The Cloudsmith API key, if none is provided, the token is read from the keychain / auth-file \[env: CLOUDSMITH_API_KEY=\]]' \
+        {-u,--url}'[The URL to the Cloudsmith API server \[env: CLOUDSMITH_API_URL=\]]' \
+        {-h,--help}'[Display help information]' \
+        '--color[Whether the log needs to be colored \[env: PIXI_COLOR=\] \[default: auto\] \[possible values: always, never, auto\]]' \
+        '--no-progress[Hide all progress bars, always turned on if stderr is not a terminal \[env: PIXI_NO_PROGRESS=\]]' \
+        "*: :_files"
+
+}
+
+function _pixi_upload_s3 {
+    _arguments \
+        {-c,--channel}'[The channel URL in the S3 bucket to upload the package to, e.g., `s3://my-bucket/my-channel` \[env: S3_CHANNEL=\]]' \
+        '--force[Replace files if it already exists]' \
+        '--endpoint-url[The endpoint URL of the S3 backend \[env: S3_ENDPOINT_URL=\]]' \
+        '--region[The region of the S3 backend \[env: S3_REGION=\]]' \
+        '--access-key-id[The access key ID for the S3 bucket \[env: S3_ACCESS_KEY_ID=\]]' \
+        '--secret-access-key[The secret access key for the S3 bucket \[env: S3_SECRET_ACCESS_KEY=\]]' \
+        '--session-token[The session token for the S3 bucket \[env: S3_SESSION_TOKEN=\]]' \
+        '--addressing-style[How to address the bucket \[env: S3_ADDRESSING_STYLE=\] \[default: virtual-host\] \[possible values: virtual-host, path\]]' \
+        {-h,--help}'[Display help information]' \
+        '--color[Whether the log needs to be colored \[env: PIXI_COLOR=\] \[default: auto\] \[possible values: always, never, auto\]]' \
+        '--no-progress[Hide all progress bars, always turned on if stderr is not a terminal \[env: PIXI_NO_PROGRESS=\]]' \
+        "*: :_files"
+
+}
+
+function _pixi_upload_help {
+    _arguments \
+        "*: :_files"
+
+}
+
+
+function _pixi_workspace {
+    local line state
+
+    function _commands {
+        local -a commands
+        commands=(
+            'channel:Commands to manage workspace channels'
+            'description:Commands to manage workspace description'
+            'platform:Commands to manage workspace platforms'
+            'version:Commands to manage workspace version'
+            'environment:Commands to manage workspace environments'
+            'feature:Commands to manage workspace features'
+            'export:Commands to export workspaces to other formats'
+            'name:Commands to manage workspace name'
+            'system-requirements:Commands to manage workspace system requirements'
+            'register:Commands to manage the registry of workspaces. Default command will add a new workspace'
+            'requires-pixi:Commands to manage the pixi minimum version requirement'
+            'help:Print this message or the help of the given subcommand(s)'
+        )
+        _describe 'command' commands
+    }
+ 
+
+    _arguments -C \
+        {-m,--manifest-path}'[The path to `pixi.toml`, `pyproject.toml`, or the workspace directory]':file:_files \
+        {-w,--workspace}'[Name of the workspace]' \
+        {-h,--help}'[Display help information]' \
+        '--color[Whether the log needs to be colored \[env: PIXI_COLOR=\] \[default: auto\] \[possible values: always, never, auto\]]' \
+        '--no-progress[Hide all progress bars, always turned on if stderr is not a terminal \[env: PIXI_NO_PROGRESS=\]]' \
+        ': :->cmd' \
+        '*:: :->subcmd'
+
+    case $state in
+    (cmd)
+        _commands
+        ;;
+    (subcmd)
+        case $line[1] in
+        (channel)
+            _pixi_workspace_channel
+            ;;
+
+        (description)
+            _pixi_workspace_description
+            ;;
+
+        (platform)
+            _pixi_workspace_platform
+            ;;
+
+        (version)
+            _pixi_workspace_version
+            ;;
+
+        (environment)
+            _pixi_workspace_environment
+            ;;
+
+        (feature)
+            _pixi_workspace_feature
+            ;;
+
+        (export)
+            _pixi_workspace_export
+            ;;
+
+        (name)
+            _pixi_workspace_name
+            ;;
+
+        (system-requirements)
+            _pixi_workspace_system-requirements
+            ;;
+
+        (register)
+            _pixi_workspace_register
+            ;;
+
+        (requires-pixi)
+            _pixi_workspace_requires-pixi
+            ;;
+
+        (help)
+            _pixi_workspace_help
+            ;;
+
+        esac
+        ;;
+     esac
+
+}
+
+
+function _pixi_workspace_channel {
+    local line state
+
+    function _commands {
+        local -a commands
+        commands=(
+            'add:Adds a channel to the manifest and updates the lockfile \[aliases: a\]'
+            'list:List the channels in the manifest \[aliases: ls\]'
+            'remove:Remove channel(s) from the manifest and updates the lockfile \[aliases: rm\]'
+            'help:Print this message or the help of the given subcommand(s)'
+        )
+        _describe 'command' commands
+    }
+ 
+
+    _arguments -C \
+        {-m,--manifest-path}'[The path to `pixi.toml`, `pyproject.toml`, or the workspace directory]':file:_files \
+        {-w,--workspace}'[Name of the workspace]' \
+        {-h,--help}'[Display help information]' \
+        '--color[Whether the log needs to be colored \[env: PIXI_COLOR=\] \[default: auto\] \[possible values: always, never, auto\]]' \
+        '--no-progress[Hide all progress bars, always turned on if stderr is not a terminal \[env: PIXI_NO_PROGRESS=\]]' \
+        ': :->cmd' \
+        '*:: :->subcmd'
+
+    case $state in
+    (cmd)
+        _commands
+        ;;
+    (subcmd)
+        case $line[1] in
+        (add)
+            _pixi_workspace_channel_add
+            ;;
+
+        (list)
+            _pixi_workspace_channel_list
+            ;;
+
+        (remove)
+            _pixi_workspace_channel_remove
+            ;;
+
+        (help)
+            _pixi_workspace_channel_help
+            ;;
+
+        esac
+        ;;
+     esac
+
+}
+
+function _pixi_workspace_channel_add {
+    _arguments \
+        '--priority[Specify the channel priority]' \
+        '--prepend[Add the channel(s) to the beginning of the channels list, making them the highest priority]' \
+        {-f,--feature}'[The name of the feature to modify]' \
+        '--no-install[Don'\''t modify the environment, only modify the lock-file]' \
+        '--frozen[Install the environment as defined in the lockfile, doesn'\''t update lockfile if it isn'\''t up-to-date with the manifest file]' \
+        '--locked[Check if lockfile is up-to-date before installing the environment, aborts when lockfile isn'\''t up-to-date with the manifest file]' \
+        '--auth-file[Path to the file containing the authentication token]':file:_files \
+        '--concurrent-downloads[Max concurrent network requests, default is `50`]' \
+        '--concurrent-solves[Max concurrent solves, default is the number of CPUs]' \
+        '--pinning-strategy[Set pinning strategy]' \
+        '--pypi-keyring-provider[Specifies whether to use the keyring to look up credentials for PyPI]' \
+        '--run-post-link-scripts[Run post-link scripts (insecure)]' \
+        '--no-symbolic-links[Disallow symbolic links during package installation]' \
+        '--no-hard-links[Disallow hard links during package installation]' \
+        '--no-ref-links[Disallow ref links (copy-on-write) during package installation]' \
+        '--tls-no-verify[Do not verify the TLS certificate of the server]' \
+        '--tls-root-certs[Which TLS root certificates to use: '\''webpki'\'' (bundled Mozilla roots), '\''native'\'' (system store), or '\''all'\'' (both)]' \
+        '--use-environment-activation-cache[Use environment activation cache (experimental)]' \
+        {-m,--manifest-path}'[The path to `pixi.toml`, `pyproject.toml`, or the workspace directory]':file:_files \
+        {-w,--workspace}'[Name of the workspace]' \
+        {-h,--help}'[Display help information]' \
+        '--color[Whether the log needs to be colored]' \
+        '--no-progress[Hide all progress bars, always turned on if stderr is not a terminal]' \
+        "*: :_files"
+
+}
+
+function _pixi_workspace_channel_list {
+    _arguments \
+        '--urls[Whether to display the channel'\''s names or urls]' \
+        {-m,--manifest-path}'[The path to `pixi.toml`, `pyproject.toml`, or the workspace directory]':file:_files \
+        {-w,--workspace}'[Name of the workspace]' \
+        {-h,--help}'[Display help information]' \
+        '--color[Whether the log needs to be colored \[env: PIXI_COLOR=\] \[default: auto\] \[possible values: always, never, auto\]]' \
+        '--no-progress[Hide all progress bars, always turned on if stderr is not a terminal \[env: PIXI_NO_PROGRESS=\]]' \
+        "*: :_files"
+
+}
+
+function _pixi_workspace_channel_remove {
+    _arguments \
+        '--priority[Specify the channel priority]' \
+        '--prepend[Add the channel(s) to the beginning of the channels list, making them the highest priority]' \
+        {-f,--feature}'[The name of the feature to modify]' \
+        '--no-install[Don'\''t modify the environment, only modify the lock-file]' \
+        '--frozen[Install the environment as defined in the lockfile, doesn'\''t update lockfile if it isn'\''t up-to-date with the manifest file]' \
+        '--locked[Check if lockfile is up-to-date before installing the environment, aborts when lockfile isn'\''t up-to-date with the manifest file]' \
+        '--auth-file[Path to the file containing the authentication token]':file:_files \
+        '--concurrent-downloads[Max concurrent network requests, default is `50`]' \
+        '--concurrent-solves[Max concurrent solves, default is the number of CPUs]' \
+        '--pinning-strategy[Set pinning strategy]' \
+        '--pypi-keyring-provider[Specifies whether to use the keyring to look up credentials for PyPI]' \
+        '--run-post-link-scripts[Run post-link scripts (insecure)]' \
+        '--no-symbolic-links[Disallow symbolic links during package installation]' \
+        '--no-hard-links[Disallow hard links during package installation]' \
+        '--no-ref-links[Disallow ref links (copy-on-write) during package installation]' \
+        '--tls-no-verify[Do not verify the TLS certificate of the server]' \
+        '--tls-root-certs[Which TLS root certificates to use: '\''webpki'\'' (bundled Mozilla roots), '\''native'\'' (system store), or '\''all'\'' (both)]' \
+        '--use-environment-activation-cache[Use environment activation cache (experimental)]' \
+        {-m,--manifest-path}'[The path to `pixi.toml`, `pyproject.toml`, or the workspace directory]':file:_files \
+        {-w,--workspace}'[Name of the workspace]' \
+        {-h,--help}'[Display help information]' \
+        '--color[Whether the log needs to be colored]' \
+        '--no-progress[Hide all progress bars, always turned on if stderr is not a terminal]' \
+        "*: :_files"
+
+}
+
+function _pixi_workspace_channel_help {
+    _arguments \
+        "*: :_files"
+
+}
+
+
+function _pixi_workspace_description {
+    local line state
+
+    function _commands {
+        local -a commands
+        commands=(
+            'get:Get the workspace description'
+            'set:Set the workspace description'
+            'help:Print this message or the help of the given subcommand(s)'
+        )
+        _describe 'command' commands
+    }
+ 
+
+    _arguments -C \
+        {-m,--manifest-path}'[The path to `pixi.toml`, `pyproject.toml`, or the workspace directory]':file:_files \
+        {-w,--workspace}'[Name of the workspace]' \
+        {-h,--help}'[Display help information]' \
+        '--color[Whether the log needs to be colored \[env: PIXI_COLOR=\] \[default: auto\] \[possible values: always, never, auto\]]' \
+        '--no-progress[Hide all progress bars, always turned on if stderr is not a terminal \[env: PIXI_NO_PROGRESS=\]]' \
+        ': :->cmd' \
+        '*:: :->subcmd'
+
+    case $state in
+    (cmd)
+        _commands
+        ;;
+    (subcmd)
+        case $line[1] in
+        (get)
+            _pixi_workspace_description_get
+            ;;
+
+        (set)
+            _pixi_workspace_description_set
+            ;;
+
+        (help)
+            _pixi_workspace_description_help
+            ;;
+
+        esac
+        ;;
+     esac
+
+}
+
+function _pixi_workspace_description_get {
+    _arguments \
+        {-m,--manifest-path}'[The path to `pixi.toml`, `pyproject.toml`, or the workspace directory]':file:_files \
+        {-w,--workspace}'[Name of the workspace]' \
+        {-h,--help}'[Display help information]' \
+        '--color[Whether the log needs to be colored]' \
+        '--no-progress[Hide all progress bars, always turned on if stderr is not a terminal]' \
+        "*: :_files"
+
+}
+
+function _pixi_workspace_description_set {
+    _arguments \
+        {-m,--manifest-path}'[The path to `pixi.toml`, `pyproject.toml`, or the workspace directory]':file:_files \
+        {-w,--workspace}'[Name of the workspace]' \
+        {-h,--help}'[Display help information]' \
+        '--color[Whether the log needs to be colored]' \
+        '--no-progress[Hide all progress bars, always turned on if stderr is not a terminal]' \
+        "*: :_files"
+
+}
+
+function _pixi_workspace_description_help {
+    _arguments \
+        "*: :_files"
+
+}
+
+
+function _pixi_workspace_platform {
+    local line state
+
+    function _commands {
+        local -a commands
+        commands=(
+            'add:Adds a platform(s) to the workspace file and updates the lockfile \[aliases: a\]'
+            'list:List the platforms in the workspace file \[aliases: ls\]'
+            'remove:Remove platform(s) from the workspace file and updates the lockfile \[aliases: rm\]'
+            'help:Print this message or the help of the given subcommand(s)'
+        )
+        _describe 'command' commands
+    }
+ 
+
+    _arguments -C \
+        {-m,--manifest-path}'[The path to `pixi.toml`, `pyproject.toml`, or the workspace directory]':file:_files \
+        {-w,--workspace}'[Name of the workspace]' \
+        {-h,--help}'[Display help information]' \
+        '--color[Whether the log needs to be colored \[env: PIXI_COLOR=\] \[default: auto\] \[possible values: always, never, auto\]]' \
+        '--no-progress[Hide all progress bars, always turned on if stderr is not a terminal \[env: PIXI_NO_PROGRESS=\]]' \
+        ': :->cmd' \
+        '*:: :->subcmd'
+
+    case $state in
+    (cmd)
+        _commands
+        ;;
+    (subcmd)
+        case $line[1] in
+        (add)
+            _pixi_workspace_platform_add
+            ;;
+
+        (list)
+            _pixi_workspace_platform_list
+            ;;
+
+        (remove)
+            _pixi_workspace_platform_remove
+            ;;
+
+        (help)
+            _pixi_workspace_platform_help
+            ;;
+
+        esac
+        ;;
+     esac
+
+}
+
+function _pixi_workspace_platform_add {
+    _arguments \
+        '--no-install[Don'\''t update the environment, only add changed packages to the lock-file \[env: PIXI_NO_INSTALL=\]]' \
+        {-f,--feature}'[The name of the feature to add the platform to]' \
+        {-m,--manifest-path}'[The path to `pixi.toml`, `pyproject.toml`, or the workspace directory]':file:_files \
+        {-w,--workspace}'[Name of the workspace]' \
+        {-h,--help}'[Display help information]' \
+        '--color[Whether the log needs to be colored \[env: PIXI_COLOR=\] \[default: auto\] \[possible values: always, never, auto\]]' \
+        '--no-progress[Hide all progress bars, always turned on if stderr is not a terminal \[env: PIXI_NO_PROGRESS=\]]' \
+        "*: :_files"
+
+}
+
+function _pixi_workspace_platform_list {
+    _arguments \
+        {-m,--manifest-path}'[The path to `pixi.toml`, `pyproject.toml`, or the workspace directory]':file:_files \
+        {-w,--workspace}'[Name of the workspace]' \
+        {-h,--help}'[Display help information]' \
+        '--color[Whether the log needs to be colored \[env: PIXI_COLOR=\] \[default: auto\] \[possible values: always, never, auto\]]' \
+        '--no-progress[Hide all progress bars, always turned on if stderr is not a terminal \[env: PIXI_NO_PROGRESS=\]]' \
+        "*: :_files"
+
+}
+
+function _pixi_workspace_platform_remove {
+    _arguments \
+        '--no-install[Don'\''t update the environment, only remove the platform(s) from the lock-file \[env: PIXI_NO_INSTALL=\]]' \
+        {-f,--feature}'[The name of the feature to remove the platform from]' \
+        {-m,--manifest-path}'[The path to `pixi.toml`, `pyproject.toml`, or the workspace directory]':file:_files \
+        {-w,--workspace}'[Name of the workspace]' \
+        {-h,--help}'[Display help information]' \
+        '--color[Whether the log needs to be colored \[env: PIXI_COLOR=\] \[default: auto\] \[possible values: always, never, auto\]]' \
+        '--no-progress[Hide all progress bars, always turned on if stderr is not a terminal \[env: PIXI_NO_PROGRESS=\]]' \
+        "*: :_files"
+
+}
+
+function _pixi_workspace_platform_help {
+    _arguments \
+        "*: :_files"
+
+}
+
+
+function _pixi_workspace_version {
+    local line state
+
+    function _commands {
+        local -a commands
+        commands=(
+            'get:Get the workspace version'
+            'set:Set the workspace version'
+            'major:Bump the workspace version to MAJOR'
+            'minor:Bump the workspace version to MINOR'
+            'patch:Bump the workspace version to PATCH'
+            'help:Print this message or the help of the given subcommand(s)'
+        )
+        _describe 'command' commands
+    }
+ 
+
+    _arguments -C \
+        {-m,--manifest-path}'[The path to `pixi.toml`, `pyproject.toml`, or the workspace directory]':file:_files \
+        {-w,--workspace}'[Name of the workspace]' \
+        {-h,--help}'[Display help information]' \
+        '--color[Whether the log needs to be colored \[env: PIXI_COLOR=\] \[default: auto\] \[possible values: always, never, auto\]]' \
+        '--no-progress[Hide all progress bars, always turned on if stderr is not a terminal \[env: PIXI_NO_PROGRESS=\]]' \
+        ': :->cmd' \
+        '*:: :->subcmd'
+
+    case $state in
+    (cmd)
+        _commands
+        ;;
+    (subcmd)
+        case $line[1] in
+        (get)
+            _pixi_workspace_version_get
+            ;;
+
+        (set)
+            _pixi_workspace_version_set
+            ;;
+
+        (major)
+            _pixi_workspace_version_major
+            ;;
+
+        (minor)
+            _pixi_workspace_version_minor
+            ;;
+
+        (patch)
+            _pixi_workspace_version_patch
+            ;;
+
+        (help)
+            _pixi_workspace_version_help
+            ;;
+
+        esac
+        ;;
+     esac
+
+}
+
+function _pixi_workspace_version_get {
+    _arguments \
+        {-m,--manifest-path}'[The path to `pixi.toml`, `pyproject.toml`, or the workspace directory]':file:_files \
+        {-w,--workspace}'[Name of the workspace]' \
+        {-h,--help}'[Display help information]' \
+        '--color[Whether the log needs to be colored \[env: PIXI_COLOR=\] \[default: auto\] \[possible values: always, never, auto\]]' \
+        '--no-progress[Hide all progress bars, always turned on if stderr is not a terminal \[env: PIXI_NO_PROGRESS=\]]' \
+        "*: :_files"
+
+}
+
+function _pixi_workspace_version_set {
+    _arguments \
+        {-m,--manifest-path}'[The path to `pixi.toml`, `pyproject.toml`, or the workspace directory]':file:_files \
+        {-w,--workspace}'[Name of the workspace]' \
+        {-h,--help}'[Display help information]' \
+        '--color[Whether the log needs to be colored \[env: PIXI_COLOR=\] \[default: auto\] \[possible values: always, never, auto\]]' \
+        '--no-progress[Hide all progress bars, always turned on if stderr is not a terminal \[env: PIXI_NO_PROGRESS=\]]' \
+        "*: :_files"
+
+}
+
+function _pixi_workspace_version_major {
+    _arguments \
+        {-m,--manifest-path}'[The path to `pixi.toml`, `pyproject.toml`, or the workspace directory]':file:_files \
+        {-w,--workspace}'[Name of the workspace]' \
+        {-h,--help}'[Display help information]' \
+        '--color[Whether the log needs to be colored \[env: PIXI_COLOR=\] \[default: auto\] \[possible values: always, never, auto\]]' \
+        '--no-progress[Hide all progress bars, always turned on if stderr is not a terminal \[env: PIXI_NO_PROGRESS=\]]' \
+        "*: :_files"
+
+}
+
+function _pixi_workspace_version_minor {
+    _arguments \
+        {-m,--manifest-path}'[The path to `pixi.toml`, `pyproject.toml`, or the workspace directory]':file:_files \
+        {-w,--workspace}'[Name of the workspace]' \
+        {-h,--help}'[Display help information]' \
+        '--color[Whether the log needs to be colored \[env: PIXI_COLOR=\] \[default: auto\] \[possible values: always, never, auto\]]' \
+        '--no-progress[Hide all progress bars, always turned on if stderr is not a terminal \[env: PIXI_NO_PROGRESS=\]]' \
+        "*: :_files"
+
+}
+
+function _pixi_workspace_version_patch {
+    _arguments \
+        {-m,--manifest-path}'[The path to `pixi.toml`, `pyproject.toml`, or the workspace directory]':file:_files \
+        {-w,--workspace}'[Name of the workspace]' \
+        {-h,--help}'[Display help information]' \
+        '--color[Whether the log needs to be colored \[env: PIXI_COLOR=\] \[default: auto\] \[possible values: always, never, auto\]]' \
+        '--no-progress[Hide all progress bars, always turned on if stderr is not a terminal \[env: PIXI_NO_PROGRESS=\]]' \
+        "*: :_files"
+
+}
+
+function _pixi_workspace_version_help {
+    _arguments \
+        "*: :_files"
+
+}
+
+
+function _pixi_workspace_environment {
+    local line state
+
+    function _commands {
+        local -a commands
+        commands=(
+            'add:Adds an environment to the manifest file \[aliases: a\]'
+            'list:List the environments in the manifest file \[aliases: ls\]'
+            'remove:Remove an environment from the manifest file \[aliases: rm\]'
+            'help:Print this message or the help of the given subcommand(s)'
+        )
+        _describe 'command' commands
+    }
+ 
+
+    _arguments -C \
+        {-m,--manifest-path}'[The path to `pixi.toml`, `pyproject.toml`, or the workspace directory]':file:_files \
+        {-w,--workspace}'[Name of the workspace]' \
+        {-h,--help}'[Display help information]' \
+        '--color[Whether the log needs to be colored \[env: PIXI_COLOR=\] \[default: auto\] \[possible values: always, never, auto\]]' \
+        '--no-progress[Hide all progress bars, always turned on if stderr is not a terminal \[env: PIXI_NO_PROGRESS=\]]' \
+        ': :->cmd' \
+        '*:: :->subcmd'
+
+    case $state in
+    (cmd)
+        _commands
+        ;;
+    (subcmd)
+        case $line[1] in
+        (add)
+            _pixi_workspace_environment_add
+            ;;
+
+        (list)
+            _pixi_workspace_environment_list
+            ;;
+
+        (remove)
+            _pixi_workspace_environment_remove
+            ;;
+
+        (help)
+            _pixi_workspace_environment_help
+            ;;
+
+        esac
+        ;;
+     esac
+
+}
+
+function _pixi_workspace_environment_add {
+    _arguments \
+        {-f,--feature}'[Features to add to the environment]' \
+        '--solve-group[The solve-group to add the environment to]' \
+        '--no-default-feature[Don'\''t include the default feature in the environment]' \
+        '--force[Update the manifest even if the environment already exists]' \
+        {-m,--manifest-path}'[The path to `pixi.toml`, `pyproject.toml`, or the workspace directory]':file:_files \
+        {-w,--workspace}'[Name of the workspace]' \
+        {-h,--help}'[Display help information]' \
+        '--color[Whether the log needs to be colored \[env: PIXI_COLOR=\] \[default: auto\] \[possible values: always, never, auto\]]' \
+        '--no-progress[Hide all progress bars, always turned on if stderr is not a terminal \[env: PIXI_NO_PROGRESS=\]]' \
+        "*: :_files"
+
+}
+
+function _pixi_workspace_environment_list {
+    _arguments \
+        {-m,--manifest-path}'[The path to `pixi.toml`, `pyproject.toml`, or the workspace directory]':file:_files \
+        {-w,--workspace}'[Name of the workspace]' \
+        {-h,--help}'[Display help information]' \
+        '--color[Whether the log needs to be colored \[env: PIXI_COLOR=\] \[default: auto\] \[possible values: always, never, auto\]]' \
+        '--no-progress[Hide all progress bars, always turned on if stderr is not a terminal \[env: PIXI_NO_PROGRESS=\]]' \
+        "*: :_files"
+
+}
+
+function _pixi_workspace_environment_remove {
+    _arguments \
+        {-m,--manifest-path}'[The path to `pixi.toml`, `pyproject.toml`, or the workspace directory]':file:_files \
+        {-w,--workspace}'[Name of the workspace]' \
+        {-h,--help}'[Display help information]' \
+        '--color[Whether the log needs to be colored \[env: PIXI_COLOR=\] \[default: auto\] \[possible values: always, never, auto\]]' \
+        '--no-progress[Hide all progress bars, always turned on if stderr is not a terminal \[env: PIXI_NO_PROGRESS=\]]' \
+        "*: :_files"
+
+}
+
+function _pixi_workspace_environment_help {
+    _arguments \
+        "*: :_files"
+
+}
+
+
+function _pixi_workspace_feature {
+    local line state
+
+    function _commands {
+        local -a commands
+        commands=(
+            'list:List the features in the manifest file \[aliases: ls\]'
+            'remove:Remove a feature from the manifest file \[aliases: rm\]'
+            'help:Print this message or the help of the given subcommand(s)'
+        )
+        _describe 'command' commands
+    }
+ 
+
+    _arguments -C \
+        {-m,--manifest-path}'[The path to `pixi.toml`, `pyproject.toml`, or the workspace directory]':file:_files \
+        {-w,--workspace}'[Name of the workspace]' \
+        {-h,--help}'[Display help information]' \
+        '--color[Whether the log needs to be colored \[env: PIXI_COLOR=\] \[default: auto\] \[possible values: always, never, auto\]]' \
+        '--no-progress[Hide all progress bars, always turned on if stderr is not a terminal \[env: PIXI_NO_PROGRESS=\]]' \
+        ': :->cmd' \
+        '*:: :->subcmd'
+
+    case $state in
+    (cmd)
+        _commands
+        ;;
+    (subcmd)
+        case $line[1] in
+        (list)
+            _pixi_workspace_feature_list
+            ;;
+
+        (remove)
+            _pixi_workspace_feature_remove
+            ;;
+
+        (help)
+            _pixi_workspace_feature_help
+            ;;
+
+        esac
+        ;;
+     esac
+
+}
+
+function _pixi_workspace_feature_list {
+    _arguments \
+        {-m,--manifest-path}'[The path to `pixi.toml`, `pyproject.toml`, or the workspace directory]':file:_files \
+        {-w,--workspace}'[Name of the workspace]' \
+        {-h,--help}'[Display help information]' \
+        '--color[Whether the log needs to be colored \[env: PIXI_COLOR=\] \[default: auto\] \[possible values: always, never, auto\]]' \
+        '--no-progress[Hide all progress bars, always turned on if stderr is not a terminal \[env: PIXI_NO_PROGRESS=\]]' \
+        "*: :_files"
+
+}
+
+function _pixi_workspace_feature_remove {
+    _arguments \
+        {-m,--manifest-path}'[The path to `pixi.toml`, `pyproject.toml`, or the workspace directory]':file:_files \
+        {-w,--workspace}'[Name of the workspace]' \
+        {-h,--help}'[Display help information]' \
+        '--color[Whether the log needs to be colored \[env: PIXI_COLOR=\] \[default: auto\] \[possible values: always, never, auto\]]' \
+        '--no-progress[Hide all progress bars, always turned on if stderr is not a terminal \[env: PIXI_NO_PROGRESS=\]]' \
+        "*: :_files"
+
+}
+
+function _pixi_workspace_feature_help {
+    _arguments \
+        "*: :_files"
+
+}
+
+
+function _pixi_workspace_export {
+    local line state
+
+    function _commands {
+        local -a commands
+        commands=(
+            'conda-explicit-spec:Export workspace environment to a conda explicit specification file \[aliases: ces\]'
+            'conda-environment:Export workspace environment to a conda environment.yaml file'
+            'help:Print this message or the help of the given subcommand(s)'
+        )
+        _describe 'command' commands
+    }
+ 
+
+    _arguments -C \
+        {-m,--manifest-path}'[The path to `pixi.toml`, `pyproject.toml`, or the workspace directory]':file:_files \
+        {-w,--workspace}'[Name of the workspace]' \
+        {-h,--help}'[Display help information]' \
+        '--color[Whether the log needs to be colored \[env: PIXI_COLOR=\] \[default: auto\] \[possible values: always, never, auto\]]' \
+        '--no-progress[Hide all progress bars, always turned on if stderr is not a terminal \[env: PIXI_NO_PROGRESS=\]]' \
+        ': :->cmd' \
+        '*:: :->subcmd'
+
+    case $state in
+    (cmd)
+        _commands
+        ;;
+    (subcmd)
+        case $line[1] in
+        (conda-explicit-spec)
+            _pixi_workspace_export_conda-explicit-spec
+            ;;
+
+        (conda-environment)
+            _pixi_workspace_export_conda-environment
+            ;;
+
+        (help)
+            _pixi_workspace_export_help
+            ;;
+
+        esac
+        ;;
+     esac
+
+}
+
+function _pixi_workspace_export_conda-explicit-spec {
+    _arguments \
+        {-e,--environment}'[The environments to render. Can be repeated for multiple environments]' \
+        {-p,--platform}'[The platform to render. Can be repeated for multiple platforms. Defaults to all platforms available for selected environments]' \
+        '--ignore-pypi-errors[PyPI dependencies are not supported in the conda explicit spec file]' \
+        '--ignore-source-errors[Source dependencies are not supported in the conda explicit spec file]' \
+        {-m,--manifest-path}'[The path to `pixi.toml`, `pyproject.toml`, or the workspace directory]':file:_files \
+        {-w,--workspace}'[Name of the workspace]' \
+        {-h,--help}'[Display help information]' \
+        '--color[Whether the log needs to be colored]' \
+        '--no-progress[Hide all progress bars, always turned on if stderr is not a terminal]' \
+        '--frozen[Install the environment as defined in the lockfile, doesn'\''t update lockfile if it isn'\''t up-to-date with the manifest file]' \
+        '--locked[Check if lockfile is up-to-date before installing the environment, aborts when lockfile isn'\''t up-to-date with the manifest file]' \
+        '--no-install[Don'\''t modify the environment, only modify the lock-file]' \
+        '--auth-file[Path to the file containing the authentication token]':file:_files \
+        '--concurrent-downloads[Max concurrent network requests, default is `50`]' \
+        '--concurrent-solves[Max concurrent solves, default is the number of CPUs]' \
+        '--pinning-strategy[Set pinning strategy]' \
+        '--pypi-keyring-provider[Specifies whether to use the keyring to look up credentials for PyPI]' \
+        '--run-post-link-scripts[Run post-link scripts (insecure)]' \
+        '--no-symbolic-links[Disallow symbolic links during package installation]' \
+        '--no-hard-links[Disallow hard links during package installation]' \
+        '--no-ref-links[Disallow ref links (copy-on-write) during package installation]' \
+        '--tls-no-verify[Do not verify the TLS certificate of the server]' \
+        '--tls-root-certs[Which TLS root certificates to use: '\''webpki'\'' (bundled Mozilla roots), '\''native'\'' (system store), or '\''all'\'' (both)]' \
+        '--use-environment-activation-cache[Use environment activation cache (experimental)]' \
+        "*: :_files"
+
+}
+
+function _pixi_workspace_export_conda-environment {
+    _arguments \
+        {-p,--platform}'[The platform to render the environment file for. Defaults to the current platform]' \
+        {-e,--environment}'[The environment to render the environment file for. Defaults to the default environment]' \
+        {-n,--name}'[The name to use for the rendered conda environment. Defaults to the environment name]' \
+        '--from-lockfile[Render the environment with packages pinned to the versions resolved in the lock file instead of the manifest specs.]' \
+        {-m,--manifest-path}'[The path to `pixi.toml`, `pyproject.toml`, or the workspace directory]':file:_files \
+        {-w,--workspace}'[Name of the workspace]' \
+        {-h,--help}'[Display help information]' \
+        '--color[Whether the log needs to be colored]' \
+        '--no-progress[Hide all progress bars, always turned on if stderr is not a terminal]' \
+        "*: :_files"
+
+}
+
+function _pixi_workspace_export_help {
+    _arguments \
+        "*: :_files"
+
+}
+
+
+function _pixi_workspace_name {
+    local line state
+
+    function _commands {
+        local -a commands
+        commands=(
+            'get:Get the workspace name'
+            'set:Set the workspace name'
+            'help:Print this message or the help of the given subcommand(s)'
+        )
+        _describe 'command' commands
+    }
+ 
+
+    _arguments -C \
+        {-m,--manifest-path}'[The path to `pixi.toml`, `pyproject.toml`, or the workspace directory]':file:_files \
+        {-w,--workspace}'[Name of the workspace]' \
+        {-h,--help}'[Display help information]' \
+        '--color[Whether the log needs to be colored \[env: PIXI_COLOR=\] \[default: auto\] \[possible values: always, never, auto\]]' \
+        '--no-progress[Hide all progress bars, always turned on if stderr is not a terminal \[env: PIXI_NO_PROGRESS=\]]' \
+        ': :->cmd' \
+        '*:: :->subcmd'
+
+    case $state in
+    (cmd)
+        _commands
+        ;;
+    (subcmd)
+        case $line[1] in
+        (get)
+            _pixi_workspace_name_get
+            ;;
+
+        (set)
+            _pixi_workspace_name_set
+            ;;
+
+        (help)
+            _pixi_workspace_name_help
+            ;;
+
+        esac
+        ;;
+     esac
+
+}
+
+function _pixi_workspace_name_get {
+    _arguments \
+        {-m,--manifest-path}'[The path to `pixi.toml`, `pyproject.toml`, or the workspace directory]':file:_files \
+        {-w,--workspace}'[Name of the workspace]' \
+        {-h,--help}'[Display help information]' \
+        '--color[Whether the log needs to be colored \[env: PIXI_COLOR=\] \[default: auto\] \[possible values: always, never, auto\]]' \
+        '--no-progress[Hide all progress bars, always turned on if stderr is not a terminal \[env: PIXI_NO_PROGRESS=\]]' \
+        "*: :_files"
+
+}
+
+function _pixi_workspace_name_set {
+    _arguments \
+        {-m,--manifest-path}'[The path to `pixi.toml`, `pyproject.toml`, or the workspace directory]':file:_files \
+        {-w,--workspace}'[Name of the workspace]' \
+        {-h,--help}'[Display help information]' \
+        '--color[Whether the log needs to be colored]' \
+        '--no-progress[Hide all progress bars, always turned on if stderr is not a terminal]' \
+        "*: :_files"
+
+}
+
+function _pixi_workspace_name_help {
+    _arguments \
+        "*: :_files"
+
+}
+
+
+function _pixi_workspace_system-requirements {
+    local line state
+
+    function _commands {
+        local -a commands
+        commands=(
+            'add:Adds an environment to the manifest file \[aliases: a\]'
+            'list:List the environments in the manifest file \[aliases: ls\]'
+            'help:Print this message or the help of the given subcommand(s)'
+        )
+        _describe 'command' commands
+    }
+ 
+
+    _arguments -C \
+        {-m,--manifest-path}'[The path to `pixi.toml`, `pyproject.toml`, or the workspace directory]':file:_files \
+        {-w,--workspace}'[Name of the workspace]' \
+        {-h,--help}'[Display help information]' \
+        '--color[Whether the log needs to be colored \[env: PIXI_COLOR=\] \[default: auto\] \[possible values: always, never, auto\]]' \
+        '--no-progress[Hide all progress bars, always turned on if stderr is not a terminal \[env: PIXI_NO_PROGRESS=\]]' \
+        ': :->cmd' \
+        '*:: :->subcmd'
+
+    case $state in
+    (cmd)
+        _commands
+        ;;
+    (subcmd)
+        case $line[1] in
+        (add)
+            _pixi_workspace_system-requirements_add
+            ;;
+
+        (list)
+            _pixi_workspace_system-requirements_list
+            ;;
+
+        (help)
+            _pixi_workspace_system-requirements_help
+            ;;
+
+        esac
+        ;;
+     esac
+
+}
+
+function _pixi_workspace_system-requirements_add {
+    _arguments \
+        '-[The version of the linux kernel (Find with `uname -r`)]' \
+        '-[The version of the CUDA driver (Find with `nvidia-smi`)]' \
+        '-[The version of MacOS (Find with `sw_vers`)]' \
+        '-[The version of the glibc library (Find with `ldd --version`)]' \
+        '-[Non Glibc libc family and version (Find with `ldd --version`)]' \
+        '--family[The Libc family, this can only be specified for requirement `other-libc`]' \
+        {-f,--feature}'[The name of the feature to modify]' \
+        {-m,--manifest-path}'[The path to `pixi.toml`, `pyproject.toml`, or the workspace directory]':file:_files \
+        {-w,--workspace}'[Name of the workspace]' \
+        {-h,--help}'[Display help information]' \
+        '--color[Whether the log needs to be colored]' \
+        '--no-progress[Hide all progress bars, always turned on if stderr is not a terminal]' \
+        "*: :_files"
+
+}
+
+function _pixi_workspace_system-requirements_list {
+    _arguments \
+        '--json[List the system requirements in JSON format]' \
+        {-e,--environment}'[The environment to list the system requirements for]' \
+        {-m,--manifest-path}'[The path to `pixi.toml`, `pyproject.toml`, or the workspace directory]':file:_files \
+        {-w,--workspace}'[Name of the workspace]' \
+        {-h,--help}'[Display help information]' \
+        '--color[Whether the log needs to be colored \[env: PIXI_COLOR=\] \[default: auto\] \[possible values: always, never, auto\]]' \
+        '--no-progress[Hide all progress bars, always turned on if stderr is not a terminal \[env: PIXI_NO_PROGRESS=\]]' \
+        "*: :_files"
+
+}
+
+function _pixi_workspace_system-requirements_help {
+    _arguments \
+        "*: :_files"
+
+}
+
+
+function _pixi_workspace_register {
+    local line state
+
+    function _commands {
+        local -a commands
+        commands=(
+            'list:List the registered workspaces \[aliases: ls\]'
+            'remove:Remove a workspace from registry \[aliases: rm\]'
+            'prune:Prune disassociated workspaces from registry \[aliases: pr\]'
+            'help:Print this message or the help of the given subcommand(s)'
+        )
+        _describe 'command' commands
+    }
+ 
+
+    _arguments -C \
+        {-n,--name}'[Name of the workspace to register. Defaults to the name of the current workspace]' \
+        {-p,--path}'[Path to register. Defaults to the path to the current workspace]':file:_files \
+        {-f,--force}'[Overwrite the workspace entry if the name of the workspace already exists in the registry]' \
+        {-m,--manifest-path}'[The path to `pixi.toml`, `pyproject.toml`, or the workspace directory]':file:_files \
+        {-w,--workspace}'[Name of the workspace]' \
+        {-h,--help}'[Display help information]' \
+        '--color[Whether the log needs to be colored \[env: PIXI_COLOR=\] \[default: auto\] \[possible values: always, never, auto\]]' \
+        '--no-progress[Hide all progress bars, always turned on if stderr is not a terminal \[env: PIXI_NO_PROGRESS=\]]' \
+        ': :->cmd' \
+        '*:: :->subcmd'
+
+    case $state in
+    (cmd)
+        _commands
+        ;;
+    (subcmd)
+        case $line[1] in
+        (list)
+            _pixi_workspace_register_list
+            ;;
+
+        (remove)
+            _pixi_workspace_register_remove
+            ;;
+
+        (prune)
+            _pixi_workspace_register_prune
+            ;;
+
+        (help)
+            _pixi_workspace_register_help
+            ;;
+
+        esac
+        ;;
+     esac
+
+}
+
+function _pixi_workspace_register_list {
+    _arguments \
+        '--json[Output in JSON format]' \
+        {-m,--manifest-path}'[The path to `pixi.toml`, `pyproject.toml`, or the workspace directory]':file:_files \
+        {-w,--workspace}'[Name of the workspace]' \
+        {-h,--help}'[Display help information]' \
+        '--color[Whether the log needs to be colored \[env: PIXI_COLOR=\] \[default: auto\] \[possible values: always, never, auto\]]' \
+        '--no-progress[Hide all progress bars, always turned on if stderr is not a terminal \[env: PIXI_NO_PROGRESS=\]]' \
+        "*: :_files"
+
+}
+
+function _pixi_workspace_register_remove {
+    _arguments \
+        {-m,--manifest-path}'[The path to `pixi.toml`, `pyproject.toml`, or the workspace directory]':file:_files \
+        {-w,--workspace}'[Name of the workspace]' \
+        {-h,--help}'[Display help information]' \
+        '--color[Whether the log needs to be colored \[env: PIXI_COLOR=\] \[default: auto\] \[possible values: always, never, auto\]]' \
+        '--no-progress[Hide all progress bars, always turned on if stderr is not a terminal \[env: PIXI_NO_PROGRESS=\]]' \
+        "*: :_files"
+
+}
+
+function _pixi_workspace_register_prune {
+    _arguments \
+        {-m,--manifest-path}'[The path to `pixi.toml`, `pyproject.toml`, or the workspace directory]':file:_files \
+        {-w,--workspace}'[Name of the workspace]' \
+        {-h,--help}'[Display help information]' \
+        '--color[Whether the log needs to be colored \[env: PIXI_COLOR=\] \[default: auto\] \[possible values: always, never, auto\]]' \
+        '--no-progress[Hide all progress bars, always turned on if stderr is not a terminal \[env: PIXI_NO_PROGRESS=\]]' \
+        "*: :_files"
+
+}
+
+function _pixi_workspace_register_help {
+    _arguments \
+        "*: :_files"
+
+}
+
+
+function _pixi_workspace_requires-pixi {
+    local line state
+
+    function _commands {
+        local -a commands
+        commands=(
+            'get:Get the pixi minimum version requirement'
+            'set:Set the pixi minimum version requirement'
+            'unset:Remove the pixi minimum version requirement'
+            'verify:Verify the pixi minimum version requirement'
+            'help:Print this message or the help of the given subcommand(s)'
+        )
+        _describe 'command' commands
+    }
+ 
+
+    _arguments -C \
+        {-m,--manifest-path}'[The path to `pixi.toml`, `pyproject.toml`, or the workspace directory]':file:_files \
+        {-w,--workspace}'[Name of the workspace]' \
+        {-h,--help}'[Display help information]' \
+        '--color[Whether the log needs to be colored \[env: PIXI_COLOR=\] \[default: auto\] \[possible values: always, never, auto\]]' \
+        '--no-progress[Hide all progress bars, always turned on if stderr is not a terminal \[env: PIXI_NO_PROGRESS=\]]' \
+        ': :->cmd' \
+        '*:: :->subcmd'
+
+    case $state in
+    (cmd)
+        _commands
+        ;;
+    (subcmd)
+        case $line[1] in
+        (get)
+            _pixi_workspace_requires-pixi_get
+            ;;
+
+        (set)
+            _pixi_workspace_requires-pixi_set
+            ;;
+
+        (unset)
+            _pixi_workspace_requires-pixi_unset
+            ;;
+
+        (verify)
+            _pixi_workspace_requires-pixi_verify
+            ;;
+
+        (help)
+            _pixi_workspace_requires-pixi_help
+            ;;
+
+        esac
+        ;;
+     esac
+
+}
+
+function _pixi_workspace_requires-pixi_get {
+    _arguments \
+        {-m,--manifest-path}'[The path to `pixi.toml`, `pyproject.toml`, or the workspace directory]':file:_files \
+        {-w,--workspace}'[Name of the workspace]' \
+        {-h,--help}'[Display help information]' \
+        '--color[Whether the log needs to be colored \[env: PIXI_COLOR=\] \[default: auto\] \[possible values: always, never, auto\]]' \
+        '--no-progress[Hide all progress bars, always turned on if stderr is not a terminal \[env: PIXI_NO_PROGRESS=\]]' \
+        "*: :_files"
+
+}
+
+function _pixi_workspace_requires-pixi_set {
+    _arguments \
+        {-m,--manifest-path}'[The path to `pixi.toml`, `pyproject.toml`, or the workspace directory]':file:_files \
+        {-w,--workspace}'[Name of the workspace]' \
+        {-h,--help}'[Display help information]' \
+        '--color[Whether the log needs to be colored]' \
+        '--no-progress[Hide all progress bars, always turned on if stderr is not a terminal]' \
+        "*: :_files"
+
+}
+
+function _pixi_workspace_requires-pixi_unset {
+    _arguments \
+        {-m,--manifest-path}'[The path to `pixi.toml`, `pyproject.toml`, or the workspace directory]':file:_files \
+        {-w,--workspace}'[Name of the workspace]' \
+        {-h,--help}'[Display help information]' \
+        '--color[Whether the log needs to be colored \[env: PIXI_COLOR=\] \[default: auto\] \[possible values: always, never, auto\]]' \
+        '--no-progress[Hide all progress bars, always turned on if stderr is not a terminal \[env: PIXI_NO_PROGRESS=\]]' \
+        "*: :_files"
+
+}
+
+function _pixi_workspace_requires-pixi_verify {
+    _arguments \
+        {-m,--manifest-path}'[The path to `pixi.toml`, `pyproject.toml`, or the workspace directory]':file:_files \
+        {-w,--workspace}'[Name of the workspace]' \
+        {-h,--help}'[Display help information]' \
+        '--color[Whether the log needs to be colored \[env: PIXI_COLOR=\] \[default: auto\] \[possible values: always, never, auto\]]' \
+        '--no-progress[Hide all progress bars, always turned on if stderr is not a terminal \[env: PIXI_NO_PROGRESS=\]]' \
+        "*: :_files"
+
+}
+
+function _pixi_workspace_requires-pixi_help {
+    _arguments \
+        "*: :_files"
+
+}
+
+function _pixi_workspace_help {
+    _arguments \
+        "*: :_files"
+
+}
+
+function _pixi_help {
+    _arguments \
+        "*: :_files"
+
+}
+
+_pixi "$@"
+
