@@ -14,28 +14,30 @@ function _gh {
             'codespace:Connect to and manage codespaces'
             'gist:Manage gists'
             'issue:Manage issues'
+            'org:Manage organizations'
             'pr:Manage pull requests'
+            'project:Work with GitHub Projects.'
             'release:Manage releases'
             'repo:Manage repositories'
+            'cache:Manage GitHub Actions caches'
             'run:View details about workflow runs'
             'workflow:View details about GitHub Actions workflows'
+            'copilot:Extension copilot'
+            'co:Alias for "pr checkout"'
             'alias:Create command shortcuts'
             'api:Make an authenticated GitHub API request'
+            'attestation:Work with artifact attestations'
             'completion:Generate shell completion scripts'
             'config:Manage configuration for gh'
             'extension:Manage gh extensions'
             'gpg-key:Manage GPG keys'
             'label:Manage labels'
+            'ruleset:View info about repo rulesets'
             'search:Search for repositories, issues, and pull requests'
             'secret:Manage GitHub secrets'
             'ssh-key:Manage SSH keys'
             'status:Print information about relevant issues, pull requests, and notifications across repositories'
-            'actions:Learn about working with GitHub Actions'
-            'environment:Environment variables that can be used with gh'
-            'exit-codes:Exit codes used by gh'
-            'formatting:Formatting options for JSON data exported from gh'
-            'mintty:Information about using gh with MinTTY'
-            'reference:A comprehensive reference of all gh commands'
+            'variable:Manage GitHub Actions variables'
         )
         _describe 'command' commands
     }
@@ -73,8 +75,16 @@ function _gh {
             _gh_issue
             ;;
 
+        (org)
+            _gh_org
+            ;;
+
         (pr)
             _gh_pr
+            ;;
+
+        (project)
+            _gh_project
             ;;
 
         (release)
@@ -85,6 +95,10 @@ function _gh {
             _gh_repo
             ;;
 
+        (cache)
+            _gh_cache
+            ;;
+
         (run)
             _gh_run
             ;;
@@ -93,12 +107,24 @@ function _gh {
             _gh_workflow
             ;;
 
+        (copilot)
+            _gh_copilot
+            ;;
+
+        (co)
+            _gh_co
+            ;;
+
         (alias)
             _gh_alias
             ;;
 
         (api)
             _gh_api
+            ;;
+
+        (attestation)
+            _gh_attestation
             ;;
 
         (completion)
@@ -121,6 +147,10 @@ function _gh {
             _gh_label
             ;;
 
+        (ruleset)
+            _gh_ruleset
+            ;;
+
         (search)
             _gh_search
             ;;
@@ -137,28 +167,8 @@ function _gh {
             _gh_status
             ;;
 
-        (actions)
-            _gh_actions
-            ;;
-
-        (environment)
-            _gh_environment
-            ;;
-
-        (exit-codes)
-            _gh_exit-codes
-            ;;
-
-        (formatting)
-            _gh_formatting
-            ;;
-
-        (mintty)
-            _gh_mintty
-            ;;
-
-        (reference)
-            _gh_reference
+        (variable)
+            _gh_variable
             ;;
 
         esac
@@ -174,12 +184,13 @@ function _gh_auth {
     function _commands {
         local -a commands
         commands=(
-            'login:Authenticate with a GitHub host'
-            'logout:Log out of a GitHub host'
+            'login:Log in to a GitHub account'
+            'logout:Log out of a GitHub account'
             'refresh:Refresh stored authentication credentials'
-            'setup-git:Configure git to use GitHub CLI as a credential helper'
-            'status:View authentication status'
-            'token:Print the auth token gh is configured to use'
+            'setup-git:Setup git with GitHub CLI'
+            'status:Display active account and authentication state on each known GitHub host'
+            'switch:Switch active GitHub account'
+            'token:Print the authentication token gh uses for a hostname and account'
         )
         _describe 'command' commands
     }
@@ -216,6 +227,10 @@ function _gh_auth {
             _gh_auth_status
             ;;
 
+        (switch)
+            _gh_auth_switch
+            ;;
+
         (token)
             _gh_auth_token
             ;;
@@ -228,9 +243,11 @@ function _gh_auth {
 
 function _gh_auth_login {
     _arguments \
-        {-p,--git-protocol}'[The protocol to use for git operations: {ssh|https}]' \
+        {-p,--git-protocol}'[The protocol to use for git operations on this host: {ssh|https}]' \
         {-h,--hostname}'[The hostname of the GitHub instance to authenticate with]' \
+        '--insecure-storage[Save authentication credentials in plain text instead of credential store]' \
         {-s,--scopes}'[Additional authentication scopes to request]' \
+        '--skip-ssh-key[Skip generate/upload SSH key prompt]' \
         {-w,--web}'[Open a browser to authenticate]' \
         '--with-token[Read token from standard input]' \
         '--help[Show help for command]' \
@@ -241,6 +258,7 @@ function _gh_auth_login {
 function _gh_auth_logout {
     _arguments \
         {-h,--hostname}'[The hostname of the GitHub instance to log out of]' \
+        {-u,--user}'[The account to log out of]' \
         '--help[Show help for command]' \
         "*: :_files"
 
@@ -249,6 +267,9 @@ function _gh_auth_logout {
 function _gh_auth_refresh {
     _arguments \
         {-h,--hostname}'[The GitHub host to use for authentication]' \
+        '--insecure-storage[Save authentication credentials in plain text instead of credential store]' \
+        {-r,--remove-scopes}'[Authentication scopes to remove from gh]' \
+        '--reset-scopes[Reset authentication scopes to the default minimum set of scopes]' \
         {-s,--scopes}'[Additional authentication scopes for gh to have]' \
         '--help[Show help for command]' \
         "*: :_files"
@@ -257,6 +278,7 @@ function _gh_auth_refresh {
 
 function _gh_auth_setup-git {
     _arguments \
+        {-f,--force,--hostname}'[Force setup even if the host is not known. Must be used in conjunction with --hostname]' \
         {-h,--hostname}'[The hostname to configure git for]' \
         '--help[Show help for command]' \
         "*: :_files"
@@ -265,8 +287,18 @@ function _gh_auth_setup-git {
 
 function _gh_auth_status {
     _arguments \
-        {-h,--hostname}'[Check a specific hostname'\''s auth status]' \
+        {-a,--active}'[Display the active account only]' \
+        {-h,--hostname}'[Check only a specific hostname'\''s auth status]' \
         {-t,--show-token}'[Display the auth token]' \
+        '--help[Show help for command]' \
+        "*: :_files"
+
+}
+
+function _gh_auth_switch {
+    _arguments \
+        {-h,--hostname}'[The hostname of the GitHub instance to switch account for]' \
+        {-u,--user}'[The account to switch to]' \
         '--help[Show help for command]' \
         "*: :_files"
 
@@ -275,6 +307,7 @@ function _gh_auth_status {
 function _gh_auth_token {
     _arguments \
         {-h,--hostname}'[The hostname of the GitHub instance authenticated with]' \
+        {-u,--user}'[The account to output the token for]' \
         '--help[Show help for command]' \
         "*: :_files"
 
@@ -283,9 +316,10 @@ function _gh_auth_token {
 function _gh_browse {
     _arguments \
         {-b,--branch}'[Select another branch by passing in the branch name]' \
-        {-c,--commit}'[Open the last commit]' \
+        {-c,--commit}'[Select another commit by passing in the commit SHA, default is the last commit]' \
         {-n,--no-browser}'[Print destination URL instead of opening the browser]' \
         {-p,--projects}'[Open repository projects]' \
+        {-r,--releases}'[Open repository releases]' \
         {-R,--repo}'[Select another repository using the \[HOST/\]OWNER/REPO format]' \
         {-s,--settings}'[Open repository settings]' \
         {-w,--wiki}'[Open repository wiki]' \
@@ -313,6 +347,7 @@ function _gh_codespace {
             'rebuild:Rebuild a codespace'
             'ssh:SSH into a codespace'
             'stop:Stop a running codespace'
+            'view:View details about a codespace'
         )
         _describe 'command' commands
     }
@@ -377,6 +412,10 @@ function _gh_codespace {
             _gh_codespace_stop
             ;;
 
+        (view)
+            _gh_codespace_view
+            ;;
+
         esac
         ;;
      esac
@@ -387,6 +426,8 @@ function _gh_codespace_code {
     _arguments \
         {-c,--codespace}'[Name of the codespace]' \
         '--insiders[Use the insiders version of Visual Studio Code]' \
+        {-R,--repo}'[Filter codespace selection by repository name (user/repo)]' \
+        '--repo-owner[Filter codespace selection by repository owner (username or org)]' \
         {-w,--web}'[Use the web version of Visual Studio Code]' \
         '--help[Show help for command]' \
         "*: :_files"
@@ -399,6 +440,8 @@ function _gh_codespace_cp {
         {-e,--expand}'[Expand remote file names on remote shell]' \
         {-p,--profile}'[Name of the SSH profile to use]' \
         {-r,--recursive}'[Recursively copy directories]' \
+        {-R,--repo}'[Filter codespace selection by repository name (user/repo)]' \
+        '--repo-owner[Filter codespace selection by repository owner (username or org)]' \
         '--help[Show help for command]' \
         "*: :_files"
 
@@ -409,12 +452,14 @@ function _gh_codespace_create {
         {-b,--branch}'[repository branch]' \
         '--default-permissions[do not prompt to accept additional permissions requested by the codespace]' \
         '--devcontainer-path[path to the devcontainer.json file to use when creating codespace]' \
+        {-d,--display-name}'[display name for the codespace (48 characters or less)]' \
         '--idle-timeout[allowed inactivity before codespace is stopped, e.g. "10m", "1h"]' \
         {-l,--location}'[location: {EastUs|SouthEastAsia|WestEurope|WestUs2} (determined automatically if not provided)]' \
         {-m,--machine}'[hardware specifications for the VM]' \
-        {-r,--repo}'[repository name with owner: user/repo]' \
+        {-R,--repo}'[repository name with owner: user/repo]' \
         '--retention-period[allowed time after shutting down before the codespace is automatically deleted (maximum 30 days), e.g. "1h", "72h"]' \
         {-s,--status}'[show status of post-create command and dotfiles]' \
+        {-w,--web}'[create codespace from browser, cannot be used with --display-name, --idle-timeout, or --retention-period]' \
         '--help[Show help for command]' \
         "*: :_files"
 
@@ -427,7 +472,8 @@ function _gh_codespace_delete {
         '--days[Delete codespaces older than N days]' \
         {-f,--force}'[Skip confirmation for codespaces that contain unsaved changes]' \
         {-o,--org}'[The login handle of the organization (admin-only)]' \
-        {-r,--repo}'[Delete codespaces for a repository]' \
+        {-R,--repo}'[Filter codespace selection by repository name (user/repo)]' \
+        '--repo-owner[Filter codespace selection by repository owner (username or org)]' \
         {-u,--user}'[The username to delete codespaces for (used with --org)]' \
         '--help[Show help for command]' \
         "*: :_files"
@@ -439,6 +485,8 @@ function _gh_codespace_edit {
         {-c,--codespace}'[Name of the codespace]' \
         {-d,--display-name}'[Set the display name]' \
         {-m,--machine}'[Set hardware specifications for the VM]' \
+        {-R,--repo}'[Filter codespace selection by repository name (user/repo)]' \
+        '--repo-owner[Filter codespace selection by repository owner (username or org)]' \
         '--help[Show help for command]' \
         "*: :_files"
 
@@ -447,6 +495,8 @@ function _gh_codespace_edit {
 function _gh_codespace_jupyter {
     _arguments \
         {-c,--codespace}'[Name of the codespace]' \
+        {-R,--repo}'[Filter codespace selection by repository name (user/repo)]' \
+        '--repo-owner[Filter codespace selection by repository owner (username or org)]' \
         '--help[Show help for command]' \
         "*: :_files"
 
@@ -458,9 +508,10 @@ function _gh_codespace_list {
         '--json[Output JSON with the specified fields]' \
         {-L,--limit}'[Maximum number of codespaces to list (default 30)]' \
         {-o,--org}'[The login handle of the organization to list codespaces for (admin-only)]' \
-        {-r,--repo}'[Repository name with owner: user/repo]' \
+        {-R,--repo}'[Repository name with owner: user/repo]' \
         {-t,--template}'[Format JSON output using a Go template; see "gh help formatting"]' \
         {-u,--user}'[The username to list codespaces for (used with --org)]' \
+        {-w,--web}'[List codespaces in the web browser, cannot be used with --user or --org]' \
         '--help[Show help for command]' \
         "*: :_files"
 
@@ -470,6 +521,8 @@ function _gh_codespace_logs {
     _arguments \
         {-c,--codespace}'[Name of the codespace]' \
         {-f,--follow}'[Tail and follow the logs]' \
+        {-R,--repo}'[Filter codespace selection by repository name (user/repo)]' \
+        '--repo-owner[Filter codespace selection by repository owner (username or org)]' \
         '--help[Show help for command]' \
         "*: :_files"
 
@@ -493,6 +546,8 @@ function _gh_codespace_ports {
         {-c,--codespace}'[Name of the codespace]' \
         {-q,--jq}'[Filter JSON output using a jq expression]' \
         '--json[Output JSON with the specified fields]' \
+        {-R,--repo}'[Filter codespace selection by repository name (user/repo)]' \
+        '--repo-owner[Filter codespace selection by repository owner (username or org)]' \
         {-t,--template}'[Format JSON output using a Go template; see "gh help formatting"]' \
         '--help[Show help for command]' \
         ': :->cmd' \
@@ -522,6 +577,8 @@ function _gh_codespace_ports_forward {
     _arguments \
         {-c,--codespace}'[Name of the codespace]' \
         '--help[Show help for command]' \
+        {-R,--repo}'[Filter codespace selection by repository name (user/repo)]' \
+        '--repo-owner[Filter codespace selection by repository owner (username or org)]' \
         "*: :_files"
 
 }
@@ -530,6 +587,8 @@ function _gh_codespace_ports_visibility {
     _arguments \
         {-c,--codespace}'[Name of the codespace]' \
         '--help[Show help for command]' \
+        {-R,--repo}'[Filter codespace selection by repository name (user/repo)]' \
+        '--repo-owner[Filter codespace selection by repository owner (username or org)]' \
         "*: :_files"
 
 }
@@ -537,6 +596,9 @@ function _gh_codespace_ports_visibility {
 function _gh_codespace_rebuild {
     _arguments \
         {-c,--codespace}'[Name of the codespace]' \
+        '--full[perform a full rebuild]' \
+        {-R,--repo}'[Filter codespace selection by repository name (user/repo)]' \
+        '--repo-owner[Filter codespace selection by repository owner (username or org)]' \
         '--help[Show help for command]' \
         "*: :_files"
 
@@ -549,6 +611,8 @@ function _gh_codespace_ssh {
         {-d,--debug}'[Log debug data to a file]' \
         '--debug-file[Path of the file log to]' \
         '--profile[Name of the SSH profile to use]' \
+        {-R,--repo}'[Filter codespace selection by repository name (user/repo)]' \
+        '--repo-owner[Filter codespace selection by repository owner (username or org)]' \
         '--server-port[SSH server port number (0 => pick unused)]' \
         '--help[Show help for command]' \
         "*: :_files"
@@ -559,7 +623,22 @@ function _gh_codespace_stop {
     _arguments \
         {-c,--codespace}'[Name of the codespace]' \
         {-o,--org}'[The login handle of the organization (admin-only)]' \
+        {-R,--repo}'[Filter codespace selection by repository name (user/repo)]' \
+        '--repo-owner[Filter codespace selection by repository owner (username or org)]' \
         {-u,--user}'[The username to stop codespace for (used with --org)]' \
+        '--help[Show help for command]' \
+        "*: :_files"
+
+}
+
+function _gh_codespace_view {
+    _arguments \
+        {-c,--codespace}'[Name of the codespace]' \
+        {-q,--jq}'[Filter JSON output using a jq expression]' \
+        '--json[Output JSON with the specified fields]' \
+        {-R,--repo}'[Filter codespace selection by repository name (user/repo)]' \
+        '--repo-owner[Filter codespace selection by repository owner (username or org)]' \
+        {-t,--template}'[Format JSON output using a Go template; see "gh help formatting"]' \
         '--help[Show help for command]' \
         "*: :_files"
 
@@ -577,6 +656,7 @@ function _gh_gist {
             'delete:Delete a gist'
             'edit:Edit one of your gists'
             'list:List your gists'
+            'rename:Rename a file in a gist'
             'view:View a gist'
         )
         _describe 'command' commands
@@ -614,6 +694,10 @@ function _gh_gist {
             _gh_gist_list
             ;;
 
+        (rename)
+            _gh_gist_rename
+            ;;
+
         (view)
             _gh_gist_view
             ;;
@@ -635,7 +719,7 @@ function _gh_gist_create {
     _arguments \
         {-d,--desc}'[A description for this gist]' \
         {-f,--filename}'[Provide a filename to be used when reading from standard input]' \
-        {-p,--public}'[List the gist publicly (default: secret)]' \
+        {-p,--public}'[List the gist publicly (default "secret")]' \
         {-w,--web}'[Open the web browser with created gist]' \
         '--help[Show help for command]' \
         "*: :_files"
@@ -654,6 +738,7 @@ function _gh_gist_edit {
         {-a,--add}'[Add a new file to the gist]' \
         {-d,--desc}'[New description for the gist]' \
         {-f,--filename}'[Select a file to edit]' \
+        {-r,--remove}'[Remove a file from the gist]' \
         '--help[Show help for command]' \
         "*: :_files"
 
@@ -661,9 +746,18 @@ function _gh_gist_edit {
 
 function _gh_gist_list {
     _arguments \
+        '--filter[Filter gists using a regular expression]' \
+        '--include-content[Include gists'\'' file content when filtering]' \
         {-L,--limit}'[Maximum number of gists to fetch (default 10)]' \
         '--public[Show only public gists]' \
         '--secret[Show only secret gists]' \
+        '--help[Show help for command]' \
+        "*: :_files"
+
+}
+
+function _gh_gist_rename {
+    _arguments \
         '--help[Show help for command]' \
         "*: :_files"
 
@@ -687,16 +781,19 @@ function _gh_issue {
     function _commands {
         local -a commands
         commands=(
+            'create:Create a new issue'
+            'list:List issues in a repository'
+            'status:Show status of relevant issues'
             'close:Close issue'
             'comment:Add a comment to an issue'
-            'create:Create a new issue'
             'delete:Delete issue'
-            'edit:Edit an issue'
-            'list:List issues in a repository'
+            'develop:Manage linked branches for an issue'
+            'edit:Edit issues'
+            'lock:Lock issue conversation'
             'pin:Pin a issue'
             'reopen:Reopen issue'
-            'status:Show status of relevant issues'
             'transfer:Transfer issue to another repository'
+            'unlock:Unlock issue conversation'
             'unpin:Unpin a issue'
             'view:View an issue'
         )
@@ -716,6 +813,18 @@ function _gh_issue {
         ;;
     (subcmd)
         case $line[1] in
+        (create)
+            _gh_issue_create
+            ;;
+
+        (list)
+            _gh_issue_list
+            ;;
+
+        (status)
+            _gh_issue_status
+            ;;
+
         (close)
             _gh_issue_close
             ;;
@@ -724,20 +833,20 @@ function _gh_issue {
             _gh_issue_comment
             ;;
 
-        (create)
-            _gh_issue_create
-            ;;
-
         (delete)
             _gh_issue_delete
+            ;;
+
+        (develop)
+            _gh_issue_develop
             ;;
 
         (edit)
             _gh_issue_edit
             ;;
 
-        (list)
-            _gh_issue_list
+        (lock)
+            _gh_issue_lock
             ;;
 
         (pin)
@@ -748,12 +857,12 @@ function _gh_issue {
             _gh_issue_reopen
             ;;
 
-        (status)
-            _gh_issue_status
-            ;;
-
         (transfer)
             _gh_issue_transfer
+            ;;
+
+        (unlock)
+            _gh_issue_unlock
             ;;
 
         (unpin)
@@ -770,67 +879,19 @@ function _gh_issue {
 
 }
 
-function _gh_issue_close {
-    _arguments \
-        {-c,--comment}'[Leave a closing comment]' \
-        {-r,--reason}'[Reason for closing: {completed|not planned}]' \
-        '--help[Show help for command]' \
-        {-R,--repo}'[Select another repository using the \[HOST/\]OWNER/REPO format]' \
-        "*: :_files"
-
-}
-
-function _gh_issue_comment {
-    _arguments \
-        {-b,--body}'[The comment body text]' \
-        {-F,--body-file}'[Read body text from file (use "-" to read from standard input)]':file:_files \
-        '--edit-last[Edit the last comment of the same author]' \
-        {-e,--editor}'[Skip prompts and open the text editor to write the body in]' \
-        {-w,--web}'[Open the web browser to write the comment]' \
-        '--help[Show help for command]' \
-        {-R,--repo}'[Select another repository using the \[HOST/\]OWNER/REPO format]' \
-        "*: :_files"
-
-}
-
 function _gh_issue_create {
     _arguments \
         {-a,--assignee}'[Assign people by their login. Use "@me" to self-assign.]' \
         {-b,--body}'[Supply a body. Will prompt for one otherwise.]' \
         {-F,--body-file}'[Read body text from file (use "-" to read from standard input)]':file:_files \
+        {-e,--editor}'[Skip prompts and open the text editor to write the title and body in. The first line is the title and the remaining text is the body.]' \
         {-l,--label}'[Add labels by name]' \
         {-m,--milestone}'[Add the issue to a milestone by name]' \
-        {-p,--project}'[Add the issue to projects by name]' \
+        {-p,--project}'[Add the issue to projects by title]' \
         '--recover[Recover input from a failed run of create]' \
+        {-T,--template}'[Template file to use as starting body text]':file:_files \
         {-t,--title}'[Supply a title. Will prompt for one otherwise.]' \
         {-w,--web}'[Open the browser to create an issue]' \
-        '--help[Show help for command]' \
-        {-R,--repo}'[Select another repository using the \[HOST/\]OWNER/REPO format]' \
-        "*: :_files"
-
-}
-
-function _gh_issue_delete {
-    _arguments \
-        '--confirm[confirm deletion without prompting]' \
-        '--help[Show help for command]' \
-        {-R,--repo}'[Select another repository using the \[HOST/\]OWNER/REPO format]' \
-        "*: :_files"
-
-}
-
-function _gh_issue_edit {
-    _arguments \
-        '--add-assignee[Add assigned users by their login. Use "@me" to assign yourself.]' \
-        '--add-label[Add labels by name]' \
-        '--add-project[Add the issue to projects by name]' \
-        {-b,--body}'[Set the new body.]' \
-        {-F,--body-file}'[Read body text from file (use "-" to read from standard input)]':file:_files \
-        {-m,--milestone}'[Edit the milestone the issue belongs to by name]' \
-        '--remove-assignee[Remove assigned users by their login. Use "@me" to unassign yourself.]' \
-        '--remove-label[Remove labels by name]' \
-        '--remove-project[Remove the issue from projects by name]' \
-        {-t,--title}'[Set the new title.]' \
         '--help[Show help for command]' \
         {-R,--repo}'[Select another repository using the \[HOST/\]OWNER/REPO format]' \
         "*: :_files"
@@ -858,6 +919,90 @@ function _gh_issue_list {
 
 }
 
+function _gh_issue_status {
+    _arguments \
+        {-q,--jq}'[Filter JSON output using a jq expression]' \
+        '--json[Output JSON with the specified fields]' \
+        {-t,--template}'[Format JSON output using a Go template; see "gh help formatting"]' \
+        '--help[Show help for command]' \
+        {-R,--repo}'[Select another repository using the \[HOST/\]OWNER/REPO format]' \
+        "*: :_files"
+
+}
+
+function _gh_issue_close {
+    _arguments \
+        {-c,--comment}'[Leave a closing comment]' \
+        {-r,--reason}'[Reason for closing: {completed|not planned}]' \
+        '--help[Show help for command]' \
+        {-R,--repo}'[Select another repository using the \[HOST/\]OWNER/REPO format]' \
+        "*: :_files"
+
+}
+
+function _gh_issue_comment {
+    _arguments \
+        {-b,--body}'[The comment body text]' \
+        {-F,--body-file}'[Read body text from file (use "-" to read from standard input)]':file:_files \
+        '--edit-last[Edit the last comment of the same author]' \
+        {-e,--editor}'[Skip prompts and open the text editor to write the body in]' \
+        {-w,--web}'[Open the web browser to write the comment]' \
+        '--help[Show help for command]' \
+        {-R,--repo}'[Select another repository using the \[HOST/\]OWNER/REPO format]' \
+        "*: :_files"
+
+}
+
+function _gh_issue_delete {
+    _arguments \
+        '--yes[confirm deletion without prompting]' \
+        '--help[Show help for command]' \
+        {-R,--repo}'[Select another repository using the \[HOST/\]OWNER/REPO format]' \
+        "*: :_files"
+
+}
+
+function _gh_issue_develop {
+    _arguments \
+        {-b,--base}'[Name of the remote branch you want to make your new branch from]' \
+        '--branch-repo[Name or URL of the repository where you want to create your new branch]' \
+        {-c,--checkout}'[Checkout the branch after creating it]' \
+        {-l,--list}'[List linked branches for the issue]' \
+        {-n,--name}'[Name of the branch to create]' \
+        '--help[Show help for command]' \
+        {-R,--repo}'[Select another repository using the \[HOST/\]OWNER/REPO format]' \
+        "*: :_files"
+
+}
+
+function _gh_issue_edit {
+    _arguments \
+        '--add-assignee[Add assigned users by their login. Use "@me" to assign yourself.]' \
+        '--add-label[Add labels by name]' \
+        '--add-project[Add the issue to projects by title]' \
+        {-b,--body}'[Set the new body.]' \
+        {-F,--body-file}'[Read body text from file (use "-" to read from standard input)]':file:_files \
+        {-m,--milestone}'[Edit the milestone the issue belongs to by name]' \
+        '--remove-assignee[Remove assigned users by their login. Use "@me" to unassign yourself.]' \
+        '--remove-label[Remove labels by name]' \
+        '--remove-milestone[Remove the milestone association from the issue]' \
+        '--remove-project[Remove the issue from projects by title]' \
+        {-t,--title}'[Set the new title.]' \
+        '--help[Show help for command]' \
+        {-R,--repo}'[Select another repository using the \[HOST/\]OWNER/REPO format]' \
+        "*: :_files"
+
+}
+
+function _gh_issue_lock {
+    _arguments \
+        {-r,--reason}'[Optional reason for locking conversation (off_topic, resolved, spam, too_heated).]' \
+        '--help[Show help for command]' \
+        {-R,--repo}'[Select another repository using the \[HOST/\]OWNER/REPO format]' \
+        "*: :_files"
+
+}
+
 function _gh_issue_pin {
     _arguments \
         '--help[Show help for command]' \
@@ -875,18 +1020,15 @@ function _gh_issue_reopen {
 
 }
 
-function _gh_issue_status {
+function _gh_issue_transfer {
     _arguments \
-        {-q,--jq}'[Filter JSON output using a jq expression]' \
-        '--json[Output JSON with the specified fields]' \
-        {-t,--template}'[Format JSON output using a Go template; see "gh help formatting"]' \
         '--help[Show help for command]' \
         {-R,--repo}'[Select another repository using the \[HOST/\]OWNER/REPO format]' \
         "*: :_files"
 
 }
 
-function _gh_issue_transfer {
+function _gh_issue_unlock {
     _arguments \
         '--help[Show help for command]' \
         {-R,--repo}'[Select another repository using the \[HOST/\]OWNER/REPO format]' \
@@ -916,25 +1058,70 @@ function _gh_issue_view {
 }
 
 
+function _gh_org {
+    local line state
+
+    function _commands {
+        local -a commands
+        commands=(
+            'list:List organizations for the authenticated user.'
+        )
+        _describe 'command' commands
+    }
+ 
+
+    _arguments -C \
+        '--help[Show help for command]' \
+        ': :->cmd' \
+        '*:: :->subcmd'
+
+    case $state in
+    (cmd)
+        _commands
+        ;;
+    (subcmd)
+        case $line[1] in
+        (list)
+            _gh_org_list
+            ;;
+
+        esac
+        ;;
+     esac
+
+}
+
+function _gh_org_list {
+    _arguments \
+        {-L,--limit}'[Maximum number of organizations to list (default 30)]' \
+        '--help[Show help for command]' \
+        "*: :_files"
+
+}
+
+
 function _gh_pr {
     local line state
 
     function _commands {
         local -a commands
         commands=(
+            'create:Create a pull request'
+            'list:List pull requests in a repository'
+            'status:Show status of relevant pull requests'
             'checkout:Check out a pull request in git'
             'checks:Show CI status for a single pull request'
             'close:Close a pull request'
             'comment:Add a comment to a pull request'
-            'create:Create a pull request'
             'diff:View changes in a pull request'
             'edit:Edit a pull request'
-            'list:List pull requests in a repository'
+            'lock:Lock pull request conversation'
             'merge:Merge a pull request'
             'ready:Mark a pull request as ready for review'
             'reopen:Reopen a pull request'
             'review:Add a review to a pull request'
-            'status:Show status of relevant pull requests'
+            'unlock:Unlock pull request conversation'
+            'update-branch:Update a pull request branch'
             'view:View a pull request'
         )
         _describe 'command' commands
@@ -953,6 +1140,18 @@ function _gh_pr {
         ;;
     (subcmd)
         case $line[1] in
+        (create)
+            _gh_pr_create
+            ;;
+
+        (list)
+            _gh_pr_list
+            ;;
+
+        (status)
+            _gh_pr_status
+            ;;
+
         (checkout)
             _gh_pr_checkout
             ;;
@@ -969,10 +1168,6 @@ function _gh_pr {
             _gh_pr_comment
             ;;
 
-        (create)
-            _gh_pr_create
-            ;;
-
         (diff)
             _gh_pr_diff
             ;;
@@ -981,8 +1176,8 @@ function _gh_pr {
             _gh_pr_edit
             ;;
 
-        (list)
-            _gh_pr_list
+        (lock)
+            _gh_pr_lock
             ;;
 
         (merge)
@@ -1001,8 +1196,12 @@ function _gh_pr {
             _gh_pr_review
             ;;
 
-        (status)
-            _gh_pr_status
+        (unlock)
+            _gh_pr_unlock
+            ;;
+
+        (update-branch)
+            _gh_pr_update-branch
             ;;
 
         (view)
@@ -1015,9 +1214,71 @@ function _gh_pr {
 
 }
 
+function _gh_pr_create {
+    _arguments \
+        {-a,--assignee}'[Assign people by their login. Use "@me" to self-assign.]' \
+        {-B,--base}'[The branch into which you want your code merged]' \
+        {-b,--body}'[Body for the pull request]' \
+        {-F,--body-file}'[Read body text from file (use "-" to read from standard input)]':file:_files \
+        {-d,--draft}'[Mark pull request as a draft]' \
+        '--dry-run[Print details instead of creating the PR. May still push git changes.]' \
+        {-e,--editor}'[Skip prompts and open the text editor to write the title and body in. The first line is the title and the remaining text is the body.]' \
+        {-f,--fill}'[Use commit info for title and body]' \
+        '--fill-first[Use first commit info for title and body]' \
+        '--fill-verbose[Use commits msg+body for description]' \
+        {-H,--head}'[The branch that contains commits for your pull request (default \[current branch\])]' \
+        {-l,--label}'[Add labels by name]' \
+        {-m,--milestone}'[Add the pull request to a milestone by name]' \
+        '--no-maintainer-edit[Disable maintainer'\''s ability to modify pull request]' \
+        {-p,--project}'[Add the pull request to projects by title]' \
+        '--recover[Recover input from a failed run of create]' \
+        {-r,--reviewer}'[Request reviews from people or teams by their handle]' \
+        {-T,--template}'[Template file to use as starting body text]':file:_files \
+        {-t,--title}'[Title for the pull request]' \
+        {-w,--web}'[Open the web browser to create a pull request]' \
+        '--help[Show help for command]' \
+        {-R,--repo}'[Select another repository using the \[HOST/\]OWNER/REPO format]' \
+        "*: :_files"
+
+}
+
+function _gh_pr_list {
+    _arguments \
+        '--app[Filter by GitHub App author]' \
+        {-a,--assignee}'[Filter by assignee]' \
+        {-A,--author}'[Filter by author]' \
+        {-B,--base}'[Filter by base branch]' \
+        {-d,--draft}'[Filter by draft state]' \
+        {-H,--head}'[Filter by head branch]' \
+        {-q,--jq}'[Filter JSON output using a jq expression]' \
+        '--json[Output JSON with the specified fields]' \
+        {-l,--label}'[Filter by label]' \
+        {-L,--limit}'[Maximum number of items to fetch (default 30)]' \
+        {-S,--search}'[Search pull requests with query]' \
+        {-s,--state}'[Filter by state: {open|closed|merged|all} (default "open")]' \
+        {-t,--template}'[Format JSON output using a Go template; see "gh help formatting"]' \
+        {-w,--web}'[List pull requests in the web browser]' \
+        '--help[Show help for command]' \
+        {-R,--repo}'[Select another repository using the \[HOST/\]OWNER/REPO format]' \
+        "*: :_files"
+
+}
+
+function _gh_pr_status {
+    _arguments \
+        {-c,--conflict-status}'[Display the merge conflict status of each pull request]' \
+        {-q,--jq}'[Filter JSON output using a jq expression]' \
+        '--json[Output JSON with the specified fields]' \
+        {-t,--template}'[Format JSON output using a Go template; see "gh help formatting"]' \
+        '--help[Show help for command]' \
+        {-R,--repo}'[Select another repository using the \[HOST/\]OWNER/REPO format]' \
+        "*: :_files"
+
+}
+
 function _gh_pr_checkout {
     _arguments \
-        {-b,--branch}'[Local branch name to use (default: the name of the head branch)]' \
+        {-b,--branch}'[Local branch name to use (default \[the name of the head branch\])]' \
         '--detach[Checkout PR with a detached HEAD]' \
         {-f,--force}'[Reset the existing local branch to the latest state of the pull request]' \
         '--recurse-submodules[Update all submodules after checkout]' \
@@ -1029,8 +1290,12 @@ function _gh_pr_checkout {
 
 function _gh_pr_checks {
     _arguments \
+        '--fail-fast[Exit watch mode on first check failure]' \
         {-i,--interval,--watch}'[Refresh interval in seconds when using --watch flag (default 10)]' \
+        {-q,--jq}'[Filter JSON output using a jq expression]' \
+        '--json[Output JSON with the specified fields]' \
         '--required[Only show checks that are required]' \
+        {-t,--template}'[Format JSON output using a Go template; see "gh help formatting"]' \
         '--watch[Watch checks until they finish]' \
         {-w,--web}'[Open the web browser to show details about checks]' \
         '--help[Show help for command]' \
@@ -1062,29 +1327,6 @@ function _gh_pr_comment {
 
 }
 
-function _gh_pr_create {
-    _arguments \
-        {-a,--assignee}'[Assign people by their login. Use "@me" to self-assign.]' \
-        {-B,--base}'[The branch into which you want your code merged]' \
-        {-b,--body}'[Body for the pull request]' \
-        {-F,--body-file}'[Read body text from file (use "-" to read from standard input)]':file:_files \
-        {-d,--draft}'[Mark pull request as a draft]' \
-        {-f,--fill}'[Do not prompt for title/body and just use commit info]' \
-        {-H,--head}'[The branch that contains commits for your pull request (default: current branch)]' \
-        {-l,--label}'[Add labels by name]' \
-        {-m,--milestone}'[Add the pull request to a milestone by name]' \
-        '--no-maintainer-edit[Disable maintainer'\''s ability to modify pull request]' \
-        {-p,--project}'[Add the pull request to projects by name]' \
-        '--recover[Recover input from a failed run of create]' \
-        {-r,--reviewer}'[Request reviews from people or teams by their handle]' \
-        {-t,--title}'[Title for the pull request]' \
-        {-w,--web}'[Open the web browser to create a pull request]' \
-        '--help[Show help for command]' \
-        {-R,--repo}'[Select another repository using the \[HOST/\]OWNER/REPO format]' \
-        "*: :_files"
-
-}
-
 function _gh_pr_diff {
     _arguments \
         '--color[Use color in diff output: {always|never|auto} (default "auto")]' \
@@ -1101,7 +1343,7 @@ function _gh_pr_edit {
     _arguments \
         '--add-assignee[Add assigned users by their login. Use "@me" to assign yourself.]' \
         '--add-label[Add labels by name]' \
-        '--add-project[Add the pull request to projects by name]' \
+        '--add-project[Add the pull request to projects by title]' \
         '--add-reviewer[Add reviewers by their login.]' \
         {-B,--base}'[Change the base branch for this pull request]' \
         {-b,--body}'[Set the new body.]' \
@@ -1109,7 +1351,8 @@ function _gh_pr_edit {
         {-m,--milestone}'[Edit the milestone the pull request belongs to by name]' \
         '--remove-assignee[Remove assigned users by their login. Use "@me" to unassign yourself.]' \
         '--remove-label[Remove labels by name]' \
-        '--remove-project[Remove the pull request from projects by name]' \
+        '--remove-milestone[Remove the milestone association from the pull request]' \
+        '--remove-project[Remove the pull request from projects by title]' \
         '--remove-reviewer[Remove reviewers by their login.]' \
         {-t,--title}'[Set the new title.]' \
         '--help[Show help for command]' \
@@ -1118,22 +1361,9 @@ function _gh_pr_edit {
 
 }
 
-function _gh_pr_list {
+function _gh_pr_lock {
     _arguments \
-        '--app[Filter by GitHub App author]' \
-        {-a,--assignee}'[Filter by assignee]' \
-        {-A,--author}'[Filter by author]' \
-        {-B,--base}'[Filter by base branch]' \
-        {-d,--draft}'[Filter by draft state]' \
-        {-H,--head}'[Filter by head branch]' \
-        {-q,--jq}'[Filter JSON output using a jq expression]' \
-        '--json[Output JSON with the specified fields]' \
-        {-l,--label}'[Filter by label]' \
-        {-L,--limit}'[Maximum number of items to fetch (default 30)]' \
-        {-S,--search}'[Search pull requests with query]' \
-        {-s,--state}'[Filter by state: {open|closed|merged|all} (default "open")]' \
-        {-t,--template}'[Format JSON output using a Go template; see "gh help formatting"]' \
-        {-w,--web}'[List pull requests in the web browser]' \
+        {-r,--reason}'[Optional reason for locking conversation (off_topic, resolved, spam, too_heated).]' \
         '--help[Show help for command]' \
         {-R,--repo}'[Select another repository using the \[HOST/\]OWNER/REPO format]' \
         "*: :_files"
@@ -1191,12 +1421,17 @@ function _gh_pr_review {
 
 }
 
-function _gh_pr_status {
+function _gh_pr_unlock {
     _arguments \
-        {-c,--conflict-status}'[Display the merge conflict status of each pull request]' \
-        {-q,--jq}'[Filter JSON output using a jq expression]' \
-        '--json[Output JSON with the specified fields]' \
-        {-t,--template}'[Format JSON output using a Go template; see "gh help formatting"]' \
+        '--help[Show help for command]' \
+        {-R,--repo}'[Select another repository using the \[HOST/\]OWNER/REPO format]' \
+        "*: :_files"
+
+}
+
+function _gh_pr_update-branch {
+    _arguments \
+        '--rebase[Update PR branch by rebasing on top of latest base branch]' \
         '--help[Show help for command]' \
         {-R,--repo}'[Select another repository using the \[HOST/\]OWNER/REPO format]' \
         "*: :_files"
@@ -1217,6 +1452,372 @@ function _gh_pr_view {
 }
 
 
+function _gh_project {
+    local line state
+
+    function _commands {
+        local -a commands
+        commands=(
+            'close:Close a project'
+            'copy:Copy a project'
+            'create:Create a project'
+            'delete:Delete a project'
+            'edit:Edit a project'
+            'field-create:Create a field in a project'
+            'field-delete:Delete a field in a project'
+            'field-list:List the fields in a project'
+            'item-add:Add a pull request or an issue to a project'
+            'item-archive:Archive an item in a project'
+            'item-create:Create a draft issue item in a project'
+            'item-delete:Delete an item from a project by ID'
+            'item-edit:Edit an item in a project'
+            'item-list:List the items in a project'
+            'link:Link a project to a repository or a team'
+            'list:List the projects for an owner'
+            'mark-template:Mark a project as a template'
+            'unlink:Unlink a project from a repository or a team'
+            'view:View a project'
+        )
+        _describe 'command' commands
+    }
+ 
+
+    _arguments -C \
+        '--help[Show help for command]' \
+        ': :->cmd' \
+        '*:: :->subcmd'
+
+    case $state in
+    (cmd)
+        _commands
+        ;;
+    (subcmd)
+        case $line[1] in
+        (close)
+            _gh_project_close
+            ;;
+
+        (copy)
+            _gh_project_copy
+            ;;
+
+        (create)
+            _gh_project_create
+            ;;
+
+        (delete)
+            _gh_project_delete
+            ;;
+
+        (edit)
+            _gh_project_edit
+            ;;
+
+        (field-create)
+            _gh_project_field-create
+            ;;
+
+        (field-delete)
+            _gh_project_field-delete
+            ;;
+
+        (field-list)
+            _gh_project_field-list
+            ;;
+
+        (item-add)
+            _gh_project_item-add
+            ;;
+
+        (item-archive)
+            _gh_project_item-archive
+            ;;
+
+        (item-create)
+            _gh_project_item-create
+            ;;
+
+        (item-delete)
+            _gh_project_item-delete
+            ;;
+
+        (item-edit)
+            _gh_project_item-edit
+            ;;
+
+        (item-list)
+            _gh_project_item-list
+            ;;
+
+        (link)
+            _gh_project_link
+            ;;
+
+        (list)
+            _gh_project_list
+            ;;
+
+        (mark-template)
+            _gh_project_mark-template
+            ;;
+
+        (unlink)
+            _gh_project_unlink
+            ;;
+
+        (view)
+            _gh_project_view
+            ;;
+
+        esac
+        ;;
+     esac
+
+}
+
+function _gh_project_close {
+    _arguments \
+        '--format[Output format: {json}]' \
+        {-q,--jq}'[Filter JSON output using a jq expression]' \
+        '--owner[Login of the owner. Use "@me" for the current user.]' \
+        {-t,--template}'[Format JSON output using a Go template; see "gh help formatting"]' \
+        '--undo[Reopen a closed project]' \
+        '--help[Show help for command]' \
+        "*: :_files"
+
+}
+
+function _gh_project_copy {
+    _arguments \
+        '--drafts[Include draft issues when copying]' \
+        '--format[Output format: {json}]' \
+        {-q,--jq}'[Filter JSON output using a jq expression]' \
+        '--source-owner[Login of the source owner. Use "@me" for the current user.]' \
+        '--target-owner[Login of the target owner. Use "@me" for the current user.]' \
+        {-t,--template}'[Format JSON output using a Go template; see "gh help formatting"]' \
+        '--title[Title for the new project]' \
+        '--help[Show help for command]' \
+        "*: :_files"
+
+}
+
+function _gh_project_create {
+    _arguments \
+        '--format[Output format: {json}]' \
+        {-q,--jq}'[Filter JSON output using a jq expression]' \
+        '--owner[Login of the owner. Use "@me" for the current user.]' \
+        {-t,--template}'[Format JSON output using a Go template; see "gh help formatting"]' \
+        '--title[Title for the project]' \
+        '--help[Show help for command]' \
+        "*: :_files"
+
+}
+
+function _gh_project_delete {
+    _arguments \
+        '--format[Output format: {json}]' \
+        {-q,--jq}'[Filter JSON output using a jq expression]' \
+        '--owner[Login of the owner. Use "@me" for the current user.]' \
+        {-t,--template}'[Format JSON output using a Go template; see "gh help formatting"]' \
+        '--help[Show help for command]' \
+        "*: :_files"
+
+}
+
+function _gh_project_edit {
+    _arguments \
+        {-d,--description}'[New description of the project]' \
+        '--format[Output format: {json}]' \
+        {-q,--jq}'[Filter JSON output using a jq expression]' \
+        '--owner[Login of the owner. Use "@me" for the current user.]' \
+        '--readme[New readme for the project]' \
+        {-t,--template}'[Format JSON output using a Go template; see "gh help formatting"]' \
+        '--title[New title for the project]' \
+        '--visibility[Change project visibility: {PUBLIC|PRIVATE}]' \
+        '--help[Show help for command]' \
+        "*: :_files"
+
+}
+
+function _gh_project_field-create {
+    _arguments \
+        '--data-type[DataType of the new field.: {TEXT|SINGLE_SELECT|DATE|NUMBER}]' \
+        '--format[Output format: {json}]' \
+        {-q,--jq}'[Filter JSON output using a jq expression]' \
+        '--name[Name of the new field]' \
+        '--owner[Login of the owner. Use "@me" for the current user.]' \
+        '--single-select-options[Options for SINGLE_SELECT data type]' \
+        {-t,--template}'[Format JSON output using a Go template; see "gh help formatting"]' \
+        '--help[Show help for command]' \
+        "*: :_files"
+
+}
+
+function _gh_project_field-delete {
+    _arguments \
+        '--format[Output format: {json}]' \
+        '--id[ID of the field to delete]' \
+        {-q,--jq}'[Filter JSON output using a jq expression]' \
+        {-t,--template}'[Format JSON output using a Go template; see "gh help formatting"]' \
+        '--help[Show help for command]' \
+        "*: :_files"
+
+}
+
+function _gh_project_field-list {
+    _arguments \
+        '--format[Output format: {json}]' \
+        {-q,--jq}'[Filter JSON output using a jq expression]' \
+        {-L,--limit}'[Maximum number of fields to fetch (default 30)]' \
+        '--owner[Login of the owner. Use "@me" for the current user.]' \
+        {-t,--template}'[Format JSON output using a Go template; see "gh help formatting"]' \
+        '--help[Show help for command]' \
+        "*: :_files"
+
+}
+
+function _gh_project_item-add {
+    _arguments \
+        '--format[Output format: {json}]' \
+        {-q,--jq}'[Filter JSON output using a jq expression]' \
+        '--owner[Login of the owner. Use "@me" for the current user.]' \
+        {-t,--template}'[Format JSON output using a Go template; see "gh help formatting"]' \
+        '--url[URL of the issue or pull request to add to the project]' \
+        '--help[Show help for command]' \
+        "*: :_files"
+
+}
+
+function _gh_project_item-archive {
+    _arguments \
+        '--format[Output format: {json}]' \
+        '--id[ID of the item to archive]' \
+        {-q,--jq}'[Filter JSON output using a jq expression]' \
+        '--owner[Login of the owner. Use "@me" for the current user.]' \
+        {-t,--template}'[Format JSON output using a Go template; see "gh help formatting"]' \
+        '--undo[Unarchive an item]' \
+        '--help[Show help for command]' \
+        "*: :_files"
+
+}
+
+function _gh_project_item-create {
+    _arguments \
+        '--body[Body for the draft issue]' \
+        '--format[Output format: {json}]' \
+        {-q,--jq}'[Filter JSON output using a jq expression]' \
+        '--owner[Login of the owner. Use "@me" for the current user.]' \
+        {-t,--template}'[Format JSON output using a Go template; see "gh help formatting"]' \
+        '--title[Title for the draft issue]' \
+        '--help[Show help for command]' \
+        "*: :_files"
+
+}
+
+function _gh_project_item-delete {
+    _arguments \
+        '--format[Output format: {json}]' \
+        '--id[ID of the item to delete]' \
+        {-q,--jq}'[Filter JSON output using a jq expression]' \
+        '--owner[Login of the owner. Use "@me" for the current user.]' \
+        {-t,--template}'[Format JSON output using a Go template; see "gh help formatting"]' \
+        '--help[Show help for command]' \
+        "*: :_files"
+
+}
+
+function _gh_project_item-edit {
+    _arguments \
+        '--body[Body of the draft issue item]' \
+        '--clear[Remove field value]' \
+        '--date[Date value for the field (YYYY-MM-DD)]' \
+        '--field-id[ID of the field to update]' \
+        '--format[Output format: {json}]' \
+        '--id[ID of the item to edit]' \
+        '--iteration-id[ID of the iteration value to set on the field]' \
+        {-q,--jq}'[Filter JSON output using a jq expression]' \
+        '--number[Number value for the field]' \
+        '--project-id[ID of the project to which the field belongs to]' \
+        '--single-select-option-id[ID of the single select option value to set on the field]' \
+        {-t,--template}'[Format JSON output using a Go template; see "gh help formatting"]' \
+        '--text[Text value for the field]' \
+        '--title[Title of the draft issue item]' \
+        '--help[Show help for command]' \
+        "*: :_files"
+
+}
+
+function _gh_project_item-list {
+    _arguments \
+        '--format[Output format: {json}]' \
+        {-q,--jq}'[Filter JSON output using a jq expression]' \
+        {-L,--limit}'[Maximum number of items to fetch (default 30)]' \
+        '--owner[Login of the owner. Use "@me" for the current user.]' \
+        {-t,--template}'[Format JSON output using a Go template; see "gh help formatting"]' \
+        '--help[Show help for command]' \
+        "*: :_files"
+
+}
+
+function _gh_project_link {
+    _arguments \
+        '--owner[Login of the owner. Use "@me" for the current user.]' \
+        {-R,--repo}'[The repository to be linked to this project]' \
+        {-T,--team}'[The team to be linked to this project]' \
+        '--help[Show help for command]' \
+        "*: :_files"
+
+}
+
+function _gh_project_list {
+    _arguments \
+        '--closed[Include closed projects]' \
+        '--format[Output format: {json}]' \
+        {-q,--jq}'[Filter JSON output using a jq expression]' \
+        {-L,--limit}'[Maximum number of projects to fetch (default 30)]' \
+        '--owner[Login of the owner]' \
+        {-t,--template}'[Format JSON output using a Go template; see "gh help formatting"]' \
+        {-w,--web}'[Open projects list in the browser]' \
+        '--help[Show help for command]' \
+        "*: :_files"
+
+}
+
+function _gh_project_mark-template {
+    _arguments \
+        '--format[Output format: {json}]' \
+        {-q,--jq}'[Filter JSON output using a jq expression]' \
+        '--owner[Login of the org owner.]' \
+        {-t,--template}'[Format JSON output using a Go template; see "gh help formatting"]' \
+        '--undo[Unmark the project as a template.]' \
+        '--help[Show help for command]' \
+        "*: :_files"
+
+}
+
+function _gh_project_unlink {
+    _arguments \
+        '--owner[Login of the owner. Use "@me" for the current user.]' \
+        {-R,--repo}'[The repository to be unlinked from this project]' \
+        {-T,--team}'[The team to be unlinked from this project]' \
+        '--help[Show help for command]' \
+        "*: :_files"
+
+}
+
+function _gh_project_view {
+    _arguments \
+        '--format[Output format: {json}]' \
+        {-q,--jq}'[Filter JSON output using a jq expression]' \
+        '--owner[Login of the owner. Use "@me" for the current user.]' \
+        {-t,--template}'[Format JSON output using a Go template; see "gh help formatting"]' \
+        {-w,--web}'[Open a project in the browser]' \
+        '--help[Show help for command]' \
+        "*: :_files"
+
+}
+
+
 function _gh_release {
     local line state
 
@@ -1224,10 +1825,11 @@ function _gh_release {
         local -a commands
         commands=(
             'create:Create a new release'
+            'list:List releases in a repository'
             'delete:Delete a release'
+            'delete-asset:Delete an asset from a release'
             'download:Download release assets'
             'edit:Edit a release'
-            'list:List releases in a repository'
             'upload:Upload assets to a release'
             'view:View information about a release'
         )
@@ -1251,8 +1853,16 @@ function _gh_release {
             _gh_release_create
             ;;
 
+        (list)
+            _gh_release_list
+            ;;
+
         (delete)
             _gh_release_delete
+            ;;
+
+        (delete-asset)
+            _gh_release_delete-asset
             ;;
 
         (download)
@@ -1261,10 +1871,6 @@ function _gh_release {
 
         (edit)
             _gh_release_edit
-            ;;
-
-        (list)
-            _gh_release_list
             ;;
 
         (upload)
@@ -1286,12 +1892,30 @@ function _gh_release_create {
         '--discussion-category[Start a discussion in the specified category]' \
         {-d,--draft}'[Save the release as a draft instead of publishing it]' \
         '--generate-notes[Automatically generate title and notes for the release]' \
+        '--latest[Mark this release as "Latest" (default \[automatic based on date and version\]). --latest=false to explicitly NOT set as latest]' \
         {-n,--notes}'[Release notes]' \
         {-F,--notes-file}'[Read release notes from file (use "-" to read from standard input)]':file:_files \
+        '--notes-from-tag[Automatically generate notes from annotated tag]' \
         '--notes-start-tag[Tag to use as the starting point for generating release notes]' \
         {-p,--prerelease}'[Mark the release as a prerelease]' \
-        '--target[Target branch or full commit SHA (default: main branch)]' \
+        '--target[Target branch or full commit SHA (default \[main branch\])]' \
         {-t,--title}'[Release title]' \
+        '--verify-tag[Abort in case the git tag doesn'\''t already exist in the remote repository]' \
+        '--help[Show help for command]' \
+        {-R,--repo}'[Select another repository using the \[HOST/\]OWNER/REPO format]' \
+        "*: :_files"
+
+}
+
+function _gh_release_list {
+    _arguments \
+        '--exclude-drafts[Exclude draft releases]' \
+        '--exclude-pre-releases[Exclude pre-releases]' \
+        {-q,--jq}'[Filter JSON output using a jq expression]' \
+        '--json[Output JSON with the specified fields]' \
+        {-L,--limit}'[Maximum number of items to fetch (default 30)]' \
+        {-O,--order}'[Order of releases returned: {asc|desc} (default "desc")]' \
+        {-t,--template}'[Format JSON output using a Go template; see "gh help formatting"]' \
         '--help[Show help for command]' \
         {-R,--repo}'[Select another repository using the \[HOST/\]OWNER/REPO format]' \
         "*: :_files"
@@ -1308,11 +1932,21 @@ function _gh_release_delete {
 
 }
 
+function _gh_release_delete-asset {
+    _arguments \
+        {-y,--yes}'[Skip the confirmation prompt]' \
+        '--help[Show help for command]' \
+        {-R,--repo}'[Select another repository using the \[HOST/\]OWNER/REPO format]' \
+        "*: :_files"
+
+}
+
 function _gh_release_download {
     _arguments \
         {-A,--archive}'[Download the source code archive in the specified format (zip or tar.gz)]' \
         '--clobber[Overwrite existing files of the same name]' \
-        {-D,--dir}'[The directory to download files into (default ".")]' \
+        {-D,--dir}'[The directory to download files into (default ".")]':file:_files \
+        {-O,--output}'[The file to write a single asset to (use "-" to write to standard output)]':file:_files \
         {-p,--pattern}'[Download only assets that match a glob pattern]' \
         '--skip-existing[Skip downloading when files of the same name exist]' \
         '--help[Show help for command]' \
@@ -1325,22 +1959,14 @@ function _gh_release_edit {
     _arguments \
         '--discussion-category[Start a discussion in the specified category when publishing a draft]' \
         '--draft[Save the release as a draft instead of publishing it]' \
+        '--latest[Explicitly mark the release as "Latest"]' \
         {-n,--notes}'[Release notes]' \
         {-F,--notes-file}'[Read release notes from file (use "-" to read from standard input)]':file:_files \
         '--prerelease[Mark the release as a prerelease]' \
         '--tag[The name of the tag]' \
-        '--target[Target branch or full commit SHA (default: main branch)]' \
+        '--target[Target branch or full commit SHA (default \[main branch\])]' \
         {-t,--title}'[Release title]' \
-        '--help[Show help for command]' \
-        {-R,--repo}'[Select another repository using the \[HOST/\]OWNER/REPO format]' \
-        "*: :_files"
-
-}
-
-function _gh_release_list {
-    _arguments \
-        '--exclude-drafts[Exclude draft releases]' \
-        {-L,--limit}'[Maximum number of items to fetch (default 30)]' \
+        '--verify-tag[Abort in case the git tag doesn'\''t already exist in the remote repository]' \
         '--help[Show help for command]' \
         {-R,--repo}'[Select another repository using the \[HOST/\]OWNER/REPO format]' \
         "*: :_files"
@@ -1375,16 +2001,20 @@ function _gh_repo {
     function _commands {
         local -a commands
         commands=(
+            'create:Create a new repository'
+            'list:List repositories owned by user or organization'
             'archive:Archive a repository'
             'clone:Clone a repository locally'
-            'create:Create a new repository'
             'delete:Delete a repository'
             'deploy-key:Manage deploy keys in a repository'
             'edit:Edit repository settings'
             'fork:Create a fork of a repository'
-            'list:List repositories owned by user or organization'
+            'gitignore:List and view available repository gitignore templates'
+            'license:Explore repository licenses'
             'rename:Rename a repository'
+            'set-default:Configure default repository for this directory'
             'sync:Sync a repository'
+            'unarchive:Unarchive a repository'
             'view:View a repository'
         )
         _describe 'command' commands
@@ -1402,16 +2032,20 @@ function _gh_repo {
         ;;
     (subcmd)
         case $line[1] in
+        (create)
+            _gh_repo_create
+            ;;
+
+        (list)
+            _gh_repo_list
+            ;;
+
         (archive)
             _gh_repo_archive
             ;;
 
         (clone)
             _gh_repo_clone
-            ;;
-
-        (create)
-            _gh_repo_create
             ;;
 
         (delete)
@@ -1430,16 +2064,28 @@ function _gh_repo {
             _gh_repo_fork
             ;;
 
-        (list)
-            _gh_repo_list
+        (gitignore)
+            _gh_repo_gitignore
+            ;;
+
+        (license)
+            _gh_repo_license
             ;;
 
         (rename)
             _gh_repo_rename
             ;;
 
+        (set-default)
+            _gh_repo_set-default
+            ;;
+
         (sync)
             _gh_repo_sync
+            ;;
+
+        (unarchive)
+            _gh_repo_unarchive
             ;;
 
         (view)
@@ -1449,22 +2095,6 @@ function _gh_repo {
         esac
         ;;
      esac
-
-}
-
-function _gh_repo_archive {
-    _arguments \
-        {-y,--confirm}'[Skip the confirmation prompt]' \
-        '--help[Show help for command]' \
-        "*: :_files"
-
-}
-
-function _gh_repo_clone {
-    _arguments \
-        {-u,--upstream-remote-name}'[Upstream remote name when cloning a fork (default "upstream")]' \
-        '--help[Show help for command]' \
-        "*: :_files"
 
 }
 
@@ -1492,9 +2122,43 @@ function _gh_repo_create {
 
 }
 
+function _gh_repo_list {
+    _arguments \
+        '--archived[Show only archived repositories]' \
+        '--fork[Show only forks]' \
+        {-q,--jq}'[Filter JSON output using a jq expression]' \
+        '--json[Output JSON with the specified fields]' \
+        {-l,--language}'[Filter by primary coding language]' \
+        {-L,--limit}'[Maximum number of repositories to list (default 30)]' \
+        '--no-archived[Omit archived repositories]' \
+        '--source[Show only non-forks]' \
+        {-t,--template}'[Format JSON output using a Go template; see "gh help formatting"]' \
+        '--topic[Filter by topic]' \
+        '--visibility[Filter by repository visibility: {public|private|internal}]' \
+        '--help[Show help for command]' \
+        "*: :_files"
+
+}
+
+function _gh_repo_archive {
+    _arguments \
+        {-y,--yes}'[Skip the confirmation prompt]' \
+        '--help[Show help for command]' \
+        "*: :_files"
+
+}
+
+function _gh_repo_clone {
+    _arguments \
+        {-u,--upstream-remote-name}'[Upstream remote name when cloning a fork (default "upstream")]' \
+        '--help[Show help for command]' \
+        "*: :_files"
+
+}
+
 function _gh_repo_delete {
     _arguments \
-        '--confirm[confirm deletion without prompting]' \
+        '--yes[confirm deletion without prompting]' \
         '--help[Show help for command]' \
         "*: :_files"
 
@@ -1565,6 +2229,9 @@ function _gh_repo_deploy-key_delete {
 
 function _gh_repo_deploy-key_list {
     _arguments \
+        {-q,--jq}'[Filter JSON output using a jq expression]' \
+        '--json[Output JSON with the specified fields]' \
+        {-t,--template}'[Format JSON output using a Go template; see "gh help formatting"]' \
         '--help[Show help for command]' \
         {-R,--repo}'[Select another repository using the \[HOST/\]OWNER/REPO format]' \
         "*: :_files"
@@ -1573,12 +2240,15 @@ function _gh_repo_deploy-key_list {
 
 function _gh_repo_edit {
     _arguments \
+        '--accept-visibility-change-consequences[Accept the consequences of changing the repository visibility]' \
         '--add-topic[Add repository topic]' \
         '--allow-forking[Allow forking of an organization repository]' \
+        '--allow-update-branch[Allow a pull request head branch that is behind its base branch to be updated]' \
         '--default-branch[Set the default branch name for the repository]' \
         '--delete-branch-on-merge[Delete head branch when pull requests are merged]' \
         {-d,--description}'[Description of the repository]' \
         '--enable-auto-merge[Enable auto-merge functionality]' \
+        '--enable-discussions[Enable discussions in the repository]' \
         '--enable-issues[Enable issues in the repository]' \
         '--enable-merge-commit[Enable merging pull requests via merge commit]' \
         '--enable-projects[Enable projects in the repository]' \
@@ -1597,6 +2267,7 @@ function _gh_repo_edit {
 function _gh_repo_fork {
     _arguments \
         '--clone[Clone the fork]' \
+        '--default-branch-only[Only include the default branch in the fork]' \
         '--fork-name[Rename the forked repository]' \
         '--org[Create the fork in an organization]' \
         '--remote[Add a git remote for the fork]' \
@@ -1606,19 +2277,108 @@ function _gh_repo_fork {
 
 }
 
-function _gh_repo_list {
+
+function _gh_repo_gitignore {
+    local line state
+
+    function _commands {
+        local -a commands
+        commands=(
+            'list:List available repository gitignore templates'
+            'view:View an available repository gitignore template'
+        )
+        _describe 'command' commands
+    }
+ 
+
+    _arguments -C \
+        '--help[Show help for command]' \
+        ': :->cmd' \
+        '*:: :->subcmd'
+
+    case $state in
+    (cmd)
+        _commands
+        ;;
+    (subcmd)
+        case $line[1] in
+        (list)
+            _gh_repo_gitignore_list
+            ;;
+
+        (view)
+            _gh_repo_gitignore_view
+            ;;
+
+        esac
+        ;;
+     esac
+
+}
+
+function _gh_repo_gitignore_list {
     _arguments \
-        '--archived[Show only archived repositories]' \
-        '--fork[Show only forks]' \
-        {-q,--jq}'[Filter JSON output using a jq expression]' \
-        '--json[Output JSON with the specified fields]' \
-        {-l,--language}'[Filter by primary coding language]' \
-        {-L,--limit}'[Maximum number of repositories to list (default 30)]' \
-        '--no-archived[Omit archived repositories]' \
-        '--source[Show only non-forks]' \
-        {-t,--template}'[Format JSON output using a Go template; see "gh help formatting"]' \
-        '--topic[Filter by topic]' \
-        '--visibility[Filter by repository visibility: {public|private|internal}]' \
+        '--help[Show help for command]' \
+        "*: :_files"
+
+}
+
+function _gh_repo_gitignore_view {
+    _arguments \
+        '--help[Show help for command]' \
+        "*: :_files"
+
+}
+
+
+function _gh_repo_license {
+    local line state
+
+    function _commands {
+        local -a commands
+        commands=(
+            'list:List common repository licenses'
+            'view:View a specific repository license'
+        )
+        _describe 'command' commands
+    }
+ 
+
+    _arguments -C \
+        '--help[Show help for command]' \
+        ': :->cmd' \
+        '*:: :->subcmd'
+
+    case $state in
+    (cmd)
+        _commands
+        ;;
+    (subcmd)
+        case $line[1] in
+        (list)
+            _gh_repo_license_list
+            ;;
+
+        (view)
+            _gh_repo_license_view
+            ;;
+
+        esac
+        ;;
+     esac
+
+}
+
+function _gh_repo_license_list {
+    _arguments \
+        '--help[Show help for command]' \
+        "*: :_files"
+
+}
+
+function _gh_repo_license_view {
+    _arguments \
+        {-w,--web}'[Open https://choosealicense.com/ in the browser]' \
         '--help[Show help for command]' \
         "*: :_files"
 
@@ -1626,8 +2386,17 @@ function _gh_repo_list {
 
 function _gh_repo_rename {
     _arguments \
-        {-y,--confirm}'[skip confirmation prompt]' \
         {-R,--repo}'[Select another repository using the \[HOST/\]OWNER/REPO format]' \
+        {-y,--yes}'[Skip the confirmation prompt]' \
+        '--help[Show help for command]' \
+        "*: :_files"
+
+}
+
+function _gh_repo_set-default {
+    _arguments \
+        {-u,--unset}'[unset the current default repository]' \
+        {-v,--view}'[view the current default repository]' \
         '--help[Show help for command]' \
         "*: :_files"
 
@@ -1635,9 +2404,17 @@ function _gh_repo_rename {
 
 function _gh_repo_sync {
     _arguments \
-        {-b,--branch}'[Branch to sync (default: main branch)]' \
+        {-b,--branch}'[Branch to sync (default \[default branch\])]' \
         '--force[Hard reset the branch of the destination repository to match the source repository]' \
         {-s,--source}'[Source repository]' \
+        '--help[Show help for command]' \
+        "*: :_files"
+
+}
+
+function _gh_repo_unarchive {
+    _arguments \
+        {-y,--yes}'[Skip the confirmation prompt]' \
         '--help[Show help for command]' \
         "*: :_files"
 
@@ -1656,6 +2433,71 @@ function _gh_repo_view {
 }
 
 
+function _gh_cache {
+    local line state
+
+    function _commands {
+        local -a commands
+        commands=(
+            'delete:Delete GitHub Actions caches'
+            'list:List GitHub Actions caches'
+        )
+        _describe 'command' commands
+    }
+ 
+
+    _arguments -C \
+        {-R,--repo}'[Select another repository using the \[HOST/\]OWNER/REPO format]' \
+        '--help[Show help for command]' \
+        ': :->cmd' \
+        '*:: :->subcmd'
+
+    case $state in
+    (cmd)
+        _commands
+        ;;
+    (subcmd)
+        case $line[1] in
+        (delete)
+            _gh_cache_delete
+            ;;
+
+        (list)
+            _gh_cache_list
+            ;;
+
+        esac
+        ;;
+     esac
+
+}
+
+function _gh_cache_delete {
+    _arguments \
+        {-a,--all}'[Delete all caches]' \
+        '--help[Show help for command]' \
+        {-R,--repo}'[Select another repository using the \[HOST/\]OWNER/REPO format]' \
+        "*: :_files"
+
+}
+
+function _gh_cache_list {
+    _arguments \
+        {-q,--jq}'[Filter JSON output using a jq expression]' \
+        '--json[Output JSON with the specified fields]' \
+        {-k,--key}'[Filter by cache key prefix]' \
+        {-L,--limit}'[Maximum number of caches to fetch (default 30)]' \
+        {-O,--order}'[Order of caches returned: {asc|desc} (default "desc")]' \
+        {-r,--ref}'[Filter by ref, formatted as refs/heads/<branch name> or refs/pull/<number>/merge]' \
+        {-S,--sort}'[Sort fetched caches: {created_at|last_accessed_at|size_in_bytes} (default "last_accessed_at")]' \
+        {-t,--template}'[Format JSON output using a Go template; see "gh help formatting"]' \
+        '--help[Show help for command]' \
+        {-R,--repo}'[Select another repository using the \[HOST/\]OWNER/REPO format]' \
+        "*: :_files"
+
+}
+
+
 function _gh_run {
     local line state
 
@@ -1663,9 +2505,10 @@ function _gh_run {
         local -a commands
         commands=(
             'cancel:Cancel a workflow run'
+            'delete:Delete a workflow run'
             'download:Download artifacts generated by a workflow run'
             'list:List recent workflow runs'
-            'rerun:Rerun a failed run'
+            'rerun:Rerun a run'
             'view:View a summary of a workflow run'
             'watch:Watch a run until it completes, showing its progress'
         )
@@ -1687,6 +2530,10 @@ function _gh_run {
         case $line[1] in
         (cancel)
             _gh_run_cancel
+            ;;
+
+        (delete)
+            _gh_run_delete
             ;;
 
         (download)
@@ -1723,6 +2570,14 @@ function _gh_run_cancel {
 
 }
 
+function _gh_run_delete {
+    _arguments \
+        '--help[Show help for command]' \
+        {-R,--repo}'[Select another repository using the \[HOST/\]OWNER/REPO format]' \
+        "*: :_files"
+
+}
+
 function _gh_run_download {
     _arguments \
         {-D,--dir}'[The directory to download artifacts into (default ".")]' \
@@ -1736,10 +2591,15 @@ function _gh_run_download {
 
 function _gh_run_list {
     _arguments \
+        {-a,--all}'[Include disabled workflows]' \
         {-b,--branch}'[Filter runs by branch]' \
+        {-c,--commit}'[Filter runs by the SHA of the commit]' \
+        '--created[Filter runs by the date it was created]' \
+        {-e,--event}'[Filter runs by which event triggered the run]' \
         {-q,--jq}'[Filter JSON output using a jq expression]' \
         '--json[Output JSON with the specified fields]' \
         {-L,--limit}'[Maximum number of runs to fetch (default 20)]' \
+        {-s,--status}'[Filter runs by status: {queued|completed|in_progress|requested|waiting|action_required|cancelled|failure|neutral|skipped|stale|startup_failure|success|timed_out}]' \
         {-t,--template}'[Format JSON output using a Go template; see "gh help formatting"]' \
         {-u,--user}'[Filter runs by user who triggered the run]' \
         {-w,--workflow}'[Filter runs by workflow]' \
@@ -1753,7 +2613,7 @@ function _gh_run_rerun {
     _arguments \
         {-d,--debug}'[Rerun with debug logging]' \
         '--failed[Rerun only failed jobs, including dependencies]' \
-        {-j,--job}'[Rerun a specific job from a run, including dependencies]' \
+        {-j,--job}'[Rerun a specific job ID from a run, including dependencies]' \
         '--help[Show help for command]' \
         {-R,--repo}'[Select another repository using the \[HOST/\]OWNER/REPO format]' \
         "*: :_files"
@@ -1762,6 +2622,7 @@ function _gh_run_rerun {
 
 function _gh_run_view {
     _arguments \
+        {-a,--attempt}'[The attempt number of the workflow run]' \
         '--exit-status[Exit with non-zero status if run failed]' \
         {-j,--job}'[View a specific job ID from a run]' \
         {-q,--jq}'[Filter JSON output using a jq expression]' \
@@ -1860,8 +2721,11 @@ function _gh_workflow_enable {
 
 function _gh_workflow_list {
     _arguments \
-        {-a,--all}'[Show all workflows, including disabled workflows]' \
+        {-a,--all}'[Include disabled workflows]' \
+        {-q,--jq}'[Filter JSON output using a jq expression]' \
+        '--json[Output JSON with the specified fields]' \
         {-L,--limit}'[Maximum number of workflows to fetch (default 50)]' \
+        {-t,--template}'[Format JSON output using a Go template; see "gh help formatting"]' \
         '--help[Show help for command]' \
         {-R,--repo}'[Select another repository using the \[HOST/\]OWNER/REPO format]' \
         "*: :_files"
@@ -1870,7 +2734,7 @@ function _gh_workflow_list {
 
 function _gh_workflow_run {
     _arguments \
-        {-F,--field}'[Add a string parameter in key=value format, respecting @ syntax]' \
+        {-F,--field}'[Add a string parameter in key=value format, respecting @ syntax (see "gh help api").]' \
         '--json[Read workflow inputs as JSON via STDIN]' \
         {-f,--raw-field}'[Add a string parameter in key=value format]' \
         {-r,--ref}'[The branch or tag name which contains the version of the workflow file you'\''d like to run]' \
@@ -1892,13 +2756,111 @@ function _gh_workflow_view {
 }
 
 
+function _gh_copilot {
+    local line state
+
+    function _commands {
+        local -a commands
+        commands=(
+            'alias:Generate shell-specific aliases for convenience'
+            'config:Configure options'
+            'explain:Explain a command'
+            'suggest:Suggest a command'
+        )
+        _describe 'command' commands
+    }
+ 
+
+    _arguments -C \
+        {-h,--help}'[help for copilot]' \
+        '--hostname[The GitHub host to use for authentication]' \
+        {-v,--version}'[version for copilot]' \
+        ': :->cmd' \
+        '*:: :->subcmd'
+
+    case $state in
+    (cmd)
+        _commands
+        ;;
+    (subcmd)
+        case $line[1] in
+        (alias)
+            _gh_copilot_alias
+            ;;
+
+        (config)
+            _gh_copilot_config
+            ;;
+
+        (explain)
+            _gh_copilot_explain
+            ;;
+
+        (suggest)
+            _gh_copilot_suggest
+            ;;
+
+        esac
+        ;;
+     esac
+
+}
+
+function _gh_copilot_alias {
+    _arguments \
+        {-h,--help}'[help for alias]' \
+        '--hostname[The GitHub host to use for authentication]' \
+        "*: :_files"
+
+}
+
+function _gh_copilot_config {
+    _arguments \
+        {-h,--help}'[help for config]' \
+        '--hostname[The GitHub host to use for authentication]' \
+        "*: :_files"
+
+}
+
+function _gh_copilot_explain {
+    _arguments \
+        {-h,--help}'[help for explain]' \
+        '--hostname[The GitHub host to use for authentication]' \
+        "*: :_files"
+
+}
+
+function _gh_copilot_suggest {
+    _arguments \
+        {-h,--help}'[help for suggest]' \
+        {-s,--shell-out}'[Path to file for outputting command to execute]' \
+        {-t,--target}'[Target for suggestion; must be shell, gh, git]' \
+        '--hostname[The GitHub host to use for authentication]' \
+        "*: :_files"
+
+}
+
+function _gh_co {
+    _arguments \
+        {-b,--branch}'[Local branch name to use (default \[the name of the head branch\])]' \
+        '--detach[Checkout PR with a detached HEAD]' \
+        {-f,--force}'[Reset the existing local branch to the latest state of the pull request]' \
+        '--recurse-submodules[Update all submodules after checkout]' \
+        '--help[Show help for command]' \
+        {-R,--repo}'[Select another repository using the \[HOST/\]OWNER/REPO format]' \
+        "*: :_files"
+
+}
+
+
 function _gh_alias {
     local line state
 
     function _commands {
         local -a commands
         commands=(
-            'delete:Delete an alias'
+            'delete:Delete set aliases'
+            'import:Import aliases from a YAML file'
             'list:List your aliases'
             'set:Create a shortcut for a gh command'
         )
@@ -1921,6 +2883,10 @@ function _gh_alias {
             _gh_alias_delete
             ;;
 
+        (import)
+            _gh_alias_import
+            ;;
+
         (list)
             _gh_alias_list
             ;;
@@ -1937,6 +2903,15 @@ function _gh_alias {
 
 function _gh_alias_delete {
     _arguments \
+        '--all[Delete all aliases]' \
+        '--help[Show help for command]' \
+        "*: :_files"
+
+}
+
+function _gh_alias_import {
+    _arguments \
+        '--clobber[Overwrite existing aliases of the same name]' \
         '--help[Show help for command]' \
         "*: :_files"
 
@@ -1951,6 +2926,7 @@ function _gh_alias_list {
 
 function _gh_alias_set {
     _arguments \
+        '--clobber[Overwrite existing aliases of the same name]' \
         {-s,--shell}'[Declare an alias to be passed through a shell interpreter]' \
         '--help[Show help for command]' \
         "*: :_files"
@@ -1971,28 +2947,30 @@ function _gh_api {
         {-p,--preview}'[GitHub API preview names to request (without the "-preview" suffix)]' \
         {-f,--raw-field}'[Add a string parameter in key=value format]' \
         '--silent[Do not print the response body]' \
+        '--slurp[Use with "--paginate" to return an array of all pages of either JSON arrays or objects]' \
         {-t,--template}'[Format JSON output using a Go template; see "gh help formatting"]' \
+        '--verbose[Include full HTTP request and response in the output]' \
         '--help[Show help for command]' \
         "*: :_files"
 
 }
 
 
-function _gh_completion {
+function _gh_attestation {
     local line state
 
     function _commands {
         local -a commands
         commands=(
-            'autoload:-U compinit'
-            'compinit:-i'
+            'download:Download an artifact'\''s attestations for offline use'
+            'trusted-root:Output trusted_root.jsonl contents, likely for offline verification'
+            'verify:Verify an artifact'\''s integrity using attestations'
         )
         _describe 'command' commands
     }
  
 
     _arguments -C \
-        {-s,--shell}'[Shell type: {bash|zsh|fish|powershell}]' \
         '--help[Show help for command]' \
         ': :->cmd' \
         '*:: :->subcmd'
@@ -2003,12 +2981,16 @@ function _gh_completion {
         ;;
     (subcmd)
         case $line[1] in
-        (autoload)
-            _gh_completion_autoload
+        (download)
+            _gh_attestation_download
             ;;
 
-        (compinit)
-            _gh_completion_compinit
+        (trusted-root)
+            _gh_attestation_trusted-root
+            ;;
+
+        (verify)
+            _gh_attestation_verify
             ;;
 
         esac
@@ -2017,14 +2999,60 @@ function _gh_completion {
 
 }
 
-function _gh_completion_autoload {
+function _gh_attestation_download {
     _arguments \
+        {-d,--digest-alg}'[The algorithm used to compute a digest of the artifact: {sha256|sha512} (default "sha256")]' \
+        '--hostname[Configure host to use]' \
+        {-L,--limit}'[Maximum number of attestations to fetch (default 30)]' \
+        {-o,--owner}'[a GitHub organization to scope attestation lookup by]' \
+        '--predicate-type[Filter attestations by provided predicate type]' \
+        {-R,--repo}'[Repository name in the format <owner>/<repo>]' \
+        '--help[Show help for command]' \
         "*: :_files"
 
 }
 
-function _gh_completion_compinit {
+function _gh_attestation_trusted-root {
     _arguments \
+        '--hostname[Configure host to use]' \
+        '--tuf-root[Path to the TUF root.json file on disk]' \
+        '--tuf-url[URL to the TUF repository mirror]' \
+        '--verify-only[Don'\''t output trusted_root.jsonl contents]' \
+        '--help[Show help for command]' \
+        "*: :_files"
+
+}
+
+function _gh_attestation_verify {
+    _arguments \
+        {-b,--bundle}'[Path to bundle on disk, either a single bundle in a JSON file or a JSON lines file with multiple bundles]' \
+        '--bundle-from-oci[When verifying an OCI image, fetch the attestation bundle from the OCI registry instead of from GitHub]' \
+        '--cert-identity[Enforce that the certificate'\''s subject alternative name matches the provided value exactly]' \
+        {-i,--cert-identity-regex}'[Enforce that the certificate'\''s subject alternative name matches the provided regex]' \
+        '--cert-oidc-issuer[Issuer of the OIDC token (default "https://token.actions.githubusercontent.com")]' \
+        '--custom-trusted-root[Path to a trusted_root.jsonl file; likely for offline verification]' \
+        '--deny-self-hosted-runners[Fail verification for attestations generated on self-hosted runners]' \
+        {-d,--digest-alg}'[The algorithm used to compute a digest of the artifact: {sha256|sha512} (default "sha256")]' \
+        '--format[Output format: {json}]' \
+        '--hostname[Configure host to use]' \
+        {-q,--jq}'[Filter JSON output using a jq expression]' \
+        {-L,--limit}'[Maximum number of attestations to fetch (default 30)]' \
+        '--no-public-good[Do not verify attestations signed with Sigstore public good instance]' \
+        {-o,--owner}'[GitHub organization to scope attestation lookup by]' \
+        '--predicate-type[Filter attestations by provided predicate type (default "https://slsa.dev/provenance/v1")]' \
+        {-R,--repo}'[Repository name in the format <owner>/<repo>]' \
+        '--signer-repo[Repository of reusable workflow that signed attestation in the format <owner>/<repo>]' \
+        '--signer-workflow[Workflow that signed attestation in the format \[host/\]<owner>/<repo>/<path>/<to>/<workflow>]' \
+        {-t,--template}'[Format JSON output using a Go template; see "gh help formatting"]' \
+        '--help[Show help for command]' \
+        "*: :_files"
+
+}
+
+function _gh_completion {
+    _arguments \
+        {-s,--shell}'[Shell type: {bash|zsh|fish|powershell}]' \
+        '--help[Show help for command]' \
         "*: :_files"
 
 }
@@ -2036,6 +3064,7 @@ function _gh_config {
     function _commands {
         local -a commands
         commands=(
+            'clear-cache:Clear the cli cache'
             'get:Print the value of a given configuration key'
             'list:Print a list of configuration keys and values'
             'set:Update configuration with a value for the given key'
@@ -2055,6 +3084,10 @@ function _gh_config {
         ;;
     (subcmd)
         case $line[1] in
+        (clear-cache)
+            _gh_config_clear-cache
+            ;;
+
         (get)
             _gh_config_get
             ;;
@@ -2070,6 +3103,13 @@ function _gh_config {
         esac
         ;;
      esac
+
+}
+
+function _gh_config_clear-cache {
+    _arguments \
+        '--help[Show help for command]' \
+        "*: :_files"
 
 }
 
@@ -2104,11 +3144,12 @@ function _gh_extension {
     function _commands {
         local -a commands
         commands=(
+            'browse:Enter a UI for browsing, adding, and removing extensions'
             'create:Create a new extension'
-            'exec:Execute an installed extension'
             'install:Install a gh extension from a repository'
             'list:List installed extension commands'
             'remove:Remove an installed extension'
+            'search:Search extensions to the GitHub CLI'
             'upgrade:Upgrade installed extensions'
         )
         _describe 'command' commands
@@ -2126,12 +3167,12 @@ function _gh_extension {
         ;;
     (subcmd)
         case $line[1] in
-        (create)
-            _gh_extension_create
+        (browse)
+            _gh_extension_browse
             ;;
 
-        (exec)
-            _gh_extension_exec
+        (create)
+            _gh_extension_create
             ;;
 
         (install)
@@ -2146,6 +3187,10 @@ function _gh_extension {
             _gh_extension_remove
             ;;
 
+        (search)
+            _gh_extension_search
+            ;;
+
         (upgrade)
             _gh_extension_upgrade
             ;;
@@ -2153,6 +3198,15 @@ function _gh_extension {
         esac
         ;;
      esac
+
+}
+
+function _gh_extension_browse {
+    _arguments \
+        '--debug[log to /tmp/extBrowse-*]' \
+        {-s,--single-column}'[Render TUI with only one column of text]' \
+        '--help[Show help for command]' \
+        "*: :_files"
 
 }
 
@@ -2164,14 +3218,9 @@ function _gh_extension_create {
 
 }
 
-function _gh_extension_exec {
-    _arguments \
-        "*: :_files"
-
-}
-
 function _gh_extension_install {
     _arguments \
+        '--force[force upgrade extension, or ignore if latest already installed]' \
         '--pin[pin extension to a release tag or commit ref]' \
         '--help[Show help for command]' \
         "*: :_files"
@@ -2187,6 +3236,22 @@ function _gh_extension_list {
 
 function _gh_extension_remove {
     _arguments \
+        '--help[Show help for command]' \
+        "*: :_files"
+
+}
+
+function _gh_extension_search {
+    _arguments \
+        {-q,--jq}'[Filter JSON output using a jq expression]' \
+        '--json[Output JSON with the specified fields]' \
+        '--license[Filter based on license type]' \
+        {-L,--limit}'[Maximum number of extensions to fetch (default 30)]' \
+        '--order[Order of repositories returned, ignored unless '\''--sort'\'' flag is specified: {asc|desc} (default "desc")]' \
+        '--owner[Filter on owner]' \
+        '--sort[Sort fetched repositories: {forks|help-wanted-issues|stars|updated} (default "best-match")]' \
+        {-t,--template}'[Format JSON output using a Go template; see "gh help formatting"]' \
+        {-w,--web}'[Open the search query in the web browser]' \
         '--help[Show help for command]' \
         "*: :_files"
 
@@ -2248,6 +3313,7 @@ function _gh_gpg-key {
 
 function _gh_gpg-key_add {
     _arguments \
+        {-t,--title}'[Title for the new key]' \
         '--help[Show help for command]' \
         "*: :_files"
 
@@ -2255,7 +3321,7 @@ function _gh_gpg-key_add {
 
 function _gh_gpg-key_delete {
     _arguments \
-        {-y,--confirm}'[Skip the confirmation prompt]' \
+        {-y,--yes}'[Skip the confirmation prompt]' \
         '--help[Show help for command]' \
         "*: :_files"
 
@@ -2345,7 +3411,7 @@ function _gh_label_create {
 
 function _gh_label_delete {
     _arguments \
-        '--confirm[Confirm deletion without prompting]' \
+        '--yes[Confirm deletion without prompting]' \
         '--help[Show help for command]' \
         {-R,--repo}'[Select another repository using the \[HOST/\]OWNER/REPO format]' \
         "*: :_files"
@@ -2380,12 +3446,92 @@ function _gh_label_list {
 }
 
 
+function _gh_ruleset {
+    local line state
+
+    function _commands {
+        local -a commands
+        commands=(
+            'check:View rules that would apply to a given branch'
+            'list:List rulesets for a repository or organization'
+            'view:View information about a ruleset'
+        )
+        _describe 'command' commands
+    }
+ 
+
+    _arguments -C \
+        {-R,--repo}'[Select another repository using the \[HOST/\]OWNER/REPO format]' \
+        '--help[Show help for command]' \
+        ': :->cmd' \
+        '*:: :->subcmd'
+
+    case $state in
+    (cmd)
+        _commands
+        ;;
+    (subcmd)
+        case $line[1] in
+        (check)
+            _gh_ruleset_check
+            ;;
+
+        (list)
+            _gh_ruleset_list
+            ;;
+
+        (view)
+            _gh_ruleset_view
+            ;;
+
+        esac
+        ;;
+     esac
+
+}
+
+function _gh_ruleset_check {
+    _arguments \
+        '--default[Check rules on default branch]' \
+        {-w,--web}'[Open the branch rules page in a web browser]' \
+        '--help[Show help for command]' \
+        {-R,--repo}'[Select another repository using the \[HOST/\]OWNER/REPO format]' \
+        "*: :_files"
+
+}
+
+function _gh_ruleset_list {
+    _arguments \
+        {-L,--limit}'[Maximum number of rulesets to list (default 30)]' \
+        {-o,--org}'[List organization-wide rulesets for the provided organization]' \
+        {-p,--parents}'[Whether to include rulesets configured at higher levels that also apply (default true)]' \
+        {-w,--web}'[Open the list of rulesets in the web browser]' \
+        '--help[Show help for command]' \
+        {-R,--repo}'[Select another repository using the \[HOST/\]OWNER/REPO format]' \
+        "*: :_files"
+
+}
+
+function _gh_ruleset_view {
+    _arguments \
+        {-o,--org}'[Organization name if the provided ID is an organization-level ruleset]' \
+        {-p,--parents}'[Whether to include rulesets configured at higher levels that also apply (default true)]' \
+        {-w,--web}'[Open the ruleset in the browser]' \
+        '--help[Show help for command]' \
+        {-R,--repo}'[Select another repository using the \[HOST/\]OWNER/REPO format]' \
+        "*: :_files"
+
+}
+
+
 function _gh_search {
     local line state
 
     function _commands {
         local -a commands
         commands=(
+            'code:Search within code'
+            'commits:Search for commits'
             'issues:Search for issues'
             'prs:Search for pull requests'
             'repos:Search for repositories'
@@ -2405,6 +3551,14 @@ function _gh_search {
         ;;
     (subcmd)
         case $line[1] in
+        (code)
+            _gh_search_code
+            ;;
+
+        (commits)
+            _gh_search_commits
+            ;;
+
         (issues)
             _gh_search_issues
             ;;
@@ -2423,10 +3577,58 @@ function _gh_search {
 
 }
 
+function _gh_search_code {
+    _arguments \
+        '--extension[Filter on file extension]' \
+        '--filename[Filter on filename]' \
+        {-q,--jq}'[Filter JSON output using a jq expression]' \
+        '--json[Output JSON with the specified fields]' \
+        '--language[Filter results by language]' \
+        {-L,--limit}'[Maximum number of code results to fetch (default 30)]' \
+        '--match[Restrict search to file contents or file path: {file|path}]' \
+        '--owner[Filter on owner]' \
+        {-R,--repo}'[Filter on repository]' \
+        '--size[Filter on size range, in kilobytes]' \
+        {-t,--template}'[Format JSON output using a Go template; see "gh help formatting"]' \
+        {-w,--web}'[Open the search query in the web browser]' \
+        '--help[Show help for command]' \
+        "*: :_files"
+
+}
+
+function _gh_search_commits {
+    _arguments \
+        '--author[Filter by author]' \
+        '--author-date[Filter based on authored date]' \
+        '--author-email[Filter on author email]' \
+        '--author-name[Filter on author name]' \
+        '--committer[Filter by committer]' \
+        '--committer-date[Filter based on committed date]' \
+        '--committer-email[Filter on committer email]' \
+        '--committer-name[Filter on committer name]' \
+        '--hash[Filter by commit hash]' \
+        {-q,--jq}'[Filter JSON output using a jq expression]' \
+        '--json[Output JSON with the specified fields]' \
+        {-L,--limit}'[Maximum number of commits to fetch (default 30)]' \
+        '--merge[Filter on merge commits]' \
+        '--order[Order of commits returned, ignored unless '\''--sort'\'' flag is specified: {asc|desc} (default "desc")]' \
+        '--owner[Filter on repository owner]' \
+        '--parent[Filter by parent hash]' \
+        {-R,--repo}'[Filter on repository]' \
+        '--sort[Sort fetched commits: {author-date|committer-date} (default "best-match")]' \
+        {-t,--template}'[Format JSON output using a Go template; see "gh help formatting"]' \
+        '--tree[Filter by tree hash]' \
+        '--visibility[Filter based on repository visibility: {public|private|internal}]' \
+        {-w,--web}'[Open the search query in the web browser]' \
+        '--help[Show help for command]' \
+        "*: :_files"
+
+}
+
 function _gh_search_issues {
     _arguments \
         '--app[Filter by GitHub App author]' \
-        '--archived[Restrict search to archived repositories]' \
+        '--archived[Filter based on the repository archived state {true|false}]' \
         '--assignee[Filter by assignee]' \
         '--author[Filter by author]' \
         '--closed[Filter on closed at date]' \
@@ -2451,9 +3653,9 @@ function _gh_search_issues {
         '--no-project[Filter on missing project]' \
         '--order[Order of results returned, ignored unless '\''--sort'\'' flag is specified: {asc|desc} (default "desc")]' \
         '--owner[Filter on repository owner]' \
-        '--project[Filter on project board number]' \
+        '--project[Filter on project board owner/number]' \
         '--reactions[Filter on number of reactions]' \
-        '--repo[Filter on repository]' \
+        {-R,--repo}'[Filter on repository]' \
         '--sort[Sort fetched results: {comments|created|interactions|reactions|reactions-+1|reactions--1|reactions-heart|reactions-smile|reactions-tada|reactions-thinking_face|updated} (default "best-match")]' \
         '--state[Filter based on state: {open|closed}]' \
         '--team-mentions[Filter based on team mentions]' \
@@ -2469,7 +3671,7 @@ function _gh_search_issues {
 function _gh_search_prs {
     _arguments \
         '--app[Filter by GitHub App author]' \
-        '--archived[Restrict search to archived repositories]' \
+        '--archived[Filter based on the repository archived state {true|false}]' \
         '--assignee[Filter by assignee]' \
         '--author[Filter by author]' \
         {-B,--base}'[Filter on base branch name]' \
@@ -2499,9 +3701,9 @@ function _gh_search_prs {
         '--no-project[Filter on missing project]' \
         '--order[Order of results returned, ignored unless '\''--sort'\'' flag is specified: {asc|desc} (default "desc")]' \
         '--owner[Filter on repository owner]' \
-        '--project[Filter on project board number]' \
+        '--project[Filter on project board owner/number]' \
         '--reactions[Filter on number of reactions]' \
-        '--repo[Filter on repository]' \
+        {-R,--repo}'[Filter on repository]' \
         '--review[Filter based on review status: {none|required|approved|changes_requested}]' \
         '--review-requested[Filter on user or team requested to review]' \
         '--reviewed-by[Filter on user who reviewed]' \
@@ -2519,7 +3721,7 @@ function _gh_search_prs {
 
 function _gh_search_repos {
     _arguments \
-        '--archived[Filter based on archive state]' \
+        '--archived[Filter based on the repository archived state {true|false}]' \
         '--created[Filter based on created at date]' \
         '--followers[Filter based on number of followers]' \
         '--forks[Filter on number of forks]' \
@@ -2609,7 +3811,10 @@ function _gh_secret_list {
     _arguments \
         {-a,--app}'[List secrets for a specific application: {actions|codespaces|dependabot}]' \
         {-e,--env}'[List secrets for an environment]' \
+        {-q,--jq}'[Filter JSON output using a jq expression]' \
+        '--json[Output JSON with the specified fields]' \
         {-o,--org}'[List secrets for an organization]' \
+        {-t,--template}'[Format JSON output using a Go template; see "gh help formatting"]' \
         {-u,--user}'[List a secret for your user]' \
         '--help[Show help for command]' \
         {-R,--repo}'[Select another repository using the \[HOST/\]OWNER/REPO format]' \
@@ -2623,7 +3828,7 @@ function _gh_secret_set {
         {-b,--body}'[The value for the secret (reads from standard input if not specified)]' \
         {-e,--env}'[Set deployment environment secret]' \
         {-f,--env-file}'[Load secret names and values from a dotenv-formatted file]':file:_files \
-        '--no-store[Print the encrypted, base64-encoded value instead of storing it on Github]' \
+        '--no-store[Print the encrypted, base64-encoded value instead of storing it on GitHub]' \
         {-o,--org}'[Set organization secret]' \
         {-r,--repos}'[List of repositories that can access an organization or user secret]' \
         {-u,--user}'[Set a secret for your user]' \
@@ -2681,6 +3886,7 @@ function _gh_ssh-key {
 function _gh_ssh-key_add {
     _arguments \
         {-t,--title}'[Title for the new key]' \
+        '--type[Type of the ssh key: {authentication|signing} (default "authentication")]' \
         '--help[Show help for command]' \
         "*: :_files"
 
@@ -2688,7 +3894,7 @@ function _gh_ssh-key_add {
 
 function _gh_ssh-key_delete {
     _arguments \
-        {-y,--confirm}'[Skip the confirmation prompt]' \
+        {-y,--yes}'[Skip the confirmation prompt]' \
         '--help[Show help for command]' \
         "*: :_files"
 
@@ -2710,39 +3916,102 @@ function _gh_status {
 
 }
 
-function _gh_actions {
-    _arguments \
+
+function _gh_variable {
+    local line state
+
+    function _commands {
+        local -a commands
+        commands=(
+            'delete:Delete variables'
+            'get:Get variables'
+            'list:List variables'
+            'set:Create or update variables'
+        )
+        _describe 'command' commands
+    }
+ 
+
+    _arguments -C \
+        {-R,--repo}'[Select another repository using the \[HOST/\]OWNER/REPO format]' \
         '--help[Show help for command]' \
+        ': :->cmd' \
+        '*:: :->subcmd'
+
+    case $state in
+    (cmd)
+        _commands
+        ;;
+    (subcmd)
+        case $line[1] in
+        (delete)
+            _gh_variable_delete
+            ;;
+
+        (get)
+            _gh_variable_get
+            ;;
+
+        (list)
+            _gh_variable_list
+            ;;
+
+        (set)
+            _gh_variable_set
+            ;;
+
+        esac
+        ;;
+     esac
+
+}
+
+function _gh_variable_delete {
+    _arguments \
+        {-e,--env}'[Delete a variable for an environment]' \
+        {-o,--org}'[Delete a variable for an organization]' \
+        '--help[Show help for command]' \
+        {-R,--repo}'[Select another repository using the \[HOST/\]OWNER/REPO format]' \
         "*: :_files"
 
 }
 
-function _gh_environment {
+function _gh_variable_get {
     _arguments \
+        {-e,--env}'[Get a variable for an environment]' \
+        {-q,--jq}'[Filter JSON output using a jq expression]' \
+        '--json[Output JSON with the specified fields]' \
+        {-o,--org}'[Get a variable for an organization]' \
+        {-t,--template}'[Format JSON output using a Go template; see "gh help formatting"]' \
+        '--help[Show help for command]' \
+        {-R,--repo}'[Select another repository using the \[HOST/\]OWNER/REPO format]' \
         "*: :_files"
 
 }
 
-function _gh_exit-codes {
+function _gh_variable_list {
     _arguments \
+        {-e,--env}'[List variables for an environment]' \
+        {-q,--jq}'[Filter JSON output using a jq expression]' \
+        '--json[Output JSON with the specified fields]' \
+        {-o,--org}'[List variables for an organization]' \
+        {-t,--template}'[Format JSON output using a Go template; see "gh help formatting"]' \
+        '--help[Show help for command]' \
+        {-R,--repo}'[Select another repository using the \[HOST/\]OWNER/REPO format]' \
         "*: :_files"
 
 }
 
-function _gh_formatting {
+function _gh_variable_set {
     _arguments \
-        "*: :_files"
-
-}
-
-function _gh_mintty {
-    _arguments \
-        "*: :_files"
-
-}
-
-function _gh_reference {
-    _arguments \
+        {-b,--body}'[The value for the variable (reads from standard input if not specified)]' \
+        {-e,--env}'[Set deployment environment variable]' \
+        {-f,--env-file}'[Load variable names and values from a dotenv-formatted file]':file:_files \
+        {-o,--org}'[Set organization variable]' \
+        {-r,--repos}'[List of repositories that can access an organization variable]' \
+        {-v,--visibility}'[Set visibility for an organization variable: {all|private|selected} (default "private")]' \
+        '--help[Show help for command]' \
+        {-R,--repo}'[Select another repository using the \[HOST/\]OWNER/REPO format]' \
         "*: :_files"
 
 }
