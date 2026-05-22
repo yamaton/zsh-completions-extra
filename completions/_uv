@@ -41,6 +41,8 @@ function _uv {
         '--managed-python[Require use of uv-managed Python versions \[env: UV_MANAGED_PYTHON=\]]' \
         '--no-managed-python[Disable use of uv-managed Python versions \[env: UV_NO_MANAGED_PYTHON=\]]' \
         '--no-python-downloads[Disable automatic downloads of Python. \[env: "UV_PYTHON_DOWNLOADS=never"\]]' \
+        {-q,--quiet}'[Use quiet output]' \
+        {-v,--verbose}'[Use verbose output]' \
         '--color[Control the use of color in output \[possible values: auto, always, never\]]' \
         '--system-certs[Whether to load TLS certificates from the platform'\''s native certificate store \[env: UV_SYSTEM_CERTS=\]]' \
         '--offline[Disable network access \[env: UV_OFFLINE=\]]' \
@@ -173,6 +175,8 @@ function _uv_auth {
         '--managed-python[Require use of uv-managed Python versions \[env: UV_MANAGED_PYTHON=\]]' \
         '--no-managed-python[Disable use of uv-managed Python versions \[env: UV_NO_MANAGED_PYTHON=\]]' \
         '--no-python-downloads[Disable automatic downloads of Python. \[env: "UV_PYTHON_DOWNLOADS=never"\]]' \
+        {-q,--quiet}'[Use quiet output]' \
+        {-v,--verbose}'[Use verbose output]' \
         '--color[Control the use of color in output \[possible values: auto, always, never\]]' \
         '--system-certs[Whether to load TLS certificates from the platform'\''s native certificate store \[env: UV_SYSTEM_CERTS=\]]' \
         '--offline[Disable network access \[env: UV_OFFLINE=\]]' \
@@ -225,6 +229,8 @@ function _uv_auth_login {
         '--managed-python[Require use of uv-managed Python versions \[env: UV_MANAGED_PYTHON=\]]' \
         '--no-managed-python[Disable use of uv-managed Python versions \[env: UV_NO_MANAGED_PYTHON=\]]' \
         '--no-python-downloads[Disable automatic downloads of Python. \[env: "UV_PYTHON_DOWNLOADS=never"\]]' \
+        {-q,--quiet}'[Use quiet output]' \
+        {-v,--verbose}'[Use verbose output]' \
         '--color[Control the use of color in output \[possible values: auto, always, never\]]' \
         '--system-certs[Whether to load TLS certificates from the platform'\''s native certificate store \[env: UV_SYSTEM_CERTS=\]]' \
         '--offline[Disable network access \[env: UV_OFFLINE=\]]' \
@@ -248,6 +254,8 @@ function _uv_auth_logout {
         '--managed-python[Require use of uv-managed Python versions \[env: UV_MANAGED_PYTHON=\]]' \
         '--no-managed-python[Disable use of uv-managed Python versions \[env: UV_NO_MANAGED_PYTHON=\]]' \
         '--no-python-downloads[Disable automatic downloads of Python. \[env: "UV_PYTHON_DOWNLOADS=never"\]]' \
+        {-q,--quiet}'[Use quiet output]' \
+        {-v,--verbose}'[Use verbose output]' \
         '--color[Control the use of color in output \[possible values: auto, always, never\]]' \
         '--system-certs[Whether to load TLS certificates from the platform'\''s native certificate store \[env: UV_SYSTEM_CERTS=\]]' \
         '--offline[Disable network access \[env: UV_OFFLINE=\]]' \
@@ -271,6 +279,8 @@ function _uv_auth_token {
         '--managed-python[Require use of uv-managed Python versions \[env: UV_MANAGED_PYTHON=\]]' \
         '--no-managed-python[Disable use of uv-managed Python versions \[env: UV_NO_MANAGED_PYTHON=\]]' \
         '--no-python-downloads[Disable automatic downloads of Python. \[env: "UV_PYTHON_DOWNLOADS=never"\]]' \
+        {-q,--quiet}'[Use quiet output]' \
+        {-v,--verbose}'[Use verbose output]' \
         '--color[Control the use of color in output \[possible values: auto, always, never\]]' \
         '--system-certs[Whether to load TLS certificates from the platform'\''s native certificate store \[env: UV_SYSTEM_CERTS=\]]' \
         '--offline[Disable network access \[env: UV_OFFLINE=\]]' \
@@ -292,6 +302,8 @@ function _uv_auth_dir {
         '--managed-python[Require use of uv-managed Python versions \[env: UV_MANAGED_PYTHON=\]]' \
         '--no-managed-python[Disable use of uv-managed Python versions \[env: UV_NO_MANAGED_PYTHON=\]]' \
         '--no-python-downloads[Disable automatic downloads of Python. \[env: "UV_PYTHON_DOWNLOADS=never"\]]' \
+        {-q,--quiet}'[Use quiet output]' \
+        {-v,--verbose}'[Use verbose output]' \
         '--color[Control the use of color in output \[possible values: auto, always, never\]]' \
         '--system-certs[Whether to load TLS certificates from the platform'\''s native certificate store \[env: UV_SYSTEM_CERTS=\]]' \
         '--offline[Disable network access \[env: UV_OFFLINE=\]]' \
@@ -375,6 +387,8 @@ function _uv_run {
         '--managed-python[Require use of uv-managed Python versions \[env: UV_MANAGED_PYTHON=\]]' \
         '--no-managed-python[Disable use of uv-managed Python versions \[env: UV_NO_MANAGED_PYTHON=\]]' \
         '--no-python-downloads[Disable automatic downloads of Python. \[env: "UV_PYTHON_DOWNLOADS=never"\]]' \
+        {-q,--quiet}'[Use quiet output]' \
+        {-v,--verbose}'[Use verbose output]' \
         '--color[Control the use of color in output \[possible values: auto, always, never\]]' \
         '--system-certs[Whether to load TLS certificates from the platform'\''s native certificate store \[env: UV_SYSTEM_CERTS=\]]' \
         '--offline[Disable network access \[env: UV_OFFLINE=\]]' \
@@ -412,6 +426,8 @@ function _uv_init {
         '--no-python-downloads[Disable automatic downloads of Python. \[env: "UV_PYTHON_DOWNLOADS=never"\]]' \
         {-n,--no-cache}'[Avoid reading from or writing to the cache, instead using a temporary directory for the duration of the operation \[env: UV_NO_CACHE=\]]' \
         '--cache-dir[Path to the cache directory \[env: UV_CACHE_DIR=\]]':file:_files \
+        {-q,--quiet}'[Use quiet output]' \
+        {-v,--verbose}'[Use verbose output]' \
         '--color[Control the use of color in output \[possible values: auto, always, never\]]' \
         '--system-certs[Whether to load TLS certificates from the platform'\''s native certificate store \[env: UV_SYSTEM_CERTS=\]]' \
         '--offline[Disable network access \[env: UV_OFFLINE=\]]' \
@@ -492,6 +508,8 @@ function _uv_add {
         '--managed-python[Require use of uv-managed Python versions \[env: UV_MANAGED_PYTHON=\]]' \
         '--no-managed-python[Disable use of uv-managed Python versions \[env: UV_NO_MANAGED_PYTHON=\]]' \
         '--no-python-downloads[Disable automatic downloads of Python. \[env: "UV_PYTHON_DOWNLOADS=never"\]]' \
+        {-q,--quiet}'[Use quiet output]' \
+        {-v,--verbose}'[Use verbose output]' \
         '--color[Control the use of color in output \[possible values: auto, always, never\]]' \
         '--system-certs[Whether to load TLS certificates from the platform'\''s native certificate store \[env: UV_SYSTEM_CERTS=\]]' \
         '--offline[Disable network access \[env: UV_OFFLINE=\]]' \
@@ -555,6 +573,8 @@ function _uv_remove {
         '--managed-python[Require use of uv-managed Python versions \[env: UV_MANAGED_PYTHON=\]]' \
         '--no-managed-python[Disable use of uv-managed Python versions \[env: UV_NO_MANAGED_PYTHON=\]]' \
         '--no-python-downloads[Disable automatic downloads of Python. \[env: "UV_PYTHON_DOWNLOADS=never"\]]' \
+        {-q,--quiet}'[Use quiet output]' \
+        {-v,--verbose}'[Use verbose output]' \
         '--color[Control the use of color in output \[possible values: auto, always, never\]]' \
         '--system-certs[Whether to load TLS certificates from the platform'\''s native certificate store \[env: UV_SYSTEM_CERTS=\]]' \
         '--offline[Disable network access \[env: UV_OFFLINE=\]]' \
@@ -618,6 +638,8 @@ function _uv_version {
         '--managed-python[Require use of uv-managed Python versions \[env: UV_MANAGED_PYTHON=\]]' \
         '--no-managed-python[Disable use of uv-managed Python versions \[env: UV_NO_MANAGED_PYTHON=\]]' \
         '--no-python-downloads[Disable automatic downloads of Python. \[env: "UV_PYTHON_DOWNLOADS=never"\]]' \
+        {-q,--quiet}'[Use quiet output]' \
+        {-v,--verbose}'[Use verbose output]' \
         '--color[Control the use of color in output \[possible values: auto, always, never\]]' \
         '--system-certs[Whether to load TLS certificates from the platform'\''s native certificate store \[env: UV_SYSTEM_CERTS=\]]' \
         '--offline[Disable network access \[env: UV_OFFLINE=\]]' \
@@ -698,6 +720,8 @@ function _uv_sync {
         '--managed-python[Require use of uv-managed Python versions \[env: UV_MANAGED_PYTHON=\]]' \
         '--no-managed-python[Disable use of uv-managed Python versions \[env: UV_NO_MANAGED_PYTHON=\]]' \
         '--no-python-downloads[Disable automatic downloads of Python. \[env: "UV_PYTHON_DOWNLOADS=never"\]]' \
+        {-q,--quiet}'[Use quiet output]' \
+        {-v,--verbose}'[Use verbose output]' \
         '--color[Control the use of color in output \[possible values: auto, always, never\]]' \
         '--system-certs[Whether to load TLS certificates from the platform'\''s native certificate store \[env: UV_SYSTEM_CERTS=\]]' \
         '--offline[Disable network access \[env: UV_OFFLINE=\]]' \
@@ -753,6 +777,8 @@ function _uv_lock {
         '--managed-python[Require use of uv-managed Python versions \[env: UV_MANAGED_PYTHON=\]]' \
         '--no-managed-python[Disable use of uv-managed Python versions \[env: UV_NO_MANAGED_PYTHON=\]]' \
         '--no-python-downloads[Disable automatic downloads of Python. \[env: "UV_PYTHON_DOWNLOADS=never"\]]' \
+        {-q,--quiet}'[Use quiet output]' \
+        {-v,--verbose}'[Use verbose output]' \
         '--color[Control the use of color in output \[possible values: auto, always, never\]]' \
         '--system-certs[Whether to load TLS certificates from the platform'\''s native certificate store \[env: UV_SYSTEM_CERTS=\]]' \
         '--offline[Disable network access \[env: UV_OFFLINE=\]]' \
@@ -830,6 +856,8 @@ function _uv_export {
         '--managed-python[Require use of uv-managed Python versions \[env: UV_MANAGED_PYTHON=\]]' \
         '--no-managed-python[Disable use of uv-managed Python versions \[env: UV_NO_MANAGED_PYTHON=\]]' \
         '--no-python-downloads[Disable automatic downloads of Python. \[env: "UV_PYTHON_DOWNLOADS=never"\]]' \
+        {-q,--quiet}'[Use quiet output]' \
+        {-v,--verbose}'[Use verbose output]' \
         '--color[Control the use of color in output \[possible values: auto, always, never\]]' \
         '--system-certs[Whether to load TLS certificates from the platform'\''s native certificate store \[env: UV_SYSTEM_CERTS=\]]' \
         '--offline[Disable network access \[env: UV_OFFLINE=\]]' \
@@ -899,6 +927,8 @@ function _uv_tree {
         '--no-python-downloads[Disable automatic downloads of Python. \[env: "UV_PYTHON_DOWNLOADS=never"\]]' \
         {-n,--no-cache}'[Avoid reading from or writing to the cache, instead using a temporary directory for the duration of the operation \[env: UV_NO_CACHE=\]]' \
         '--cache-dir[Path to the cache directory \[env: UV_CACHE_DIR=\]]':file:_files \
+        {-q,--quiet}'[Use quiet output]' \
+        {-v,--verbose}'[Use verbose output]' \
         '--color[Control the use of color in output \[possible values: auto, always, never\]]' \
         '--system-certs[Whether to load TLS certificates from the platform'\''s native certificate store \[env: UV_SYSTEM_CERTS=\]]' \
         '--offline[Disable network access \[env: UV_OFFLINE=\]]' \
@@ -925,6 +955,8 @@ function _uv_format {
         '--managed-python[Require use of uv-managed Python versions \[env: UV_MANAGED_PYTHON=\]]' \
         '--no-managed-python[Disable use of uv-managed Python versions \[env: UV_NO_MANAGED_PYTHON=\]]' \
         '--no-python-downloads[Disable automatic downloads of Python. \[env: "UV_PYTHON_DOWNLOADS=never"\]]' \
+        {-q,--quiet}'[Use quiet output]' \
+        {-v,--verbose}'[Use verbose output]' \
         '--color[Control the use of color in output \[possible values: auto, always, never\]]' \
         '--system-certs[Whether to load TLS certificates from the platform'\''s native certificate store \[env: UV_SYSTEM_CERTS=\]]' \
         '--offline[Disable network access \[env: UV_OFFLINE=\]]' \
@@ -989,6 +1021,8 @@ function _uv_audit {
         '--managed-python[Require use of uv-managed Python versions \[env: UV_MANAGED_PYTHON=\]]' \
         '--no-managed-python[Disable use of uv-managed Python versions \[env: UV_NO_MANAGED_PYTHON=\]]' \
         '--no-python-downloads[Disable automatic downloads of Python. \[env: "UV_PYTHON_DOWNLOADS=never"\]]' \
+        {-q,--quiet}'[Use quiet output]' \
+        {-v,--verbose}'[Use verbose output]' \
         '--color[Control the use of color in output \[possible values: auto, always, never\]]' \
         '--system-certs[Whether to load TLS certificates from the platform'\''s native certificate store \[env: UV_SYSTEM_CERTS=\]]' \
         '--offline[Disable network access \[env: UV_OFFLINE=\]]' \
@@ -1028,6 +1062,8 @@ function _uv_tool {
         '--managed-python[Require use of uv-managed Python versions \[env: UV_MANAGED_PYTHON=\]]' \
         '--no-managed-python[Disable use of uv-managed Python versions \[env: UV_NO_MANAGED_PYTHON=\]]' \
         '--no-python-downloads[Disable automatic downloads of Python. \[env: "UV_PYTHON_DOWNLOADS=never"\]]' \
+        {-q,--quiet}'[Use quiet output]' \
+        {-v,--verbose}'[Use verbose output]' \
         '--color[Control the use of color in output \[possible values: auto, always, never\]]' \
         '--system-certs[Whether to load TLS certificates from the platform'\''s native certificate store \[env: UV_SYSTEM_CERTS=\]]' \
         '--offline[Disable network access \[env: UV_OFFLINE=\]]' \
@@ -1134,6 +1170,8 @@ function _uv_tool_run {
         '--managed-python[Require use of uv-managed Python versions \[env: UV_MANAGED_PYTHON=\]]' \
         '--no-managed-python[Disable use of uv-managed Python versions \[env: UV_NO_MANAGED_PYTHON=\]]' \
         '--no-python-downloads[Disable automatic downloads of Python. \[env: "UV_PYTHON_DOWNLOADS=never"\]]' \
+        {-q,--quiet}'[Use quiet output]' \
+        {-v,--verbose}'[Use verbose output]' \
         '--color[Control the use of color in output \[possible values: auto, always, never\]]' \
         '--system-certs[Whether to load TLS certificates from the platform'\''s native certificate store \[env: UV_SYSTEM_CERTS=\]]' \
         '--offline[Disable network access \[env: UV_OFFLINE=\]]' \
@@ -1201,6 +1239,8 @@ function _uv_tool_install {
         '--managed-python[Require use of uv-managed Python versions \[env: UV_MANAGED_PYTHON=\]]' \
         '--no-managed-python[Disable use of uv-managed Python versions \[env: UV_NO_MANAGED_PYTHON=\]]' \
         '--no-python-downloads[Disable automatic downloads of Python. \[env: "UV_PYTHON_DOWNLOADS=never"\]]' \
+        {-q,--quiet}'[Use quiet output]' \
+        {-v,--verbose}'[Use verbose output]' \
         '--color[Control the use of color in output \[possible values: auto, always, never\]]' \
         '--system-certs[Whether to load TLS certificates from the platform'\''s native certificate store \[env: UV_SYSTEM_CERTS=\]]' \
         '--offline[Disable network access \[env: UV_OFFLINE=\]]' \
@@ -1252,6 +1292,8 @@ function _uv_tool_upgrade {
         '--no-binary-package[Don'\''t install pre-built wheels for a specific package \[env: UV_NO_BINARY_PACKAGE=\]]' \
         {-n,--no-cache}'[Avoid reading from or writing to the cache, instead using a temporary directory for the duration of the operation \[env: UV_NO_CACHE=\]]' \
         '--cache-dir[Path to the cache directory \[env: UV_CACHE_DIR=\]]':file:_files \
+        {-q,--quiet}'[Use quiet output]' \
+        {-v,--verbose}'[Use verbose output]' \
         '--color[Control the use of color in output \[possible values: auto, always, never\]]' \
         '--system-certs[Whether to load TLS certificates from the platform'\''s native certificate store \[env: UV_SYSTEM_CERTS=\]]' \
         '--offline[Disable network access \[env: UV_OFFLINE=\]]' \
@@ -1279,6 +1321,8 @@ function _uv_tool_list {
         '--cache-dir[Path to the cache directory \[env: UV_CACHE_DIR=\]]':file:_files \
         '--managed-python[Require use of uv-managed Python versions \[env: UV_MANAGED_PYTHON=\]]' \
         '--no-managed-python[Disable use of uv-managed Python versions \[env: UV_NO_MANAGED_PYTHON=\]]' \
+        {-q,--quiet}'[Use quiet output]' \
+        {-v,--verbose}'[Use verbose output]' \
         '--color[Control the use of color in output \[possible values: auto, always, never\]]' \
         '--system-certs[Whether to load TLS certificates from the platform'\''s native certificate store \[env: UV_SYSTEM_CERTS=\]]' \
         '--offline[Disable network access \[env: UV_OFFLINE=\]]' \
@@ -1301,6 +1345,8 @@ function _uv_tool_uninstall {
         '--managed-python[Require use of uv-managed Python versions \[env: UV_MANAGED_PYTHON=\]]' \
         '--no-managed-python[Disable use of uv-managed Python versions \[env: UV_NO_MANAGED_PYTHON=\]]' \
         '--no-python-downloads[Disable automatic downloads of Python. \[env: "UV_PYTHON_DOWNLOADS=never"\]]' \
+        {-q,--quiet}'[Use quiet output]' \
+        {-v,--verbose}'[Use verbose output]' \
         '--color[Control the use of color in output \[possible values: auto, always, never\]]' \
         '--system-certs[Whether to load TLS certificates from the platform'\''s native certificate store \[env: UV_SYSTEM_CERTS=\]]' \
         '--offline[Disable network access \[env: UV_OFFLINE=\]]' \
@@ -1322,6 +1368,8 @@ function _uv_tool_update-shell {
         '--managed-python[Require use of uv-managed Python versions \[env: UV_MANAGED_PYTHON=\]]' \
         '--no-managed-python[Disable use of uv-managed Python versions \[env: UV_NO_MANAGED_PYTHON=\]]' \
         '--no-python-downloads[Disable automatic downloads of Python. \[env: "UV_PYTHON_DOWNLOADS=never"\]]' \
+        {-q,--quiet}'[Use quiet output]' \
+        {-v,--verbose}'[Use verbose output]' \
         '--color[Control the use of color in output \[possible values: auto, always, never\]]' \
         '--system-certs[Whether to load TLS certificates from the platform'\''s native certificate store \[env: UV_SYSTEM_CERTS=\]]' \
         '--offline[Disable network access \[env: UV_OFFLINE=\]]' \
@@ -1344,6 +1392,8 @@ function _uv_tool_dir {
         '--managed-python[Require use of uv-managed Python versions \[env: UV_MANAGED_PYTHON=\]]' \
         '--no-managed-python[Disable use of uv-managed Python versions \[env: UV_NO_MANAGED_PYTHON=\]]' \
         '--no-python-downloads[Disable automatic downloads of Python. \[env: "UV_PYTHON_DOWNLOADS=never"\]]' \
+        {-q,--quiet}'[Use quiet output]' \
+        {-v,--verbose}'[Use verbose output]' \
         '--color[Control the use of color in output \[possible values: auto, always, never\]]' \
         '--system-certs[Whether to load TLS certificates from the platform'\''s native certificate store \[env: UV_SYSTEM_CERTS=\]]' \
         '--offline[Disable network access \[env: UV_OFFLINE=\]]' \
@@ -1384,6 +1434,8 @@ function _uv_python {
         '--managed-python[Require use of uv-managed Python versions \[env: UV_MANAGED_PYTHON=\]]' \
         '--no-managed-python[Disable use of uv-managed Python versions \[env: UV_NO_MANAGED_PYTHON=\]]' \
         '--no-python-downloads[Disable automatic downloads of Python. \[env: "UV_PYTHON_DOWNLOADS=never"\]]' \
+        {-q,--quiet}'[Use quiet output]' \
+        {-v,--verbose}'[Use verbose output]' \
         '--color[Control the use of color in output \[possible values: auto, always, never\]]' \
         '--system-certs[Whether to load TLS certificates from the platform'\''s native certificate store \[env: UV_SYSTEM_CERTS=\]]' \
         '--offline[Disable network access \[env: UV_OFFLINE=\]]' \
@@ -1456,6 +1508,8 @@ function _uv_python_list {
         '--managed-python[Require use of uv-managed Python versions \[env: UV_MANAGED_PYTHON=\]]' \
         '--no-managed-python[Disable use of uv-managed Python versions \[env: UV_NO_MANAGED_PYTHON=\]]' \
         '--no-python-downloads[Disable automatic downloads of Python. \[env: "UV_PYTHON_DOWNLOADS=never"\]]' \
+        {-q,--quiet}'[Use quiet output]' \
+        {-v,--verbose}'[Use verbose output]' \
         '--color[Control the use of color in output \[possible values: auto, always, never\]]' \
         '--system-certs[Whether to load TLS certificates from the platform'\''s native certificate store \[env: UV_SYSTEM_CERTS=\]]' \
         '--offline[Disable network access \[env: UV_OFFLINE=\]]' \
@@ -1488,6 +1542,8 @@ function _uv_python_install {
         '--managed-python[Require use of uv-managed Python versions \[env: UV_MANAGED_PYTHON=\]]' \
         '--no-managed-python[Disable use of uv-managed Python versions \[env: UV_NO_MANAGED_PYTHON=\]]' \
         '--no-python-downloads[Disable automatic downloads of Python. \[env: "UV_PYTHON_DOWNLOADS=never"\]]' \
+        {-q,--quiet}'[Use quiet output]' \
+        {-v,--verbose}'[Use verbose output]' \
         '--color[Control the use of color in output \[possible values: auto, always, never\]]' \
         '--system-certs[Whether to load TLS certificates from the platform'\''s native certificate store \[env: UV_SYSTEM_CERTS=\]]' \
         '--offline[Disable network access \[env: UV_OFFLINE=\]]' \
@@ -1515,6 +1571,8 @@ function _uv_python_upgrade {
         '--managed-python[Require use of uv-managed Python versions \[env: UV_MANAGED_PYTHON=\]]' \
         '--no-managed-python[Disable use of uv-managed Python versions \[env: UV_NO_MANAGED_PYTHON=\]]' \
         '--no-python-downloads[Disable automatic downloads of Python. \[env: "UV_PYTHON_DOWNLOADS=never"\]]' \
+        {-q,--quiet}'[Use quiet output]' \
+        {-v,--verbose}'[Use verbose output]' \
         '--color[Control the use of color in output \[possible values: auto, always, never\]]' \
         '--system-certs[Whether to load TLS certificates from the platform'\''s native certificate store \[env: UV_SYSTEM_CERTS=\]]' \
         '--offline[Disable network access \[env: UV_OFFLINE=\]]' \
@@ -1542,6 +1600,8 @@ function _uv_python_find {
         '--managed-python[Require use of uv-managed Python versions \[env: UV_MANAGED_PYTHON=\]]' \
         '--no-managed-python[Disable use of uv-managed Python versions \[env: UV_NO_MANAGED_PYTHON=\]]' \
         '--no-python-downloads[Disable automatic downloads of Python. \[env: "UV_PYTHON_DOWNLOADS=never"\]]' \
+        {-q,--quiet}'[Use quiet output]' \
+        {-v,--verbose}'[Use verbose output]' \
         '--color[Control the use of color in output \[possible values: auto, always, never\]]' \
         '--system-certs[Whether to load TLS certificates from the platform'\''s native certificate store \[env: UV_SYSTEM_CERTS=\]]' \
         '--offline[Disable network access \[env: UV_OFFLINE=\]]' \
@@ -1568,6 +1628,8 @@ function _uv_python_pin {
         '--managed-python[Require use of uv-managed Python versions \[env: UV_MANAGED_PYTHON=\]]' \
         '--no-managed-python[Disable use of uv-managed Python versions \[env: UV_NO_MANAGED_PYTHON=\]]' \
         '--no-python-downloads[Disable automatic downloads of Python. \[env: "UV_PYTHON_DOWNLOADS=never"\]]' \
+        {-q,--quiet}'[Use quiet output]' \
+        {-v,--verbose}'[Use verbose output]' \
         '--color[Control the use of color in output \[possible values: auto, always, never\]]' \
         '--system-certs[Whether to load TLS certificates from the platform'\''s native certificate store \[env: UV_SYSTEM_CERTS=\]]' \
         '--offline[Disable network access \[env: UV_OFFLINE=\]]' \
@@ -1590,6 +1652,8 @@ function _uv_python_dir {
         '--managed-python[Require use of uv-managed Python versions \[env: UV_MANAGED_PYTHON=\]]' \
         '--no-managed-python[Disable use of uv-managed Python versions \[env: UV_NO_MANAGED_PYTHON=\]]' \
         '--no-python-downloads[Disable automatic downloads of Python. \[env: "UV_PYTHON_DOWNLOADS=never"\]]' \
+        {-q,--quiet}'[Use quiet output]' \
+        {-v,--verbose}'[Use verbose output]' \
         '--color[Control the use of color in output \[possible values: auto, always, never\]]' \
         '--system-certs[Whether to load TLS certificates from the platform'\''s native certificate store \[env: UV_SYSTEM_CERTS=\]]' \
         '--offline[Disable network access \[env: UV_OFFLINE=\]]' \
@@ -1613,6 +1677,8 @@ function _uv_python_uninstall {
         '--managed-python[Require use of uv-managed Python versions \[env: UV_MANAGED_PYTHON=\]]' \
         '--no-managed-python[Disable use of uv-managed Python versions \[env: UV_NO_MANAGED_PYTHON=\]]' \
         '--no-python-downloads[Disable automatic downloads of Python. \[env: "UV_PYTHON_DOWNLOADS=never"\]]' \
+        {-q,--quiet}'[Use quiet output]' \
+        {-v,--verbose}'[Use verbose output]' \
         '--color[Control the use of color in output \[possible values: auto, always, never\]]' \
         '--system-certs[Whether to load TLS certificates from the platform'\''s native certificate store \[env: UV_SYSTEM_CERTS=\]]' \
         '--offline[Disable network access \[env: UV_OFFLINE=\]]' \
@@ -1634,6 +1700,8 @@ function _uv_python_update-shell {
         '--managed-python[Require use of uv-managed Python versions \[env: UV_MANAGED_PYTHON=\]]' \
         '--no-managed-python[Disable use of uv-managed Python versions \[env: UV_NO_MANAGED_PYTHON=\]]' \
         '--no-python-downloads[Disable automatic downloads of Python. \[env: "UV_PYTHON_DOWNLOADS=never"\]]' \
+        {-q,--quiet}'[Use quiet output]' \
+        {-v,--verbose}'[Use verbose output]' \
         '--color[Control the use of color in output \[possible values: auto, always, never\]]' \
         '--system-certs[Whether to load TLS certificates from the platform'\''s native certificate store \[env: UV_SYSTEM_CERTS=\]]' \
         '--offline[Disable network access \[env: UV_OFFLINE=\]]' \
@@ -1675,6 +1743,8 @@ function _uv_pip {
         '--managed-python[Require use of uv-managed Python versions \[env: UV_MANAGED_PYTHON=\]]' \
         '--no-managed-python[Disable use of uv-managed Python versions \[env: UV_NO_MANAGED_PYTHON=\]]' \
         '--no-python-downloads[Disable automatic downloads of Python. \[env: "UV_PYTHON_DOWNLOADS=never"\]]' \
+        {-q,--quiet}'[Use quiet output]' \
+        {-v,--verbose}'[Use verbose output]' \
         '--color[Control the use of color in output \[possible values: auto, always, never\]]' \
         '--system-certs[Whether to load TLS certificates from the platform'\''s native certificate store \[env: UV_SYSTEM_CERTS=\]]' \
         '--offline[Disable network access \[env: UV_OFFLINE=\]]' \
@@ -1799,6 +1869,8 @@ function _uv_pip_compile {
         '--managed-python[Require use of uv-managed Python versions \[env: UV_MANAGED_PYTHON=\]]' \
         '--no-managed-python[Disable use of uv-managed Python versions \[env: UV_NO_MANAGED_PYTHON=\]]' \
         '--no-python-downloads[Disable automatic downloads of Python. \[env: "UV_PYTHON_DOWNLOADS=never"\]]' \
+        {-q,--quiet}'[Use quiet output]' \
+        {-v,--verbose}'[Use verbose output]' \
         '--color[Control the use of color in output \[possible values: auto, always, never\]]' \
         '--system-certs[Whether to load TLS certificates from the platform'\''s native certificate store \[env: UV_SYSTEM_CERTS=\]]' \
         '--offline[Disable network access \[env: UV_OFFLINE=\]]' \
@@ -1861,6 +1933,8 @@ function _uv_pip_sync {
         '--managed-python[Require use of uv-managed Python versions \[env: UV_MANAGED_PYTHON=\]]' \
         '--no-managed-python[Disable use of uv-managed Python versions \[env: UV_NO_MANAGED_PYTHON=\]]' \
         '--no-python-downloads[Disable automatic downloads of Python. \[env: "UV_PYTHON_DOWNLOADS=never"\]]' \
+        {-q,--quiet}'[Use quiet output]' \
+        {-v,--verbose}'[Use verbose output]' \
         '--color[Control the use of color in output \[possible values: auto, always, never\]]' \
         '--system-certs[Whether to load TLS certificates from the platform'\''s native certificate store \[env: UV_SYSTEM_CERTS=\]]' \
         '--offline[Disable network access \[env: UV_OFFLINE=\]]' \
@@ -1936,6 +2010,8 @@ function _uv_pip_install {
         '--managed-python[Require use of uv-managed Python versions \[env: UV_MANAGED_PYTHON=\]]' \
         '--no-managed-python[Disable use of uv-managed Python versions \[env: UV_NO_MANAGED_PYTHON=\]]' \
         '--no-python-downloads[Disable automatic downloads of Python. \[env: "UV_PYTHON_DOWNLOADS=never"\]]' \
+        {-q,--quiet}'[Use quiet output]' \
+        {-v,--verbose}'[Use verbose output]' \
         '--color[Control the use of color in output \[possible values: auto, always, never\]]' \
         '--system-certs[Whether to load TLS certificates from the platform'\''s native certificate store \[env: UV_SYSTEM_CERTS=\]]' \
         '--offline[Disable network access \[env: UV_OFFLINE=\]]' \
@@ -1965,6 +2041,8 @@ function _uv_pip_uninstall {
         '--no-python-downloads[Disable automatic downloads of Python. \[env: "UV_PYTHON_DOWNLOADS=never"\]]' \
         {-n,--no-cache}'[Avoid reading from or writing to the cache, instead using a temporary directory for the duration of the operation \[env: UV_NO_CACHE=\]]' \
         '--cache-dir[Path to the cache directory \[env: UV_CACHE_DIR=\]]':file:_files \
+        {-q,--quiet}'[Use quiet output]' \
+        {-v,--verbose}'[Use verbose output]' \
         '--color[Control the use of color in output \[possible values: auto, always, never\]]' \
         '--system-certs[Whether to load TLS certificates from the platform'\''s native certificate store \[env: UV_SYSTEM_CERTS=\]]' \
         '--offline[Disable network access \[env: UV_OFFLINE=\]]' \
@@ -1994,6 +2072,8 @@ function _uv_pip_freeze {
         '--no-python-downloads[Disable automatic downloads of Python. \[env: "UV_PYTHON_DOWNLOADS=never"\]]' \
         {-n,--no-cache}'[Avoid reading from or writing to the cache, instead using a temporary directory for the duration of the operation \[env: UV_NO_CACHE=\]]' \
         '--cache-dir[Path to the cache directory \[env: UV_CACHE_DIR=\]]':file:_files \
+        {-q,--quiet}'[Use quiet output]' \
+        {-v,--verbose}'[Use verbose output]' \
         '--color[Control the use of color in output \[possible values: auto, always, never\]]' \
         '--system-certs[Whether to load TLS certificates from the platform'\''s native certificate store \[env: UV_SYSTEM_CERTS=\]]' \
         '--offline[Disable network access \[env: UV_OFFLINE=\]]' \
@@ -2034,6 +2114,8 @@ function _uv_pip_list {
         '--no-python-downloads[Disable automatic downloads of Python. \[env: "UV_PYTHON_DOWNLOADS=never"\]]' \
         {-n,--no-cache}'[Avoid reading from or writing to the cache, instead using a temporary directory for the duration of the operation \[env: UV_NO_CACHE=\]]' \
         '--cache-dir[Path to the cache directory \[env: UV_CACHE_DIR=\]]':file:_files \
+        {-q,--quiet}'[Use quiet output]' \
+        {-v,--verbose}'[Use verbose output]' \
         '--color[Control the use of color in output \[possible values: auto, always, never\]]' \
         '--system-certs[Whether to load TLS certificates from the platform'\''s native certificate store \[env: UV_SYSTEM_CERTS=\]]' \
         '--offline[Disable network access \[env: UV_OFFLINE=\]]' \
@@ -2061,6 +2143,8 @@ function _uv_pip_show {
         '--no-python-downloads[Disable automatic downloads of Python. \[env: "UV_PYTHON_DOWNLOADS=never"\]]' \
         {-n,--no-cache}'[Avoid reading from or writing to the cache, instead using a temporary directory for the duration of the operation \[env: UV_NO_CACHE=\]]' \
         '--cache-dir[Path to the cache directory \[env: UV_CACHE_DIR=\]]':file:_files \
+        {-q,--quiet}'[Use quiet output]' \
+        {-v,--verbose}'[Use verbose output]' \
         '--color[Control the use of color in output \[possible values: auto, always, never\]]' \
         '--system-certs[Whether to load TLS certificates from the platform'\''s native certificate store \[env: UV_SYSTEM_CERTS=\]]' \
         '--offline[Disable network access \[env: UV_OFFLINE=\]]' \
@@ -2102,6 +2186,8 @@ function _uv_pip_tree {
         '--no-python-downloads[Disable automatic downloads of Python. \[env: "UV_PYTHON_DOWNLOADS=never"\]]' \
         {-n,--no-cache}'[Avoid reading from or writing to the cache, instead using a temporary directory for the duration of the operation \[env: UV_NO_CACHE=\]]' \
         '--cache-dir[Path to the cache directory \[env: UV_CACHE_DIR=\]]':file:_files \
+        {-q,--quiet}'[Use quiet output]' \
+        {-v,--verbose}'[Use verbose output]' \
         '--color[Control the use of color in output \[possible values: auto, always, never\]]' \
         '--system-certs[Whether to load TLS certificates from the platform'\''s native certificate store \[env: UV_SYSTEM_CERTS=\]]' \
         '--offline[Disable network access \[env: UV_OFFLINE=\]]' \
@@ -2127,6 +2213,8 @@ function _uv_pip_check {
         '--no-python-downloads[Disable automatic downloads of Python. \[env: "UV_PYTHON_DOWNLOADS=never"\]]' \
         {-n,--no-cache}'[Avoid reading from or writing to the cache, instead using a temporary directory for the duration of the operation \[env: UV_NO_CACHE=\]]' \
         '--cache-dir[Path to the cache directory \[env: UV_CACHE_DIR=\]]':file:_files \
+        {-q,--quiet}'[Use quiet output]' \
+        {-v,--verbose}'[Use verbose output]' \
         '--color[Control the use of color in output \[possible values: auto, always, never\]]' \
         '--system-certs[Whether to load TLS certificates from the platform'\''s native certificate store \[env: UV_SYSTEM_CERTS=\]]' \
         '--offline[Disable network access \[env: UV_OFFLINE=\]]' \
@@ -2169,6 +2257,8 @@ function _uv_venv {
         {-n,--no-cache}'[Avoid reading from or writing to the cache, instead using a temporary directory for the duration of the operation \[env: UV_NO_CACHE=\]]' \
         '--refresh-package[Refresh cached data for a specific package]' \
         '--cache-dir[Path to the cache directory \[env: UV_CACHE_DIR=\]]':file:_files \
+        {-q,--quiet}'[Use quiet output]' \
+        {-v,--verbose}'[Use verbose output]' \
         '--color[Control the use of color in output \[possible values: auto, always, never\]]' \
         '--system-certs[Whether to load TLS certificates from the platform'\''s native certificate store \[env: UV_SYSTEM_CERTS=\]]' \
         '--offline[Disable network access \[env: UV_OFFLINE=\]]' \
@@ -2232,6 +2322,8 @@ function _uv_build {
         '--cache-dir[Path to the cache directory \[env: UV_CACHE_DIR=\]]':file:_files \
         '--refresh[Refresh all cached data]' \
         '--refresh-package[Refresh cached data for a specific package]' \
+        {-q,--quiet}'[Use quiet output]' \
+        {-v,--verbose}'[Use verbose output]' \
         '--color[Control the use of color in output \[possible values: auto, always, never\]]' \
         '--system-certs[Whether to load TLS certificates from the platform'\''s native certificate store \[env: UV_SYSTEM_CERTS=\]]' \
         '--offline[Disable network access \[env: UV_OFFLINE=\]]' \
@@ -2263,6 +2355,8 @@ function _uv_publish {
         '--managed-python[Require use of uv-managed Python versions \[env: UV_MANAGED_PYTHON=\]]' \
         '--no-managed-python[Disable use of uv-managed Python versions \[env: UV_NO_MANAGED_PYTHON=\]]' \
         '--no-python-downloads[Disable automatic downloads of Python. \[env: "UV_PYTHON_DOWNLOADS=never"\]]' \
+        {-q,--quiet}'[Use quiet output]' \
+        {-v,--verbose}'[Use verbose output]' \
         '--color[Control the use of color in output \[possible values: auto, always, never\]]' \
         '--system-certs[Whether to load TLS certificates from the platform'\''s native certificate store \[env: UV_SYSTEM_CERTS=\]]' \
         '--offline[Disable network access \[env: UV_OFFLINE=\]]' \
@@ -2299,6 +2393,8 @@ function _uv_cache {
         '--managed-python[Require use of uv-managed Python versions \[env: UV_MANAGED_PYTHON=\]]' \
         '--no-managed-python[Disable use of uv-managed Python versions \[env: UV_NO_MANAGED_PYTHON=\]]' \
         '--no-python-downloads[Disable automatic downloads of Python. \[env: "UV_PYTHON_DOWNLOADS=never"\]]' \
+        {-q,--quiet}'[Use quiet output]' \
+        {-v,--verbose}'[Use verbose output]' \
         '--color[Control the use of color in output \[possible values: auto, always, never\]]' \
         '--system-certs[Whether to load TLS certificates from the platform'\''s native certificate store \[env: UV_SYSTEM_CERTS=\]]' \
         '--offline[Disable network access \[env: UV_OFFLINE=\]]' \
@@ -2348,6 +2444,8 @@ function _uv_cache_clean {
         '--managed-python[Require use of uv-managed Python versions \[env: UV_MANAGED_PYTHON=\]]' \
         '--no-managed-python[Disable use of uv-managed Python versions \[env: UV_NO_MANAGED_PYTHON=\]]' \
         '--no-python-downloads[Disable automatic downloads of Python. \[env: "UV_PYTHON_DOWNLOADS=never"\]]' \
+        {-q,--quiet}'[Use quiet output]' \
+        {-v,--verbose}'[Use verbose output]' \
         '--color[Control the use of color in output \[possible values: auto, always, never\]]' \
         '--system-certs[Whether to load TLS certificates from the platform'\''s native certificate store \[env: UV_SYSTEM_CERTS=\]]' \
         '--offline[Disable network access \[env: UV_OFFLINE=\]]' \
@@ -2371,6 +2469,8 @@ function _uv_cache_prune {
         '--managed-python[Require use of uv-managed Python versions \[env: UV_MANAGED_PYTHON=\]]' \
         '--no-managed-python[Disable use of uv-managed Python versions \[env: UV_NO_MANAGED_PYTHON=\]]' \
         '--no-python-downloads[Disable automatic downloads of Python. \[env: "UV_PYTHON_DOWNLOADS=never"\]]' \
+        {-q,--quiet}'[Use quiet output]' \
+        {-v,--verbose}'[Use verbose output]' \
         '--color[Control the use of color in output \[possible values: auto, always, never\]]' \
         '--system-certs[Whether to load TLS certificates from the platform'\''s native certificate store \[env: UV_SYSTEM_CERTS=\]]' \
         '--offline[Disable network access \[env: UV_OFFLINE=\]]' \
@@ -2392,6 +2492,8 @@ function _uv_cache_dir {
         '--managed-python[Require use of uv-managed Python versions \[env: UV_MANAGED_PYTHON=\]]' \
         '--no-managed-python[Disable use of uv-managed Python versions \[env: UV_NO_MANAGED_PYTHON=\]]' \
         '--no-python-downloads[Disable automatic downloads of Python. \[env: "UV_PYTHON_DOWNLOADS=never"\]]' \
+        {-q,--quiet}'[Use quiet output]' \
+        {-v,--verbose}'[Use verbose output]' \
         '--color[Control the use of color in output \[possible values: auto, always, never\]]' \
         '--system-certs[Whether to load TLS certificates from the platform'\''s native certificate store \[env: UV_SYSTEM_CERTS=\]]' \
         '--offline[Disable network access \[env: UV_OFFLINE=\]]' \
@@ -2414,6 +2516,8 @@ function _uv_cache_size {
         '--managed-python[Require use of uv-managed Python versions \[env: UV_MANAGED_PYTHON=\]]' \
         '--no-managed-python[Disable use of uv-managed Python versions \[env: UV_NO_MANAGED_PYTHON=\]]' \
         '--no-python-downloads[Disable automatic downloads of Python. \[env: "UV_PYTHON_DOWNLOADS=never"\]]' \
+        {-q,--quiet}'[Use quiet output]' \
+        {-v,--verbose}'[Use verbose output]' \
         '--color[Control the use of color in output \[possible values: auto, always, never\]]' \
         '--system-certs[Whether to load TLS certificates from the platform'\''s native certificate store \[env: UV_SYSTEM_CERTS=\]]' \
         '--offline[Disable network access \[env: UV_OFFLINE=\]]' \
@@ -2448,6 +2552,8 @@ function _uv_self {
         '--managed-python[Require use of uv-managed Python versions \[env: UV_MANAGED_PYTHON=\]]' \
         '--no-managed-python[Disable use of uv-managed Python versions \[env: UV_NO_MANAGED_PYTHON=\]]' \
         '--no-python-downloads[Disable automatic downloads of Python. \[env: "UV_PYTHON_DOWNLOADS=never"\]]' \
+        {-q,--quiet}'[Use quiet output]' \
+        {-v,--verbose}'[Use verbose output]' \
         '--color[Control the use of color in output \[possible values: auto, always, never\]]' \
         '--system-certs[Whether to load TLS certificates from the platform'\''s native certificate store \[env: UV_SYSTEM_CERTS=\]]' \
         '--offline[Disable network access \[env: UV_OFFLINE=\]]' \
@@ -2490,6 +2596,8 @@ function _uv_self_update {
         '--managed-python[Require use of uv-managed Python versions \[env: UV_MANAGED_PYTHON=\]]' \
         '--no-managed-python[Disable use of uv-managed Python versions \[env: UV_NO_MANAGED_PYTHON=\]]' \
         '--no-python-downloads[Disable automatic downloads of Python. \[env: "UV_PYTHON_DOWNLOADS=never"\]]' \
+        {-q,--quiet}'[Use quiet output]' \
+        {-v,--verbose}'[Use verbose output]' \
         '--color[Control the use of color in output \[possible values: auto, always, never\]]' \
         '--system-certs[Whether to load TLS certificates from the platform'\''s native certificate store \[env: UV_SYSTEM_CERTS=\]]' \
         '--offline[Disable network access \[env: UV_OFFLINE=\]]' \
@@ -2513,6 +2621,8 @@ function _uv_self_version {
         '--managed-python[Require use of uv-managed Python versions \[env: UV_MANAGED_PYTHON=\]]' \
         '--no-managed-python[Disable use of uv-managed Python versions \[env: UV_NO_MANAGED_PYTHON=\]]' \
         '--no-python-downloads[Disable automatic downloads of Python. \[env: "UV_PYTHON_DOWNLOADS=never"\]]' \
+        {-q,--quiet}'[Use quiet output]' \
+        {-v,--verbose}'[Use verbose output]' \
         '--color[Control the use of color in output \[possible values: auto, always, never\]]' \
         '--system-certs[Whether to load TLS certificates from the platform'\''s native certificate store \[env: UV_SYSTEM_CERTS=\]]' \
         '--offline[Disable network access \[env: UV_OFFLINE=\]]' \

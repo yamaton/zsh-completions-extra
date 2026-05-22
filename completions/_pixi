@@ -46,6 +46,8 @@ function _pixi {
     _arguments -C \
         {-V,--version}'[Print version]' \
         {-h,--help}'[Display help information]' \
+        {-v,--verbose}'[Increase logging verbosity (-v for warnings, -vv for info, -vvv for debug, -vvvv for trace)]' \
+        {-q,--quiet}'[Decrease logging verbosity (quiet mode)]' \
         '--color[Whether the log needs to be colored \[env: PIXI_COLOR=\] \[default: auto\] \[possible values: always, never, auto\]]' \
         '--no-progress[Hide all progress bars, always turned on if stderr is not a terminal \[env: PIXI_NO_PROGRESS=\]]' \
         '--list[List all installed commands (built-in and extensions)]' \
@@ -189,6 +191,8 @@ function _pixi_add {
         {-m,--manifest-path}'[The path to `pixi.toml`, `pyproject.toml`, or the workspace directory]':file:_files \
         {-w,--workspace}'[Name of the workspace]' \
         {-h,--help}'[Display help information]' \
+        {-v,--verbose}'[Increase logging verbosity (-v for warnings, -vv for info, -vvv for debug, -vvvv for trace)]' \
+        {-q,--quiet}'[Decrease logging verbosity (quiet mode)]' \
         '--color[Whether the log needs to be colored]' \
         '--no-progress[Hide all progress bars, always turned on if stderr is not a terminal]' \
         {-g,--git}'[The git url to use when adding a git dependency]' \
@@ -232,6 +236,8 @@ function _pixi_auth {
 
     _arguments -C \
         {-h,--help}'[Display help information]' \
+        {-v,--verbose}'[Increase logging verbosity (-v for warnings, -vv for info, -vvv for debug, -vvvv for trace)]' \
+        {-q,--quiet}'[Decrease logging verbosity (quiet mode)]' \
         '--color[Whether the log needs to be colored \[env: PIXI_COLOR=\] \[default: auto\] \[possible values: always, never, auto\]]' \
         '--no-progress[Hide all progress bars, always turned on if stderr is not a terminal \[env: PIXI_NO_PROGRESS=\]]' \
         ': :->cmd' \
@@ -277,6 +283,8 @@ function _pixi_auth_login {
         '--oauth-flow[OAuth flow: auto (default), auth-code, device-code \[possible values: auto, auth-code, device-code\]]' \
         '--oauth-scope[Additional OAuth scopes to request (repeatable)]' \
         {-h,--help}'[Display help information]' \
+        {-v,--verbose}'[Increase logging verbosity (-v for warnings, -vv for info, -vvv for debug, -vvvv for trace)]' \
+        {-q,--quiet}'[Decrease logging verbosity (quiet mode)]' \
         '--color[Whether the log needs to be colored \[env: PIXI_COLOR=\] \[default: auto\] \[possible values: always, never, auto\]]' \
         '--no-progress[Hide all progress bars, always turned on if stderr is not a terminal \[env: PIXI_NO_PROGRESS=\]]' \
         "*: :_files"
@@ -286,6 +294,8 @@ function _pixi_auth_login {
 function _pixi_auth_logout {
     _arguments \
         {-h,--help}'[Display help information]' \
+        {-v,--verbose}'[Increase logging verbosity (-v for warnings, -vv for info, -vvv for debug, -vvvv for trace)]' \
+        {-q,--quiet}'[Decrease logging verbosity (quiet mode)]' \
         '--color[Whether the log needs to be colored \[env: PIXI_COLOR=\] \[default: auto\] \[possible values: always, never, auto\]]' \
         '--no-progress[Hide all progress bars, always turned on if stderr is not a terminal \[env: PIXI_NO_PROGRESS=\]]' \
         "*: :_files"
@@ -323,6 +333,8 @@ function _pixi_build {
         '--locked[Check if lockfile is up-to-date before installing the environment, aborts when lockfile isn'\''t up-to-date with the manifest file]' \
         '--as-is[Shorthand for the combination of --no-install and --frozen]' \
         {-h,--help}'[Display help information]' \
+        {-v,--verbose}'[Increase logging verbosity (-v for warnings, -vv for info, -vvv for debug, -vvvv for trace)]' \
+        {-q,--quiet}'[Decrease logging verbosity (quiet mode)]' \
         '--color[Whether the log needs to be colored]' \
         '--no-progress[Hide all progress bars, always turned on if stderr is not a terminal]' \
         "*: :_files"
@@ -351,6 +363,8 @@ function _pixi_clean {
         {-m,--manifest-path}'[The path to `pixi.toml`, `pyproject.toml`, or the workspace directory]':file:_files \
         {-w,--workspace}'[Name of the workspace]' \
         {-h,--help}'[Display help information]' \
+        {-v,--verbose}'[Increase logging verbosity (-v for warnings, -vv for info, -vvv for debug, -vvvv for trace)]' \
+        {-q,--quiet}'[Decrease logging verbosity (quiet mode)]' \
         '--color[Whether the log needs to be colored]' \
         '--no-progress[Hide all progress bars, always turned on if stderr is not a terminal]' \
         ': :->cmd' \
@@ -389,6 +403,8 @@ function _pixi_clean_cache {
         {-m,--manifest-path}'[The path to `pixi.toml`, `pyproject.toml`, or the workspace directory]':file:_files \
         {-w,--workspace}'[Name of the workspace]' \
         {-h,--help}'[Display help information]' \
+        {-v,--verbose}'[Increase logging verbosity (-v for warnings, -vv for info, -vvv for debug, -vvvv for trace)]' \
+        {-q,--quiet}'[Decrease logging verbosity (quiet mode)]' \
         '--color[Whether the log needs to be colored]' \
         '--no-progress[Hide all progress bars, always turned on if stderr is not a terminal]' \
         "*: :_files"
@@ -407,6 +423,8 @@ function _pixi_completion {
         '-[Elvish shell]' \
         '-[Friendly Interactive SHell (fish)]' \
         {-h,--help}'[Display help information]' \
+        {-v,--verbose}'[Increase logging verbosity (-v for warnings, -vv for info, -vvv for debug, -vvvv for trace)]' \
+        {-q,--quiet}'[Decrease logging verbosity (quiet mode)]' \
         '--color[Whether the log needs to be colored]' \
         '--no-progress[Hide all progress bars, always turned on if stderr is not a terminal]' \
         "*: :_files"
@@ -434,6 +452,8 @@ function _pixi_config {
 
     _arguments -C \
         {-h,--help}'[Display help information]' \
+        {-v,--verbose}'[Increase logging verbosity (-v for warnings, -vv for info, -vvv for debug, -vvvv for trace)]' \
+        {-q,--quiet}'[Decrease logging verbosity (quiet mode)]' \
         '--color[Whether the log needs to be colored \[env: PIXI_COLOR=\] \[default: auto\] \[possible values: always, never, auto\]]' \
         '--no-progress[Hide all progress bars, always turned on if stderr is not a terminal \[env: PIXI_NO_PROGRESS=\]]' \
         ': :->cmd' \
@@ -487,6 +507,8 @@ function _pixi_config_edit {
         {-m,--manifest-path}'[The path to `pixi.toml`, `pyproject.toml`, or the workspace directory]':file:_files \
         {-w,--workspace}'[Name of the workspace]' \
         {-h,--help}'[Display help information]' \
+        {-v,--verbose}'[Increase logging verbosity (-v for warnings, -vv for info, -vvv for debug, -vvvv for trace)]' \
+        {-q,--quiet}'[Decrease logging verbosity (quiet mode)]' \
         '--color[Whether the log needs to be colored \[env: PIXI_COLOR=\] \[default: auto\] \[possible values: always, never, auto\]]' \
         '--no-progress[Hide all progress bars, always turned on if stderr is not a terminal \[env: PIXI_NO_PROGRESS=\]]' \
         "*: :_files"
@@ -502,6 +524,8 @@ function _pixi_config_list {
         {-m,--manifest-path}'[The path to `pixi.toml`, `pyproject.toml`, or the workspace directory]':file:_files \
         {-w,--workspace}'[Name of the workspace]' \
         {-h,--help}'[Display help information]' \
+        {-v,--verbose}'[Increase logging verbosity (-v for warnings, -vv for info, -vvv for debug, -vvvv for trace)]' \
+        {-q,--quiet}'[Decrease logging verbosity (quiet mode)]' \
         '--color[Whether the log needs to be colored]' \
         '--no-progress[Hide all progress bars, always turned on if stderr is not a terminal]' \
         "*: :_files"
@@ -516,6 +540,8 @@ function _pixi_config_prepend {
         {-m,--manifest-path}'[The path to `pixi.toml`, `pyproject.toml`, or the workspace directory]':file:_files \
         {-w,--workspace}'[Name of the workspace]' \
         {-h,--help}'[Display help information]' \
+        {-v,--verbose}'[Increase logging verbosity (-v for warnings, -vv for info, -vvv for debug, -vvvv for trace)]' \
+        {-q,--quiet}'[Decrease logging verbosity (quiet mode)]' \
         '--color[Whether the log needs to be colored]' \
         '--no-progress[Hide all progress bars, always turned on if stderr is not a terminal]' \
         "*: :_files"
@@ -530,6 +556,8 @@ function _pixi_config_append {
         {-m,--manifest-path}'[The path to `pixi.toml`, `pyproject.toml`, or the workspace directory]':file:_files \
         {-w,--workspace}'[Name of the workspace]' \
         {-h,--help}'[Display help information]' \
+        {-v,--verbose}'[Increase logging verbosity (-v for warnings, -vv for info, -vvv for debug, -vvvv for trace)]' \
+        {-q,--quiet}'[Decrease logging verbosity (quiet mode)]' \
         '--color[Whether the log needs to be colored]' \
         '--no-progress[Hide all progress bars, always turned on if stderr is not a terminal]' \
         "*: :_files"
@@ -544,6 +572,8 @@ function _pixi_config_set {
         {-m,--manifest-path}'[The path to `pixi.toml`, `pyproject.toml`, or the workspace directory]':file:_files \
         {-w,--workspace}'[Name of the workspace]' \
         {-h,--help}'[Display help information]' \
+        {-v,--verbose}'[Increase logging verbosity (-v for warnings, -vv for info, -vvv for debug, -vvvv for trace)]' \
+        {-q,--quiet}'[Decrease logging verbosity (quiet mode)]' \
         '--color[Whether the log needs to be colored]' \
         '--no-progress[Hide all progress bars, always turned on if stderr is not a terminal]' \
         "*: :_files"
@@ -558,6 +588,8 @@ function _pixi_config_unset {
         {-m,--manifest-path}'[The path to `pixi.toml`, `pyproject.toml`, or the workspace directory]':file:_files \
         {-w,--workspace}'[Name of the workspace]' \
         {-h,--help}'[Display help information]' \
+        {-v,--verbose}'[Increase logging verbosity (-v for warnings, -vv for info, -vvv for debug, -vvvv for trace)]' \
+        {-q,--quiet}'[Decrease logging verbosity (quiet mode)]' \
         '--color[Whether the log needs to be colored]' \
         '--no-progress[Hide all progress bars, always turned on if stderr is not a terminal]' \
         "*: :_files"
@@ -592,6 +624,8 @@ function _pixi_exec {
         '--tls-root-certs[Which TLS root certificates to use: '\''webpki'\'' (bundled Mozilla roots), '\''native'\'' (system store), or '\''all'\'' (both)]' \
         '--use-environment-activation-cache[Use environment activation cache (experimental)]' \
         {-h,--help}'[Display help information]' \
+        {-v,--verbose}'[Increase logging verbosity (-v for warnings, -vv for info, -vvv for debug, -vvvv for trace)]' \
+        {-q,--quiet}'[Decrease logging verbosity (quiet mode)]' \
         '--color[Whether the log needs to be colored]' \
         '--no-progress[Hide all progress bars, always turned on if stderr is not a terminal]' \
         "*: :_files"
@@ -624,6 +658,8 @@ function _pixi_global {
 
     _arguments -C \
         {-h,--help}'[Display help information]' \
+        {-v,--verbose}'[Increase logging verbosity (-v for warnings, -vv for info, -vvv for debug, -vvvv for trace)]' \
+        {-q,--quiet}'[Decrease logging verbosity (quiet mode)]' \
         '--color[Whether the log needs to be colored]' \
         '--no-progress[Hide all progress bars, always turned on if stderr is not a terminal]' \
         ': :->cmd' \
@@ -712,6 +748,8 @@ function _pixi_global_add {
         '--tls-root-certs[Which TLS root certificates to use: '\''webpki'\'' (bundled Mozilla roots), '\''native'\'' (system store), or '\''all'\'' (both)]' \
         '--use-environment-activation-cache[Use environment activation cache (experimental)]' \
         {-h,--help}'[Display help information]' \
+        {-v,--verbose}'[Increase logging verbosity (-v for warnings, -vv for info, -vvv for debug, -vvvv for trace)]' \
+        {-q,--quiet}'[Decrease logging verbosity (quiet mode)]' \
         '--color[Whether the log needs to be colored]' \
         '--no-progress[Hide all progress bars, always turned on if stderr is not a terminal]' \
         "*: :_files"
@@ -721,6 +759,8 @@ function _pixi_global_add {
 function _pixi_global_edit {
     _arguments \
         {-h,--help}'[Display help information]' \
+        {-v,--verbose}'[Increase logging verbosity (-v for warnings, -vv for info, -vvv for debug, -vvvv for trace)]' \
+        {-q,--quiet}'[Decrease logging verbosity (quiet mode)]' \
         '--color[Whether the log needs to be colored]' \
         '--no-progress[Hide all progress bars, always turned on if stderr is not a terminal]' \
         "*: :_files"
@@ -755,6 +795,8 @@ function _pixi_global_install {
         '--tls-root-certs[Which TLS root certificates to use: '\''webpki'\'' (bundled Mozilla roots), '\''native'\'' (system store), or '\''all'\'' (both)]' \
         '--use-environment-activation-cache[Use environment activation cache (experimental)]' \
         {-h,--help}'[Display help information]' \
+        {-v,--verbose}'[Increase logging verbosity (-v for warnings, -vv for info, -vvv for debug, -vvvv for trace)]' \
+        {-q,--quiet}'[Decrease logging verbosity (quiet mode)]' \
         '--color[Whether the log needs to be colored]' \
         '--no-progress[Hide all progress bars, always turned on if stderr is not a terminal]' \
         "*: :_files"
@@ -776,6 +818,8 @@ function _pixi_global_uninstall {
         '--tls-root-certs[Which TLS root certificates to use: '\''webpki'\'' (bundled Mozilla roots), '\''native'\'' (system store), or '\''all'\'' (both)]' \
         '--use-environment-activation-cache[Use environment activation cache (experimental)]' \
         {-h,--help}'[Display help information]' \
+        {-v,--verbose}'[Increase logging verbosity (-v for warnings, -vv for info, -vvv for debug, -vvvv for trace)]' \
+        {-q,--quiet}'[Decrease logging verbosity (quiet mode)]' \
         '--color[Whether the log needs to be colored]' \
         '--no-progress[Hide all progress bars, always turned on if stderr is not a terminal]' \
         "*: :_files"
@@ -798,6 +842,8 @@ function _pixi_global_remove {
         '--tls-root-certs[Which TLS root certificates to use: '\''webpki'\'' (bundled Mozilla roots), '\''native'\'' (system store), or '\''all'\'' (both)]' \
         '--use-environment-activation-cache[Use environment activation cache (experimental)]' \
         {-h,--help}'[Display help information]' \
+        {-v,--verbose}'[Increase logging verbosity (-v for warnings, -vv for info, -vvv for debug, -vvvv for trace)]' \
+        {-q,--quiet}'[Decrease logging verbosity (quiet mode)]' \
         '--color[Whether the log needs to be colored]' \
         '--no-progress[Hide all progress bars, always turned on if stderr is not a terminal]' \
         "*: :_files"
@@ -822,6 +868,8 @@ function _pixi_global_list {
         '--tls-root-certs[Which TLS root certificates to use: '\''webpki'\'' (bundled Mozilla roots), '\''native'\'' (system store), or '\''all'\'' (both)]' \
         '--use-environment-activation-cache[Use environment activation cache (experimental)]' \
         {-h,--help}'[Display help information]' \
+        {-v,--verbose}'[Increase logging verbosity (-v for warnings, -vv for info, -vvv for debug, -vvvv for trace)]' \
+        {-q,--quiet}'[Decrease logging verbosity (quiet mode)]' \
         '--color[Whether the log needs to be colored]' \
         '--no-progress[Hide all progress bars, always turned on if stderr is not a terminal]' \
         "*: :_files"
@@ -843,6 +891,8 @@ function _pixi_global_sync {
         '--tls-root-certs[Which TLS root certificates to use: '\''webpki'\'' (bundled Mozilla roots), '\''native'\'' (system store), or '\''all'\'' (both)]' \
         '--use-environment-activation-cache[Use environment activation cache (experimental)]' \
         {-h,--help}'[Display help information]' \
+        {-v,--verbose}'[Increase logging verbosity (-v for warnings, -vv for info, -vvv for debug, -vvvv for trace)]' \
+        {-q,--quiet}'[Decrease logging verbosity (quiet mode)]' \
         '--color[Whether the log needs to be colored]' \
         '--no-progress[Hide all progress bars, always turned on if stderr is not a terminal]' \
         "*: :_files"
@@ -866,6 +916,8 @@ function _pixi_global_expose {
 
     _arguments -C \
         {-h,--help}'[Display help information]' \
+        {-v,--verbose}'[Increase logging verbosity (-v for warnings, -vv for info, -vvv for debug, -vvvv for trace)]' \
+        {-q,--quiet}'[Decrease logging verbosity (quiet mode)]' \
         '--color[Whether the log needs to be colored]' \
         '--no-progress[Hide all progress bars, always turned on if stderr is not a terminal]' \
         ': :->cmd' \
@@ -911,6 +963,8 @@ function _pixi_global_expose_add {
         '--tls-root-certs[Which TLS root certificates to use: '\''webpki'\'' (bundled Mozilla roots), '\''native'\'' (system store), or '\''all'\'' (both)]' \
         '--use-environment-activation-cache[Use environment activation cache (experimental)]' \
         {-h,--help}'[Display help information]' \
+        {-v,--verbose}'[Increase logging verbosity (-v for warnings, -vv for info, -vvv for debug, -vvvv for trace)]' \
+        {-q,--quiet}'[Decrease logging verbosity (quiet mode)]' \
         '--color[Whether the log needs to be colored]' \
         '--no-progress[Hide all progress bars, always turned on if stderr is not a terminal]' \
         "*: :_files"
@@ -932,6 +986,8 @@ function _pixi_global_expose_remove {
         '--tls-root-certs[Which TLS root certificates to use: '\''webpki'\'' (bundled Mozilla roots), '\''native'\'' (system store), or '\''all'\'' (both)]' \
         '--use-environment-activation-cache[Use environment activation cache (experimental)]' \
         {-h,--help}'[Display help information]' \
+        {-v,--verbose}'[Increase logging verbosity (-v for warnings, -vv for info, -vvv for debug, -vvvv for trace)]' \
+        {-q,--quiet}'[Decrease logging verbosity (quiet mode)]' \
         '--color[Whether the log needs to be colored]' \
         '--no-progress[Hide all progress bars, always turned on if stderr is not a terminal]' \
         "*: :_files"
@@ -961,6 +1017,8 @@ function _pixi_global_shortcut {
 
     _arguments -C \
         {-h,--help}'[Display help information]' \
+        {-v,--verbose}'[Increase logging verbosity (-v for warnings, -vv for info, -vvv for debug, -vvvv for trace)]' \
+        {-q,--quiet}'[Decrease logging verbosity (quiet mode)]' \
         '--color[Whether the log needs to be colored \[env: PIXI_COLOR=\] \[default: auto\] \[possible values: always, never, auto\]]' \
         '--no-progress[Hide all progress bars, always turned on if stderr is not a terminal \[env: PIXI_NO_PROGRESS=\]]' \
         ': :->cmd' \
@@ -1006,6 +1064,8 @@ function _pixi_global_shortcut_add {
         '--tls-root-certs[Which TLS root certificates to use: '\''webpki'\'' (bundled Mozilla roots), '\''native'\'' (system store), or '\''all'\'' (both)]' \
         '--use-environment-activation-cache[Use environment activation cache (experimental)]' \
         {-h,--help}'[Display help information]' \
+        {-v,--verbose}'[Increase logging verbosity (-v for warnings, -vv for info, -vvv for debug, -vvvv for trace)]' \
+        {-q,--quiet}'[Decrease logging verbosity (quiet mode)]' \
         '--color[Whether the log needs to be colored]' \
         '--no-progress[Hide all progress bars, always turned on if stderr is not a terminal]' \
         "*: :_files"
@@ -1027,6 +1087,8 @@ function _pixi_global_shortcut_remove {
         '--tls-root-certs[Which TLS root certificates to use: '\''webpki'\'' (bundled Mozilla roots), '\''native'\'' (system store), or '\''all'\'' (both)]' \
         '--use-environment-activation-cache[Use environment activation cache (experimental)]' \
         {-h,--help}'[Display help information]' \
+        {-v,--verbose}'[Increase logging verbosity (-v for warnings, -vv for info, -vvv for debug, -vvvv for trace)]' \
+        {-q,--quiet}'[Decrease logging verbosity (quiet mode)]' \
         '--color[Whether the log needs to be colored]' \
         '--no-progress[Hide all progress bars, always turned on if stderr is not a terminal]' \
         "*: :_files"
@@ -1054,6 +1116,8 @@ function _pixi_global_update {
         '--tls-root-certs[Which TLS root certificates to use: '\''webpki'\'' (bundled Mozilla roots), '\''native'\'' (system store), or '\''all'\'' (both)]' \
         '--use-environment-activation-cache[Use environment activation cache (experimental)]' \
         {-h,--help}'[Display help information]' \
+        {-v,--verbose}'[Increase logging verbosity (-v for warnings, -vv for info, -vvv for debug, -vvvv for trace)]' \
+        {-q,--quiet}'[Decrease logging verbosity (quiet mode)]' \
         '--color[Whether the log needs to be colored]' \
         '--no-progress[Hide all progress bars, always turned on if stderr is not a terminal]' \
         "*: :_files"
@@ -1065,6 +1129,8 @@ function _pixi_global_tree {
         {-e,--environment}'[The environment to list packages for]' \
         {-i,--invert}'[Invert tree and show what depends on a given package in the regex argument]' \
         {-h,--help}'[Display help information]' \
+        {-v,--verbose}'[Increase logging verbosity (-v for warnings, -vv for info, -vvv for debug, -vvvv for trace)]' \
+        {-q,--quiet}'[Decrease logging verbosity (quiet mode)]' \
         '--color[Whether the log needs to be colored]' \
         '--no-progress[Hide all progress bars, always turned on if stderr is not a terminal]' \
         "*: :_files"
@@ -1084,6 +1150,8 @@ function _pixi_info {
         {-m,--manifest-path}'[The path to `pixi.toml`, `pyproject.toml`, or the workspace directory]':file:_files \
         {-w,--workspace}'[Name of the workspace]' \
         {-h,--help}'[Display help information]' \
+        {-v,--verbose}'[Increase logging verbosity (-v for warnings, -vv for info, -vvv for debug, -vvvv for trace)]' \
+        {-q,--quiet}'[Decrease logging verbosity (quiet mode)]' \
         '--color[Whether the log needs to be colored \[env: PIXI_COLOR=\] \[default: auto\] \[possible values: always, never, auto\]]' \
         '--no-progress[Hide all progress bars, always turned on if stderr is not a terminal \[env: PIXI_NO_PROGRESS=\]]' \
         "*: :_files"
@@ -1099,6 +1167,8 @@ function _pixi_init {
         {-s,--scm}'[Source Control Management used for this workspace]' \
         '--conda-pypi-map[Set a mapping between conda channels and pypi channels]' \
         {-h,--help}'[Display help information]' \
+        {-v,--verbose}'[Increase logging verbosity (-v for warnings, -vv for info, -vvv for debug, -vvvv for trace)]' \
+        {-q,--quiet}'[Decrease logging verbosity (quiet mode)]' \
         '--color[Whether the log needs to be colored]' \
         '--no-progress[Hide all progress bars, always turned on if stderr is not a terminal]' \
         "*: :_files"
@@ -1114,6 +1184,8 @@ function _pixi_import {
         {-m,--manifest-path}'[The path to `pixi.toml`, `pyproject.toml`, or the workspace directory]':file:_files \
         {-w,--workspace}'[Name of the workspace]' \
         {-h,--help}'[Display help information]' \
+        {-v,--verbose}'[Increase logging verbosity (-v for warnings, -vv for info, -vvv for debug, -vvvv for trace)]' \
+        {-q,--quiet}'[Decrease logging verbosity (quiet mode)]' \
         '--color[Whether the log needs to be colored]' \
         '--no-progress[Hide all progress bars, always turned on if stderr is not a terminal]' \
         '--auth-file[Path to the file containing the authentication token]':file:_files \
@@ -1142,6 +1214,8 @@ function _pixi_install {
         {-m,--manifest-path}'[The path to `pixi.toml`, `pyproject.toml`, or the workspace directory]':file:_files \
         {-w,--workspace}'[Name of the workspace]' \
         {-h,--help}'[Display help information]' \
+        {-v,--verbose}'[Increase logging verbosity (-v for warnings, -vv for info, -vvv for debug, -vvvv for trace)]' \
+        {-q,--quiet}'[Decrease logging verbosity (quiet mode)]' \
         '--color[Whether the log needs to be colored]' \
         '--no-progress[Hide all progress bars, always turned on if stderr is not a terminal]' \
         '--frozen[Install the environment as defined in the lockfile, doesn'\''t update lockfile if it isn'\''t up-to-date with the manifest file]' \
@@ -1173,6 +1247,8 @@ function _pixi_list {
         {-m,--manifest-path}'[The path to `pixi.toml`, `pyproject.toml`, or the workspace directory]':file:_files \
         {-w,--workspace}'[Name of the workspace]' \
         {-h,--help}'[Display help information]' \
+        {-v,--verbose}'[Increase logging verbosity (-v for warnings, -vv for info, -vvv for debug, -vvvv for trace)]' \
+        {-q,--quiet}'[Decrease logging verbosity (quiet mode)]' \
         '--color[Whether the log needs to be colored]' \
         '--no-progress[Hide all progress bars, always turned on if stderr is not a terminal]' \
         '--frozen[Install the environment as defined in the lockfile, doesn'\''t update lockfile if it isn'\''t up-to-date with the manifest file]' \
@@ -1190,6 +1266,8 @@ function _pixi_lock {
         {-m,--manifest-path}'[The path to `pixi.toml`, `pyproject.toml`, or the workspace directory]':file:_files \
         {-w,--workspace}'[Name of the workspace]' \
         {-h,--help}'[Display help information]' \
+        {-v,--verbose}'[Increase logging verbosity (-v for warnings, -vv for info, -vvv for debug, -vvvv for trace)]' \
+        {-q,--quiet}'[Decrease logging verbosity (quiet mode)]' \
         '--color[Whether the log needs to be colored \[env: PIXI_COLOR=\] \[default: auto\] \[possible values: always, never, auto\]]' \
         '--no-progress[Hide all progress bars, always turned on if stderr is not a terminal \[env: PIXI_NO_PROGRESS=\]]' \
         '--no-install[Don'\''t modify the environment, only modify the lock-file \[env: PIXI_NO_INSTALL=\]]' \
@@ -1204,6 +1282,8 @@ function _pixi_reinstall {
         {-m,--manifest-path}'[The path to `pixi.toml`, `pyproject.toml`, or the workspace directory]':file:_files \
         {-w,--workspace}'[Name of the workspace]' \
         {-h,--help}'[Display help information]' \
+        {-v,--verbose}'[Increase logging verbosity (-v for warnings, -vv for info, -vvv for debug, -vvvv for trace)]' \
+        {-q,--quiet}'[Decrease logging verbosity (quiet mode)]' \
         '--color[Whether the log needs to be colored]' \
         '--no-progress[Hide all progress bars, always turned on if stderr is not a terminal]' \
         '--frozen[Install the environment as defined in the lockfile, doesn'\''t update lockfile if it isn'\''t up-to-date with the manifest file]' \
@@ -1251,6 +1331,8 @@ function _pixi_publish {
         '--tls-root-certs[Which TLS root certificates to use: '\''webpki'\'' (bundled Mozilla roots), '\''native'\'' (system store), or '\''all'\'' (both)]' \
         '--use-environment-activation-cache[Use environment activation cache (experimental)]' \
         {-h,--help}'[Display help information]' \
+        {-v,--verbose}'[Increase logging verbosity (-v for warnings, -vv for info, -vvv for debug, -vvvv for trace)]' \
+        {-q,--quiet}'[Decrease logging verbosity (quiet mode)]' \
         '--color[Whether the log needs to be colored]' \
         '--no-progress[Hide all progress bars, always turned on if stderr is not a terminal]' \
         "*: :_files"
@@ -1265,6 +1347,8 @@ function _pixi_remove {
         {-m,--manifest-path}'[The path to `pixi.toml`, `pyproject.toml`, or the workspace directory]':file:_files \
         {-w,--workspace}'[Name of the workspace]' \
         {-h,--help}'[Display help information]' \
+        {-v,--verbose}'[Increase logging verbosity (-v for warnings, -vv for info, -vvv for debug, -vvvv for trace)]' \
+        {-q,--quiet}'[Decrease logging verbosity (quiet mode)]' \
         '--color[Whether the log needs to be colored]' \
         '--no-progress[Hide all progress bars, always turned on if stderr is not a terminal]' \
         {-g,--git}'[The git url to use when adding a git dependency]' \
@@ -1301,6 +1385,8 @@ function _pixi_run {
         {-n,--dry-run}'[Run the task in dry-run mode (only print the command that would run)]' \
         {-m,--manifest-path}'[The path to `pixi.toml`, `pyproject.toml`, or the workspace directory]':file:_files \
         {-w,--workspace}'[Name of the workspace]' \
+        {-v,--verbose}'[Increase logging verbosity (-v for warnings, -vv for info, -vvv for debug, -vvvv for trace)]' \
+        {-q,--quiet}'[Decrease logging verbosity (quiet mode)]' \
         '--color[Whether the log needs to be colored]' \
         '--no-progress[Hide all progress bars, always turned on if stderr is not a terminal]' \
         '--no-install[Don'\''t modify the environment, only modify the lock-file]' \
@@ -1335,6 +1421,8 @@ function _pixi_search {
         {-m,--manifest-path}'[The path to `pixi.toml`, `pyproject.toml`, or the workspace directory]':file:_files \
         {-w,--workspace}'[Name of the workspace]' \
         {-h,--help}'[Display help information]' \
+        {-v,--verbose}'[Increase logging verbosity (-v for warnings, -vv for info, -vvv for debug, -vvvv for trace)]' \
+        {-q,--quiet}'[Decrease logging verbosity (quiet mode)]' \
         '--color[Whether the log needs to be colored]' \
         '--no-progress[Hide all progress bars, always turned on if stderr is not a terminal]' \
         "*: :_files"
@@ -1348,6 +1436,8 @@ function _pixi_self-update {
         '--force[Force download the desired version when not exactly same with the current. If no desired version, always replace with the latest version]' \
         '--no-release-note[Skip printing the release notes]' \
         {-h,--help}'[Display help information]' \
+        {-v,--verbose}'[Increase logging verbosity (-v for warnings, -vv for info, -vvv for debug, -vvvv for trace)]' \
+        {-q,--quiet}'[Decrease logging verbosity (quiet mode)]' \
         '--color[Whether the log needs to be colored \[env: PIXI_COLOR=\] \[default: auto\] \[possible values: always, never, auto\]]' \
         '--no-progress[Hide all progress bars, always turned on if stderr is not a terminal \[env: PIXI_NO_PROGRESS=\]]' \
         "*: :_files"
@@ -1360,6 +1450,8 @@ function _pixi_shell {
         {-m,--manifest-path}'[The path to `pixi.toml`, `pyproject.toml`, or the workspace directory]':file:_files \
         {-w,--workspace}'[Name of the workspace]' \
         {-h,--help}'[Display help information]' \
+        {-v,--verbose}'[Increase logging verbosity (-v for warnings, -vv for info, -vvv for debug, -vvvv for trace)]' \
+        {-q,--quiet}'[Decrease logging verbosity (quiet mode)]' \
         '--color[Whether the log needs to be colored]' \
         '--no-progress[Hide all progress bars, always turned on if stderr is not a terminal]' \
         '--no-install[Don'\''t modify the environment, only modify the lock-file]' \
@@ -1393,6 +1485,8 @@ function _pixi_shell-hook {
         {-m,--manifest-path}'[The path to `pixi.toml`, `pyproject.toml`, or the workspace directory]':file:_files \
         {-w,--workspace}'[Name of the workspace]' \
         {-h,--help}'[Display help information]' \
+        {-v,--verbose}'[Increase logging verbosity (-v for warnings, -vv for info, -vvv for debug, -vvvv for trace)]' \
+        {-q,--quiet}'[Decrease logging verbosity (quiet mode)]' \
         '--color[Whether the log needs to be colored]' \
         '--no-progress[Hide all progress bars, always turned on if stderr is not a terminal]' \
         '--no-install[Don'\''t modify the environment, only modify the lock-file]' \
@@ -1439,6 +1533,8 @@ function _pixi_task {
         {-m,--manifest-path}'[The path to `pixi.toml`, `pyproject.toml`, or the workspace directory]':file:_files \
         {-w,--workspace}'[Name of the workspace]' \
         {-h,--help}'[Display help information]' \
+        {-v,--verbose}'[Increase logging verbosity (-v for warnings, -vv for info, -vvv for debug, -vvvv for trace)]' \
+        {-q,--quiet}'[Decrease logging verbosity (quiet mode)]' \
         '--color[Whether the log needs to be colored \[env: PIXI_COLOR=\] \[default: auto\] \[possible values: always, never, auto\]]' \
         '--no-progress[Hide all progress bars, always turned on if stderr is not a terminal \[env: PIXI_NO_PROGRESS=\]]' \
         ': :->cmd' \
@@ -1490,6 +1586,8 @@ function _pixi_task_add {
         {-m,--manifest-path}'[The path to `pixi.toml`, `pyproject.toml`, or the workspace directory]':file:_files \
         {-w,--workspace}'[Name of the workspace]' \
         {-h,--help}'[Display help information]' \
+        {-v,--verbose}'[Increase logging verbosity (-v for warnings, -vv for info, -vvv for debug, -vvvv for trace)]' \
+        {-q,--quiet}'[Decrease logging verbosity (quiet mode)]' \
         '--color[Whether the log needs to be colored \[env: PIXI_COLOR=\] \[default: auto\] \[possible values: always, never, auto\]]' \
         '--no-progress[Hide all progress bars, always turned on if stderr is not a terminal \[env: PIXI_NO_PROGRESS=\]]' \
         "*: :_files"
@@ -1503,6 +1601,8 @@ function _pixi_task_remove {
         {-m,--manifest-path}'[The path to `pixi.toml`, `pyproject.toml`, or the workspace directory]':file:_files \
         {-w,--workspace}'[Name of the workspace]' \
         {-h,--help}'[Display help information]' \
+        {-v,--verbose}'[Increase logging verbosity (-v for warnings, -vv for info, -vvv for debug, -vvvv for trace)]' \
+        {-q,--quiet}'[Decrease logging verbosity (quiet mode)]' \
         '--color[Whether the log needs to be colored \[env: PIXI_COLOR=\] \[default: auto\] \[possible values: always, never, auto\]]' \
         '--no-progress[Hide all progress bars, always turned on if stderr is not a terminal \[env: PIXI_NO_PROGRESS=\]]' \
         "*: :_files"
@@ -1516,6 +1616,8 @@ function _pixi_task_alias {
         {-m,--manifest-path}'[The path to `pixi.toml`, `pyproject.toml`, or the workspace directory]':file:_files \
         {-w,--workspace}'[Name of the workspace]' \
         {-h,--help}'[Display help information]' \
+        {-v,--verbose}'[Increase logging verbosity (-v for warnings, -vv for info, -vvv for debug, -vvvv for trace)]' \
+        {-q,--quiet}'[Decrease logging verbosity (quiet mode)]' \
         '--color[Whether the log needs to be colored \[env: PIXI_COLOR=\] \[default: auto\] \[possible values: always, never, auto\]]' \
         '--no-progress[Hide all progress bars, always turned on if stderr is not a terminal \[env: PIXI_NO_PROGRESS=\]]' \
         "*: :_files"
@@ -1530,6 +1632,8 @@ function _pixi_task_list {
         {-m,--manifest-path}'[The path to `pixi.toml`, `pyproject.toml`, or the workspace directory]':file:_files \
         {-w,--workspace}'[Name of the workspace]' \
         {-h,--help}'[Display help information]' \
+        {-v,--verbose}'[Increase logging verbosity (-v for warnings, -vv for info, -vvv for debug, -vvvv for trace)]' \
+        {-q,--quiet}'[Decrease logging verbosity (quiet mode)]' \
         '--color[Whether the log needs to be colored \[env: PIXI_COLOR=\] \[default: auto\] \[possible values: always, never, auto\]]' \
         '--no-progress[Hide all progress bars, always turned on if stderr is not a terminal \[env: PIXI_NO_PROGRESS=\]]' \
         "*: :_files"
@@ -1550,6 +1654,8 @@ function _pixi_tree {
         {-m,--manifest-path}'[The path to `pixi.toml`, `pyproject.toml`, or the workspace directory]':file:_files \
         {-w,--workspace}'[Name of the workspace]' \
         {-h,--help}'[Display help information]' \
+        {-v,--verbose}'[Increase logging verbosity (-v for warnings, -vv for info, -vvv for debug, -vvvv for trace)]' \
+        {-q,--quiet}'[Decrease logging verbosity (quiet mode)]' \
         '--color[Whether the log needs to be colored]' \
         '--no-progress[Hide all progress bars, always turned on if stderr is not a terminal]' \
         '--frozen[Install the environment as defined in the lockfile, doesn'\''t update lockfile if it isn'\''t up-to-date with the manifest file]' \
@@ -1581,6 +1687,8 @@ function _pixi_update {
         {-m,--manifest-path}'[The path to `pixi.toml`, `pyproject.toml`, or the workspace directory]':file:_files \
         {-w,--workspace}'[Name of the workspace]' \
         {-h,--help}'[Display help information]' \
+        {-v,--verbose}'[Increase logging verbosity (-v for warnings, -vv for info, -vvv for debug, -vvvv for trace)]' \
+        {-q,--quiet}'[Decrease logging verbosity (quiet mode)]' \
         '--color[Whether the log needs to be colored]' \
         '--no-progress[Hide all progress bars, always turned on if stderr is not a terminal]' \
         "*: :_files"
@@ -1596,6 +1704,8 @@ function _pixi_upgrade {
         {-m,--manifest-path}'[The path to `pixi.toml`, `pyproject.toml`, or the workspace directory]':file:_files \
         {-w,--workspace}'[Name of the workspace]' \
         {-h,--help}'[Display help information]' \
+        {-v,--verbose}'[Increase logging verbosity (-v for warnings, -vv for info, -vvv for debug, -vvvv for trace)]' \
+        {-q,--quiet}'[Decrease logging verbosity (quiet mode)]' \
         '--color[Whether the log needs to be colored]' \
         '--no-progress[Hide all progress bars, always turned on if stderr is not a terminal]' \
         '--no-install[Don'\''t modify the environment, only modify the lock-file]' \
@@ -1639,6 +1749,8 @@ function _pixi_upload {
     _arguments -C \
         '--allow-insecure-host[List of hosts for which SSL certificate verification should be skipped]' \
         {-h,--help}'[Display help information]' \
+        {-v,--verbose}'[Increase logging verbosity (-v for warnings, -vv for info, -vvv for debug, -vvvv for trace)]' \
+        {-q,--quiet}'[Decrease logging verbosity (quiet mode)]' \
         '--color[Whether the log needs to be colored]' \
         '--no-progress[Hide all progress bars, always turned on if stderr is not a terminal]' \
         ': :->cmd' \
@@ -1690,6 +1802,8 @@ function _pixi_upload_quetz {
         {-c,--channel}'[The URL to your channel \[env: QUETZ_CHANNEL=\]]' \
         {-a,--api-key}'[The Quetz API key, if none is provided, the token is read from the keychain / auth-file \[env: QUETZ_API_KEY=\]]' \
         {-h,--help}'[Display help information]' \
+        {-v,--verbose}'[Increase logging verbosity (-v for warnings, -vv for info, -vvv for debug, -vvvv for trace)]' \
+        {-q,--quiet}'[Decrease logging verbosity (quiet mode)]' \
         '--color[Whether the log needs to be colored \[env: PIXI_COLOR=\] \[default: auto\] \[possible values: always, never, auto\]]' \
         '--no-progress[Hide all progress bars, always turned on if stderr is not a terminal \[env: PIXI_NO_PROGRESS=\]]' \
         "*: :_files"
@@ -1702,6 +1816,8 @@ function _pixi_upload_artifactory {
         {-c,--channel}'[The URL to your channel \[env: ARTIFACTORY_CHANNEL=\]]' \
         {-t,--token}'[Your Artifactory token \[env: ARTIFACTORY_TOKEN=\]]' \
         {-h,--help}'[Display help information]' \
+        {-v,--verbose}'[Increase logging verbosity (-v for warnings, -vv for info, -vvv for debug, -vvvv for trace)]' \
+        {-q,--quiet}'[Decrease logging verbosity (quiet mode)]' \
         '--color[Whether the log needs to be colored \[env: PIXI_COLOR=\] \[default: auto\] \[possible values: always, never, auto\]]' \
         '--no-progress[Hide all progress bars, always turned on if stderr is not a terminal \[env: PIXI_NO_PROGRESS=\]]' \
         "*: :_files"
@@ -1719,6 +1835,8 @@ function _pixi_upload_prefix {
         {-s,--skip-existing}'[Skip upload if package already exists]' \
         '--force[Force overwrite existing packages]' \
         {-h,--help}'[Display help information]' \
+        {-v,--verbose}'[Increase logging verbosity (-v for warnings, -vv for info, -vvv for debug, -vvvv for trace)]' \
+        {-q,--quiet}'[Decrease logging verbosity (quiet mode)]' \
         '--color[Whether the log needs to be colored \[env: PIXI_COLOR=\] \[default: auto\] \[possible values: always, never, auto\]]' \
         '--no-progress[Hide all progress bars, always turned on if stderr is not a terminal \[env: PIXI_NO_PROGRESS=\]]' \
         "*: :_files"
@@ -1733,6 +1851,8 @@ function _pixi_upload_anaconda {
         {-u,--url}'[The URL to the Anaconda server \[env: ANACONDA_SERVER_URL=\]]' \
         {-f,--force}'[Replace files on conflict \[env: ANACONDA_FORCE=\]]' \
         {-h,--help}'[Display help information]' \
+        {-v,--verbose}'[Increase logging verbosity (-v for warnings, -vv for info, -vvv for debug, -vvvv for trace)]' \
+        {-q,--quiet}'[Decrease logging verbosity (quiet mode)]' \
         '--color[Whether the log needs to be colored \[env: PIXI_COLOR=\] \[default: auto\] \[possible values: always, never, auto\]]' \
         '--no-progress[Hide all progress bars, always turned on if stderr is not a terminal \[env: PIXI_NO_PROGRESS=\]]' \
         "*: :_files"
@@ -1746,6 +1866,8 @@ function _pixi_upload_cloudsmith {
         {-a,--api-key}'[The Cloudsmith API key, if none is provided, the token is read from the keychain / auth-file \[env: CLOUDSMITH_API_KEY=\]]' \
         {-u,--url}'[The URL to the Cloudsmith API server \[env: CLOUDSMITH_API_URL=\]]' \
         {-h,--help}'[Display help information]' \
+        {-v,--verbose}'[Increase logging verbosity (-v for warnings, -vv for info, -vvv for debug, -vvvv for trace)]' \
+        {-q,--quiet}'[Decrease logging verbosity (quiet mode)]' \
         '--color[Whether the log needs to be colored \[env: PIXI_COLOR=\] \[default: auto\] \[possible values: always, never, auto\]]' \
         '--no-progress[Hide all progress bars, always turned on if stderr is not a terminal \[env: PIXI_NO_PROGRESS=\]]' \
         "*: :_files"
@@ -1763,6 +1885,8 @@ function _pixi_upload_s3 {
         '--session-token[The session token for the S3 bucket \[env: S3_SESSION_TOKEN=\]]' \
         '--addressing-style[How to address the bucket \[env: S3_ADDRESSING_STYLE=\] \[default: virtual-host\] \[possible values: virtual-host, path\]]' \
         {-h,--help}'[Display help information]' \
+        {-v,--verbose}'[Increase logging verbosity (-v for warnings, -vv for info, -vvv for debug, -vvvv for trace)]' \
+        {-q,--quiet}'[Decrease logging verbosity (quiet mode)]' \
         '--color[Whether the log needs to be colored \[env: PIXI_COLOR=\] \[default: auto\] \[possible values: always, never, auto\]]' \
         '--no-progress[Hide all progress bars, always turned on if stderr is not a terminal \[env: PIXI_NO_PROGRESS=\]]' \
         "*: :_files"
@@ -1803,6 +1927,8 @@ function _pixi_workspace {
         {-m,--manifest-path}'[The path to `pixi.toml`, `pyproject.toml`, or the workspace directory]':file:_files \
         {-w,--workspace}'[Name of the workspace]' \
         {-h,--help}'[Display help information]' \
+        {-v,--verbose}'[Increase logging verbosity (-v for warnings, -vv for info, -vvv for debug, -vvvv for trace)]' \
+        {-q,--quiet}'[Decrease logging verbosity (quiet mode)]' \
         '--color[Whether the log needs to be colored \[env: PIXI_COLOR=\] \[default: auto\] \[possible values: always, never, auto\]]' \
         '--no-progress[Hide all progress bars, always turned on if stderr is not a terminal \[env: PIXI_NO_PROGRESS=\]]' \
         ': :->cmd' \
@@ -1888,6 +2014,8 @@ function _pixi_workspace_channel {
         {-m,--manifest-path}'[The path to `pixi.toml`, `pyproject.toml`, or the workspace directory]':file:_files \
         {-w,--workspace}'[Name of the workspace]' \
         {-h,--help}'[Display help information]' \
+        {-v,--verbose}'[Increase logging verbosity (-v for warnings, -vv for info, -vvv for debug, -vvvv for trace)]' \
+        {-q,--quiet}'[Decrease logging verbosity (quiet mode)]' \
         '--color[Whether the log needs to be colored \[env: PIXI_COLOR=\] \[default: auto\] \[possible values: always, never, auto\]]' \
         '--no-progress[Hide all progress bars, always turned on if stderr is not a terminal \[env: PIXI_NO_PROGRESS=\]]' \
         ': :->cmd' \
@@ -1944,6 +2072,8 @@ function _pixi_workspace_channel_add {
         {-m,--manifest-path}'[The path to `pixi.toml`, `pyproject.toml`, or the workspace directory]':file:_files \
         {-w,--workspace}'[Name of the workspace]' \
         {-h,--help}'[Display help information]' \
+        {-v,--verbose}'[Increase logging verbosity (-v for warnings, -vv for info, -vvv for debug, -vvvv for trace)]' \
+        {-q,--quiet}'[Decrease logging verbosity (quiet mode)]' \
         '--color[Whether the log needs to be colored]' \
         '--no-progress[Hide all progress bars, always turned on if stderr is not a terminal]' \
         "*: :_files"
@@ -1956,6 +2086,8 @@ function _pixi_workspace_channel_list {
         {-m,--manifest-path}'[The path to `pixi.toml`, `pyproject.toml`, or the workspace directory]':file:_files \
         {-w,--workspace}'[Name of the workspace]' \
         {-h,--help}'[Display help information]' \
+        {-v,--verbose}'[Increase logging verbosity (-v for warnings, -vv for info, -vvv for debug, -vvvv for trace)]' \
+        {-q,--quiet}'[Decrease logging verbosity (quiet mode)]' \
         '--color[Whether the log needs to be colored \[env: PIXI_COLOR=\] \[default: auto\] \[possible values: always, never, auto\]]' \
         '--no-progress[Hide all progress bars, always turned on if stderr is not a terminal \[env: PIXI_NO_PROGRESS=\]]' \
         "*: :_files"
@@ -1985,6 +2117,8 @@ function _pixi_workspace_channel_remove {
         {-m,--manifest-path}'[The path to `pixi.toml`, `pyproject.toml`, or the workspace directory]':file:_files \
         {-w,--workspace}'[Name of the workspace]' \
         {-h,--help}'[Display help information]' \
+        {-v,--verbose}'[Increase logging verbosity (-v for warnings, -vv for info, -vvv for debug, -vvvv for trace)]' \
+        {-q,--quiet}'[Decrease logging verbosity (quiet mode)]' \
         '--color[Whether the log needs to be colored]' \
         '--no-progress[Hide all progress bars, always turned on if stderr is not a terminal]' \
         "*: :_files"
@@ -2016,6 +2150,8 @@ function _pixi_workspace_description {
         {-m,--manifest-path}'[The path to `pixi.toml`, `pyproject.toml`, or the workspace directory]':file:_files \
         {-w,--workspace}'[Name of the workspace]' \
         {-h,--help}'[Display help information]' \
+        {-v,--verbose}'[Increase logging verbosity (-v for warnings, -vv for info, -vvv for debug, -vvvv for trace)]' \
+        {-q,--quiet}'[Decrease logging verbosity (quiet mode)]' \
         '--color[Whether the log needs to be colored \[env: PIXI_COLOR=\] \[default: auto\] \[possible values: always, never, auto\]]' \
         '--no-progress[Hide all progress bars, always turned on if stderr is not a terminal \[env: PIXI_NO_PROGRESS=\]]' \
         ': :->cmd' \
@@ -2050,6 +2186,8 @@ function _pixi_workspace_description_get {
         {-m,--manifest-path}'[The path to `pixi.toml`, `pyproject.toml`, or the workspace directory]':file:_files \
         {-w,--workspace}'[Name of the workspace]' \
         {-h,--help}'[Display help information]' \
+        {-v,--verbose}'[Increase logging verbosity (-v for warnings, -vv for info, -vvv for debug, -vvvv for trace)]' \
+        {-q,--quiet}'[Decrease logging verbosity (quiet mode)]' \
         '--color[Whether the log needs to be colored]' \
         '--no-progress[Hide all progress bars, always turned on if stderr is not a terminal]' \
         "*: :_files"
@@ -2061,6 +2199,8 @@ function _pixi_workspace_description_set {
         {-m,--manifest-path}'[The path to `pixi.toml`, `pyproject.toml`, or the workspace directory]':file:_files \
         {-w,--workspace}'[Name of the workspace]' \
         {-h,--help}'[Display help information]' \
+        {-v,--verbose}'[Increase logging verbosity (-v for warnings, -vv for info, -vvv for debug, -vvvv for trace)]' \
+        {-q,--quiet}'[Decrease logging verbosity (quiet mode)]' \
         '--color[Whether the log needs to be colored]' \
         '--no-progress[Hide all progress bars, always turned on if stderr is not a terminal]' \
         "*: :_files"
@@ -2093,6 +2233,8 @@ function _pixi_workspace_platform {
         {-m,--manifest-path}'[The path to `pixi.toml`, `pyproject.toml`, or the workspace directory]':file:_files \
         {-w,--workspace}'[Name of the workspace]' \
         {-h,--help}'[Display help information]' \
+        {-v,--verbose}'[Increase logging verbosity (-v for warnings, -vv for info, -vvv for debug, -vvvv for trace)]' \
+        {-q,--quiet}'[Decrease logging verbosity (quiet mode)]' \
         '--color[Whether the log needs to be colored \[env: PIXI_COLOR=\] \[default: auto\] \[possible values: always, never, auto\]]' \
         '--no-progress[Hide all progress bars, always turned on if stderr is not a terminal \[env: PIXI_NO_PROGRESS=\]]' \
         ': :->cmd' \
@@ -2133,6 +2275,8 @@ function _pixi_workspace_platform_add {
         {-m,--manifest-path}'[The path to `pixi.toml`, `pyproject.toml`, or the workspace directory]':file:_files \
         {-w,--workspace}'[Name of the workspace]' \
         {-h,--help}'[Display help information]' \
+        {-v,--verbose}'[Increase logging verbosity (-v for warnings, -vv for info, -vvv for debug, -vvvv for trace)]' \
+        {-q,--quiet}'[Decrease logging verbosity (quiet mode)]' \
         '--color[Whether the log needs to be colored \[env: PIXI_COLOR=\] \[default: auto\] \[possible values: always, never, auto\]]' \
         '--no-progress[Hide all progress bars, always turned on if stderr is not a terminal \[env: PIXI_NO_PROGRESS=\]]' \
         "*: :_files"
@@ -2144,6 +2288,8 @@ function _pixi_workspace_platform_list {
         {-m,--manifest-path}'[The path to `pixi.toml`, `pyproject.toml`, or the workspace directory]':file:_files \
         {-w,--workspace}'[Name of the workspace]' \
         {-h,--help}'[Display help information]' \
+        {-v,--verbose}'[Increase logging verbosity (-v for warnings, -vv for info, -vvv for debug, -vvvv for trace)]' \
+        {-q,--quiet}'[Decrease logging verbosity (quiet mode)]' \
         '--color[Whether the log needs to be colored \[env: PIXI_COLOR=\] \[default: auto\] \[possible values: always, never, auto\]]' \
         '--no-progress[Hide all progress bars, always turned on if stderr is not a terminal \[env: PIXI_NO_PROGRESS=\]]' \
         "*: :_files"
@@ -2157,6 +2303,8 @@ function _pixi_workspace_platform_remove {
         {-m,--manifest-path}'[The path to `pixi.toml`, `pyproject.toml`, or the workspace directory]':file:_files \
         {-w,--workspace}'[Name of the workspace]' \
         {-h,--help}'[Display help information]' \
+        {-v,--verbose}'[Increase logging verbosity (-v for warnings, -vv for info, -vvv for debug, -vvvv for trace)]' \
+        {-q,--quiet}'[Decrease logging verbosity (quiet mode)]' \
         '--color[Whether the log needs to be colored \[env: PIXI_COLOR=\] \[default: auto\] \[possible values: always, never, auto\]]' \
         '--no-progress[Hide all progress bars, always turned on if stderr is not a terminal \[env: PIXI_NO_PROGRESS=\]]' \
         "*: :_files"
@@ -2191,6 +2339,8 @@ function _pixi_workspace_version {
         {-m,--manifest-path}'[The path to `pixi.toml`, `pyproject.toml`, or the workspace directory]':file:_files \
         {-w,--workspace}'[Name of the workspace]' \
         {-h,--help}'[Display help information]' \
+        {-v,--verbose}'[Increase logging verbosity (-v for warnings, -vv for info, -vvv for debug, -vvvv for trace)]' \
+        {-q,--quiet}'[Decrease logging verbosity (quiet mode)]' \
         '--color[Whether the log needs to be colored \[env: PIXI_COLOR=\] \[default: auto\] \[possible values: always, never, auto\]]' \
         '--no-progress[Hide all progress bars, always turned on if stderr is not a terminal \[env: PIXI_NO_PROGRESS=\]]' \
         ': :->cmd' \
@@ -2237,6 +2387,8 @@ function _pixi_workspace_version_get {
         {-m,--manifest-path}'[The path to `pixi.toml`, `pyproject.toml`, or the workspace directory]':file:_files \
         {-w,--workspace}'[Name of the workspace]' \
         {-h,--help}'[Display help information]' \
+        {-v,--verbose}'[Increase logging verbosity (-v for warnings, -vv for info, -vvv for debug, -vvvv for trace)]' \
+        {-q,--quiet}'[Decrease logging verbosity (quiet mode)]' \
         '--color[Whether the log needs to be colored \[env: PIXI_COLOR=\] \[default: auto\] \[possible values: always, never, auto\]]' \
         '--no-progress[Hide all progress bars, always turned on if stderr is not a terminal \[env: PIXI_NO_PROGRESS=\]]' \
         "*: :_files"
@@ -2248,6 +2400,8 @@ function _pixi_workspace_version_set {
         {-m,--manifest-path}'[The path to `pixi.toml`, `pyproject.toml`, or the workspace directory]':file:_files \
         {-w,--workspace}'[Name of the workspace]' \
         {-h,--help}'[Display help information]' \
+        {-v,--verbose}'[Increase logging verbosity (-v for warnings, -vv for info, -vvv for debug, -vvvv for trace)]' \
+        {-q,--quiet}'[Decrease logging verbosity (quiet mode)]' \
         '--color[Whether the log needs to be colored \[env: PIXI_COLOR=\] \[default: auto\] \[possible values: always, never, auto\]]' \
         '--no-progress[Hide all progress bars, always turned on if stderr is not a terminal \[env: PIXI_NO_PROGRESS=\]]' \
         "*: :_files"
@@ -2259,6 +2413,8 @@ function _pixi_workspace_version_major {
         {-m,--manifest-path}'[The path to `pixi.toml`, `pyproject.toml`, or the workspace directory]':file:_files \
         {-w,--workspace}'[Name of the workspace]' \
         {-h,--help}'[Display help information]' \
+        {-v,--verbose}'[Increase logging verbosity (-v for warnings, -vv for info, -vvv for debug, -vvvv for trace)]' \
+        {-q,--quiet}'[Decrease logging verbosity (quiet mode)]' \
         '--color[Whether the log needs to be colored \[env: PIXI_COLOR=\] \[default: auto\] \[possible values: always, never, auto\]]' \
         '--no-progress[Hide all progress bars, always turned on if stderr is not a terminal \[env: PIXI_NO_PROGRESS=\]]' \
         "*: :_files"
@@ -2270,6 +2426,8 @@ function _pixi_workspace_version_minor {
         {-m,--manifest-path}'[The path to `pixi.toml`, `pyproject.toml`, or the workspace directory]':file:_files \
         {-w,--workspace}'[Name of the workspace]' \
         {-h,--help}'[Display help information]' \
+        {-v,--verbose}'[Increase logging verbosity (-v for warnings, -vv for info, -vvv for debug, -vvvv for trace)]' \
+        {-q,--quiet}'[Decrease logging verbosity (quiet mode)]' \
         '--color[Whether the log needs to be colored \[env: PIXI_COLOR=\] \[default: auto\] \[possible values: always, never, auto\]]' \
         '--no-progress[Hide all progress bars, always turned on if stderr is not a terminal \[env: PIXI_NO_PROGRESS=\]]' \
         "*: :_files"
@@ -2281,6 +2439,8 @@ function _pixi_workspace_version_patch {
         {-m,--manifest-path}'[The path to `pixi.toml`, `pyproject.toml`, or the workspace directory]':file:_files \
         {-w,--workspace}'[Name of the workspace]' \
         {-h,--help}'[Display help information]' \
+        {-v,--verbose}'[Increase logging verbosity (-v for warnings, -vv for info, -vvv for debug, -vvvv for trace)]' \
+        {-q,--quiet}'[Decrease logging verbosity (quiet mode)]' \
         '--color[Whether the log needs to be colored \[env: PIXI_COLOR=\] \[default: auto\] \[possible values: always, never, auto\]]' \
         '--no-progress[Hide all progress bars, always turned on if stderr is not a terminal \[env: PIXI_NO_PROGRESS=\]]' \
         "*: :_files"
@@ -2313,6 +2473,8 @@ function _pixi_workspace_environment {
         {-m,--manifest-path}'[The path to `pixi.toml`, `pyproject.toml`, or the workspace directory]':file:_files \
         {-w,--workspace}'[Name of the workspace]' \
         {-h,--help}'[Display help information]' \
+        {-v,--verbose}'[Increase logging verbosity (-v for warnings, -vv for info, -vvv for debug, -vvvv for trace)]' \
+        {-q,--quiet}'[Decrease logging verbosity (quiet mode)]' \
         '--color[Whether the log needs to be colored \[env: PIXI_COLOR=\] \[default: auto\] \[possible values: always, never, auto\]]' \
         '--no-progress[Hide all progress bars, always turned on if stderr is not a terminal \[env: PIXI_NO_PROGRESS=\]]' \
         ': :->cmd' \
@@ -2355,6 +2517,8 @@ function _pixi_workspace_environment_add {
         {-m,--manifest-path}'[The path to `pixi.toml`, `pyproject.toml`, or the workspace directory]':file:_files \
         {-w,--workspace}'[Name of the workspace]' \
         {-h,--help}'[Display help information]' \
+        {-v,--verbose}'[Increase logging verbosity (-v for warnings, -vv for info, -vvv for debug, -vvvv for trace)]' \
+        {-q,--quiet}'[Decrease logging verbosity (quiet mode)]' \
         '--color[Whether the log needs to be colored \[env: PIXI_COLOR=\] \[default: auto\] \[possible values: always, never, auto\]]' \
         '--no-progress[Hide all progress bars, always turned on if stderr is not a terminal \[env: PIXI_NO_PROGRESS=\]]' \
         "*: :_files"
@@ -2366,6 +2530,8 @@ function _pixi_workspace_environment_list {
         {-m,--manifest-path}'[The path to `pixi.toml`, `pyproject.toml`, or the workspace directory]':file:_files \
         {-w,--workspace}'[Name of the workspace]' \
         {-h,--help}'[Display help information]' \
+        {-v,--verbose}'[Increase logging verbosity (-v for warnings, -vv for info, -vvv for debug, -vvvv for trace)]' \
+        {-q,--quiet}'[Decrease logging verbosity (quiet mode)]' \
         '--color[Whether the log needs to be colored \[env: PIXI_COLOR=\] \[default: auto\] \[possible values: always, never, auto\]]' \
         '--no-progress[Hide all progress bars, always turned on if stderr is not a terminal \[env: PIXI_NO_PROGRESS=\]]' \
         "*: :_files"
@@ -2377,6 +2543,8 @@ function _pixi_workspace_environment_remove {
         {-m,--manifest-path}'[The path to `pixi.toml`, `pyproject.toml`, or the workspace directory]':file:_files \
         {-w,--workspace}'[Name of the workspace]' \
         {-h,--help}'[Display help information]' \
+        {-v,--verbose}'[Increase logging verbosity (-v for warnings, -vv for info, -vvv for debug, -vvvv for trace)]' \
+        {-q,--quiet}'[Decrease logging verbosity (quiet mode)]' \
         '--color[Whether the log needs to be colored \[env: PIXI_COLOR=\] \[default: auto\] \[possible values: always, never, auto\]]' \
         '--no-progress[Hide all progress bars, always turned on if stderr is not a terminal \[env: PIXI_NO_PROGRESS=\]]' \
         "*: :_files"
@@ -2408,6 +2576,8 @@ function _pixi_workspace_feature {
         {-m,--manifest-path}'[The path to `pixi.toml`, `pyproject.toml`, or the workspace directory]':file:_files \
         {-w,--workspace}'[Name of the workspace]' \
         {-h,--help}'[Display help information]' \
+        {-v,--verbose}'[Increase logging verbosity (-v for warnings, -vv for info, -vvv for debug, -vvvv for trace)]' \
+        {-q,--quiet}'[Decrease logging verbosity (quiet mode)]' \
         '--color[Whether the log needs to be colored \[env: PIXI_COLOR=\] \[default: auto\] \[possible values: always, never, auto\]]' \
         '--no-progress[Hide all progress bars, always turned on if stderr is not a terminal \[env: PIXI_NO_PROGRESS=\]]' \
         ': :->cmd' \
@@ -2442,6 +2612,8 @@ function _pixi_workspace_feature_list {
         {-m,--manifest-path}'[The path to `pixi.toml`, `pyproject.toml`, or the workspace directory]':file:_files \
         {-w,--workspace}'[Name of the workspace]' \
         {-h,--help}'[Display help information]' \
+        {-v,--verbose}'[Increase logging verbosity (-v for warnings, -vv for info, -vvv for debug, -vvvv for trace)]' \
+        {-q,--quiet}'[Decrease logging verbosity (quiet mode)]' \
         '--color[Whether the log needs to be colored \[env: PIXI_COLOR=\] \[default: auto\] \[possible values: always, never, auto\]]' \
         '--no-progress[Hide all progress bars, always turned on if stderr is not a terminal \[env: PIXI_NO_PROGRESS=\]]' \
         "*: :_files"
@@ -2453,6 +2625,8 @@ function _pixi_workspace_feature_remove {
         {-m,--manifest-path}'[The path to `pixi.toml`, `pyproject.toml`, or the workspace directory]':file:_files \
         {-w,--workspace}'[Name of the workspace]' \
         {-h,--help}'[Display help information]' \
+        {-v,--verbose}'[Increase logging verbosity (-v for warnings, -vv for info, -vvv for debug, -vvvv for trace)]' \
+        {-q,--quiet}'[Decrease logging verbosity (quiet mode)]' \
         '--color[Whether the log needs to be colored \[env: PIXI_COLOR=\] \[default: auto\] \[possible values: always, never, auto\]]' \
         '--no-progress[Hide all progress bars, always turned on if stderr is not a terminal \[env: PIXI_NO_PROGRESS=\]]' \
         "*: :_files"
@@ -2484,6 +2658,8 @@ function _pixi_workspace_export {
         {-m,--manifest-path}'[The path to `pixi.toml`, `pyproject.toml`, or the workspace directory]':file:_files \
         {-w,--workspace}'[Name of the workspace]' \
         {-h,--help}'[Display help information]' \
+        {-v,--verbose}'[Increase logging verbosity (-v for warnings, -vv for info, -vvv for debug, -vvvv for trace)]' \
+        {-q,--quiet}'[Decrease logging verbosity (quiet mode)]' \
         '--color[Whether the log needs to be colored \[env: PIXI_COLOR=\] \[default: auto\] \[possible values: always, never, auto\]]' \
         '--no-progress[Hide all progress bars, always turned on if stderr is not a terminal \[env: PIXI_NO_PROGRESS=\]]' \
         ': :->cmd' \
@@ -2522,6 +2698,8 @@ function _pixi_workspace_export_conda-explicit-spec {
         {-m,--manifest-path}'[The path to `pixi.toml`, `pyproject.toml`, or the workspace directory]':file:_files \
         {-w,--workspace}'[Name of the workspace]' \
         {-h,--help}'[Display help information]' \
+        {-v,--verbose}'[Increase logging verbosity (-v for warnings, -vv for info, -vvv for debug, -vvvv for trace)]' \
+        {-q,--quiet}'[Decrease logging verbosity (quiet mode)]' \
         '--color[Whether the log needs to be colored]' \
         '--no-progress[Hide all progress bars, always turned on if stderr is not a terminal]' \
         '--frozen[Install the environment as defined in the lockfile, doesn'\''t update lockfile if it isn'\''t up-to-date with the manifest file]' \
@@ -2552,6 +2730,8 @@ function _pixi_workspace_export_conda-environment {
         {-m,--manifest-path}'[The path to `pixi.toml`, `pyproject.toml`, or the workspace directory]':file:_files \
         {-w,--workspace}'[Name of the workspace]' \
         {-h,--help}'[Display help information]' \
+        {-v,--verbose}'[Increase logging verbosity (-v for warnings, -vv for info, -vvv for debug, -vvvv for trace)]' \
+        {-q,--quiet}'[Decrease logging verbosity (quiet mode)]' \
         '--color[Whether the log needs to be colored]' \
         '--no-progress[Hide all progress bars, always turned on if stderr is not a terminal]' \
         "*: :_files"
@@ -2583,6 +2763,8 @@ function _pixi_workspace_name {
         {-m,--manifest-path}'[The path to `pixi.toml`, `pyproject.toml`, or the workspace directory]':file:_files \
         {-w,--workspace}'[Name of the workspace]' \
         {-h,--help}'[Display help information]' \
+        {-v,--verbose}'[Increase logging verbosity (-v for warnings, -vv for info, -vvv for debug, -vvvv for trace)]' \
+        {-q,--quiet}'[Decrease logging verbosity (quiet mode)]' \
         '--color[Whether the log needs to be colored \[env: PIXI_COLOR=\] \[default: auto\] \[possible values: always, never, auto\]]' \
         '--no-progress[Hide all progress bars, always turned on if stderr is not a terminal \[env: PIXI_NO_PROGRESS=\]]' \
         ': :->cmd' \
@@ -2617,6 +2799,8 @@ function _pixi_workspace_name_get {
         {-m,--manifest-path}'[The path to `pixi.toml`, `pyproject.toml`, or the workspace directory]':file:_files \
         {-w,--workspace}'[Name of the workspace]' \
         {-h,--help}'[Display help information]' \
+        {-v,--verbose}'[Increase logging verbosity (-v for warnings, -vv for info, -vvv for debug, -vvvv for trace)]' \
+        {-q,--quiet}'[Decrease logging verbosity (quiet mode)]' \
         '--color[Whether the log needs to be colored \[env: PIXI_COLOR=\] \[default: auto\] \[possible values: always, never, auto\]]' \
         '--no-progress[Hide all progress bars, always turned on if stderr is not a terminal \[env: PIXI_NO_PROGRESS=\]]' \
         "*: :_files"
@@ -2628,6 +2812,8 @@ function _pixi_workspace_name_set {
         {-m,--manifest-path}'[The path to `pixi.toml`, `pyproject.toml`, or the workspace directory]':file:_files \
         {-w,--workspace}'[Name of the workspace]' \
         {-h,--help}'[Display help information]' \
+        {-v,--verbose}'[Increase logging verbosity (-v for warnings, -vv for info, -vvv for debug, -vvvv for trace)]' \
+        {-q,--quiet}'[Decrease logging verbosity (quiet mode)]' \
         '--color[Whether the log needs to be colored]' \
         '--no-progress[Hide all progress bars, always turned on if stderr is not a terminal]' \
         "*: :_files"
@@ -2659,6 +2845,8 @@ function _pixi_workspace_system-requirements {
         {-m,--manifest-path}'[The path to `pixi.toml`, `pyproject.toml`, or the workspace directory]':file:_files \
         {-w,--workspace}'[Name of the workspace]' \
         {-h,--help}'[Display help information]' \
+        {-v,--verbose}'[Increase logging verbosity (-v for warnings, -vv for info, -vvv for debug, -vvvv for trace)]' \
+        {-q,--quiet}'[Decrease logging verbosity (quiet mode)]' \
         '--color[Whether the log needs to be colored \[env: PIXI_COLOR=\] \[default: auto\] \[possible values: always, never, auto\]]' \
         '--no-progress[Hide all progress bars, always turned on if stderr is not a terminal \[env: PIXI_NO_PROGRESS=\]]' \
         ': :->cmd' \
@@ -2700,6 +2888,8 @@ function _pixi_workspace_system-requirements_add {
         {-m,--manifest-path}'[The path to `pixi.toml`, `pyproject.toml`, or the workspace directory]':file:_files \
         {-w,--workspace}'[Name of the workspace]' \
         {-h,--help}'[Display help information]' \
+        {-v,--verbose}'[Increase logging verbosity (-v for warnings, -vv for info, -vvv for debug, -vvvv for trace)]' \
+        {-q,--quiet}'[Decrease logging verbosity (quiet mode)]' \
         '--color[Whether the log needs to be colored]' \
         '--no-progress[Hide all progress bars, always turned on if stderr is not a terminal]' \
         "*: :_files"
@@ -2713,6 +2903,8 @@ function _pixi_workspace_system-requirements_list {
         {-m,--manifest-path}'[The path to `pixi.toml`, `pyproject.toml`, or the workspace directory]':file:_files \
         {-w,--workspace}'[Name of the workspace]' \
         {-h,--help}'[Display help information]' \
+        {-v,--verbose}'[Increase logging verbosity (-v for warnings, -vv for info, -vvv for debug, -vvvv for trace)]' \
+        {-q,--quiet}'[Decrease logging verbosity (quiet mode)]' \
         '--color[Whether the log needs to be colored \[env: PIXI_COLOR=\] \[default: auto\] \[possible values: always, never, auto\]]' \
         '--no-progress[Hide all progress bars, always turned on if stderr is not a terminal \[env: PIXI_NO_PROGRESS=\]]' \
         "*: :_files"
@@ -2748,6 +2940,8 @@ function _pixi_workspace_register {
         {-m,--manifest-path}'[The path to `pixi.toml`, `pyproject.toml`, or the workspace directory]':file:_files \
         {-w,--workspace}'[Name of the workspace]' \
         {-h,--help}'[Display help information]' \
+        {-v,--verbose}'[Increase logging verbosity (-v for warnings, -vv for info, -vvv for debug, -vvvv for trace)]' \
+        {-q,--quiet}'[Decrease logging verbosity (quiet mode)]' \
         '--color[Whether the log needs to be colored \[env: PIXI_COLOR=\] \[default: auto\] \[possible values: always, never, auto\]]' \
         '--no-progress[Hide all progress bars, always turned on if stderr is not a terminal \[env: PIXI_NO_PROGRESS=\]]' \
         ': :->cmd' \
@@ -2787,6 +2981,8 @@ function _pixi_workspace_register_list {
         {-m,--manifest-path}'[The path to `pixi.toml`, `pyproject.toml`, or the workspace directory]':file:_files \
         {-w,--workspace}'[Name of the workspace]' \
         {-h,--help}'[Display help information]' \
+        {-v,--verbose}'[Increase logging verbosity (-v for warnings, -vv for info, -vvv for debug, -vvvv for trace)]' \
+        {-q,--quiet}'[Decrease logging verbosity (quiet mode)]' \
         '--color[Whether the log needs to be colored \[env: PIXI_COLOR=\] \[default: auto\] \[possible values: always, never, auto\]]' \
         '--no-progress[Hide all progress bars, always turned on if stderr is not a terminal \[env: PIXI_NO_PROGRESS=\]]' \
         "*: :_files"
@@ -2798,6 +2994,8 @@ function _pixi_workspace_register_remove {
         {-m,--manifest-path}'[The path to `pixi.toml`, `pyproject.toml`, or the workspace directory]':file:_files \
         {-w,--workspace}'[Name of the workspace]' \
         {-h,--help}'[Display help information]' \
+        {-v,--verbose}'[Increase logging verbosity (-v for warnings, -vv for info, -vvv for debug, -vvvv for trace)]' \
+        {-q,--quiet}'[Decrease logging verbosity (quiet mode)]' \
         '--color[Whether the log needs to be colored \[env: PIXI_COLOR=\] \[default: auto\] \[possible values: always, never, auto\]]' \
         '--no-progress[Hide all progress bars, always turned on if stderr is not a terminal \[env: PIXI_NO_PROGRESS=\]]' \
         "*: :_files"
@@ -2809,6 +3007,8 @@ function _pixi_workspace_register_prune {
         {-m,--manifest-path}'[The path to `pixi.toml`, `pyproject.toml`, or the workspace directory]':file:_files \
         {-w,--workspace}'[Name of the workspace]' \
         {-h,--help}'[Display help information]' \
+        {-v,--verbose}'[Increase logging verbosity (-v for warnings, -vv for info, -vvv for debug, -vvvv for trace)]' \
+        {-q,--quiet}'[Decrease logging verbosity (quiet mode)]' \
         '--color[Whether the log needs to be colored \[env: PIXI_COLOR=\] \[default: auto\] \[possible values: always, never, auto\]]' \
         '--no-progress[Hide all progress bars, always turned on if stderr is not a terminal \[env: PIXI_NO_PROGRESS=\]]' \
         "*: :_files"
@@ -2842,6 +3042,8 @@ function _pixi_workspace_requires-pixi {
         {-m,--manifest-path}'[The path to `pixi.toml`, `pyproject.toml`, or the workspace directory]':file:_files \
         {-w,--workspace}'[Name of the workspace]' \
         {-h,--help}'[Display help information]' \
+        {-v,--verbose}'[Increase logging verbosity (-v for warnings, -vv for info, -vvv for debug, -vvvv for trace)]' \
+        {-q,--quiet}'[Decrease logging verbosity (quiet mode)]' \
         '--color[Whether the log needs to be colored \[env: PIXI_COLOR=\] \[default: auto\] \[possible values: always, never, auto\]]' \
         '--no-progress[Hide all progress bars, always turned on if stderr is not a terminal \[env: PIXI_NO_PROGRESS=\]]' \
         ': :->cmd' \
@@ -2884,6 +3086,8 @@ function _pixi_workspace_requires-pixi_get {
         {-m,--manifest-path}'[The path to `pixi.toml`, `pyproject.toml`, or the workspace directory]':file:_files \
         {-w,--workspace}'[Name of the workspace]' \
         {-h,--help}'[Display help information]' \
+        {-v,--verbose}'[Increase logging verbosity (-v for warnings, -vv for info, -vvv for debug, -vvvv for trace)]' \
+        {-q,--quiet}'[Decrease logging verbosity (quiet mode)]' \
         '--color[Whether the log needs to be colored \[env: PIXI_COLOR=\] \[default: auto\] \[possible values: always, never, auto\]]' \
         '--no-progress[Hide all progress bars, always turned on if stderr is not a terminal \[env: PIXI_NO_PROGRESS=\]]' \
         "*: :_files"
@@ -2895,6 +3099,8 @@ function _pixi_workspace_requires-pixi_set {
         {-m,--manifest-path}'[The path to `pixi.toml`, `pyproject.toml`, or the workspace directory]':file:_files \
         {-w,--workspace}'[Name of the workspace]' \
         {-h,--help}'[Display help information]' \
+        {-v,--verbose}'[Increase logging verbosity (-v for warnings, -vv for info, -vvv for debug, -vvvv for trace)]' \
+        {-q,--quiet}'[Decrease logging verbosity (quiet mode)]' \
         '--color[Whether the log needs to be colored]' \
         '--no-progress[Hide all progress bars, always turned on if stderr is not a terminal]' \
         "*: :_files"
@@ -2906,6 +3112,8 @@ function _pixi_workspace_requires-pixi_unset {
         {-m,--manifest-path}'[The path to `pixi.toml`, `pyproject.toml`, or the workspace directory]':file:_files \
         {-w,--workspace}'[Name of the workspace]' \
         {-h,--help}'[Display help information]' \
+        {-v,--verbose}'[Increase logging verbosity (-v for warnings, -vv for info, -vvv for debug, -vvvv for trace)]' \
+        {-q,--quiet}'[Decrease logging verbosity (quiet mode)]' \
         '--color[Whether the log needs to be colored \[env: PIXI_COLOR=\] \[default: auto\] \[possible values: always, never, auto\]]' \
         '--no-progress[Hide all progress bars, always turned on if stderr is not a terminal \[env: PIXI_NO_PROGRESS=\]]' \
         "*: :_files"
@@ -2917,6 +3125,8 @@ function _pixi_workspace_requires-pixi_verify {
         {-m,--manifest-path}'[The path to `pixi.toml`, `pyproject.toml`, or the workspace directory]':file:_files \
         {-w,--workspace}'[Name of the workspace]' \
         {-h,--help}'[Display help information]' \
+        {-v,--verbose}'[Increase logging verbosity (-v for warnings, -vv for info, -vvv for debug, -vvvv for trace)]' \
+        {-q,--quiet}'[Decrease logging verbosity (quiet mode)]' \
         '--color[Whether the log needs to be colored \[env: PIXI_COLOR=\] \[default: auto\] \[possible values: always, never, auto\]]' \
         '--no-progress[Hide all progress bars, always turned on if stderr is not a terminal \[env: PIXI_NO_PROGRESS=\]]' \
         "*: :_files"
